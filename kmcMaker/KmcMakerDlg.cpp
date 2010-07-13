@@ -162,16 +162,13 @@ BOOL CKmcMakerDlg::OnInitDialog()
 // 	m_DLayout.SetSplit("об" );
 	
 	//////////////////////////////////////////////////////////////////////////
+	
+
 	CRect rect;
 	GetDlgItem(IDC_DLG_AREA)->GetWindowRect(&rect);
-	//this->GetWindowRect()
-//	this->ScreenToClient(&rect);
-	
-	
-	ImportLyricDlg.Create(IDD_IMPORTLYRICDLG_DIALOG);
-	ImportLyricDlg.SetWindowPos(NULL,SWP_SHOWWINDOW, rect.left,rect.top,rect.right,rect.bottom); 
-	ImportLyricDlg.SetParent(GetDlgItem(IDC_DLG_AREA));
-//	ImportLyricDlg.MoveWindow(rect);
+	ScreenToClient(&rect);
+	ImportLyricDlg.Create(IDD_IMPORTLYRICDLG_DIALOG,this);
+	ImportLyricDlg.MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
 	ImportLyricDlg.ShowWindow(SW_SHOW);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control

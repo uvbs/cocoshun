@@ -6,6 +6,32 @@
 --------------------Configuration: KmcMaker - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB2.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/KmcMaker.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"F:\google-svn\cocoshun\kmcMaker\KmcMakerDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB2.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB3.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/KmcMaker.pdb" /debug /machine:I386 /out:"Debug/KmcMaker.exe" /pdbtype:sept 
+".\Debug\BCMenu.obj"
+".\Debug\BtnST.obj"
+".\Debug\CeXDib.obj"
+".\Debug\CheckBTGroup.obj"
+".\Debug\ImportLyricDlg.obj"
+".\Debug\KmcMaker.obj"
+".\Debug\KmcMakerDlg.obj"
+".\Debug\ResizingDialog.obj"
+".\Debug\ShadeButtonST.obj"
+".\Debug\StdAfx.obj"
+".\Debug\KmcMaker.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB3.tmp"
+<h3>Output Window</h3>
+Compiling...
+KmcMakerDlg.cpp
+Linking...
 
 
 
