@@ -90,10 +90,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\UILib\AutoCtrlSize.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\UILib\BCMenu.cpp
 # End Source File
 # Begin Source File
@@ -110,10 +106,6 @@ SOURCE=.\CheckBTGroup.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\UILib\DynamicLayoutExport.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\KmcMaker.cpp
 # End Source File
 # Begin Source File
@@ -126,23 +118,7 @@ SOURCE=.\KmcMakerDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\UILib\LayoutBase.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutControl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutPanel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutPanelFrame.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutSplit.cpp
+SOURCE=.\UILib\ResizingDialog.cpp
 # End Source File
 # Begin Source File
 
@@ -157,10 +133,6 @@ SOURCE=.\StdAfx.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\UILib\AutoCtrlSize.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\UILib\BCMenu.h
@@ -179,14 +151,6 @@ SOURCE=.\CheckBTGroup.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\UILib\DynamicLayoutExport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\DynamicLayoutShare.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\KmcMaker.h
 # End Source File
 # Begin Source File
@@ -195,23 +159,7 @@ SOURCE=.\KmcMakerDlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\UILib\LayoutBase.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutPanel.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutPanelFrame.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UILib\LayoutSplit.h
+SOURCE=.\UILib\ResizingDialog.h
 # End Source File
 # Begin Source File
 
