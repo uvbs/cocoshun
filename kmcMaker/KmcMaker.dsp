@@ -106,6 +106,10 @@ SOURCE=.\CheckBTGroup.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImportLyricDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\KmcMaker.cpp
 # End Source File
 # Begin Source File
@@ -148,6 +152,10 @@ SOURCE=.\UILib\CeXDib.h
 # Begin Source File
 
 SOURCE=.\CheckBTGroup.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImportLyricDlg.h
 # End Source File
 # Begin Source File
 
