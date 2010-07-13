@@ -183,21 +183,21 @@ void CResizingDialog::OnDestroy()
 {
 	// Save the size of the dialog box, so next time
 	// we'll start with this size
-	if(m_bRememberSize && m_bSizeChanged && m_old_cx && m_old_cy)
-		{
-		CRect rc;
-		GetWindowRect(&rc);
-		CString dialog_name;
-		GetDialogProfileEntry(dialog_name);
-
-		AfxGetApp()->WriteProfileInt(dialog_name,"CX",rc.Width());
-		AfxGetApp()->WriteProfileInt(dialog_name,"CY",rc.Height());
-		}
-
-	// Important: Reset the internal values in case of reuse of the dialog
-	// with out deleting.
-	m_minWidth = m_minHeight = m_old_cx = m_old_cy = 0;
-	m_bSizeChanged = FALSE;
+// 	if(m_bRememberSize && m_bSizeChanged && m_old_cx && m_old_cy)
+// 		{
+// 		CRect rc;
+// 		GetWindowRect(&rc);
+// 		CString dialog_name;
+// 		GetDialogProfileEntry(dialog_name);
+// 
+// 		AfxGetApp()->WriteProfileInt(dialog_name,"CX",rc.Width());
+// 		AfxGetApp()->WriteProfileInt(dialog_name,"CY",rc.Height());
+// 		}
+// 
+// 	// Important: Reset the internal values in case of reuse of the dialog
+// 	// with out deleting.
+// 	m_minWidth = m_minHeight = m_old_cx = m_old_cy = 0;
+// 	m_bSizeChanged = FALSE;
 
 	CDialog::OnDestroy();
 }
