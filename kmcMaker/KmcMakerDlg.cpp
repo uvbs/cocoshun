@@ -65,25 +65,27 @@ UINT CKmcMakerDlg::CheckBtnIDs[] =
 };
 
 CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
-: CDialog(CKmcMakerDlg::IDD, pParent)
+: CResizingDialog(CKmcMakerDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CKmcMakerDlg)
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	SetControlInfo(IDOK,				ANCHORE_RIGHT);
+	SetControlInfo(IDCANCEL,			ANCHORE_RIGHT);
+//	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CKmcMakerDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CKmcMakerDlg)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CKmcMakerDlg, CDialog)
+BEGIN_MESSAGE_MAP(CKmcMakerDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CKmcMakerDlg)
-	ON_WM_SYSCOMMAND()
-	ON_WM_PAINT()
+ 	ON_WM_SYSCOMMAND()
+ 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_CHECK_STEP1, OnCheckStep1)
 	ON_BN_CLICKED(IDC_CHECK_STEP2, OnCheckStep2)
@@ -96,7 +98,7 @@ END_MESSAGE_MAP()
 
 BOOL CKmcMakerDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CResizingDialog::OnInitDialog();
 
 	// Add "About..." menu item to system menu.
 
@@ -125,11 +127,11 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	m_CheckGroup.SubClassWindows(this,CheckBtnIDs,0);
 
 	//////////////////////////////////////////////////////////////////////////
-	m_DLayout.InitLayout( this );
-	m_DLayout.SetDialogMaxSize( 800,600 );
-	m_DLayout.SetDialogMinSize( 200,100 );
-	
-// 	m_DLayout.AddPanel("上","",1,1,1,1);
+// 	m_DLayout.InitLayout( this );
+// 	m_DLayout.SetDialogMaxSize( 800,600 );
+// 	m_DLayout.SetDialogMinSize( 200,100 );
+// 	
+//  	m_DLayout.AddPanel("上","",1,1,1,1);
 // 	m_DLayout.AddPanel("下","",0,1,1,1);
 // 	
 // 	m_DLayout.AddPanel("上右","上",1,1,1,1);
@@ -173,7 +175,7 @@ void CKmcMakerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 	else
 	{
-		CDialog::OnSysCommand(nID, lParam);
+		CResizingDialog::OnSysCommand(nID, lParam);
 	}
 }
 
@@ -202,7 +204,7 @@ void CKmcMakerDlg::OnPaint()
 	}
 	else
 	{
-		CDialog::OnPaint();
+		CResizingDialog::OnPaint();
 	}
 }
 
@@ -228,10 +230,10 @@ void CKmcMakerDlg::OnCheckStep3()
 	m_CheckGroup.SetCheck(2);		
 }
 
-LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
-{
-	// TODO: Add your specialized code here and/or call the base class
-	m_DLayout.FilterDynamicLayoutMessage(message,wParam,lParam);
-	
-	return CDialog::WindowProc(message, wParam, lParam); 
-}
+// LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
+// {
+// 	// TODO: Add your specialized code here and/or call the base class
+// 	m_DLayout.FilterDynamicLayoutMessage(message,wParam,lParam);
+// 	
+// 	return CDialog::WindowProc(message, wParam, lParam); 
+// }

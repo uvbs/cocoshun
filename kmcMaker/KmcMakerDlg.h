@@ -12,9 +12,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // CKmcMakerDlg dialog
 #include "CheckBTGroup.h"
-#include "./UILib/DynamicLayoutExport.h"
+#include "./UILib/ResizingDialog.h"
 
-class CKmcMakerDlg : public CDialog
+class CKmcMakerDlg : public CResizingDialog
 {
 // Construction
 public:
@@ -29,7 +29,7 @@ public:
 	//{{AFX_VIRTUAL(CKmcMakerDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+// 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -39,9 +39,9 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CKmcMakerDlg)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
+ 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+ 	afx_msg void OnPaint();
+ 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnCheckStep1();
 	afx_msg void OnCheckStep2();
 	afx_msg void OnCheckStep3();
@@ -50,7 +50,6 @@ protected:
 private:
 	static UINT CheckBtnIDs[];
 	CCheckBTGroup m_CheckGroup;
-	DynamicLayout::CDynamicLayout m_DLayout;
 };
 
 //{{AFX_INSERT_LOCATION}}
