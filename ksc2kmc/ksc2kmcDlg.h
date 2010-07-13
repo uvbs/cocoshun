@@ -5,9 +5,6 @@
 #define AFX_KSC2KMCDLG_H__9056942F_AF69_441E_AD88_A727870A2912__INCLUDED_
 
 #include "FileFinder.h"	// Added by ClassView
-#include "TextProgressCtrl.h"
-//#include "FlatEdit.h"
-
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
@@ -25,15 +22,13 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CKsc2kmcDlg)
 	enum { IDD = IDD_KSC2KMC_DIALOG };
-	CEdit			m_EditSrc;
-	CTextProgressCtrl	m_Progress;
+	CProgressCtrl	m_Progress;
 	CButton	m_BtnStop;
 	CButton	m_BtnCancel;
 	CButton	m_BtnSearch;
 	CString	m_srcPath;
 	CString	m_tagPath;
 	CString	m_StaticStatus;
-	CString	m_Author;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -58,7 +53,6 @@ protected:
 	afx_msg void OnBtnStop();
 	virtual void OnCancel();
 	afx_msg void OnUpdateMyData(WPARAM wp, LPARAM lp); 
-	afx_msg void OnStaticIcon();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

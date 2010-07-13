@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x804 /d "NDEBUG" /d "_AFXDLL"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 shlwapi.lib winmm.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 shlwapi.lib /nologo /subsystem:windows /machine:I386
 
 !ELSEIF  "$(CFG)" == "ksc2kmc - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 shlwapi.lib winmm.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 shlwapi.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 
 !ENDIF 
 
@@ -93,10 +93,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\FileFinder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\FlatEdit.cpp
 # End Source File
 # Begin Source File
 
@@ -127,14 +123,6 @@ SOURCE=.\ShellUtil.cpp
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
-# Begin Source File
-
-SOURCE=.\TextProgressCtrl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\XString.Cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -142,10 +130,6 @@ SOURCE=.\XString.Cpp
 # Begin Source File
 
 SOURCE=.\FileFinder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\FlatEdit.h
 # End Source File
 # Begin Source File
 
@@ -175,22 +159,10 @@ SOURCE=.\ShellUtil.h
 
 SOURCE=.\StdAfx.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\TextProgressCtrl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\XString.H
-# End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-# Begin Source File
-
-SOURCE=.\res\cursor1.cur
-# End Source File
 # Begin Source File
 
 SOURCE=.\res\ksc2kmc.ico
