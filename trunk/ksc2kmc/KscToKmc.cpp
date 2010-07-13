@@ -16,23 +16,23 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-byte CKscToKmc::UTF8_BOM[]= {0xEF, 0xBB, 0xBF, 0};
 
-CKscToKmc::CKscToKmc(CString Author)
+CKscToKmc::CKscToKmc()
 {
-	m_Author = Author;
 	XMLHeader	= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-	KMCStart	= "<kmc ";
+	KMCStart	= "<kmc\n";
+	XMLClose	= ">\n";
 	KMCEnd		= "</kmc>\n";
-// 	Karaoke_AnimateBorderColor		=	"karaoke.AnimateBorderColor";
-// 	Karaoke_AnimateColor			=	"karaoke.AnimateColor";
-// 	Karaoke_NormalBorderColor		=	"karaoke.NormalBorderColor";
-// 	Karaoke_NormalColor				=	"karaoke.NormalColor";
-// 	Karaoke_AnimateBorderThickness	=	"karaoke.AnimateBorderThickness";
-// 	Karaoke_NormalBorderThickness	=	"karaoke.NormalBorderThickness";
+	
+	Karaoke_AnimateBorderColor		=	"karaoke.AnimateBorderColor";
+	Karaoke_AnimateColor			=	"karaoke.AnimateColor";
+	Karaoke_NormalBorderColor		=	"karaoke.NormalBorderColor";
+	Karaoke_NormalColor				=	"karaoke.NormalColor";
+	Karaoke_AnimateBorderThickness	=	"karaoke.AnimateBorderThickness";
+	Karaoke_NormalBorderThickness	=	"karaoke.NormalBorderThickness";
 	Karaoke_TimeOffset				=	"karaoke.TimeOffset";
-// 	Karaoke_Font					=	"karaoke.Font(";
-	Karaoke_Artist					=	"karaoke.tag('¸èÊÖ'";
+	Karaoke_Font					=	"karaoke.Font(";
+	Karaoke_Artist					=	"karaoke.tag('¸èÊÖ',";
 	Karaoke_Name					=	"karaoke.tag('¸èÃû'";
 	Karaoke_Add						=	"karaoke.add('";	
 }
@@ -56,110 +56,112 @@ void CKscToKmc::convert(CString srcFile, CString tagFile)
 		return;
 	}
 	
-	XString Title;
-	XString Artist;
-	XString Album;
-	XString Offset;
-// 	XString Font;
-// 	XString Align;
-// 	XString Margin;
-// 	XString Leading;
-// 	XString Normal1;
-// 	XString Normal2;
-// 	XString Normal3;
-// 	XString Animate1;
-// 	XString Animate2;
-// 	XString Animate3;
-	XString Lyric;
+	//write KMC header
+	byte utf8_Bom[] = {0xEF, 0xBB, 0xBF};
+	fw.Write(utf8_Bom,3);
+	fw.WriteString(XMLHeader);
+	fw.WriteString(KMCStart);
 	
-	// get file buffer
-//  	long flen = fr.GetLength();
-//  	char *fbuf = new char[flen+1];
-//  	fr.ReadHuge(fbuf,flen);
-//  	fbuf[flen] = '\0';
-// 	fr.SeekToBegin();
-
-	// parse lines
-	XString Line;
-	char LINESP[] = "\n";
+	CString Title;
+	CString Artist;
+	CString Album;
+	CString Author;
+	CString Offset;
+	CString Font;
+	CString Align;
+	CString Margin;
+	CString Leading;
+	CString Normal1;
+	CString Normal2;
+	CString Normal3;
+	CString Animate1;
+	CString Animate2;
+	CString Animate3;
+	CString Lyric;
+	
+	//parse KSC file
+	CString Line;
+	BOOL bStartAdd = FALSE;
 	while(fr.ReadString(Line))
 	{
-		if( Line.Find(Karaoke_Name) == 0)
+		//if(!bStartAdd)
 		{
-			Title = GetXStringElement(Line,'\'',3);
-			continue;
+			if(StartWith(Line,Karaoke_Name))
+			{
+				int pos = Line.ReverseFind(',');
+				Title = Line.Mid(pos+3,Line.GetLength()- pos -6);
+			}
+			
+			if(StartWith(Line,Karaoke_Artist))
+			{
+				int pos = Line.ReverseFind(',');
+				Artist = Line.Mid(pos+2,Line.GetLength()- pos -3);
+			}
+			
+			if(StartWith(Line,Karaoke_TimeOffset))
+			{
+				int pos = Line.ReverseFind('=') + 1;
+				int count = Line.GetLength()- pos -1;
+				Offset = Line.Mid(pos,count);
+				Offset.TrimLeft();
+				Offset.TrimRight();
+			}
+			
+			if(StartWith(Line,Karaoke_Font))
+			{
+				int pos = Line.Find('(') + 1;
+				int count = Line.GetLength() - pos - 2;
+				Font = Line.Mid(pos, count);
+				Font.Replace('\'',' ');
+			}
+			
+			//color 
+			if(StartWith(Line,Karaoke_AnimateBorderColor))
+			{
+				Animate1 = RgbToHex(Line);
+			}
+			if(StartWith(Line, Karaoke_AnimateColor))
+			{
+				Animate2 = RgbToHex(Line);
+			}
+			
+			if(StartWith(Line, Karaoke_AnimateBorderThickness))
+			{
+				int pos = Line.ReverseFind('=') + 1 ;
+				Animate3 = Line.Mid(pos, Line.GetLength() - pos -1);
+			}
+			
+			if(StartWith(Line, Karaoke_NormalBorderColor	))
+			{
+				
+				Normal1 = RgbToHex(Line);
+			}
+			if(StartWith(Line, Karaoke_NormalColor))
+			{
+				Normal2 = RgbToHex(Line);
+			}
+			
+			if(StartWith(Line, Karaoke_NormalBorderThickness))
+			{
+				int pos = Line.ReverseFind('=') + 1 ;
+				Normal3 = Line.Mid(pos, Line.GetLength() - pos -1);
+			}
+			
+			
+			if(StartWith(Line,Karaoke_Add))
+			{
+				Lyric += GetAddLine(Line, Lyric.IsEmpty());
+// 				bStartAdd = TRUE;
+// 				continue;
+			}
 		}
 		
-		if( Line.Find(Karaoke_Artist) == 0)
-		{
-			Artist = GetXStringElement(Line,'\'',3);
-			continue;
-		}
-		
-		if( Line.Find(Karaoke_TimeOffset) == 0 )
-		{
-			Offset = Line.FromTo(Line.ReverseFind('=') + 1,Line.ReverseFind(';') -1 );
-			Offset = Offset.Trim();
-			continue;
-		}
-		
-// 		if(Line.Find(Karaoke_Font) == 0 )
+// 		if(bStartAdd )
 // 		{
-// 			Font = Line.FromTo(Line.Find('(')+1,Line.ReverseFind(')')-1);
-// 			Font.ReplaceAll(' ','\'');
-// 			continue;
+// 			if(!Line.IsEmpty())
+// 				Lyric += GetAddLine(Line, FALSE);
 // 		}
-		
-		//color 
-// 		if(Line.Find(Karaoke_AnimateBorderColor) == 0 )
-// 		{
-// 			Animate1 = RgbToHex(Line);
-// 			continue;
-// 		}
-// 		if(Line.Find(Karaoke_AnimateColor) == 0)
-// 		{
-// 			Animate2 = RgbToHex(Line);
-// 			continue;
-// 		}
-// 		
-// 		if(Line.Find(Karaoke_AnimateBorderThickness) == 0)
-// 		{
-// 			Animate3 = Line.FromTo(Line.ReverseFind('=') + 1,Line.ReverseFind(';') -1 );
-// 			Animate3 = Animate3.Trim();
-// 			continue;
-// 		}
-		
-// 		if(Line.Find(Karaoke_NormalBorderColor) == 0 )
-// 		{
-// 			Normal1 = RgbToHex(Line);
-// 			continue;
-// 		}
-// 		if(Line.Find(Karaoke_NormalColor) == 0 )
-// 		{
-// 			Normal2 = RgbToHex(Line);
-// 			continue;
-// 		}
-// 		
-// 		if(Line.Find(Karaoke_NormalBorderThickness) == 0 )
-// 		{
-// 			Normal3 = Line.FromTo(Line.ReverseFind('=') + 1,Line.ReverseFind(';') -1 );
-// 			Normal3 = Normal3.Trim();
-// 			continue;
-// 		}
-		
-		if(Line.Find(Karaoke_Add) == 0 )
-		{
-			Lyric += GetLyric(Line);
-			continue;
-		}
 	}
-
-	CString KMC;
-	//KMC header
-	fw.WriteString(UTF8_BOM + XMLHeader +  KMCStart);
-// 	KMC += UTF8_BOM;
-// 	KMC += XMLHeader;
-// 	KMC += KMCStart;
 	
 	if(Title.IsEmpty())
 	{
@@ -168,90 +170,147 @@ void CKscToKmc::convert(CString srcFile, CString tagFile)
 	}
 
 	if(!Title.IsEmpty())
-		KMC += "ti=\"" + Title + "\" ";
+		fw.WriteString(GBToUTF8("  title=\"" + Title + "\"\n"));
 
-	KMC += "ar=\"\" ";
-	KMC += "al=\"\" ";
-	KMC += "by=\"" + m_Author + "\"";
-	
+	fw.WriteString(GBToUTF8("  artist=\"\"\n"));
+	fw.WriteString(GBToUTF8("  album=\"\"\n"));
+	fw.WriteString(GBToUTF8("  author=\"\"\n"));
+
 	if(!Offset.IsEmpty())
-		KMC += "offset=\"" + Offset + "\" ";
+		fw.WriteString(GBToUTF8("  offset=\"" + Offset + "\"\n"));
 
-// 	if(!Font.IsEmpty())
-// 		KMC += "  font=\"" + Font + ", false\"\n";
+	if(!Font.IsEmpty())
+		fw.WriteString(GBToUTF8("  font=\"" + Font + ",false\"\n"));
 
-// 	KMC += "  align=\"left,right\"\n";
-// 	KMC += "  margin=\"5\" \n" ;
-// 	KMC += "  leading=\"5\" \n" ;
+	fw.WriteString(GBToUTF8("  align=\"left,right\"\n") );
+	fw.WriteString(GBToUTF8("  margin=\"5\" \n" ));
+	fw.WriteString(GBToUTF8("  leading=\"5\" \n" ));
 
-// 	if(!Normal1.IsEmpty() || !Normal2.IsEmpty() || !Normal3.IsEmpty())
-// 		KMC += "  normal=\"" + Normal1 + "," + Normal2 + "," + Normal3 + "\"\n";
-// 
-// 	if(!Animate1.IsEmpty() || !Animate2.IsEmpty() || !Animate3.IsEmpty())
-// 		KMC += "  animate=\"" + Animate1 + "," + Animate2 + "," + Animate3 + "\"\n";
-	KMC += ">\n";
+	if(!Normal1.IsEmpty() || !Normal2.IsEmpty() || !Normal3.IsEmpty())
+		fw.WriteString(GBToUTF8("  normal=\"" + Normal1 + "," + Normal2 + "," + Normal3 + "\"\n"));
 
-	KMC += Lyric;
-	KMC += KMCEnd;
+	if(!Animate1.IsEmpty() || !Animate2.IsEmpty() || !Animate3.IsEmpty())
+		fw.WriteString(GBToUTF8("  animate=\"" + Animate1 + "," + Animate2 + "," + Animate3 + "\"\n"));
+	fw.WriteString(GBToUTF8(">\n\n" ));
 
-	fw.WriteString(GBToUTF8(KMC));
+	fw.WriteString(Lyric);
+	fw.WriteString(KMCEnd);	
 
-	//release memory
-// 	if(fbuf != NULL)
-// 	{
-// 		delete []fbuf;
-// 		fbuf = NULL;
-// 	}
-
-	//close file
 	fr.Close();
 	fw.Close();
 }
 
-
-CString CKscToKmc::RgbToHex(XString &Line)
+BOOL CKscToKmc::StartWith(CString &string, CString &subString)
 {
-	XString &Values = Line.FromTo(Line.ReverseFind('(') + 1,Line.ReverseFind(')') -1);
-	Values.SetSeparator(',');
-	CString strResult="#";
-	XString color;
-	int n = Values.Count(',') + 1;
+	return string.Find(subString) == 0;
+}
 
-	for(int i=0;i<n;i++)
+int  CKscToKmc::Split(const CString	&s, CStringArray &sa, char chSplitter)
+{
+	int   nLen=s.GetLength(),   nLastPos,   nPos; 
+	bool   bContinue; 
+	
+	sa.RemoveAll(); 
+	nLastPos=0; 
+	do 
+	{ 
+		bContinue=false; 
+		nPos   =   s.Find(chSplitter,   nLastPos); 
+		if   (-1!=nPos) 
+		{ 
+			sa.Add(s.Mid(nLastPos,   nPos-nLastPos)); 
+			nLastPos=nPos+1; 
+			if   (nLastPos   !=   nLen)   bContinue=true; 
+		} 
+	}   while   (bContinue); 
+	
+	if   (nLastPos   !=   nLen) 
+		sa.Add(s.Mid(nLastPos,   nLen-nLastPos)); 
+}
+
+CString CKscToKmc::RgbToHex(CString &Line)
+{
+	int pos = Line.ReverseFind('(') + 1;
+	int count = Line.GetLength() - pos - 2;
+	CString Values = Line.Mid(pos,count);
+	CStringArray Arys;
+	Split(Values,Arys,',');
+	CString strResult="#";
+	for(int i=0;i<Arys.GetSize();i++)
 	{
-		color.Format("%.2X",Values.Element(i).Int());
+		CString color = Arys.GetAt(i);
+		color.TrimLeft();
+		color.TrimRight();
+		int v = atoi(color);
+		color.Format("%.2X",v);
 		strResult += color;
 	}
-//	Values.RestoreSeparator();
+	
 	return strResult;
 }
 
-CString CKscToKmc::GetLyric(XString &Line)
+CString CKscToKmc::GetAddLine(CString &Line,BOOL bFirst)
 {
 	if(Line.GetLength() < 2) 
 		return "";
 	
-	Line.SetSeparator('\'');
+	int len = Line.GetLength();
+	CStringArray Arys;
+	int pos1;
+	int pos2;
+	TCHAR cFlag = '\'';
+	for(;;)
+	{
+		pos1 = Line.Find(cFlag);
+		pos2 = Line.Find(cFlag, pos1 + 1);
+		if(pos1 == -1 || pos2 ==-1 )
+			break;
 
+		CString seg = Line.Mid(pos1,pos2-pos1);
+		Arys.Add(seg);
+		Line = Line.Mid(pos2+1);
+	}
+
+ 	CString addResult;
 	CString strResult = "  <l t=\"";
+	
+	CString s1 = Arys.GetAt(0);
+	s1.TrimLeft("'");
+	s1.TrimRight("'");
+	CString s2 = Arys.GetAt(1);
+	s2.TrimLeft("'");
+	s2.TrimRight("'");
+	CString s3 = Arys.GetAt(2);
+	s3.TrimLeft("'");
+	s3.TrimRight("'");
 
-	strResult += Line.Element(1) + ',';
-	strResult += Line.Element(3) + ',';
-	strResult += Line.Element(7) + '\"';
-// 	if(bFirst)
-// 	{
-// 		strResult+= " sec3=\"¡ñ\"";
-// 	}
-	strResult += ">" + Line.Element(5)  +"</l>\n";
+	
+	strResult+=s1+',';
+	strResult+=s2+',';
+	CString s4;
+	for(int i=3;i<Arys.GetSize();i++)
+	{
+		s4 = Arys.GetAt(3);
+		s4.TrimLeft("'");
+		s4.TrimRight("'");
+	}
+	strResult+=s4;
+	if(bFirst)
+	{
+		strResult+= "\" sec3=\"¡ñ";
+	}
+	strResult+="\">";
+	strResult+=s3 + "</l>\n";
 
-//	Line.RestoreSeparator();
 
+ 	strResult = GBToUTF8(strResult.GetBuffer(0));
+ 	
 	return strResult;
 }
 
 CString CKscToKmc::GBToUTF8(const char* str)
 {
-	//std::string result;
+	std::string result;
 	WCHAR *strSrc;
 	TCHAR *szRes;
 	
@@ -265,20 +324,13 @@ CString CKscToKmc::GBToUTF8(const char* str)
 	szRes = new TCHAR[i+1];
 	int j=WideCharToMultiByte(CP_UTF8, 0, strSrc, -1, szRes, i, NULL, NULL);
 	
-	//result = szRes;
-
-	CString string = szRes;
+	result = szRes;
 	delete []strSrc;
 	delete []szRes;
 
-//	string.Format("%s",result.c_str());
+	CString string ;
+	string.Format("%s",result.c_str());
 	return string;
 }
 
-XString CKscToKmc::GetXStringElement(XString &xString, char Spliter, int index)
-{
-	xString.SetSeparator(Spliter);
-	XString string = xString.Element(index);
-//	xString.RestoreSeparator();	
-	return string;
-}
+

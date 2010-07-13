@@ -73,50 +73,44 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "res\\ksc2kmc.ico"
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 239, 52
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "关于 ksc2kmc"
 FONT 9, "宋体"
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,7,19,21,21
-    LTEXT           "KSC To KMC  批量转换器",IDC_STATIC,40,10,119,8,
-                    SS_NOPREFIX
-    LTEXT           "版权所有 (C) 2010",IDC_STATIC,36,27,119,8
-    DEFPUSHBUTTON   "确定",IDOK,182,7,50,14,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "ksc2kmc 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2010",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
 END
 
-IDD_KSC2KMC_DIALOG DIALOGEX 0, 0, 301, 138
-STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
-    WS_SYSMENU
+IDD_KSC2KMC_DIALOG DIALOGEX 0, 0, 298, 121
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "KSC to KMC 批量转换器"
+CAPTION "Ksc to Kmc batch converter"
 FONT 9, "宋体"
 BEGIN
     EDITTEXT        IDC_EDIT_SOURCE,59,22,179,13,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_TARGET,59,40,179,13,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_AUTHOR,59,58,179,13,ES_AUTOHSCROLL
-    CONTROL         "KMC",IDC_RADIO_KMC,"Button",BS_AUTORADIOBUTTON,59,76,28,
+    CONTROL         "KMC",IDC_RADIO_KMC,"Button",BS_AUTORADIOBUTTON,60,60,28,
                     10
-    CONTROL         "XML",IDC_RADIO_XML,"Button",BS_AUTORADIOBUTTON,97,76,28,
+    CONTROL         "XML",IDC_RADIO_XML,"Button",BS_AUTORADIOBUTTON,97,60,28,
                     10
     CONTROL         "打开目标目录",IDC_CHECK_OPENTAG,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,174,76,64,10
-    DEFPUSHBUTTON   "开始(&S)",ID_BTN_SEARCH,59,110,50,14
-    PUSHBUTTON      "停止(&T)",ID_BTN_STOP,123,110,50,14
-    PUSHBUTTON      "退出(&X)",IDCANCEL,187,110,50,14
-    GROUPBOX        "转换",IDC_STATIC,7,7,287,124
-    LTEXT           "KSC路径：",IDC_STATIC,18,26,36,8
-    LTEXT           "KMC路径：",IDC_STATIC,18,43,36,8
-    PUSHBUTTON      "浏览",IDC_BUTTON_BROWSE_SRC,242,22,49,14
-    PUSHBUTTON      "浏览",IDC_BUTTON_BROWSE_TAG,242,41,49,14
-    LTEXT           "文件后缀：",IDC_STATIC,14,77,40,8
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    60,90,178,14,WS_EX_TRANSPARENT
-    CONTROL         "",IDC_STATIC_STATUS,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,245,92,42,12
-    LTEXT           "转换进度：",IDC_STATIC,14,93,40,8
-    LTEXT           "作者：",IDC_STATIC,30,60,25,8
-    ICON            IDR_MAINFRAME,IDC_STATIC_ICON,32,105,20,20
+                    BS_AUTOCHECKBOX | WS_TABSTOP,174,60,64,10
+    PUSHBUTTON      "开始(&S)",ID_BTN_SEARCH,59,93,50,14
+    PUSHBUTTON      "停止(&T)",ID_BTN_STOP,123,93,50,14
+    PUSHBUTTON      "退出(&X)",IDCANCEL,187,93,50,14
+    GROUPBOX        "转换设置",IDC_STATIC,7,7,284,104
+    LTEXT           "Ksc路径：",IDC_STATIC,18,24,36,8
+    LTEXT           "Kmc路径：",IDC_STATIC,18,42,36,8
+    PUSHBUTTON      "浏览",IDC_BUTTON_BROWSE_SRC,241,22,42,14
+    PUSHBUTTON      "浏览",IDC_BUTTON_BROWSE_TAG,241,37,42,14
+    LTEXT           "文件后缀：",IDC_STATIC,14,60,40,8
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",0x0,60,73,
+                    178,14
+    LTEXT           "",IDC_STATIC_STATUS,243,73,39,12
+    LTEXT           "转换进度：",IDC_STATIC,14,76,40,8
 END
 
 
@@ -141,20 +135,17 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "080404b0"
+        BLOCK "080404B0"
         BEGIN
-            VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", " ksc2kmc 批量转换器\0"
+            VALUE "FileDescription", "ksc2kmc Microsoft 基础类应用程序\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "ksc2kmc\0"
             VALUE "LegalCopyright", "版权所有 (C) 2010\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "ksc2kmc.exe\0"
-            VALUE "PrivateBuild", "\0"
+            VALUE "OriginalFilename", "ksc2kmc.EXE\0"
             VALUE "ProductName", "ksc2kmc 应用程序\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
-            VALUE "SpecialBuild", "\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -177,17 +168,17 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 232
+        RIGHTMARGIN, 228
         TOPMARGIN, 7
-        BOTTOMMARGIN, 45
+        BOTTOMMARGIN, 48
     END
 
     IDD_KSC2KMC_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 294
+        RIGHTMARGIN, 291
         TOPMARGIN, 7
-        BOTTOMMARGIN, 131
+        BOTTOMMARGIN, 114
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -199,11 +190,6 @@ END
 //
 
 1                       24      MOVEABLE PURE   "res\\Master.manifest"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Cursor
-//
 
 /////////////////////////////////////////////////////////////////////////////
 //

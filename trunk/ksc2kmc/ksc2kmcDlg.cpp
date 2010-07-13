@@ -7,7 +7,6 @@
 #include "ShellUtil.h"
 #include "KscToKmc.h"
 #include <direct.h>
-#include <mmsystem.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -67,10 +66,7 @@ CKsc2kmcDlg::CKsc2kmcDlg(CWnd* pParent /*=NULL*/)
 : CDialog(CKsc2kmcDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CKsc2kmcDlg)
-	m_srcPath = _T("");
-	m_tagPath = _T("");
 	m_StaticStatus = _T("");
-	m_Author = _T("");
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -83,7 +79,6 @@ void CKsc2kmcDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CKsc2kmcDlg)
-	DDX_Control(pDX, IDC_EDIT_SOURCE, m_EditSrc);
 	DDX_Control(pDX, IDC_PROGRESS, m_Progress);
 	DDX_Control(pDX, ID_BTN_STOP, m_BtnStop);
 	DDX_Control(pDX, IDCANCEL, m_BtnCancel);
@@ -91,7 +86,6 @@ void CKsc2kmcDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_SOURCE, m_srcPath);
 	DDX_Text(pDX, IDC_EDIT_TARGET, m_tagPath);
 	DDX_Text(pDX, IDC_STATIC_STATUS, m_StaticStatus);
-	DDX_Text(pDX, IDC_EDIT_AUTHOR, m_Author);
 	//}}AFX_DATA_MAP
 }
 
@@ -104,8 +98,8 @@ ON_BN_CLICKED(IDC_BUTTON_BROWSE_SRC, OnButtonBrowseSrc)
 ON_BN_CLICKED(IDC_BUTTON_BROWSE_TAG, OnButtonBrowseTag)
 	ON_BN_CLICKED(ID_BTN_SEARCH, OnBtnSearch)
 	ON_BN_CLICKED(ID_BTN_STOP, OnBtnStop)
+
 	ON_REGISTERED_MESSAGE(WM_MYUPDATEDATA,OnUpdateMyData)
-	ON_BN_CLICKED(IDC_STATIC_ICON, OnStaticIcon)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -258,23 +252,12 @@ DWORD WINAPI CKsc2kmcDlg::ConvertProc(LPVOID lpParameter)
 	if(FileCount > 0)
 		::mkdir(pDlg->m_tagPath);
 
-	pDlg->m_Progress.SetRange(0,100);
+	pDlg->m_Progress.SetRange(0,99);
 
-	CKscToKmc converter(pDlg->m_Author);
-	DWORD StartTime = timeGetTime();
-	CString Percent;
-
-	int i = 0;
-	short pos = 0;
-	for(i=0;i<FileCount && pDlg->m_bProcess && !pDlg->m_bClose;i++)
+	CKscToKmc converter;
+	for(int i=0;i<FileCount && pDlg->m_bProcess && !pDlg->m_bClose;i++)
 	{
 		CPath path = pDlg->m_fileFinder.GetFilePath(i);
-
-		if(path.IsLocalPath())
-		{
-			CString p = path.GetFileName();
-		}
-
 		CString srcFile = path.GetPath();
 		CString tagFile = path.GetFileName();
 		tagFile = tagFile.Mid(0,tagFile.GetLength()-3);
@@ -285,32 +268,17 @@ DWORD WINAPI CKsc2kmcDlg::ConvertProc(LPVOID lpParameter)
 		{
 			tagFile = pDlg->m_tagPath + "\\" + tagFile + "xml";
 		}
-
-		//start convert
 		converter.convert(srcFile,tagFile);
 
-		pos = (short)(( (i+1) /1.0 / FileCount) * 100);
-
-		pDlg->m_Progress.SetPos(pos);
-		Percent.Format("%d/%d  %d%% ", i+1, FileCount,pos);
-		pDlg->m_Progress.SetWindowText(Percent);
+		short pos = (short)((i /1.0 / FileCount) * 100);
 
 		//set convert status
-		DWORD UsedTime = timeGetTime() - StartTime;
-		pDlg->m_StaticStatus.Format("%dºÁÃë", UsedTime);
+		pDlg->m_StaticStatus.Format("%d/%d", i+1, FileCount );
 		pDlg->SendMessage(WM_MYUPDATEDATA,FALSE);
-	}
 
-	if( i < FileCount)
-	{
-		Percent.Format("%d/%d  %d%% Í£Ö¹", i+1 , FileCount,pos);
-		pDlg->m_Progress.SetWindowText(Percent);
-	}else
-	{
-		Percent.Format("%d/%d  %d%% Íê³É", i, FileCount,pos);
-		pDlg->m_Progress.SetWindowText(Percent);
+		pDlg->m_Progress.SetPos(pos);
 	}
-
+	
  	pDlg->m_BtnSearch.EnableWindow(TRUE);
  	pDlg->m_BtnStop.EnableWindow(FALSE);
  	pDlg->m_bProcess = FALSE;
@@ -344,7 +312,4 @@ void CKsc2kmcDlg::OnUpdateMyData(WPARAM wp,LPARAM lp)
     UpdateData(wp);
 }
 
-void CKsc2kmcDlg::OnStaticIcon() 
-{
-	MessageBox("x")	;
-}
+
