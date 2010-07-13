@@ -2,20 +2,22 @@
 
 [General Info]
 Version=1
-LastClass=CKmcMakerDlg
+LastClass=CImportLyricDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
 
-ClassCount=3
+ClassCount=4
 Class1=CKmcMakerApp
 Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
-ResourceCount=3
+ResourceCount=4
 Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
 Resource3=IDD_KMCMAKER_DIALOG
+Class4=CImportLyricDlg
+Resource4=IDD_IMPORTLYRICDLG_DIALOG
 
 [CLS:CKmcMakerApp]
 Type=0
@@ -50,11 +52,26 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_KMCMAKER_DIALOG]
 Type=1
 Class=CKmcMakerDlg
-ControlCount=6
+ControlCount=7
 Control1=IDOK,button,1342242817
 Control2=IDCANCEL,button,1342242816
 Control3=IDC_CHECK_STEP1,button,1342246915
 Control4=IDC_CHECK_STEP2,button,1342246915
 Control5=IDC_CHECK_STEP3,button,1342246915
 Control6=IDC_STATIC,static,1342181383
+Control7=IDC_DLG_AREA,button,1342177287
+
+[DLG:IDD_IMPORTLYRICDLG_DIALOG]
+Type=1
+Class=CImportLyricDlg
+ControlCount=2
+Control1=IDOK,button,1342242817
+Control2=IDCANCEL,button,1342242816
+
+[CLS:CImportLyricDlg]
+Type=0
+HeaderFile=ImportLyricDlg.h
+ImplementationFile=ImportLyricDlg.cpp
+BaseClass=CDialog
+Filter=D
 

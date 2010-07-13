@@ -13,6 +13,7 @@
 // CKmcMakerDlg dialog
 #include "CheckBTGroup.h"
 #include "./UILib/ResizingDialog.h"
+#include "ImportLyricDlg.h"
 
 class CKmcMakerDlg : public CResizingDialog
 {
@@ -50,6 +51,8 @@ protected:
 private:
 	static UINT CheckBtnIDs[];
 	CCheckBTGroup m_CheckGroup;
+
+	CImportLyricDlg ImportLyricDlg;
 };
 
 //{{AFX_INSERT_LOCATION}}
