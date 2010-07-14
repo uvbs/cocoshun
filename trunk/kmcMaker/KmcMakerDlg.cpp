@@ -17,19 +17,19 @@ class CAboutDlg : public CDialog
 {
 public:
 	CAboutDlg();
-
-// Dialog Data
+	
+	// Dialog Data
 	//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	//}}AFX_DATA
-
+	
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
-
-// Implementation
+	
+	// Implementation
 protected:
 	//{{AFX_MSG(CAboutDlg)
 	//}}AFX_MSG
@@ -50,20 +50,13 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CAboutDlg)
+// No message handlers
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CKmcMakerDlg dialog
-UINT CKmcMakerDlg::CheckBtnIDs[] = 
-{
-	IDC_CHECK_STEP1,
-	IDC_CHECK_STEP2,
-	IDC_CHECK_STEP3,
-};
-
 CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 : CResizingDialog(CKmcMakerDlg::IDD, pParent)
 {
@@ -72,7 +65,7 @@ CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	SetControlInfo(IDOK,				ANCHORE_RIGHT);
 	SetControlInfo(IDCANCEL,			ANCHORE_RIGHT);
-//	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CKmcMakerDlg::DoDataExchange(CDataExchange* pDX)
@@ -84,8 +77,8 @@ void CKmcMakerDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CKmcMakerDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CKmcMakerDlg)
- 	ON_WM_SYSCOMMAND()
- 	ON_WM_PAINT()
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_CHECK_STEP1, OnCheckStep1)
 	ON_BN_CLICKED(IDC_CHECK_STEP2, OnCheckStep2)
@@ -99,13 +92,13 @@ END_MESSAGE_MAP()
 BOOL CKmcMakerDlg::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
-
+	
 	// Add "About..." menu item to system menu.
-
+	
 	// IDM_ABOUTBOX must be in the system command range.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
-
+	
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != NULL)
 	{
@@ -117,60 +110,37 @@ BOOL CKmcMakerDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
-
+	
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
 	// TODO: Add extra initialization here
-	m_CheckGroup.SubClassWindows(this,CheckBtnIDs,0);
+	static UINT CheckBtnIDs[] = 
+	{
+		IDC_CHECK_STEP1,
+		IDC_CHECK_STEP2,
+		IDC_CHECK_STEP3,
+	};
 
-	//////////////////////////////////////////////////////////////////////////
-// 	m_DLayout.InitLayout( this );
-// 	m_DLayout.SetDialogMaxSize( 800,600 );
-// 	m_DLayout.SetDialogMinSize( 200,100 );
-// 	
-//  	m_DLayout.AddPanel("上","",1,1,1,1);
-// 	m_DLayout.AddPanel("下","",0,1,1,1);
-// 	
-// 	m_DLayout.AddPanel("上右","上",1,1,1,1);
-// 	m_DLayout.AddControl(IDC_LIST_LIST,"上右",1,1,1,1);
-// 	m_DLayout.AddPanel("上右下","上右",0,1,1,0);
-// 	m_DLayout.AddControl(IDC_BTN_MODAL,"上右下",1,1,1,0);
-// 	m_DLayout.AddControl(IDC_BTN_MODALNESS,"上右下",1,1,1,0);
-// 	m_DLayout.AddControl(IDOK,"上右下",1,1,1,0);
-// 	
-// 	m_DLayout.AddPanel("上左","上",1,1,1,0);
-// 	m_DLayout.AddControl(IDC_TREE1,"上左",1,1,1,1);
-// 	
-// 	m_DLayout.AddPanel("下左","下",1,1,1,0);
-// 	m_DLayout.AddControl(IDC_LIST2,"下左",1,1,1,1);
-// 	m_DLayout.AddPanel("下右","下",1,1,1,1);	
-// 	m_DLayout.AddControl(IDC_EDIT1,"下右",1,1,1,1);
-// 	m_DLayout.AddControl(IDC_STATIC_COMMAND,"下右",1,0,1,0);
-// 	m_DLayout.AddControl(IDC_EDIT2,"下右",1,0,1,1);
-	
-// 	m_DLayout.SetBkColor( "上",    RGB(160,160,255));
-// 	m_DLayout.SetBkColor( "上右",  RGB(128,128,255));
-// 	m_DLayout.SetBkColor("上右下", RGB(128,255,128));
-// 	
-// 	//m_DLayout.UpdateLayout();
-// 	m_DLayout.ShowPanel("",TRUE);
-// 	m_DLayout.SetSplit("");
-// 	m_DLayout.SetSplit("上");
-// 	m_DLayout.SetSplit("下" );
-	
-	//////////////////////////////////////////////////////////////////////////
-	
+	static UINT DlgPageIDs[] = 
+	{
+		IDD_IMPORTLYRICDLG_DIALOG,
+		IDD_MAKELYRICDLG_DIALOG,
+		IDD_SAVELYRICDLG_DIALOG,
+	};
 
-	CRect rect;
-	GetDlgItem(IDC_DLG_AREA)->GetWindowRect(&rect);
-	ScreenToClient(&rect);
-	ImportLyricDlg.Create(IDD_IMPORTLYRICDLG_DIALOG,this);
-	ImportLyricDlg.MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
-	ImportLyricDlg.ShowWindow(SW_SHOW);
+	static CheckGroupInfo ChkGrpInfo = 
+	{ 
+		0, 
+		IDC_DLG_AREA,
+		CheckBtnIDs,
+		DlgPageIDs
+	};
 
+	m_CheckGroup.Init(this,ChkGrpInfo);
+	
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -196,9 +166,9 @@ void CKmcMakerDlg::OnPaint()
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
-
+		
 		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
-
+		
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
@@ -206,7 +176,7 @@ void CKmcMakerDlg::OnPaint()
 		GetClientRect(&rect);
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
-
+		
 		// Draw the icon
 		dc.DrawIcon(x, y, m_hIcon);
 	}
@@ -231,17 +201,15 @@ void CKmcMakerDlg::OnCheckStep1()
 void CKmcMakerDlg::OnCheckStep2() 
 {
 	m_CheckGroup.SetCheck(1);
-	}
+}
 
 void CKmcMakerDlg::OnCheckStep3() 
 {
 	m_CheckGroup.SetCheck(2);		
 }
 
-// LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
-// {
-// 	// TODO: Add your specialized code here and/or call the base class
-// 	m_DLayout.FilterDynamicLayoutMessage(message,wParam,lParam);
-// 	
-// 	return CDialog::WindowProc(message, wParam, lParam); 
-// }
+LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
+{
+	
+	return CDialog::WindowProc(message, wParam, lParam); 
+}

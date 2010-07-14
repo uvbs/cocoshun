@@ -1,9 +1,9 @@
-// ImportLyricDlg.cpp : implementation file
+// MakeLyricDlg.cpp : implementation file
 //
 
 #include "stdafx.h"
 #include "KmcMaker.h"
-#include "ImportLyricDlg.h"
+#include "MakeLyricDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -12,32 +12,32 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CImportLyricDlg dialog
+// CMakeLyricDlg dialog
 
 
-CImportLyricDlg::CImportLyricDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CImportLyricDlg::IDD, pParent)
+CMakeLyricDlg::CMakeLyricDlg(CWnd* pParent /*=NULL*/)
+	: CDialog(CMakeLyricDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CImportLyricDlg)
+	//{{AFX_DATA_INIT(CMakeLyricDlg)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
 
-void CImportLyricDlg::DoDataExchange(CDataExchange* pDX)
+void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CImportLyricDlg)
-	DDX_Control(pDX, IDC_LYRIC_EDITOR, m_LyricEditor);
+	//{{AFX_DATA_MAP(CMakeLyricDlg)
+		// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CImportLyricDlg, CDialog)
-	//{{AFX_MSG_MAP(CImportLyricDlg)
+BEGIN_MESSAGE_MAP(CMakeLyricDlg, CDialog)
+	//{{AFX_MSG_MAP(CMakeLyricDlg)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CImportLyricDlg message handlers
+// CMakeLyricDlg message handlers

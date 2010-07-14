@@ -19,7 +19,7 @@ static char THIS_FILE[]=__FILE__;
 CCheckBTGroup::CCheckBTGroup()
 {
 	m_CheckBtns = NULL;
-
+	m_DlgPages = NULL;
 }
 
 CCheckBTGroup::~CCheckBTGroup()
@@ -28,21 +28,47 @@ CCheckBTGroup::~CCheckBTGroup()
 	{
 		delete []m_CheckBtns;
 	}
+	if(m_DlgPages !=NULL)
+	{
+		delete []m_DlgPages;
+	}
 }
 
-void CCheckBTGroup::SubClassWindows(CWnd *parent,UINT CheckBtns[], int DefaultCheck)
+void CCheckBTGroup::Init(CWnd *parent,CheckGroupInfo ChkGrpInfo)
 {
+	m_Parent = parent;
+	UINT *CheckBtns = ChkGrpInfo.CheckBtnIDs;
+	UINT *DlgPageIDs = ChkGrpInfo.DlgPageIDs;
+	UINT AreaCtrlID = ChkGrpInfo.AreaCtrlID;
+	int DefaultSelcted = ChkGrpInfo.nSelected;
+	
+	// init check buttons
 	m_BtnNum = sizeof(CheckBtns) -1;
+
 	m_CheckBtns = new CShadeButtonST[m_BtnNum];
 	for(int i=0; i<m_BtnNum; i++)
 	{
 		m_CheckBtns[i].SubclassWindow(parent->GetDlgItem(CheckBtns[i])->m_hWnd);
 		m_CheckBtns[i].SetShade(CShadeButtonST::SHS_SOFTBUMP,8,20,5,RGB(55,55,255));
-		if(i == DefaultCheck)
+		if(i == DefaultSelcted)
 		{
 			m_CheckBtns[i].SetCheck(TRUE);
 		}
 	}
+
+	// init dialog pages
+	m_DlgPageNum = sizeof(DlgPageIDs) -1;
+	m_DlgPages = new CDialog[m_DlgPageNum];
+	CRect rect;
+	parent->GetDlgItem(AreaCtrlID)->GetWindowRect(&rect);
+	parent->ScreenToClient(&rect);
+	for(int j=0; j<m_DlgPageNum; j++)
+	{
+		m_DlgPages[j].Create(DlgPageIDs[j],parent);
+		m_DlgPages[j].MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+	}
+
+	SetCheck(DefaultSelcted);
 }
 
 void CCheckBTGroup::SetCheck(int n)
@@ -52,9 +78,11 @@ void CCheckBTGroup::SetCheck(int n)
 		if(i == n)
 		{
 			m_CheckBtns[i].SetCheck(TRUE);
+			m_DlgPages[i].ShowWindow(SW_SHOW);
 		}else
 		{
 			m_CheckBtns[i].SetCheck(FALSE);
+			m_DlgPages[i].ShowWindow(SW_HIDE);
 		}
 	}
 }

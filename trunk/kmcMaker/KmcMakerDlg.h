@@ -30,7 +30,7 @@ public:
 	//{{AFX_VIRTUAL(CKmcMakerDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-// 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+ 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -49,10 +49,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	static UINT CheckBtnIDs[];
 	CCheckBTGroup m_CheckGroup;
 
-	CImportLyricDlg ImportLyricDlg;
 };
 
 //{{AFX_INSERT_LOCATION}}

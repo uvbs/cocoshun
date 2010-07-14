@@ -7,17 +7,21 @@ LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
 
-ClassCount=4
+ClassCount=6
 Class1=CKmcMakerApp
 Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
-ResourceCount=4
+ResourceCount=6
 Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_KMCMAKER_DIALOG
+Resource3=IDD_MAKELYRICDLG_DIALOG
 Class4=CImportLyricDlg
 Resource4=IDD_IMPORTLYRICDLG_DIALOG
+Class5=CMakeLyricDlg
+Resource5=IDD_KMCMAKER_DIALOG
+Class6=CSaveLyricDlg
+Resource6=IDD_SAVELYRICDLG_DIALOG
 
 [CLS:CKmcMakerApp]
 Type=0
@@ -30,7 +34,7 @@ Type=0
 HeaderFile=KmcMakerDlg.h
 ImplementationFile=KmcMakerDlg.cpp
 Filter=D
-LastObject=IDC_CHECK_STEP1
+LastObject=CKmcMakerDlg
 BaseClass=CDialog
 VirtualFilter=dWC
 
@@ -64,14 +68,41 @@ Control7=IDC_DLG_AREA,button,1342177287
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
 Class=CImportLyricDlg
-ControlCount=2
-Control1=IDOK,button,1342242817
-Control2=IDCANCEL,button,1342242816
+ControlCount=1
+Control1=IDC_LYRIC_EDITOR,RICHEDIT,1350631552
 
 [CLS:CImportLyricDlg]
 Type=0
 HeaderFile=ImportLyricDlg.h
 ImplementationFile=ImportLyricDlg.cpp
+BaseClass=CDialog
+Filter=D
+LastObject=IDC_EDITLYRIC
+VirtualFilter=dWC
+
+[DLG:IDD_MAKELYRICDLG_DIALOG]
+Type=1
+Class=CMakeLyricDlg
+ControlCount=1
+Control1=IDC_STATIC,static,1342308352
+
+[CLS:CMakeLyricDlg]
+Type=0
+HeaderFile=MakeLyricDlg.h
+ImplementationFile=MakeLyricDlg.cpp
+BaseClass=CDialog
+Filter=D
+
+[DLG:IDD_SAVELYRICDLG_DIALOG]
+Type=1
+Class=CSaveLyricDlg
+ControlCount=1
+Control1=IDC_STATIC,static,1342308352
+
+[CLS:CSaveLyricDlg]
+Type=0
+HeaderFile=SaveLyricDlg.h
+ImplementationFile=SaveLyricDlg.cpp
 BaseClass=CDialog
 Filter=D
 
