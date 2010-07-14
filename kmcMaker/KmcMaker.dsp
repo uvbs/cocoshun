@@ -122,7 +122,15 @@ SOURCE=.\KmcMakerDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MakeLyricDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\UILib\ResizingDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SaveLyricDlg.cpp
 # End Source File
 # Begin Source File
 
@@ -167,11 +175,19 @@ SOURCE=.\KmcMakerDlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MakeLyricDlg.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\UILib\ResizingDialog.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SaveLyricDlg.h
 # End Source File
 # Begin Source File
 
@@ -202,6 +218,10 @@ SOURCE=.\res\KmcMaker.ico
 SOURCE=.\res\KmcMaker.rc2
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\res\Master.manifest
+# End Source File
 # Begin Source File
 
 SOURCE=.\ReadMe.txt
