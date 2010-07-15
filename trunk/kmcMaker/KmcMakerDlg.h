@@ -22,7 +22,7 @@ class CKmcMakerDlg : public CResizingDialog
 // Construction
 public:
 	CKmcMakerDlg(CWnd* pParent = NULL);	// standard constructor
-
+	~CKmcMakerDlg();
 // Dialog Data
 	//{{AFX_DATA(CKmcMakerDlg)
 	enum { IDD = IDD_KMCMAKER_DIALOG };
@@ -48,14 +48,15 @@ protected:
 	afx_msg void OnCheckStep1();
 	afx_msg void OnCheckStep2();
 	afx_msg void OnCheckStep3();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
 	CCheckBTGroup m_CheckGroup;
 
-	CImportLyricDlg m_ImportLyricDlg;
-	CMakeLyricDlg m_MakeLyricDlg;
-	CSaveLyricDlg m_SaveLyricDlg;
+	CImportLyricDlg *m_ImportLyricDlg;
+	CMakeLyricDlg *m_MakeLyricDlg;
+	CSaveLyricDlg *m_SaveLyricDlg;
 };
 
 //{{AFX_INSERT_LOCATION}}

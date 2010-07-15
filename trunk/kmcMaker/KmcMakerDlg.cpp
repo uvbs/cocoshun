@@ -67,6 +67,28 @@ CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+
+	m_ImportLyricDlg = NULL;
+	m_MakeLyricDlg = NULL;
+	m_SaveLyricDlg = NULL;
+}
+
+CKmcMakerDlg::~CKmcMakerDlg()
+{
+	if(m_ImportLyricDlg!=NULL)
+	{
+		delete []m_ImportLyricDlg;
+	}
+	
+	if(m_MakeLyricDlg!=NULL)
+	{
+		delete []m_MakeLyricDlg;
+	}
+	
+	if(m_SaveLyricDlg!=NULL)
+	{
+		delete []m_SaveLyricDlg;
+	}
 }
 
 void CKmcMakerDlg::DoDataExchange(CDataExchange* pDX)
@@ -84,6 +106,7 @@ BEGIN_MESSAGE_MAP(CKmcMakerDlg, CResizingDialog)
 	ON_BN_CLICKED(IDC_CHECK_STEP1, OnCheckStep1)
 	ON_BN_CLICKED(IDC_CHECK_STEP2, OnCheckStep2)
 	ON_BN_CLICKED(IDC_CHECK_STEP3, OnCheckStep3)
+	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -119,48 +142,52 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 
-
 	// Init dialog pages
-	static UINT CheckBtnIDs[] = 
-	{
-		IDC_CHECK_STEP1,
-		IDC_CHECK_STEP2,
-		IDC_CHECK_STEP3,
-	};
+	m_ImportLyricDlg = new CImportLyricDlg();
+	m_ImportLyricDlg->Create(IDD_IMPORTLYRICDLG_DIALOG,this);
+	m_MakeLyricDlg = new CMakeLyricDlg();
+	m_MakeLyricDlg->Create(IDD_MAKELYRICDLG_DIALOG,this);
+	m_SaveLyricDlg = new CSaveLyricDlg();
+	m_SaveLyricDlg->Create(IDD_SAVELYRICDLG_DIALOG,this);
 
-// 	static UINT DlgPageIDs[] = 
-// 	{
-// 		IDD_IMPORTLYRICDLG_DIALOG,
-// 		IDD_MAKELYRICDLG_DIALOG,
-// 		IDD_SAVELYRICDLG_DIALOG,
-// 	};
-
-	static CDialog *Dlgs[] = 
+	static ChkBtnIDAndDlg ChkBtnIDAndDlgs[] =
 	{
-		&m_ImportLyricDlg,
-		&m_MakeLyricDlg,
-		&m_SaveLyricDlg
+		{IDC_CHECK_STEP1, m_ImportLyricDlg},
+		{IDC_CHECK_STEP2, m_MakeLyricDlg},
+		{IDC_CHECK_STEP3, m_SaveLyricDlg}
 	};
 
 	static CheckGroupInfo ChkGrpInfo = 
 	{ 
+		this,
 		0, 
 		IDC_DLG_AREA,
-		CheckBtnIDs,
-		*Dlgs
+		ChkBtnIDAndDlgs
 	};
 
-	m_CheckGroup.Init(this,ChkGrpInfo);
+	m_CheckGroup.Init(ChkGrpInfo);
 	
-	SetControlInfo(IDOK,	ANCHORE_RIGHT | ANCHORE_BOTTOM);
-	SetControlInfo(IDCANCEL,			ANCHORE_RIGHT);
+	SetControlInfo(IDOK,ANCHORE_RIGHT | ANCHORE_BOTTOM);
+	SetControlInfo(IDCANCEL,ANCHORE_RIGHT);
 	SetControlInfo(IDC_DLG_AREA, RESIZE_BOTH);
+	SetControlInfo(IDD_IMPORTLYRICDLG_DIALOG, RESIZE_HOR);
+	SetControlInfo(IDC_STATIC_TOPLINE, RESIZE_HOR);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
 void CKmcMakerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+	UINT ID = (nID & 0xFFF0);
+	if (ID == SC_MAXIMIZE || ID == SC_RESTORE || ID == SC_SIZE)     //   ’‚æ‰ 
+	{ 
+		if(m_CheckGroup.IsCreated())
+		{
+			m_CheckGroup.ReSizePages();
+		}
+	
+	} 
+
+	if (ID == IDM_ABOUTBOX)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
@@ -227,3 +254,8 @@ void CKmcMakerDlg::OnCheckStep3()
 // 	
 // 	return CDialog::WindowProc(message, wParam, lParam); 
 // }
+
+void CKmcMakerDlg::OnSize(UINT nType, int cx, int cy) 
+{
+	CResizingDialog::OnSize(nType, cx, cy);
+}

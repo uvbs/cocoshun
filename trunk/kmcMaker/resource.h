@@ -18,6 +18,7 @@
 #define IDC_RADIO1                      1006
 #define IDC_DLG_AREA                    1007
 #define IDC_LYRIC_EDITOR                1008
+#define IDC_STATIC_TOPLINE              1010
 
 // Next default values for new objects
 // 
@@ -25,7 +26,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1010
+#define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif
