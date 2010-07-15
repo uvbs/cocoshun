@@ -43,5 +43,15 @@ END_MESSAGE_MAP()
 
 void CImportLyricDlg::OnCancel() 
 {
-	CResizingDialog::OnCancel();
+//	CResizingDialog::OnCancel();
+}
+
+BOOL CImportLyricDlg::OnInitDialog() 
+{
+	CResizingDialog::OnInitDialog();
+	
+	SetControlInfo(IDC_LYRIC_EDITOR,RESIZE_BOTH);
+	
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
 }

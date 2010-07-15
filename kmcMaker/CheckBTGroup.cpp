@@ -19,77 +19,76 @@ static char THIS_FILE[]=__FILE__;
 CCheckBTGroup::CCheckBTGroup()
 {
 	m_CheckBtns = NULL;
-	m_DlgPages = NULL;
+	m_IsCreated = FALSE;
 }
 
 CCheckBTGroup::~CCheckBTGroup()
 {
 	if(m_CheckBtns !=NULL)
 	{
-		delete []m_CheckBtns;
-	}
-	if(m_DlgPages !=NULL)
-	{
-		delete []m_DlgPages;
+		delete [] m_CheckBtns;
+		m_CheckBtns = NULL;
 	}
 }
 
-void CCheckBTGroup::Init(CWnd *parent,CheckGroupInfo ChkGrpInfo)
+void CCheckBTGroup::Init(CheckGroupInfo ChkGrpInfo)
 {
-	m_Parent = parent;
-	UINT *CheckBtns = ChkGrpInfo.CheckBtnIDs;
-//	UINT *DlgPageIDs = ChkGrpInfo.DlgPageIDs;
-	UINT AreaCtrlID = ChkGrpInfo.AreaCtrlID;
-	int DefaultSelcted = ChkGrpInfo.nSelected;
-	CDialog *Dlgs = ChkGrpInfo.Dlgs;
-	
+	m_ChkGrpInfo = ChkGrpInfo;
+
 	// init check buttons
-	m_BtnNum = sizeof(CheckBtns) -1;
+	m_PageNum = sizeof(ChkGrpInfo.ChkBtnIDAndDlgs->CheckBtnID) -1;
 
-	m_CheckBtns = new CShadeButtonST[m_BtnNum];
-	for(int i=0; i<m_BtnNum; i++)
+	m_CheckBtns = new CShadeButtonST[m_PageNum];
+	for(int i=0; i<m_PageNum; i++)
 	{
-		m_CheckBtns[i].SubclassWindow(parent->GetDlgItem(CheckBtns[i])->m_hWnd);
+		// init check buttons
+		m_CheckBtns[i].SubclassWindow(ChkGrpInfo.Parent->GetDlgItem(ChkGrpInfo.ChkBtnIDAndDlgs[i].CheckBtnID)->m_hWnd);
 		m_CheckBtns[i].SetShade(CShadeButtonST::SHS_SOFTBUMP,8,20,5,RGB(55,55,255));
-		if(i == DefaultSelcted)
-		{
-			m_CheckBtns[i].SetCheck(TRUE);
-		}
 	}
 
-	// init dialog pages
-	m_DlgPageNum = sizeof(Dlgs) -1;
-	m_DlgPages = Dlgs;
+	ReSizePages();
 
-	CRect rect;
-	parent->GetDlgItem(AreaCtrlID)->GetWindowRect(&rect);
-	parent->ScreenToClient(&rect);
-	rect.left = rect.left + 10;
-	rect.top  = rect.top + 10;
-	rect.right= rect.right - 10;
-	rect.bottom = rect.bottom - 10;
-
-	for(int j=0; j<m_DlgPageNum; j++)
-	{
-//		m_DlgPages[j].Create(DlgPageIDs[j],parent);
-		m_DlgPages[j].MoveWindow(rect.left, rect.top , rect.Width() , rect.Height());
-	}
-
-	SetCheck(DefaultSelcted);
+	SetCheck(ChkGrpInfo.nSelected);
+	m_IsCreated = TRUE;
 }
 
 void CCheckBTGroup::SetCheck(int n)
 {
-	for(int i=0; i<m_BtnNum; i++)
+	m_nSelected = n;
+	for(int i=0; i<m_PageNum; i++)
 	{
 		if(i == n)
 		{
 			m_CheckBtns[i].SetCheck(TRUE);
-			m_DlgPages[i].ShowWindow(SW_SHOW);
+			m_ChkGrpInfo.ChkBtnIDAndDlgs[i].Dlg->ShowWindow(SW_SHOW);
 		}else
 		{
 			m_CheckBtns[i].SetCheck(FALSE);
-			m_DlgPages[i].ShowWindow(SW_HIDE);
+			m_ChkGrpInfo.ChkBtnIDAndDlgs[i].Dlg->ShowWindow(SW_HIDE);
 		}
 	}
+}
+
+void CCheckBTGroup::ReSizePages()
+{
+	// get the rect of dialog page area
+	CWnd *Parent = m_ChkGrpInfo.Parent;
+	CRect rect;
+	Parent->GetDlgItem(m_ChkGrpInfo.AreaCtrlID)->GetWindowRect(&rect);
+	Parent->ScreenToClient(&rect);
+	rect.left = rect.left + 10;
+	rect.top  = rect.top + 10;
+	rect.right= rect.right - 10;
+	rect.bottom = rect.bottom - 10;
+	
+	for(int i=0; i<m_PageNum; i++)
+	{
+		// set size for dialog pages
+		m_ChkGrpInfo.ChkBtnIDAndDlgs[i].Dlg->MoveWindow(rect.left, rect.top , rect.Width() , rect.Height());
+	}
+}
+
+BOOL CCheckBTGroup::IsCreated()
+{
+	return m_IsCreated;
 }
