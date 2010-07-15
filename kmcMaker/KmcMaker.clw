@@ -13,13 +13,13 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=6
-Resource1=IDD_ABOUTBOX
+Resource1=IDD_MAKELYRICDLG_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_MAKELYRICDLG_DIALOG
+Resource3=IDD_KMCMAKER_DIALOG
 Class4=CImportLyricDlg
-Resource4=IDD_IMPORTLYRICDLG_DIALOG
+Resource4=IDD_ABOUTBOX
 Class5=CMakeLyricDlg
-Resource5=IDD_KMCMAKER_DIALOG
+Resource5=IDD_IMPORTLYRICDLG_DIALOG
 Class6=CSaveLyricDlg
 Resource6=IDD_SAVELYRICDLG_DIALOG
 
@@ -68,8 +68,9 @@ Control7=IDC_DLG_AREA,button,1342177287
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
 Class=CImportLyricDlg
-ControlCount=1
+ControlCount=2
 Control1=IDC_LYRIC_EDITOR,RICHEDIT,1350631552
+Control2=IDCANCEL,button,1342242816
 
 [CLS:CImportLyricDlg]
 Type=0
@@ -77,7 +78,7 @@ HeaderFile=ImportLyricDlg.h
 ImplementationFile=ImportLyricDlg.cpp
 BaseClass=CDialog
 Filter=D
-LastObject=IDC_EDITLYRIC
+LastObject=CImportLyricDlg
 VirtualFilter=dWC
 
 [DLG:IDD_MAKELYRICDLG_DIALOG]
@@ -90,8 +91,9 @@ Control1=IDC_STATIC,static,1342308352
 Type=0
 HeaderFile=MakeLyricDlg.h
 ImplementationFile=MakeLyricDlg.cpp
-BaseClass=CDialog
+BaseClass=CResizingDialog
 Filter=D
+VirtualFilter=dWC
 
 [DLG:IDD_SAVELYRICDLG_DIALOG]
 Type=1

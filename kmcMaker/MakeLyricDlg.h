@@ -7,10 +7,11 @@
 // MakeLyricDlg.h : header file
 //
 
+#include "UILib/ResizingDialog.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
-class CMakeLyricDlg : public CDialog
+class CMakeLyricDlg : public CResizingDialog
 {
 // Construction
 public:
@@ -35,7 +36,7 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CMakeLyricDlg)
-		// NOTE: the ClassWizard will add member functions here
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

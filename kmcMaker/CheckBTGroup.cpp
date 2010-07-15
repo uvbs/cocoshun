@@ -38,9 +38,10 @@ void CCheckBTGroup::Init(CWnd *parent,CheckGroupInfo ChkGrpInfo)
 {
 	m_Parent = parent;
 	UINT *CheckBtns = ChkGrpInfo.CheckBtnIDs;
-	UINT *DlgPageIDs = ChkGrpInfo.DlgPageIDs;
+//	UINT *DlgPageIDs = ChkGrpInfo.DlgPageIDs;
 	UINT AreaCtrlID = ChkGrpInfo.AreaCtrlID;
 	int DefaultSelcted = ChkGrpInfo.nSelected;
+	CDialog *Dlgs = ChkGrpInfo.Dlgs;
 	
 	// init check buttons
 	m_BtnNum = sizeof(CheckBtns) -1;
@@ -57,15 +58,21 @@ void CCheckBTGroup::Init(CWnd *parent,CheckGroupInfo ChkGrpInfo)
 	}
 
 	// init dialog pages
-	m_DlgPageNum = sizeof(DlgPageIDs) -1;
-	m_DlgPages = new CDialog[m_DlgPageNum];
+	m_DlgPageNum = sizeof(Dlgs) -1;
+	m_DlgPages = Dlgs;
+
 	CRect rect;
 	parent->GetDlgItem(AreaCtrlID)->GetWindowRect(&rect);
 	parent->ScreenToClient(&rect);
+	rect.left = rect.left + 10;
+	rect.top  = rect.top + 10;
+	rect.right= rect.right - 10;
+	rect.bottom = rect.bottom - 10;
+
 	for(int j=0; j<m_DlgPageNum; j++)
 	{
-		m_DlgPages[j].Create(DlgPageIDs[j],parent);
-		m_DlgPages[j].MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+//		m_DlgPages[j].Create(DlgPageIDs[j],parent);
+		m_DlgPages[j].MoveWindow(rect.left, rect.top , rect.Width() , rect.Height());
 	}
 
 	SetCheck(DefaultSelcted);

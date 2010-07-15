@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 CMakeLyricDlg::CMakeLyricDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CMakeLyricDlg::IDD, pParent)
+	: CResizingDialog(CMakeLyricDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CMakeLyricDlg)
 		// NOTE: the ClassWizard will add member initialization here
@@ -26,18 +26,26 @@ CMakeLyricDlg::CMakeLyricDlg(CWnd* pParent /*=NULL*/)
 
 void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CMakeLyricDlg)
 		// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CMakeLyricDlg, CDialog)
+BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CMakeLyricDlg)
-		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg message handlers
+
+BOOL CMakeLyricDlg::OnInitDialog() 
+{
+	CResizingDialog::OnInitDialog();
+	
+	SetControlInfo(IDC_LYRIC_EDITOR, RESIZE_BOTH);
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}

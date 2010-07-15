@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include "KmcMaker.h"
 #include "KmcMakerDlg.h"
+#include "ImportLyricDlg.h"
+#include "MakeLyricDlg.h"
+#include "SaveLyricDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -63,8 +66,6 @@ CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(CKmcMakerDlg)
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
-	SetControlInfo(IDOK,				ANCHORE_RIGHT);
-	SetControlInfo(IDCANCEL,			ANCHORE_RIGHT);
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -117,6 +118,9 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
 	// TODO: Add extra initialization here
+
+
+	// Init dialog pages
 	static UINT CheckBtnIDs[] = 
 	{
 		IDC_CHECK_STEP1,
@@ -124,11 +128,18 @@ BOOL CKmcMakerDlg::OnInitDialog()
 		IDC_CHECK_STEP3,
 	};
 
-	static UINT DlgPageIDs[] = 
+// 	static UINT DlgPageIDs[] = 
+// 	{
+// 		IDD_IMPORTLYRICDLG_DIALOG,
+// 		IDD_MAKELYRICDLG_DIALOG,
+// 		IDD_SAVELYRICDLG_DIALOG,
+// 	};
+
+	static CDialog *Dlgs[] = 
 	{
-		IDD_IMPORTLYRICDLG_DIALOG,
-		IDD_MAKELYRICDLG_DIALOG,
-		IDD_SAVELYRICDLG_DIALOG,
+		&m_ImportLyricDlg,
+		&m_MakeLyricDlg,
+		&m_SaveLyricDlg
 	};
 
 	static CheckGroupInfo ChkGrpInfo = 
@@ -136,11 +147,14 @@ BOOL CKmcMakerDlg::OnInitDialog()
 		0, 
 		IDC_DLG_AREA,
 		CheckBtnIDs,
-		DlgPageIDs
+		*Dlgs
 	};
 
 	m_CheckGroup.Init(this,ChkGrpInfo);
 	
+	SetControlInfo(IDOK,	ANCHORE_RIGHT | ANCHORE_BOTTOM);
+	SetControlInfo(IDCANCEL,			ANCHORE_RIGHT);
+	SetControlInfo(IDC_DLG_AREA, RESIZE_BOTH);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -208,8 +222,8 @@ void CKmcMakerDlg::OnCheckStep3()
 	m_CheckGroup.SetCheck(2);		
 }
 
-LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
-{
-	
-	return CDialog::WindowProc(message, wParam, lParam); 
-}
+// LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
+// {
+// 	
+// 	return CDialog::WindowProc(message, wParam, lParam); 
+// }

@@ -6,11 +6,11 @@
 #endif // _MSC_VER > 1000
 // ImportLyricDlg.h : header file
 //
-
+#include "UILib/ResizingDialog.h"
 /////////////////////////////////////////////////////////////////////////////
 // CImportLyricDlg dialog
 
-class CImportLyricDlg : public CDialog
+class CImportLyricDlg : public CResizingDialog
 {
 // Construction
 public:
@@ -35,7 +35,7 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CImportLyricDlg)
-		// NOTE: the ClassWizard will add member functions here
+	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

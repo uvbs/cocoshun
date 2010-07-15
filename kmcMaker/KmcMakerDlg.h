@@ -14,6 +14,8 @@
 #include "CheckBTGroup.h"
 #include "./UILib/ResizingDialog.h"
 #include "ImportLyricDlg.h"
+#include "MakeLyricDlg.h"
+#include "SaveLyricDlg.h"
 
 class CKmcMakerDlg : public CResizingDialog
 {
@@ -30,7 +32,7 @@ public:
 	//{{AFX_VIRTUAL(CKmcMakerDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
- 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+// 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -51,6 +53,9 @@ protected:
 private:
 	CCheckBTGroup m_CheckGroup;
 
+	CImportLyricDlg m_ImportLyricDlg;
+	CMakeLyricDlg m_MakeLyricDlg;
+	CSaveLyricDlg m_SaveLyricDlg;
 };
 
 //{{AFX_INSERT_LOCATION}}
