@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 CImportLyricDlg::CImportLyricDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CImportLyricDlg::IDD, pParent)
+	: CResizingDialog(CImportLyricDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CImportLyricDlg)
 		// NOTE: the ClassWizard will add member initialization here
@@ -26,18 +26,22 @@ CImportLyricDlg::CImportLyricDlg(CWnd* pParent /*=NULL*/)
 
 void CImportLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CImportLyricDlg)
 	DDX_Control(pDX, IDC_LYRIC_EDITOR, m_LyricEditor);
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CImportLyricDlg, CDialog)
+BEGIN_MESSAGE_MAP(CImportLyricDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CImportLyricDlg)
-		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CImportLyricDlg message handlers
+
+void CImportLyricDlg::OnCancel() 
+{
+	CResizingDialog::OnCancel();
+}

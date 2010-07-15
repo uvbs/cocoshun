@@ -21,6 +21,21 @@ class CResizingDialog : public CDialog
 // Construction
 public:
 	CResizingDialog( UINT nIDTemplate, CWnd* pParentWnd = NULL );
+
+// 	CResizingDialog(){};
+// 	void SetDlgIDAndParent(UINT nIDTemplate, CWnd* pParentWnd = NULL)
+// 	{
+// 		m_nIDTemplate = nIDTemplate;
+// 		this->m_pParentWnd = pParentWnd;
+// 
+// 		m_minWidth = m_minHeight = 0;	// flag that GetMinMax wasn't called yet
+// 		m_old_cx = m_old_cy = 0;
+// 		m_bSizeChanged = FALSE;
+// 		
+// 		m_bRememberSize = TRUE;
+// 		m_bDrawGripper = TRUE;
+// 	}
+
 	void SetControlInfo(WORD CtrlId,WORD Anchore);
 	BOOL GetRememberSize() { return  m_bRememberSize;}
 	void SetRememberSize(BOOL bRemember) { m_bRememberSize = bRemember;}

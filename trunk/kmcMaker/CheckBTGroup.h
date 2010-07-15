@@ -11,13 +11,14 @@
 
 #include "UILib/BtnST.h"
 #include "UILib/ShadeButtonST.h"
+#include "UILib/ResizingDialog.h"
 
 typedef struct CheckGroupInfo_Tag
 {
 	int  nSelected;
 	UINT AreaCtrlID;
 	UINT *CheckBtnIDs;
-	UINT *DlgPageIDs;
+	CDialog *Dlgs;
 } CheckGroupInfo;
 
 class CCheckBTGroup  
