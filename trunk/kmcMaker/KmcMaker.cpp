@@ -42,6 +42,16 @@ CKmcMakerApp theApp;
 BOOL CKmcMakerApp::InitInstance()
 {
 	AfxEnableControlContainer();
+
+	CCommandLineInfo cmdInfo;
+	ParseCommandLine(cmdInfo);
+
+	if (cmdInfo.m_bRunEmbedded || cmdInfo.m_bRunAutomated)
+	{
+		return TRUE;
+	}
+
+
 	::AfxInitRichEdit();
 	// Standard initialization
 	// If you are not using these features and wish to reduce the size
@@ -72,3 +82,10 @@ BOOL CKmcMakerApp::InitInstance()
 	//  application, rather than start the application's message pump.
 	return FALSE;
 }
+
+	
+
+
+
+
+

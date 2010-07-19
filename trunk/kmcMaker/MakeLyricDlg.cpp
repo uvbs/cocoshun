@@ -19,7 +19,6 @@ CMakeLyricDlg::CMakeLyricDlg(CWnd* pParent /*=NULL*/)
 	: CResizingDialog(CMakeLyricDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CMakeLyricDlg)
-		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
@@ -28,13 +27,14 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CMakeLyricDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDC_MEDIA_PLAYER, m_MediaPlayer);
 	//}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CMakeLyricDlg)
+	ON_BN_CLICKED(IDC_BTN_OPEN, OnBtnOpen)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -44,8 +44,24 @@ END_MESSAGE_MAP()
 BOOL CMakeLyricDlg::OnInitDialog() 
 {
 	CResizingDialog::OnInitDialog();
-	
-	SetControlInfo(IDC_LYRIC_EDITOR, RESIZE_BOTH);
+	m_MediaPlayer.SetFileName("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3");
+
+//	SetControlInfo(IDC_MEDIA_PLAYER, RESIZE_BOTH);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+BEGIN_EVENTSINK_MAP(CMakeLyricDlg, CResizingDialog)
+    //{{AFX_EVENTSINK_MAP(CMakeLyricDlg)
+	//}}AFX_EVENTSINK_MAP
+END_EVENTSINK_MAP()
+
+
+
+void CMakeLyricDlg::OnBtnOpen() 
+{
+	m_MediaPlayer.Run();
+	CString str;
+	str.Format("%f",m_MediaPlayer.GetDuration());
+	MessageBox(str);
 }

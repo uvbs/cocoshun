@@ -7,6 +7,11 @@
 // ImportLyricDlg.h : header file
 //
 #include "UILib/ResizingDialog.h"
+#include "UILib/BtnST.h"
+#include "UILib/FileDialogEx.h"
+//#include "UILib/AutoRichEditCtrl.h"
+#include  "UILib/MyRichEdit.h"
+#include "LyricText.h"	// Added by ClassView
 /////////////////////////////////////////////////////////////////////////////
 // CImportLyricDlg dialog
 
@@ -14,12 +19,14 @@ class CImportLyricDlg : public CResizingDialog
 {
 // Construction
 public:
+	CLyricText m_LyricText;
 	CImportLyricDlg(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CImportLyricDlg)
 	enum { IDD = IDD_IMPORTLYRICDLG_DIALOG };
-	CRichEditCtrl	m_LyricEditor;
+	CButton m_BtnImport;
+	CMyRichEdit m_LyricEditor;
 	//}}AFX_DATA
 
 
@@ -32,13 +39,18 @@ public:
 
 // Implementation
 protected:
+	BOOL LoadLyric(LPCTSTR pszFileName);
 
 	// Generated message map functions
 	//{{AFX_MSG(CImportLyricDlg)
 	virtual void OnCancel();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnImportLyric();
+	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
+	LRESULT OnAcceptDropFile(WPARAM wParam = 0, LPARAM lParam = 0 );
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -71,6 +71,7 @@ CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 	m_ImportLyricDlg = NULL;
 	m_MakeLyricDlg = NULL;
 	m_SaveLyricDlg = NULL;
+	m_bUseDir=FALSE;
 }
 
 CKmcMakerDlg::~CKmcMakerDlg()
@@ -107,8 +108,11 @@ BEGIN_MESSAGE_MAP(CKmcMakerDlg, CResizingDialog)
 	ON_BN_CLICKED(IDC_CHECK_STEP2, OnCheckStep2)
 	ON_BN_CLICKED(IDC_CHECK_STEP3, OnCheckStep3)
 	ON_WM_SIZE()
+
+	ON_WM_DROPFILES()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CKmcMakerDlg message handlers
@@ -167,27 +171,22 @@ BOOL CKmcMakerDlg::OnInitDialog()
 
 	m_CheckGroup.Init(ChkGrpInfo);
 	
-	SetControlInfo(IDOK,ANCHORE_RIGHT | ANCHORE_BOTTOM);
-	SetControlInfo(IDCANCEL,ANCHORE_RIGHT);
+	SetControlInfo(IDOK,ANCHORE_LEFT | ANCHORE_BOTTOM);
+	SetControlInfo(IDCANCEL,ANCHORE_LEFT| ANCHORE_BOTTOM);
 	SetControlInfo(IDC_DLG_AREA, RESIZE_BOTH);
-	SetControlInfo(IDD_IMPORTLYRICDLG_DIALOG, RESIZE_HOR);
 	SetControlInfo(IDC_STATIC_TOPLINE, RESIZE_HOR);
-	return TRUE;  // return TRUE  unless you set the focus to a control
+	m_ImportLyricDlg->SetFocus();
+
+	// 右下角画上调整大小的角
+	DrawGripper(TRUE);
+
+	OnCheckStep2();
+	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 
 void CKmcMakerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	UINT ID = (nID & 0xFFF0);
-	if (ID == SC_MAXIMIZE || ID == SC_RESTORE || ID == SC_SIZE)     //   这句 
-	{ 
-		if(m_CheckGroup.IsCreated())
-		{
-			m_CheckGroup.ReSizePages();
-		}
-	
-	} 
-
-	if (ID == IDM_ABOUTBOX)
+	if ( (nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
@@ -236,7 +235,8 @@ HCURSOR CKmcMakerDlg::OnQueryDragIcon()
 
 void CKmcMakerDlg::OnCheckStep1() 
 {
-	m_CheckGroup.SetCheck(0);	
+	m_CheckGroup.SetCheck(0);
+	m_ImportLyricDlg->SetFocus();
 }
 
 void CKmcMakerDlg::OnCheckStep2() 
@@ -258,4 +258,19 @@ void CKmcMakerDlg::OnCheckStep3()
 void CKmcMakerDlg::OnSize(UINT nType, int cx, int cy) 
 {
 	CResizingDialog::OnSize(nType, cx, cy);
+	if (nType == SIZE_MAXIMIZED || nType == SIZE_RESTORED )     //   这句 
+	{ 
+		if(m_CheckGroup.IsCreated())
+		{
+			m_CheckGroup.ReSizePages();
+		}
+		
+	} 
 }
+
+LRESULT CKmcMakerDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
+{
+	m_ImportLyricDlg->SendMessage(WM_CUSTOM_MSG_DROPFILE,wParam,lParam);
+	return 1L;
+}
+
