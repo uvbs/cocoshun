@@ -14,6 +14,8 @@
 #define IDR_MAINFRAME                   128
 #define IDB_A                           129
 #define IDI_ICON1                       130
+#define IDB_LOGO                        140
+#define IDB_BACKGROUND                  141
 #define IDC_ACTIVEMOVIECONTROL1         1000
 #define IDC_MEDIA_PLAYER                1000
 #define IDC_CHECK_STEP1                 1003
@@ -25,14 +27,16 @@
 #define IDC_STATIC_TOPLINE              1010
 #define IDC_BTN_IMPORT                  1011
 #define IDC_BTN_OPEN                    1023
+#define IDC_LYRIC_MAKER1                1024
+#define IDC_LYRIC_MAKER                 1025
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        139
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1024
+#define _APS_NEXT_CONTROL_VALUE         1026
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

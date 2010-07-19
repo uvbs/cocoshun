@@ -6,13 +6,14 @@
 --------------------Configuration: KmcMaker - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA7A.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/KmcMaker.res" /d "_DEBUG" /d "_AFXDLL" "F:\google-svn\cocoshun\kmcMaker\KmcMaker.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE47.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/KmcMaker.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"F:\google-svn\cocoshun\kmcMaker\MakeLyricDlg.cpp"
+"F:\google-svn\cocoshun\kmcMaker\UILib\LyricMakerCtrl.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA7A.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA7B.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE47.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE48.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/KmcMaker.pdb" /debug /machine:I386 /out:"Debug/KmcMaker.exe" /pdbtype:sept 
 ".\Debug\activemovie3.obj"
@@ -34,11 +35,13 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA7B.tmp" with con
 ".\Debug\StdAfx.obj"
 ".\Debug\TextBuffer.obj"
 ".\Debug\KmcMaker.res"
+".\Debug\LyricMakerCtrl.obj"
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA7B.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE48.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
-MakeLyricDlg.cpp
+LyricMakerCtrl.cpp
 Linking...
 
 

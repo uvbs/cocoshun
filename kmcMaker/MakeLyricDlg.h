@@ -11,6 +11,7 @@
 //
 
 #include "UILib/ResizingDialog.h"
+#include "UILib/LyricMakerCtrl.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
@@ -23,6 +24,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CMakeLyricDlg)
 	enum { IDD = IDD_MAKELYRICDLG_DIALOG };
+	CLyricMakerCtrl	m_LyricMaker;
 	CActiveMovie3	m_MediaPlayer;
 	//}}AFX_DATA
 
