@@ -27,6 +27,7 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CMakeLyricDlg)
+	DDX_Control(pDX, IDC_LYRIC_MAKER, m_LyricMaker);
 	DDX_Control(pDX, IDC_MEDIA_PLAYER, m_MediaPlayer);
 	//}}AFX_DATA_MAP
 }
@@ -44,8 +45,11 @@ END_MESSAGE_MAP()
 BOOL CMakeLyricDlg::OnInitDialog() 
 {
 	CResizingDialog::OnInitDialog();
-	m_MediaPlayer.SetFileName("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3");
+//	m_MediaPlayer.SetFileName("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3");
 
+	m_LyricMaker.SetCredits("ÖÜ½ÜÂ× - ÐÇÇç");
+	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
+	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
 //	SetControlInfo(IDC_MEDIA_PLAYER, RESIZE_BOTH);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

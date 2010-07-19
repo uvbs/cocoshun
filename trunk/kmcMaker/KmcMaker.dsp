@@ -137,6 +137,10 @@ SOURCE=.\KmcMakerDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UILib\LyricMakerCtrl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LyricText.cpp
 # End Source File
 # Begin Source File
@@ -214,6 +218,10 @@ SOURCE=.\KmcMakerDlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UILib\LyricMakerCtrl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LyricText.h
 # End Source File
 # Begin Source File
@@ -254,6 +262,18 @@ SOURCE=.\TextBuffer.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\res\backgrou.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\Background.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bitmap1.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\KmcMaker.ico
 # End Source File
 # Begin Source File
@@ -271,48 +291,14 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project
-# Section KmcMaker : {74C09E02-F828-11D2-A74B-00A0C905F36E}
-# 	2:5:Class:CWMPControls
-# 	2:10:HeaderFile:wmpcontrols.h
-# 	2:8:ImplFile:wmpcontrols.cpp
-# End Section
-# Section KmcMaker : {679409C0-99F7-11D3-9FB7-00105AA620BB}
-# 	2:5:Class:CWMPPlaylistArray
-# 	2:10:HeaderFile:wmpplaylistarray.h
-# 	2:8:ImplFile:wmpplaylistarray.cpp
-# End Section
-# Section KmcMaker : {CFAB6E98-8730-11D3-B388-00C04F68574B}
-# 	2:5:Class:CWMPCdrom
-# 	2:10:HeaderFile:wmpcdrom.h
-# 	2:8:ImplFile:wmpcdrom.cpp
-# End Section
-# Section KmcMaker : {265EC140-AE62-11D1-8500-00A0C91F9CA0}
-# 	2:5:Class:CActiveMovie3
-# 	2:10:HeaderFile:activemovie3.h
-# 	2:8:ImplFile:activemovie3.cpp
-# End Section
-# Section KmcMaker : {8DA61686-4668-4A5C-AE5D-803193293DBE}
-# 	2:5:Class:CWMPDVD
-# 	2:10:HeaderFile:wmpdvd.h
-# 	2:8:ImplFile:wmpdvd.cpp
-# End Section
-# Section KmcMaker : {05589FA1-C356-11CE-BF01-00AA0055595A}
-# 	2:21:DefaultSinkHeaderFile:activemovie3.h
-# 	2:16:DefaultSinkClass:CActiveMovie3
-# End Section
-# Section KmcMaker : {6C497D62-8919-413C-82DB-E935FB3EC584}
-# 	2:5:Class:CWMPPlayer4
-# 	2:10:HeaderFile:wmpplayer4.h
-# 	2:8:ImplFile:wmpplayer4.cpp
+# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
+# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
+# 	2:16:DefaultSinkClass:CWMPPlayer4
 # End Section
 # Section KmcMaker : {40897764-CEAB-47BE-AD4A-8E28537F9BBF}
 # 	2:5:Class:CWMPPlayerApplication
 # 	2:10:HeaderFile:wmpplayerapplication.h
 # 	2:8:ImplFile:wmpplayerapplication.cpp
-# End Section
-# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
-# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
-# 	2:16:DefaultSinkClass:CWMPPlayer4
 # End Section
 # Section KmcMaker : {9104D1AB-80C9-4FED-ABF0-2E6417A6DF14}
 # 	2:5:Class:CWMPSettings
@@ -371,4 +357,38 @@ SOURCE=.\ReadMe.txt
 # 	2:5:Class:CWMPStringCollection
 # 	2:10:HeaderFile:wmpstringcollection.h
 # 	2:8:ImplFile:wmpstringcollection.cpp
+# End Section
+# Section KmcMaker : {679409C0-99F7-11D3-9FB7-00105AA620BB}
+# 	2:5:Class:CWMPPlaylistArray
+# 	2:10:HeaderFile:wmpplaylistarray.h
+# 	2:8:ImplFile:wmpplaylistarray.cpp
+# End Section
+# Section KmcMaker : {CFAB6E98-8730-11D3-B388-00C04F68574B}
+# 	2:5:Class:CWMPCdrom
+# 	2:10:HeaderFile:wmpcdrom.h
+# 	2:8:ImplFile:wmpcdrom.cpp
+# End Section
+# Section KmcMaker : {265EC140-AE62-11D1-8500-00A0C91F9CA0}
+# 	2:5:Class:CActiveMovie3
+# 	2:10:HeaderFile:activemovie3.h
+# 	2:8:ImplFile:activemovie3.cpp
+# End Section
+# Section KmcMaker : {74C09E02-F828-11D2-A74B-00A0C905F36E}
+# 	2:5:Class:CWMPControls
+# 	2:10:HeaderFile:wmpcontrols.h
+# 	2:8:ImplFile:wmpcontrols.cpp
+# End Section
+# Section KmcMaker : {05589FA1-C356-11CE-BF01-00AA0055595A}
+# 	2:21:DefaultSinkHeaderFile:activemovie3.h
+# 	2:16:DefaultSinkClass:CActiveMovie3
+# End Section
+# Section KmcMaker : {6C497D62-8919-413C-82DB-E935FB3EC584}
+# 	2:5:Class:CWMPPlayer4
+# 	2:10:HeaderFile:wmpplayer4.h
+# 	2:8:ImplFile:wmpplayer4.cpp
+# End Section
+# Section KmcMaker : {8DA61686-4668-4A5C-AE5D-803193293DBE}
+# 	2:5:Class:CWMPDVD
+# 	2:10:HeaderFile:wmpdvd.h
+# 	2:8:ImplFile:wmpdvd.cpp
 # End Section
