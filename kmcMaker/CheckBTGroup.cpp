@@ -76,10 +76,10 @@ void CCheckBTGroup::ReSizePages()
 	CRect rect;
 	Parent->GetDlgItem(m_ChkGrpInfo.AreaCtrlID)->GetWindowRect(&rect);
 	Parent->ScreenToClient(&rect);
-	rect.left = rect.left + 10;
+	rect.left = rect.left + 5;
 	rect.top  = rect.top + 10;
-	rect.right= rect.right - 10;
-	rect.bottom = rect.bottom - 10;
+	rect.right= rect.right - 2;
+	rect.bottom = rect.bottom - 5;
 	
 	for(int i=0; i<m_PageNum; i++)
 	{

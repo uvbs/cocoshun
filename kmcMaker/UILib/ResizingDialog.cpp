@@ -31,6 +31,8 @@
 //
 #include "stdafx.h"
 #include "ResizingDialog.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -50,7 +52,7 @@ CResizingDialog::CResizingDialog(UINT nIDTemplate, CWnd* pParentWnd) :
 	m_nIDTemplate = nIDTemplate;
 
 	m_bRememberSize = TRUE;
-	m_bDrawGripper = TRUE;
+	m_bDrawGripper = FALSE;
 }
 
 void CResizingDialog::SetControlInfo(WORD CtrlId,WORD Anchore)			
@@ -71,6 +73,8 @@ BEGIN_MESSAGE_MAP(CResizingDialog, CDialog)
 	ON_WM_GETMINMAXINFO()
 	ON_WM_DESTROY()
 	ON_WM_CREATE()
+
+	ON_MESSAGE(WM_CUSTOM_MSG_DROPFILE,OnAcceptDropFile)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -265,9 +269,15 @@ UINT CResizingDialog::OnNcHitTest(CPoint point)
 		rc.top = rc.bottom-GetSystemMetrics(SM_CYVSCROLL);
 		if(rc.PtInRect(point))
 		{
-			ht = HTBOTTOMRIGHT;
+			return HTBOTTOMRIGHT;
 		}
+
+		//拖动客户端界面里，移动窗口
+		GetClientRect(&rc);
+		ClientToScreen(&rc);
+		return rc.PtInRect(point) ? HTCAPTION : CDialog::OnNcHitTest(point);
 	}
+
 	return ht;
 }
 
@@ -282,4 +292,147 @@ void CResizingDialog::GetDialogProfileEntry(CString &sEntry)
 {
 	// By default store the size under the Dialog ID value (Hex)
 	sEntry.Format("%x",m_nIDTemplate);
+}
+
+
+void CResizingDialog::OnDropFiles(HDROP dropInfo)
+{
+	// Get the number of pathnames that have been dropped
+	WORD wNumFilesDropped = DragQueryFile(dropInfo, -1, NULL, 0);
+	
+	CString csFirstFile = _T("");
+	
+	// there may be many, but we'll only use the first
+	if (wNumFilesDropped > 0)
+	{
+		// Get the number of bytes required by the file's full pathname
+		WORD wPathnameSize = DragQueryFile(dropInfo, 0, NULL, 0);
+		
+		// Allocate memory to contain full pathname & zero byte
+		wPathnameSize+=1;
+		
+		char * pFile = new TCHAR[wPathnameSize];
+		if (pFile == NULL)
+		{
+			ASSERT(0);
+			DragFinish(dropInfo);
+			return;
+		}
+		
+		// Copy the pathname into the buffer
+		DragQueryFile(dropInfo, 0, pFile, wPathnameSize);
+		
+		csFirstFile = pFile;
+		
+		// clean up
+		delete [] pFile; 
+	}
+	
+	// Free the memory block containing the dropped-file information
+	DragFinish(dropInfo);
+	
+	// if this was a shortcut, we need to expand it to the target path
+	CString csExpandedFile = ExpandShortcut(csFirstFile);
+	
+	// if that worked, we should have a real file name
+	if (!csExpandedFile.IsEmpty()) 
+	{
+		csFirstFile = csExpandedFile;
+	}
+	
+	if (!csFirstFile.IsEmpty())
+	{
+		struct _stat buf;
+		
+		// get some info about that file
+		int result = _stat( csFirstFile, &buf );
+		if( result == 0 ) 
+		{
+			// verify that we have a dir (if we want dirs)
+			if ((buf.st_mode & _S_IFDIR) == _S_IFDIR) 
+			{
+				if (m_bUseDir)
+				{
+					SendMessage(WM_CUSTOM_MSG_DROPFILE,(WPARAM)csFirstFile.GetBuffer(0),0);
+					//SetWindowText(csFirstFile);
+				}
+				
+				// verify that we have a file (if we want files)
+			} 
+			else if ((buf.st_mode & _S_IFREG) == _S_IFREG) 
+			{
+				if (!m_bUseDir)
+				{
+					SendMessage(WM_CUSTOM_MSG_DROPFILE,(WPARAM)csFirstFile.GetBuffer(0),0);
+					//SetWindowText(csFirstFile);
+				}
+			}
+		}
+	}
+	
+}
+CString CResizingDialog::ExpandShortcut(CString &inFile)
+{
+	CString outFile;
+	
+	// Make sure we have a path
+	ASSERT(inFile != _T(""));
+	
+	IShellLink* psl;
+	HRESULT hres;
+	LPTSTR lpsz = inFile.GetBuffer(MAX_PATH);
+	
+	// Create instance for shell link
+	hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*) &psl);
+	
+	if (SUCCEEDED(hres))
+	{
+		// Get a pointer to the persist file interface
+		IPersistFile* ppf;
+		
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*) &ppf);
+		if (SUCCEEDED(hres))
+		{
+			// Make sure it's ANSI
+			WORD wsz[MAX_PATH];
+			::MultiByteToWideChar(CP_ACP, 0, lpsz, -1, wsz, MAX_PATH);
+			
+			// Load shortcut
+			hres = ppf->Load(wsz, STGM_READ);
+			
+			if (SUCCEEDED(hres)) 
+			{
+				WIN32_FIND_DATA wfd;
+				
+				// find the path from that
+				HRESULT hres = psl->GetPath(outFile.GetBuffer(MAX_PATH), 
+					MAX_PATH,
+					&wfd, 
+					SLGP_UNCPRIORITY);
+				
+				outFile.ReleaseBuffer();
+			}
+			
+			ppf->Release();
+		}
+		
+		psl->Release();
+	}
+	
+	inFile.ReleaseBuffer();
+	
+	// if this fails, outFile == ""
+	return outFile;
+}
+
+void CResizingDialog::PreSubclassWindow() 
+{
+	DragAcceptFiles(TRUE);
+	
+	CDialog::PreSubclassWindow();
+}
+
+LRESULT CResizingDialog::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
+{
+	return 1L;
 }
