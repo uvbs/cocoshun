@@ -49,6 +49,7 @@ public:
 
 	// Generated message map functions
 protected:
+	void DrawLyric();
 	CString m_strCredits;
 	void Initialize();
 	void AnimateLogo();

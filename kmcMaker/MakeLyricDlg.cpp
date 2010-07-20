@@ -47,7 +47,6 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	CResizingDialog::OnInitDialog();
 //	m_MediaPlayer.SetFileName("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3");
 
-	m_LyricMaker.SetCredits("ÖÜ½ÜÂ× - ÐÇÇç");
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
 //	SetControlInfo(IDC_MEDIA_PLAYER, RESIZE_BOTH);

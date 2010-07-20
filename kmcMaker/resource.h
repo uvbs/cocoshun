@@ -27,8 +27,8 @@
 #define IDC_STATIC_TOPLINE              1010
 #define IDC_BTN_IMPORT                  1011
 #define IDC_BTN_OPEN                    1023
-#define IDC_LYRIC_MAKER1                1024
-#define IDC_LYRIC_MAKER                 1025
+#define IDC_LYRIC_MAKER                 1024
+#define IDC_LYRIC_MAKER2                1025
 
 // Next default values for new objects
 // 
