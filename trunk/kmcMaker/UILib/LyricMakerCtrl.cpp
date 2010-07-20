@@ -71,6 +71,7 @@ END_MESSAGE_MAP()
 void CLyricMakerCtrl::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
+	DrawLyric();
 }
 
 
@@ -82,33 +83,52 @@ void CLyricMakerCtrl::OnPaint()
 /********************************************************************/
 void CLyricMakerCtrl::Initialize()
 {
-	int cx, cy;
-
-	// First time calling , do some init (loading pictures and create's some Hdc
-	m_xAngle = 180;	// logo x angle
-	m_yAngle = 60;	// logo y angle
-	m_nSpeed = 6;	// spin speed
-		
-	m_cxData = 220;
-	m_cyData = 300;
+// 	int cx, cy;
+// 
+// 	// First time calling , do some init (loading pictures and create's some Hdc
+// 	m_xAngle = 180;	// logo x angle
+// 	m_yAngle = 60;	// logo y angle
+// 	m_nSpeed = 6;	// spin speed
+// 		
+// 	m_cxData = 220;
+// 	m_cyData = 300;
 
 	CRect rect;
 	GetClientRect(rect);
-
+// 
 	CDC *pDC = GetDC();
+// 
+// 	HDC hdcCompatible;
+// 	HBITMAP hbmScreen;
+// 	// create the DC
+// 	hdcCompatible = CreateCompatibleDC(pDC->m_hDC);			
+// 	// temporary memory bitmap
+// 	hbmScreen = CreateCompatibleBitmap(pDC->m_hDC, rect.Width(), rect.Height());		
+// 	// if the function fails
+// 	if (SelectObject(hdcCompatible, hbmScreen) == NULL)
+// 	{
+// 		// return null
+// 		m_hMemDC = NULL;
+// 	}
+// 	else
+// 	{
+// 		// if it succeeds, return the DC
+// 		m_hMemDC = hdcCompatible;                                     
+// 	}
+// 	FillRect(m_hMemDC,rect, (HBRUSH)(HBRUSH)GetStockObject(DKGRAY_BRUSH));
+// 	DeleteObject(hbmScreen);
 
 	// create credits dc
-	LoadCredits(m_hCreditsDC, m_cxData, m_cyData, pDC->m_hDC);
+	LoadCredits(m_hCreditsDC, rect.Width(), rect.Height(), pDC->m_hDC);
 	// Load logo and creates logo dc
-	LoadPicture(IDB_LOGO, m_hLogoDC, m_cxLogo, m_cyLogo, pDC->m_hDC);
+//	LoadPicture(IDB_LOGO, m_hLogoDC, m_cxLogo, m_cyLogo, pDC->m_hDC);
 	// Load Backgroundpicture and creates background DC
-	LoadPicture(IDB_BACKGROUND, m_hBackgroundDC, cx, cy, pDC->m_hDC); 
+//	LoadPicture(IDB_BACKGROUND, m_hBackgroundDC, cx, cy, pDC->m_hDC); 
 	// create work area
-	LoadPicture(0, m_hMemDC, cx, cy, pDC->m_hDC);
+//	LoadPicture(0, m_hMemDC, cx, cy, pDC->m_hDC);
 
 	// set scroll counter
-	m_nCounter = rect.Height();
-
+//	m_nCounter = rect.Height();
 	ReleaseDC(pDC);
 }
 
@@ -124,7 +144,7 @@ void CLyricMakerCtrl::PreSubclassWindow()
 	// initialze dc's
 	Initialize();	
 	// start animation
-	SetTimer(1, 40, NULL);
+//	SetTimer(1, 40, NULL);
 
 	CStatic::PreSubclassWindow();
 }
@@ -146,6 +166,21 @@ void CLyricMakerCtrl::OnTimer(UINT nIDEvent)
 	CStatic::OnTimer(nIDEvent);
 }
 
+
+void CLyricMakerCtrl::DrawLyric()
+{
+	CRect rect;
+	GetClientRect(rect);
+	// copy credits in memory dc
+//	BitBlt(m_hMemDC, 10, 10, rect.Width(), rect.Height(), m_hCreditsDC, 0, 0, SRCAND);
+
+	CDC *pDC = GetDC();
+	
+	// and finally, copy memory bitmap to screen
+	BitBlt(pDC->m_hDC, 0, 0, rect.Width(), rect.Height(), m_hCreditsDC, 0, 0, SRCCOPY);
+	
+	ReleaseDC(pDC);
+}
 
 /********************************************************************/
 /*																	*/
@@ -430,3 +465,5 @@ void CLyricMakerCtrl::SetCredits(LPCTSTR lpszCredits)
 {
 	m_strCredits = lpszCredits;
 }
+
+

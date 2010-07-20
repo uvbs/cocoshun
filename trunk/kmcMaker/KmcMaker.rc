@@ -123,9 +123,7 @@ BEGIN
                     "{6BF52A52-394A-11D3-B153-00C04F79FAA6}",NOT WS_VISIBLE | 
                     WS_TABSTOP,330,7,20,15
     PUSHBUTTON      "´ò¿ª(&O)",IDC_BTN_OPEN,7,163,50,14
-    LTEXT           "Static",IDC_LYRIC_MAKER1,7,7,343,39,0,WS_EX_TRANSPARENT | 
-                    WS_EX_STATICEDGE
-    CONTROL         "",IDC_LYRIC_MAKER,"Static",SS_BLACKFRAME,7,77,339,65,
+    LTEXT           "Static",IDC_LYRIC_MAKER,7,7,343,142,0,WS_EX_TRANSPARENT | 
                     WS_EX_STATICEDGE
 END
 
