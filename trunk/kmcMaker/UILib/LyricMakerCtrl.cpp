@@ -119,7 +119,7 @@ void CLyricMakerCtrl::Initialize()
 // 	DeleteObject(hbmScreen);
 
 	// create credits dc
-	LoadCredits(m_hCreditsDC, rect.Width(), rect.Height(), pDC->m_hDC);
+//	LoadCredits(m_hCreditsDC, rect.Width(), rect.Height(), pDC->m_hDC);
 	// Load logo and creates logo dc
 //	LoadPicture(IDB_LOGO, m_hLogoDC, m_cxLogo, m_cyLogo, pDC->m_hDC);
 	// Load Backgroundpicture and creates background DC
@@ -176,6 +176,8 @@ void CLyricMakerCtrl::DrawLyric()
 
 	CDC *pDC = GetDC();
 	
+	LoadLyric(m_hCreditsDC, rect.Width(), rect.Height(), pDC->m_hDC);
+
 	// and finally, copy memory bitmap to screen
 	BitBlt(pDC->m_hDC, 0, 0, rect.Width(), rect.Height(), m_hCreditsDC, 0, 0, SRCCOPY);
 	
@@ -343,11 +345,11 @@ void CLyricMakerCtrl::LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWi
 
 /********************************************************************/
 /*																	*/
-/* Function name : LoadCredits										*/
-/* Description   : Create credits picture into device context		*/
+/* Function name : LoadLyric										*/
+/* Description   : Create lyric credits picture into device context		*/
 /*																	*/
 /********************************************************************/
-void CLyricMakerCtrl::LoadCredits(HDC &hDestinationDC, int nWidth, int nHeight, HDC hDC)
+void CLyricMakerCtrl::LoadLyric(HDC &hDestinationDC, int nWidth, int nHeight, HDC hDC)
 {
 	HDC hdcCompatible;
 	HBITMAP hbmScreen;

@@ -49,7 +49,6 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
-//	SetControlInfo(IDC_MEDIA_PLAYER, RESIZE_BOTH);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -67,4 +66,49 @@ void CMakeLyricDlg::OnBtnOpen()
 	CString str;
 	str.Format("%f",m_MediaPlayer.GetDuration());
 	MessageBox(str);
+}
+
+void CMakeLyricDlg::InitLyric(CString Lyric)
+{
+	Lyric = "一个老虎 English \n二Chinese\n";
+	if(Lyric.IsEmpty()) return;
+
+	CString Line;
+	int nCount=0;
+	while(AfxExtractSubString(Line, Lyric, nCount++, '\n'))
+	{
+		LyricLine LL;
+		if(Line.IsEmpty()) continue;
+		LL.Line = Line;
+
+		int Pos = 0;
+		int Len = Line.GetLength();
+		while(Pos < Len)
+		{
+			LyricWord LyWord;
+
+			// check chinese
+			TCHAR ch = Line.GetAt(Pos);
+			if(ch & 0x80)
+			{
+				LyWord.IsChs = TRUE;
+				LyWord.Word = Line.Mid(Pos,2);
+				Pos+=2;
+
+				int increment;
+				while(Pos < Len-1)
+				{
+					int p = Pos+1;
+					ch = Line.GetAt(Ch)
+				}
+				continue;
+			}
+			
+			if(ch == )
+			{
+
+			}
+		}
+	}
+
 }
