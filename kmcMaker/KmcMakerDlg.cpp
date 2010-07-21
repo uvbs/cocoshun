@@ -242,6 +242,9 @@ void CKmcMakerDlg::OnCheckStep1()
 void CKmcMakerDlg::OnCheckStep2() 
 {
 	m_CheckGroup.SetCheck(1);
+	CString Lyric;
+	m_ImportLyricDlg->m_LyricEditor.GetWindowText(Lyric);
+	m_MakeLyricDlg->InitLyric(Lyric);
 }
 
 void CKmcMakerDlg::OnCheckStep3() 

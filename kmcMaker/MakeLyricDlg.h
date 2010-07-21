@@ -12,6 +12,8 @@
 
 #include "UILib/ResizingDialog.h"
 #include "UILib/LyricMakerCtrl.h"
+
+#include <afxtempl.h>
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
@@ -19,6 +21,7 @@ class CMakeLyricDlg : public CResizingDialog
 {
 // Construction
 public:
+	void InitLyric(CString Lyric);
 	CMakeLyricDlg(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
@@ -38,7 +41,31 @@ public:
 
 // Implementation
 protected:
+	struct LyricWord
+	{
+		BOOL IsLyric;
+		BOOL IsChs;
+		LONG DelayTime;
+		CString Word;
+		COLORREF Color;
+		BOOL IsMarked;
 
+		LyricWord()
+		{
+			IsLyric = TRUE;
+			IsMarked = FALSE;
+		}
+	};
+
+	struct LyricLine
+	{
+		LONG StartTime;
+		LONG EndTime;		
+		CString Line;
+		CArray <LyricWord, LyricWord&> LyricWords;
+	};
+
+	CArray <LyricLine, LyricLine&> m_LyricLines;
 	// Generated message map functions
 	//{{AFX_MSG(CMakeLyricDlg)
 	virtual BOOL OnInitDialog();

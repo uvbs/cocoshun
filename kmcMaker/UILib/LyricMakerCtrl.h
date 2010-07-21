@@ -54,7 +54,7 @@ protected:
 	void Initialize();
 	void AnimateLogo();
 	void LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWidth, int &nHeight, HDC hDC);
-	void LoadCredits(HDC &hDestination, int nWidth, int nHeight, HDC hDC);
+	void LoadLyric(HDC &hDestination, int nWidth, int nHeight, HDC hDC);
 
 	//{{AFX_MSG(LyricMakerCtrl)
 	afx_msg void OnPaint();
