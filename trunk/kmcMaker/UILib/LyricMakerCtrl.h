@@ -4,6 +4,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include "../Lyric.h"
 
 class CLyricMakerCtrl : public CStatic
 {
@@ -16,7 +17,7 @@ protected:
 	HDC m_hLogoDC; 
 	HDC m_hBackgroundDC; 
 	HDC m_hMemDC; 
-	HDC m_hCreditsDC; 
+	HDC m_hLyricDC; 
 
 	// logo dimensions
 	int m_cxLogo, m_cyLogo;
@@ -44,13 +45,14 @@ public:
 
 // Implementation
 public:
+	void LoadLyric();
 	void SetCredits(LPCTSTR lpszCredits);
 	virtual ~CLyricMakerCtrl();
 
 	// Generated message map functions
 protected:
 	void DrawLyric();
-	CString m_strCredits;
+	CString m_strLyric;
 	void Initialize();
 	void AnimateLogo();
 	void LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWidth, int &nHeight, HDC hDC);

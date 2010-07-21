@@ -70,9 +70,10 @@ void CMakeLyricDlg::OnBtnOpen()
 
 void CMakeLyricDlg::InitLyric(CString Lyric)
 {
-	Lyric = "一个老虎 English \n二Chinese\n";
+//	Lyric = "一   个老虎 English \n二Chinese\n";
 	if(Lyric.IsEmpty()) return;
 
+	m_LyricLines.RemoveAll();
 	CString Line;
 	int nCount=0;
 	while(AfxExtractSubString(Line, Lyric, nCount++, '\n'))
@@ -94,21 +95,62 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 				LyWord.IsChs = TRUE;
 				LyWord.Word = Line.Mid(Pos,2);
 				Pos+=2;
-
-				int increment;
-				while(Pos < Len-1)
-				{
-					int p = Pos+1;
-					ch = Line.GetAt(Ch)
-				}
-				continue;
-			}
-			
-			if(ch == )
+	
+				// add space
+				//int increment;
+				CString StrSpace;
+				GetSpace(Line, Pos, StrSpace);
+				LyWord.Word += StrSpace;
+			}else
 			{
+				LyWord.IsChs = FALSE;
+				GetEnWord(Line, Pos, LyWord.Word);
 
+				CString StrSpace;
+				GetSpace(Line, Pos, StrSpace);
+				LyWord.Word += StrSpace;
 			}
+			LL.LyricWords.push_back(LyWord);
+		}
+		m_LyricLines.Add(LL);
+	}
+
+//	m_LyricMaker.LoadLyric();
+}
+
+void CMakeLyricDlg::GetSpace(CString &Str, int &Pos,CString &StrSpace)
+{
+	int Len = Str.GetLength();
+	while(Pos < Len)
+	{
+		TCHAR ch = Str.GetAt(Pos++);
+		if(ch == 0x20)
+		{
+			StrSpace += ch;
+		}else
+		{
+			break;
+		}
+	}
+	if(Pos < Len)
+		Pos--;
+}
+
+void CMakeLyricDlg::GetEnWord(CString &Str, int &Pos, CString &StrWord)
+{
+	int Len = Str.GetLength();
+	while(Pos < Len)
+	{
+		TCHAR ch = Str.GetAt(Pos++);
+		if( (!(ch & 0x80)) && ch!=0x20)
+		{
+			StrWord += ch;
+		}else
+		{
+			break;
 		}
 	}
 
+	if(Pos < Len)	
+		Pos--;	
 }
