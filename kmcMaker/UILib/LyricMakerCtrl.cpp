@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "../resource.h"
 #include "LyricMakerCtrl.h"
+#include "../MakeLyricDlg.h"
 #include <math.h>
 
 #ifdef _DEBUG
@@ -20,7 +21,7 @@ double deg2rad(int angle)
 
 CLyricMakerCtrl::CLyricMakerCtrl()
 {
-	m_hCreditsDC = NULL;
+	m_hLyricDC = NULL;
 	m_hLogoDC = NULL;
 	m_hBackgroundDC = NULL;
 	m_hMemDC = NULL;
@@ -30,7 +31,7 @@ CLyricMakerCtrl::CLyricMakerCtrl()
 	m_xPos = 0;
 	m_yPos = 0; 
 
-	m_strCredits = "\tCLyricMakerCtrl\n\n"
+	m_strLyric = "\tCLyricMakerCtrl\n\n"
 				   "\rProgrammed by:\n"
 				   "Pablo van der Meer\n\n"
 				   "Copyright © 2002 Pablo Software Solutions\n"
@@ -42,8 +43,8 @@ CLyricMakerCtrl::CLyricMakerCtrl()
 CLyricMakerCtrl::~CLyricMakerCtrl()
 {
 	// clean up
-	if (m_hCreditsDC != NULL)
-		DeleteDC(m_hCreditsDC);
+	if (m_hLyricDC != NULL)
+		DeleteDC(m_hLyricDC);
 	if (m_hLogoDC != NULL)
 		DeleteDC(m_hLogoDC);
 	if (m_hBackgroundDC != NULL)
@@ -169,6 +170,7 @@ void CLyricMakerCtrl::OnTimer(UINT nIDEvent)
 
 void CLyricMakerCtrl::DrawLyric()
 {
+	LoadLyric();
 	CRect rect;
 	GetClientRect(rect);
 	// copy credits in memory dc
@@ -176,10 +178,10 @@ void CLyricMakerCtrl::DrawLyric()
 
 	CDC *pDC = GetDC();
 	
-	LoadLyric(m_hCreditsDC, rect.Width(), rect.Height(), pDC->m_hDC);
+//	LoadLyric(m_hLyricDC, rect.Width(), rect.Height(), pDC->m_hDC);
 
 	// and finally, copy memory bitmap to screen
-	BitBlt(pDC->m_hDC, 0, 0, rect.Width(), rect.Height(), m_hCreditsDC, 0, 0, SRCCOPY);
+	BitBlt(pDC->m_hDC, 0, 0, rect.Width(), rect.Height(), m_hLyricDC, 0, 0, SRCCOPY);
 	
 	ReleaseDC(pDC);
 }
@@ -229,7 +231,7 @@ void CLyricMakerCtrl::AnimateLogo()
 	}
 
 	// copy credits in memory dc
-	BitBlt(m_hMemDC, 194, m_nCounter--, m_cxData, yPos, m_hCreditsDC, 0, 0, SRCAND);
+	BitBlt(m_hMemDC, 194, m_nCounter--, m_cxData, yPos, m_hLyricDC, 0, 0, SRCAND);
 
 	if (m_nCounter< -m_cyData)
 	{
@@ -411,7 +413,7 @@ void CLyricMakerCtrl::LoadLyric(HDC &hDestinationDC, int nWidth, int nHeight, HD
 		CString strSub;
 		int nCount=0;
 		// draw each line, based on specified type
-		while(AfxExtractSubString(strSub, m_strCredits, nCount++, '\n'))
+		while(AfxExtractSubString(strSub, m_strLyric, nCount++, '\n'))
 		{
 			TCHAR nType = 0;
 			COLORREF oldColor;
@@ -465,7 +467,76 @@ void CLyricMakerCtrl::LoadLyric(HDC &hDestinationDC, int nWidth, int nHeight, HD
 /********************************************************************/
 void CLyricMakerCtrl::SetCredits(LPCTSTR lpszCredits)
 {
-	m_strCredits = lpszCredits;
+	m_strLyric = lpszCredits;
 }
 
+void CLyricMakerCtrl::LoadLyric()
+{
+	HDC hdcCompatible;
+	HBITMAP hbmScreen;
+ 
+	CDC *pDC = GetDC();
+	CRect rect;
+	GetClientRect(rect);
+	// Create the DC
+	hdcCompatible = CreateCompatibleDC(pDC->m_hDC);			
+	// Temporary bitmap
+	hbmScreen = CreateCompatibleBitmap(pDC->m_hDC, rect.Width(), rect.Height());		
+	// if the function fails
+	if (SelectObject(hdcCompatible, hbmScreen) == NULL)
+	{
+		// return null
+		m_hLyricDC = NULL;
+	}
+	else
+	{
+		 // if it succeeds, return the DC
+		m_hLyricDC = hdcCompatible;
+		RECT rc;
+
+		rc.top = 0;
+		rc.left = 0;
+		rc.bottom = rect.Width();
+		rc.right = rect.Height();
+
+		HFONT pOldFont;
+		HFONT hFont;
+		FillRect(m_hLyricDC, rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
+
+		// create a bunch of fonts
+		hFont = CreateFont(25, 0, 0, 0, 
+			FW_BOLD, FALSE, FALSE, 0, 
+			ANSI_CHARSET,
+			OUT_DEFAULT_PRECIS,
+			CLIP_DEFAULT_PRECIS,
+			PROOF_QUALITY,
+			VARIABLE_PITCH | 0x04 | FF_DONTCARE,
+			(LPSTR)"ËÎÌå");
+
+		CString Line;
+		int nCount=0;
+		// draw each line, based on specified type
+		for(int i=0;i<((CMakeLyricDlg *)GetParent())->m_LyricLines.GetSize();i++)
+		{
+			COLORREF oldColor;
+
+			oldColor = SetTextColor(m_hLyricDC, RGB(16,140,231));
+			pOldFont = (HFONT)SelectObject(m_hLyricDC, hFont);
+			Line = ((CMakeLyricDlg *)GetParent())->m_LyricLines.GetAt(i).Line;
+			DrawText(m_hLyricDC, Line, Line.GetLength(), &rect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
+
+			// next line
+			TEXTMETRIC tm;  
+			GetTextMetrics(m_hLyricDC, &tm);
+			rc.top += tm.tmHeight;
+			
+			// set back old values
+			SetTextColor(m_hLyricDC, oldColor);
+			SelectObject(m_hLyricDC, pOldFont);
+		}
+		// clean up
+		DeleteObject(hFont);
+	}
+	DeleteObject(hbmScreen);
+}
 
