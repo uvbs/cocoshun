@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CMakeLyricDlg
+LastClass=CImportLyricDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
@@ -13,13 +13,13 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=6
-Resource1=IDD_ABOUTBOX
+Resource1=IDD_KMCMAKER_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_KMCMAKER_DIALOG
+Resource3=IDD_IMPORTLYRICDLG_DIALOG
 Class4=CImportLyricDlg
-Resource4=IDD_IMPORTLYRICDLG_DIALOG
+Resource4=IDD_MAKELYRICDLG_DIALOG
 Class5=CMakeLyricDlg
-Resource5=IDD_MAKELYRICDLG_DIALOG
+Resource5=IDD_ABOUTBOX
 Class6=CSaveLyricDlg
 Resource6=IDD_SAVELYRICDLG_DIALOG
 
@@ -68,9 +68,11 @@ Control7=IDC_DLG_AREA,button,1342177287
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
 Class=CImportLyricDlg
-ControlCount=2
+ControlCount=4
 Control1=IDC_LYRIC_EDITOR,RICHEDIT,1353781700
 Control2=IDC_BTN_IMPORT,button,1342242816
+Control3=IDC_COMBO_ENCODE,combobox,1344340227
+Control4=IDC_STATIC_ENCODE,static,1342308352
 
 [CLS:CImportLyricDlg]
 Type=0
@@ -78,7 +80,7 @@ HeaderFile=ImportLyricDlg.h
 ImplementationFile=ImportLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
-LastObject=CImportLyricDlg
+LastObject=IDC_COMBO_ENCODE
 VirtualFilter=dWC
 
 [DLG:IDD_MAKELYRICDLG_DIALOG]

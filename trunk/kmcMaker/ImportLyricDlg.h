@@ -12,6 +12,7 @@
 //#include "UILib/AutoRichEditCtrl.h"
 #include  "UILib/MyRichEdit.h"
 #include "LyricText.h"	// Added by ClassView
+#include "Util/StdioFileEx.h"
 /////////////////////////////////////////////////////////////////////////////
 // CImportLyricDlg dialog
 
@@ -25,6 +26,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CImportLyricDlg)
 	enum { IDD = IDD_IMPORTLYRICDLG_DIALOG };
+	CComboBox	m_ComboEncode;
 	CButton m_BtnImport;
 	CMyRichEdit m_LyricEditor;
 	//}}AFX_DATA
@@ -51,6 +53,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	LRESULT OnAcceptDropFile(WPARAM wParam = 0, LPARAM lParam = 0 );
+	void AddCodePage(IN const CString& sDesc,IN const UINT nCodePage,IN const UINT nCurrentCP);
+	CMapStringToPtr	m_mapCodePageDescsToCodePages;
+	CString				m_sCurrentCPDesc;
+
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -8,6 +8,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include "Util/StdioFileEx.h"
 #include <afxtempl.h>
 
 #define LINE_SEPARATOR _T("\n")
