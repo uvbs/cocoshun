@@ -28,9 +28,9 @@ CTextBuffer::~CTextBuffer()
 
 BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 {
-	CStdioFile FileReader;
+	CStdioFileEx FileReader;
 	
-	if(! FileReader.Open(pszFileName, CStdioFile::modeRead| CStdioFile::typeText))
+	if(! FileReader.Open(pszFileName, CStdioFileEx::modeRead| CStdioFileEx::typeText))
 	{
 		FileReader.Close();
 		return FALSE;
@@ -56,9 +56,9 @@ BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 
 BOOL CTextBuffer::SaveToFile(LPCTSTR pszFileName)
 {
-	CStdioFile FileWriter;
+	CStdioFileEx FileWriter;
 	
-	if(! FileWriter.Open(pszFileName, CStdioFile::modeCreate|CStdioFile::modeWrite| CStdioFile::typeText))
+	if(! FileWriter.Open(pszFileName, CStdioFileEx::modeCreate|CStdioFileEx::modeWrite| CStdioFileEx::typeText))
 	{
 		return FALSE;
 	}
