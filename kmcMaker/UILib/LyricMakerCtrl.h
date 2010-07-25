@@ -14,28 +14,19 @@ public:
 
 // Attributes
 protected:
-	HDC m_hLogoDC; 
 	HDC m_hBackgroundDC; 
-	HDC m_hMemDC; 
 	HDC m_hLyricDC; 
+	HFONT m_hLyricFont;
 
-	// logo dimensions
-	int m_cxLogo, m_cyLogo;
-	// logo angle
-	int m_xAngle, m_yAngle;
-	// logo 'fly' speed
-	int m_nSpeed;
-	// logo position
-	int m_xPos, m_yPos; 
+	int m_ClientWith;
+	int m_ClientHeight;
+	int m_LyricPosY;
+	int m_LyricPosX;
 
-	int m_cxData;
-	int m_cyData;
-
-	int m_nCounter;
-
+	vector <LyricLine> *m_LyricLines;
 // Operations
 public:
-
+	void SetLyricLines( vector <LyricLine> *Ll );
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(LyricMakerCtrl)
@@ -45,25 +36,27 @@ public:
 
 // Implementation
 public:
-	void LoadLyric();
-	void SetCredits(LPCTSTR lpszCredits);
+	int m_FontHeight;
 	virtual ~CLyricMakerCtrl();
 
 	// Generated message map functions
 protected:
+	void DrawLyricLine(int nLine);
 	void DrawLyric();
 	CString m_strLyric;
 	void Initialize();
-	void AnimateLogo();
 	void LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWidth, int &nHeight, HDC hDC);
-	void LoadLyric(HDC &hDestination, int nWidth, int nHeight, HDC hDC);
 
 	//{{AFX_MSG(LyricMakerCtrl)
 	afx_msg void OnPaint();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnTimer( UINT nIDEvent );
+	afx_msg UINT OnGetDlgCode();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	//}}AFX_MSG
-
 	DECLARE_MESSAGE_MAP()
+
+private:
 };
 
 //{{AFX_INSERT_LOCATION}}

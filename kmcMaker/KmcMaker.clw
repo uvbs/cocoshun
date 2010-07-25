@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CImportLyricDlg
+LastClass=CMakeLyricDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
@@ -13,9 +13,9 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=6
-Resource1=IDD_KMCMAKER_DIALOG
+Resource1=IDD_IMPORTLYRICDLG_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_IMPORTLYRICDLG_DIALOG
+Resource3=IDD_KMCMAKER_DIALOG
 Class4=CImportLyricDlg
 Resource4=IDD_MAKELYRICDLG_DIALOG
 Class5=CMakeLyricDlg
@@ -68,11 +68,9 @@ Control7=IDC_DLG_AREA,button,1342177287
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
 Class=CImportLyricDlg
-ControlCount=4
+ControlCount=2
 Control1=IDC_LYRIC_EDITOR,RICHEDIT,1353781700
 Control2=IDC_BTN_IMPORT,button,1342242816
-Control3=IDC_COMBO_ENCODE,combobox,1344340227
-Control4=IDC_STATIC_ENCODE,static,1342308352
 
 [CLS:CImportLyricDlg]
 Type=0
@@ -87,9 +85,9 @@ VirtualFilter=dWC
 Type=1
 Class=CMakeLyricDlg
 ControlCount=3
-Control1=IDC_MEDIA_PLAYER,{6BF52A52-394A-11D3-B153-00C04F79FAA6},1073807360
-Control2=IDC_BTN_OPEN,button,1342242816
-Control3=IDC_LYRIC_MAKER,static,1342308352
+Control1=IDC_BTN_OPEN,button,1342242816
+Control2=IDC_LYRIC_MAKER,static,1342373889
+Control3=IDC_MEDIA_PLAYER,{6BF52A52-394A-11D3-B153-00C04F79FAA6},1342242816
 
 [CLS:CMakeLyricDlg]
 Type=0
@@ -98,7 +96,7 @@ ImplementationFile=MakeLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=IDC_LYRIC_MAKER
+LastObject=IDC_MEDIA_PLAYER
 
 [DLG:IDD_SAVELYRICDLG_DIALOG]
 Type=1
