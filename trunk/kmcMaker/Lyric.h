@@ -13,7 +13,7 @@ struct LyricWord
 	CString Word;
 	COLORREF Color;
 	BOOL IsMarked;
-	
+
 	LyricWord()
 	{
 		IsLyric = TRUE;
@@ -28,10 +28,10 @@ struct LyricLine
 	CString Line;
 	vector <LyricWord> LyricWords;
 
-	LyricLine()
-	{
-		LyricWords.clear();
-	}
+// 	LyricLine()
+// 	{
+// 		LyricWords.clear();
+// 	}
 };
 
 

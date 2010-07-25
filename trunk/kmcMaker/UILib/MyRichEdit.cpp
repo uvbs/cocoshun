@@ -59,16 +59,16 @@ void CMyRichEdit::OnRButtonDown(UINT nFlags, CPoint point)
 	CMenu popmenu;
 	popmenu.CreatePopupMenu();
 	//添加菜单项目
-	popmenu.AppendMenu(0, ID_RICH_UNDO, "撤消(&U)");
+	popmenu.AppendMenu(0, ID_RICH_UNDO, _T("撤消(&U)"));
 	popmenu.AppendMenu(0, MF_SEPARATOR);
-	popmenu.AppendMenu(0, ID_RICH_CUT, "剪切(&T)");
-	popmenu.AppendMenu(0, ID_RICH_COPY, "复制(&T)");
-	popmenu.AppendMenu(0, ID_RICH_PASTE, "粘贴(&P)");
-	popmenu.AppendMenu(0, ID_RICH_CLEAR, "删除(&D)");
+	popmenu.AppendMenu(0, ID_RICH_CUT, _T("剪切(&T)"));
+	popmenu.AppendMenu(0, ID_RICH_COPY, _T("复制(&T)"));
+	popmenu.AppendMenu(0, ID_RICH_PASTE, _T("粘贴(&P)"));
+	popmenu.AppendMenu(0, ID_RICH_CLEAR, _T("删除(&D)"));
 	popmenu.AppendMenu(0, MF_SEPARATOR);
-	popmenu.AppendMenu(0, ID_RICH_SELECTALL, "全选(&A)");
+	popmenu.AppendMenu(0, ID_RICH_SELECTALL, _T("全选(&A)"));
 	popmenu.AppendMenu(0, MF_SEPARATOR);
-	popmenu.AppendMenu(0, ID_RICH_SETFONT, "设置字体(&F)");
+	popmenu.AppendMenu(0, ID_RICH_SETFONT, _T("设置字体(&F)"));
 
 	//初始化菜单项
 	UINT nUndo=(CanUndo() ? 0 : MF_GRAYED );

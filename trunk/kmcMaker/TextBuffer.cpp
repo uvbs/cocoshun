@@ -28,9 +28,9 @@ CTextBuffer::~CTextBuffer()
 
 BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 {
-	CStdioFileEx FileReader;
+	CTextFileRead FileReader(pszFileName);
 	
-	if(! FileReader.Open(pszFileName, CStdioFileEx::modeRead| CStdioFileEx::typeText))
+	if(! FileReader.IsOpen())
 	{
 		FileReader.Close();
 		return FALSE;
@@ -41,7 +41,7 @@ BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 	m_Lines.SetSize(0,4096);
 	CString Line;
 	int LineNum = 0;
-	while(FileReader.ReadString(Line))
+	while(FileReader.ReadLine(Line))
 	{
 		LineInfo Li;
 		Li.Num = LineNum++;
@@ -56,9 +56,9 @@ BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 
 BOOL CTextBuffer::SaveToFile(LPCTSTR pszFileName)
 {
-	CStdioFileEx FileWriter;
+	CTextFileWrite FileWriter(pszFileName);
 	
-	if(! FileWriter.Open(pszFileName, CStdioFileEx::modeCreate|CStdioFileEx::modeWrite| CStdioFileEx::typeText))
+	if(! FileWriter.IsOpen())
 	{
 		return FALSE;
 	}
@@ -67,7 +67,7 @@ BOOL CTextBuffer::SaveToFile(LPCTSTR pszFileName)
 	for(int i=0; i<m_Lines.GetSize();i++)
 	{
 		LineInfo Li = m_Lines.GetAt(i);
-		FileWriter.WriteString(Li.Text + LINE_SEPARATOR);
+		FileWriter.Write(Li.Text + LINE_SEPARATOR);
 	}
 
 	FileWriter.Close();

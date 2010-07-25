@@ -42,10 +42,11 @@ BOOL CLyricText::LoadLyric(LPCTSTR pszFileName)
 
 void CLyricText::SplitLRC()
 {
-	TCHAR LRC_FLAG = ']';
-	TCHAR *Ti = _T("[ti:");
-	TCHAR *Ar = _T("[ar:");
-	TCHAR *Al = _T("[al:");
+	TCHAR LRC_FLAG = _T(']');
+	TCHAR Ti[] = _T("[ti:");
+	TCHAR Ar[] = _T("[ar:");
+	TCHAR Al[] = _T("[al:");
+	TCHAR By[] = _T("[by:");
 
 	for(int i=0;i<m_Lines.GetSize();i++)
 	{
@@ -55,7 +56,8 @@ void CLyricText::SplitLRC()
 		if(Text.IsEmpty()) continue;
 
 		int Pos;
-		if( ((Pos = Text.Find(Ti)) != -1) || ((Pos = Text.Find(Ar)) != -1) || ((Pos = Text.Find(Al)) != -1) )
+		if( ((Pos = Text.Find(Ti)) != -1) || ((Pos = Text.Find(Ar)) != -1) 
+			|| ((Pos = Text.Find(Al)) != -1) || ((Pos = Text.Find(By)) != -1))
 		{
 			int PosNext = Text.ReverseFind(LRC_FLAG);
 			Text = Text.Mid(Pos + 4, PosNext - (Pos + 4));
@@ -67,13 +69,17 @@ void CLyricText::SplitLRC()
 		Pos = Text.ReverseFind(LRC_FLAG);
 		if(Pos !=-1)
 		{
-			Text = Text.Mid(Pos + 1, Text.GetAllocLength() - Pos);
+			int nCount = Text.GetLength() - Pos;
+			if(nCount>0)
+				Text = Text.Mid(Pos + 1, nCount);
 			Text.TrimLeft();
 			Text.TrimRight();
 		}
 
-		if(Text.IsEmpty()) m_Lines.RemoveAt(i);
-		m_Lines.SetAt(i, Li);
+		if(Text.IsEmpty()) 
+			m_Lines.RemoveAt(i);
+		else
+			m_Lines.SetAt(i, Li);
 	}
 }
 

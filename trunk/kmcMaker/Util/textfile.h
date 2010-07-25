@@ -334,6 +334,7 @@ public:
 	bool Eof() const;
 
 private:
+	BOOL IsUTF8(const void* pBuffer, long size);
 	//Guess the number of characters in the file
 	int GuessCharacterCount();
 

@@ -12,7 +12,6 @@
 //#include "UILib/AutoRichEditCtrl.h"
 #include  "UILib/MyRichEdit.h"
 #include "LyricText.h"	// Added by ClassView
-#include "Util/StdioFileEx.h"
 /////////////////////////////////////////////////////////////////////////////
 // CImportLyricDlg dialog
 
@@ -26,7 +25,6 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CImportLyricDlg)
 	enum { IDD = IDD_IMPORTLYRICDLG_DIALOG };
-	CComboBox	m_ComboEncode;
 	CButton m_BtnImport;
 	CMyRichEdit m_LyricEditor;
 	//}}AFX_DATA

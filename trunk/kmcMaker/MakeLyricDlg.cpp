@@ -45,27 +45,27 @@ END_MESSAGE_MAP()
 BOOL CMakeLyricDlg::OnInitDialog() 
 {
 	CResizingDialog::OnInitDialog();
-//	m_MediaPlayer.SetFileName("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3");
 
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
+	SetControlInfo(IDC_MEDIA_PLAYER, ANCHORE_BOTTOM | ANCHORE_LEFT);
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-BEGIN_EVENTSINK_MAP(CMakeLyricDlg, CResizingDialog)
-    //{{AFX_EVENTSINK_MAP(CMakeLyricDlg)
-	//}}AFX_EVENTSINK_MAP
-END_EVENTSINK_MAP()
-
-
 
 void CMakeLyricDlg::OnBtnOpen() 
 {
-	m_MediaPlayer.Run();
-	CString str;
-	str.Format("%f",m_MediaPlayer.GetDuration());
-	MessageBox(str);
+	CString FileName = _T("F:\\My Music\\ÖÜ½ÜÂ× - Ò¹Çú.mp3");
+	m_MediaPlayer.SetUrl(_T("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3"));
+	m_MediaPlayer.GetControls().play();
+	SetFocusToLyricMaker();
+//	m_MediaPlayer.SetUrl(FileName);
+//	m_MediaPlayer.Run();
+//	CString str;
+//	str.Format(_T("%f"),m_MediaPlayer.GetDuration());
+//	MessageBox(str);
 }
 
 void CMakeLyricDlg::InitLyric(CString Lyric)
@@ -73,7 +73,7 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 //	Lyric = "Ò»   ¸öÀÏ»¢ English \n¶þChinese\n";
 	if(Lyric.IsEmpty()) return;
 
-	m_LyricLines.RemoveAll();
+	m_LyricLines.clear();
 	CString Line;
 	int nCount=0;
 	while(AfxExtractSubString(Line, Lyric, nCount++, '\n'))
@@ -112,10 +112,10 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 			}
 			LL.LyricWords.push_back(LyWord);
 		}
-		m_LyricLines.Add(LL);
+		m_LyricLines.push_back(LL);
 	}
 
-//	m_LyricMaker.LoadLyric();
+	m_LyricMaker.SetLyricLines( &m_LyricLines);
 }
 
 void CMakeLyricDlg::GetSpace(CString &Str, int &Pos,CString &StrSpace)
@@ -154,3 +154,9 @@ void CMakeLyricDlg::GetEnWord(CString &Str, int &Pos, CString &StrWord)
 	if(Pos < Len)	
 		Pos--;	
 }
+
+void CMakeLyricDlg::SetFocusToLyricMaker()
+{
+	m_LyricMaker.SetFocus();
+}
+

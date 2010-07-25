@@ -96,8 +96,8 @@ BOOL CResizingDialog::OnInitDialog()
 		CString dialog_name;
 		GetDialogProfileEntry(dialog_name);
 
-		int cx = AfxGetApp()->GetProfileInt(dialog_name,"CX",0);
-		int cy = AfxGetApp()->GetProfileInt(dialog_name,"CY",0);
+		int cx = AfxGetApp()->GetProfileInt(dialog_name,_T("CX"),0);
+		int cy = AfxGetApp()->GetProfileInt(dialog_name,_T("CY"),0);
 		
 		if(cx && cy)
 		{
@@ -139,7 +139,7 @@ void CResizingDialog::OnSize(UINT nType, int cx, int cy)
 			pWnd = GetDlgItem(LOWORD(c_info));
 			if(!pWnd)
 			{
-				TRACE("Control ID - %d NOT FOUND!!\n",LOWORD(c_info));
+				TRACE(_T("Control ID - %d NOT FOUND!!\n"),LOWORD(c_info));
 				continue;
 			}
 
@@ -291,7 +291,7 @@ UINT CResizingDialog::OnNcHitTest(CPoint point)
 void CResizingDialog::GetDialogProfileEntry(CString &sEntry)
 {
 	// By default store the size under the Dialog ID value (Hex)
-	sEntry.Format("%x",m_nIDTemplate);
+	sEntry.Format(_T("%x"),m_nIDTemplate);
 }
 
 
@@ -311,7 +311,7 @@ void CResizingDialog::OnDropFiles(HDROP dropInfo)
 		// Allocate memory to contain full pathname & zero byte
 		wPathnameSize+=1;
 		
-		char * pFile = new TCHAR[wPathnameSize];
+		TCHAR * pFile = new TCHAR[wPathnameSize];
 		if (pFile == NULL)
 		{
 			ASSERT(0);

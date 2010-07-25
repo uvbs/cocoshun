@@ -113,21 +113,18 @@ BEGIN
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
                     WS_TABSTOP,3,5,381,175
     PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,7,190,55,20
-    COMBOBOX        IDC_COMBO_ENCODE,114,193,152,30,CBS_DROPDOWNLIST | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "编码方式:",IDC_STATIC_ENCODE,76,197,37,8
 END
 
-IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 357, 184
-STYLE WS_CHILD
-FONT 9, "宋体", 0, 0, 0x1
+IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 450, 218
+STYLE DS_SETFOREGROUND | WS_CHILD
+FONT 9, "宋体"
 BEGIN
+    PUSHBUTTON      "打开(&O)",IDC_BTN_OPEN,379,181,29,30
+    CTEXT           "Static",IDC_LYRIC_MAKER,7,7,436,166,WS_TABSTOP,
+                    WS_EX_TRANSPARENT | WS_EX_STATICEDGE
     CONTROL         "",IDC_MEDIA_PLAYER,
-                    "{6BF52A52-394A-11D3-B153-00C04F79FAA6}",NOT WS_VISIBLE | 
-                    WS_TABSTOP,330,7,20,15
-    PUSHBUTTON      "打开(&O)",IDC_BTN_OPEN,7,163,50,14
-    LTEXT           "Static",IDC_LYRIC_MAKER,7,7,343,142,0,WS_EX_TRANSPARENT | 
-                    WS_EX_STATICEDGE
+                    "{6BF52A52-394A-11D3-B153-00C04F79FAA6}",WS_TABSTOP,7,
+                    180,372,31
 END
 
 IDD_SAVELYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 320, 201
@@ -216,9 +213,9 @@ BEGIN
     IDD_MAKELYRICDLG_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 350
+        RIGHTMARGIN, 443
         TOPMARGIN, 7
-        BOTTOMMARGIN, 177
+        BOTTOMMARGIN, 211
     END
 
     IDD_SAVELYRICDLG_DIALOG, DIALOG
@@ -241,39 +238,33 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Dialog Info
-//
-
-IDD_MEDIAPLAYER_DIALOG DLGINIT
-BEGIN
-    IDC_ACTIVEMOVIECONTROL1, 0x378, 0, 0
-    0
-END
-
-IDD_MAKELYRICDLG_DIALOG DLGINIT
-BEGIN
-    IDC_MEDIA_PLAYER, 0x376, 166, 0
-0x0000, 0x0000, 0x0300, 0x0000, 0x0008, 0x0000, 0x0000, 0x0005, 0x0000, 
-0x0000, 0x0000, 0x3ff0, 0x0003, 0x0000, 0x0000, 0x0005, 0x0000, 0x0000, 
-0x0000, 0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x0003, 0x0001, 0x0000, 
-0x000b, 0xffff, 0x0003, 0x0000, 0x0000, 0x000b, 0xffff, 0x0008, 0x0002, 
-0x0000, 0x0000, 0x0003, 0x0032, 0x0000, 0x000b, 0x0000, 0x0008, 0x000a, 
-0x0000, 0x0066, 0x0075, 0x006c, 0x006c, 0x0000, 0x000b, 0x0000, 0x000b, 
-0x0000, 0x000b, 0xffff, 0x000b, 0xffff, 0x000b, 0x0000, 0x0008, 0x0002, 
-0x0000, 0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x0008, 0x0002, 0x0000, 
-0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x000b, 0x0000, 0x031a, 0x0000, 
-0x0261, 0x0000, 
-    0
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Bitmap
 //
 
-IDB_LOGO                BITMAP  DISCARDABLE     "res\\backgrou.bmp"
-IDB_BACKGROUND          BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+IDB_LOGO                BITMAP  DISCARDABLE     "res\\logo.bmp"
+IDB_BACKGROUND          BITMAP  DISCARDABLE     "res\\background.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_MAKELYRICDLG_DIALOG DLGINIT
+BEGIN
+    IDC_MEDIA_PLAYER, 0x376, 168, 0
+0x0000, 0x0000, 0x0300, 0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x0005, 
+0x0000, 0x0000, 0x0000, 0x3ff0, 0x0003, 0x0000, 0x0000, 0x0005, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x0003, 0x0001, 
+0x0000, 0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 0x000b, 0xffff, 0x0008, 
+0x0002, 0x0000, 0x0000, 0x0003, 0x0032, 0x0000, 0x000b, 0x0000, 0x0008, 
+0x000a, 0x0000, 0x0066, 0x0075, 0x006c, 0x006c, 0x0000, 0x000b, 0x0000, 
+0x000b, 0xffff, 0x000b, 0xffff, 0x000b, 0x0000, 0x000b, 0x0000, 0x0008, 
+0x0002, 0x0000, 0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x0008, 0x0002, 
+0x0000, 0x0000, 0x0008, 0x0002, 0x0000, 0x0000, 0x000b, 0x0000, 0x39ac, 
+0x0000, 0x04dc, 0x0000, 
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
