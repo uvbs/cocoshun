@@ -9,7 +9,8 @@ struct LyricWord
 {
 	BOOL IsLyric;
 	BOOL IsChs;
-	double DelayTime;
+	double StartTime;
+	double EndTime;
 	CString Word;
 	COLORREF Color;
 	BOOL IsMarked;
@@ -18,6 +19,11 @@ struct LyricWord
 	{
 		IsLyric = TRUE;
 		IsMarked = FALSE;
+	}
+
+	double DelayTime()
+	{
+		return EndTime - StartTime;
 	}
 };
 

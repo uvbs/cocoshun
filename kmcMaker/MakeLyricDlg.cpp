@@ -57,8 +57,9 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 void CMakeLyricDlg::OnBtnOpen() 
 {
-	CString FileName = _T("F:\\My Music\\ÖÜ½ÜÂ× - Ò¹Çú.mp3");
-	m_MediaPlayer.SetUrl(_T("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3"));
+//	CString FileName = _T("F:\\My Music\\ÖÜ½ÜÂ× - Ò¹Çú.mp3");
+//	m_MediaPlayer.SetUrl(_T("F:\\My Music\\ÖÜ½ÜÂ× - ÐÇÇç.mp3"));
+	m_MediaPlayer.SetUrl(_T("d:\\KuGou\\°ÜÀà.mp3"));
 	m_MediaPlayer.GetControls().play();
 	SetFocusToLyricMaker();
 //	m_MediaPlayer.SetUrl(FileName);
@@ -116,6 +117,7 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 	}
 
 	m_LyricMaker.SetLyricLines( &m_LyricLines);
+	m_LyricMaker.SetMediaPlayer( &m_MediaPlayer);
 }
 
 void CMakeLyricDlg::GetSpace(CString &Str, int &Pos,CString &StrSpace)

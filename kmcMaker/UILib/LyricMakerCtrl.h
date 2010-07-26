@@ -5,6 +5,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 #include "../Lyric.h"
+#include "../wmpplayer4.h"
 
 class CLyricMakerCtrl : public CStatic
 {
@@ -24,6 +25,7 @@ protected:
 	int m_LyricPosX;
 
 	vector <LyricLine> *m_LyricLines;
+	CWMPPlayer4 *m_MediaPlayer;
 // Operations
 public:
 	void SetLyricLines( vector <LyricLine> *Ll );
@@ -36,6 +38,7 @@ public:
 
 // Implementation
 public:
+	void SetMediaPlayer(CWMPPlayer4 *MediaPlayer);
 	int m_FontHeight;
 	virtual ~CLyricMakerCtrl();
 
@@ -43,7 +46,6 @@ public:
 protected:
 	void DrawLyricLine(int nLine);
 	void DrawLyric();
-	CString m_strLyric;
 	void Initialize();
 	void LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWidth, int &nHeight, HDC hDC);
 
