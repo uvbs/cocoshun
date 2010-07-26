@@ -18,7 +18,7 @@ protected:
 	HDC m_hBackgroundDC; 
 	HDC m_hLyricDC; 
 	HFONT m_hLyricFont;
-
+	int m_FontHeight;
 	int m_ClientWith;
 	int m_ClientHeight;
 	int m_LyricPosY;
@@ -39,12 +39,13 @@ public:
 // Implementation
 public:
 	void SetMediaPlayer(CWMPPlayer4 *MediaPlayer);
-	int m_FontHeight;
 	virtual ~CLyricMakerCtrl();
 
 	// Generated message map functions
 protected:
-	void DrawLyricLine(int nLine);
+	int m_DrawLineCount;
+	int m_MidLineNum;
+	void DrawLyricLine(int nLine,BOOL bCallByDrallAll= FALSE, int DrewLineNum = 0);
 	void DrawLyric();
 	void Initialize();
 	void LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWidth, int &nHeight, HDC hDC);

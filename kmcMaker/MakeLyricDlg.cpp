@@ -57,9 +57,7 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 void CMakeLyricDlg::OnBtnOpen() 
 {
-//	CString FileName = _T("F:\\My Music\\周杰伦 - 夜曲.mp3");
-//	m_MediaPlayer.SetUrl(_T("F:\\My Music\\周杰伦 - 星晴.mp3"));
-	m_MediaPlayer.SetUrl(_T("d:\\KuGou\\败类.mp3"));
+	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
 	m_MediaPlayer.GetControls().play();
 	SetFocusToLyricMaker();
 //	m_MediaPlayer.SetUrl(FileName);
