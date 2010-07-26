@@ -68,22 +68,31 @@ void CLyricMakerCtrl::OnPaint()
 void CLyricMakerCtrl::Initialize()
 {
  	int cx, cy;
-
 	CDC *pDC = GetDC();
 
+	// load bitbmp
 	LoadPicture(IDB_BACKGROUND, m_hBackgroundDC, cx, cy, pDC->m_hDC); 
 
 	// create a bunch of fonts
-	m_hLyricFont = CreateFont(25, 0, 0, 0, 
+	m_hLyricFont = CreateFont(20, 0, 0, 0, 
 		FW_BOLD, FALSE, FALSE, 0, 
 		ANSI_CHARSET,
 		OUT_DEFAULT_PRECIS,
 		CLIP_DEFAULT_PRECIS,
-		DRAFT_QUALITY,
+		PROOF_QUALITY,
 		VARIABLE_PITCH | 0x04 | FF_DONTCARE,
 			_T("宋体"));
 
-	SetTimer(1,1000,NULL);
+
+	// select font
+	SelectObject(pDC->m_hDC, m_hLyricFont);
+
+	// get font height
+	TEXTMETRIC tm;  
+	GetTextMetrics(pDC->m_hDC, &tm);
+	m_FontHeight = tm.tmHeight + 5;
+
+//	SetTimer(1,1000,NULL);
 
 	ReleaseDC(pDC);
 }
@@ -103,7 +112,7 @@ void CLyricMakerCtrl::PreSubclassWindow()
 }
 
 
-void CLyricMakerCtrl::DrawLyricLine(int nLine)
+void CLyricMakerCtrl::DrawLyricLine(int nLine, BOOL bCallByDrallAll,int DrewLineNum )
 {
 	if( m_LyricLines == NULL) return;
 
@@ -111,11 +120,21 @@ void CLyricMakerCtrl::DrawLyricLine(int nLine)
 	SelectObject(pDC->m_hDC, m_hLyricFont);
 	
 	pDC->SetBkMode(TRANSPARENT);
-	TEXTMETRIC tm;  
-	GetTextMetrics(pDC->m_hDC, &tm);
 
 	// Draw Lyric
-	CRect FontRect(20, (5 + m_FontHeight*nLine) - (m_LyricPosY*m_FontHeight) ,m_ClientWith,m_ClientHeight);
+ 	int DrawLineCount = m_ClientHeight / m_FontHeight;
+ 	int MidLineNum = DrawLineCount / 2;
+	int top;
+
+	if(bCallByDrallAll )
+	{
+		top = (5+m_FontHeight* DrewLineNum);
+	}else
+	{
+		top = (5+m_FontHeight * nLine);
+	}
+
+	CRect FontRect(20, top , m_ClientWith, m_ClientHeight);
 	COLORREF oldColor;
 
 	CString UnMarkedWords;
@@ -139,16 +158,14 @@ void CLyricMakerCtrl::DrawLyricLine(int nLine)
 	oldColor = SetTextColor(pDC->m_hDC, RGB(16,140,231));
 	pDC->DrawText(Ll.Line, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
 	//		DrawText(pDC->m_hDC, Line, Line.GetLength(), FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
-	SetTextColor(pDC->m_hDC, RGB(0,240,0));
+	SetTextColor(pDC->m_hDC, RGB(250,0,0));
 	pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
 	// move position to next line
-	FontRect.top += m_FontHeight;
+//	FontRect.top += m_FontHeight;
 	
 	// set back old values
 	pDC->SetTextColor(oldColor);
 
-//	SelectObject(pDC->m_hDC, pOldFont);
-	
 	ReleaseDC(pDC);
 }
 void CLyricMakerCtrl::DrawLyric()
@@ -161,29 +178,26 @@ void CLyricMakerCtrl::DrawLyric()
 
 	if( m_LyricLines == NULL) return;
 
-	// Set Font
-//	pOldFont = (HFONT)
-	SelectObject(pDC->m_hDC, m_hLyricFont);
-	TEXTMETRIC tm;  
-	GetTextMetrics(pDC->m_hDC, &tm);
-	m_FontHeight = tm.tmHeight + 5;
-//	int FontWidth = tm.tmWeight;
+	int StartDrawLine = 0;
+	if(m_LyricPosY > m_MidLineNum)
+	{
+		StartDrawLine += (m_LyricPosY-m_MidLineNum) + 1;
+	}
 
-	// calculate line count for client font should be draw
-	int DrawLineCount = m_ClientHeight / m_FontHeight;
-
+	TRACE("Start Line : %d\n",StartDrawLine);
 	// Draw Line
-	int LinePosY = m_FontHeight + 3; //(DrawLineCount / 4) * FontHeight + 8;
+	int LinePosY = m_FontHeight*m_MidLineNum + 3; //(DrawLineCount / 4) * FontHeight + 8;
 	CPen pen3DDKShadow(PS_SOLID, 2, RGB(0,240,0)); // Black
 	pDC->SelectObject(pen3DDKShadow);
 	pDC->MoveTo(0, LinePosY);
-	pDC->LineTo(m_ClientWith, LinePosY );
+	pDC->LineTo(800, LinePosY );
 
 	int DrewLineNum = 0;
 //	TRACE("%d\n",m_LyricLines->GetAt(m_LyricPosY).LyricWords[m_LyricPosX].IsMarked);
-	for(int i=m_LyricPosY;i<m_LyricLines->size() && DrewLineNum<DrawLineCount;i++,DrewLineNum++)
+	for(int i=StartDrawLine;i<m_LyricLines->size() 
+							&& DrewLineNum<m_DrawLineCount;i++,DrewLineNum++)
 	{
-		DrawLyricLine(i);
+		DrawLyricLine(i,TRUE, DrewLineNum);
 	}
 
 	ReleaseDC(pDC);
@@ -196,6 +210,10 @@ void CLyricMakerCtrl::OnSize(UINT nType, int cx, int cy)
 	GetClientRect(rect);
 	m_ClientWith = rect.Width();
 	m_ClientHeight = rect.Height();
+
+	// calculate line count for client font should be draw
+	m_DrawLineCount = m_ClientHeight / m_FontHeight;
+	m_MidLineNum = m_DrawLineCount / 2;
 }
 
 UINT CLyricMakerCtrl::OnGetDlgCode()
@@ -241,18 +259,19 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 					{
 						TRACE("行开始");
 					}
-					//TRACE("VK_RIGHT, %d, %s\n",m_LyricPosX,m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).Word);
 					m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked = TRUE;
-					//TRACE("%d\n",m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked);
 					m_LyricPosX++;
 					DrawLyricLine(m_LyricPosY);
-				}else if( m_LyricPosY < LineNum-1)
+				}
+				else //if( m_LyricPosY <= LineNum)
 				{
 					TRACE("行结束");
-
 					m_LyricPosY++;
 					m_LyricPosX = 0;
-					DrawLyric();
+					m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked = TRUE;
+
+					DrawLyricLine(m_LyricPosY);
+					//DrawLyric();
 				}
 				break;
 			case VK_UP:
