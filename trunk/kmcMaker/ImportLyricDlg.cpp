@@ -56,7 +56,8 @@ BOOL CImportLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_IMPORT,ANCHORE_LEFT | ANCHORE_BOTTOM);
 
 	m_LyricEditor.SetFocus();
-	LoadLyric(_T("F:\\Lrc\\UTF-8-UINX.LRC"));
+//	LoadLyric(_T("F:\\Lrc\\UTF-8-UINX.LRC"));
+	LoadLyric(_T("E:\\Kelly Clarkson - Because Of You.lrc"));
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }

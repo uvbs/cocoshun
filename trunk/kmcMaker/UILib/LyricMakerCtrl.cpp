@@ -12,10 +12,10 @@ static char THIS_FILE[] = __FILE__;
 
 CLyricMakerCtrl::CLyricMakerCtrl()
 {
-	m_hLyricDC = NULL;
 	m_hBackgroundDC = NULL;
+	m_hLyricDC = NULL;
+	m_LyricLines =NULL;
 	m_hLyricFont = NULL;
-	m_strLyric = _T("");
 	m_LyricPosY = 0;
 	m_LyricPosX = 0;
 }
@@ -105,16 +105,17 @@ void CLyricMakerCtrl::PreSubclassWindow()
 
 void CLyricMakerCtrl::DrawLyricLine(int nLine)
 {
+	if( m_LyricLines == NULL) return;
+
 	CDC *pDC = GetDC();
 	SelectObject(pDC->m_hDC, m_hLyricFont);
 	
 	pDC->SetBkMode(TRANSPARENT);
 	TEXTMETRIC tm;  
 	GetTextMetrics(pDC->m_hDC, &tm);
-	int LinePosY = m_FontHeight + 3; 
 
 	// Draw Lyric
-	CRect FontRect(20,LinePosY-m_FontHeight + nLine*m_FontHeight ,m_ClientWith,m_ClientHeight);
+	CRect FontRect(20, (5 + m_FontHeight*nLine) - (m_LyricPosY*m_FontHeight) ,m_ClientWith,m_ClientHeight);
 	COLORREF oldColor;
 
 	CString UnMarkedWords;
@@ -158,8 +159,11 @@ void CLyricMakerCtrl::DrawLyric()
 	BitBlt(pDC->m_hDC, 0, 0, m_ClientWith, m_ClientHeight, m_hBackgroundDC, 0, 0, SRCCOPY);
 //	StretchBlt(pDC->m_hDC,0, 0, m_ClientWith, m_ClientHeight, m_hBackgroundDC, 0, 0, 800,600, SRCCOPY);
 
+	if( m_LyricLines == NULL) return;
+
 	// Set Font
-//	pOldFont = (HFONT)SelectObject(pDC->m_hDC, m_hLyricFont);
+//	pOldFont = (HFONT)
+	SelectObject(pDC->m_hDC, m_hLyricFont);
 	TEXTMETRIC tm;  
 	GetTextMetrics(pDC->m_hDC, &tm);
 	m_FontHeight = tm.tmHeight + 5;
@@ -212,6 +216,10 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if(nChar == VK_LEFT || nChar == VK_RIGHT 
 		|| nChar == VK_UP|| nChar == VK_DOWN)
 	{
+		if( m_LyricLines == NULL) return;
+
+		double curTime = m_MediaPlayer->GetControls().GetCurrentPosition();
+		
 		int LineNum = m_LyricLines->size();
 		int WordNum = m_LyricLines->at(m_LyricPosY).LyricWords.size();
 
@@ -223,19 +231,25 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 					m_LyricPosX--;
 					//TRACE("VK_LEFT, %d, %s\n",m_LyricPosX,m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).Word);
 					m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked = FALSE;
-					DrawLyric();
+					DrawLyricLine(m_LyricPosY);
 				}
 				break;
 			case VK_RIGHT:
 				if(m_LyricPosX < WordNum)
 				{
+					if(m_LyricPosX == 0)
+					{
+						TRACE("行开始");
+					}
 					//TRACE("VK_RIGHT, %d, %s\n",m_LyricPosX,m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).Word);
 					m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked = TRUE;
 					//TRACE("%d\n",m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked);
 					m_LyricPosX++;
-					DrawLyric();
+					DrawLyricLine(m_LyricPosY);
 				}else if( m_LyricPosY < LineNum-1)
 				{
+					TRACE("行结束");
+
 					m_LyricPosY++;
 					m_LyricPosX = 0;
 					DrawLyric();
@@ -244,10 +258,17 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			case VK_UP:
 				if(m_LyricPosY>0)
 				{
+					int i;
+					// clear all marked flag of lyric word in current line  
+					for(i=0;i<m_LyricLines->at(m_LyricPosY).LyricWords.size();i++)
+					{
+						m_LyricLines->at(m_LyricPosY).LyricWords.at(i).IsMarked = FALSE;
+					}
+
 					m_LyricPosY--;
 
 					// clear all marked flag of lyric word in prev line  
-					for(int i=0;i<m_LyricLines->at(m_LyricPosY).LyricWords.size();i++)
+					for(i=0;i<m_LyricLines->at(m_LyricPosY).LyricWords.size();i++)
 					{
 						m_LyricLines->at(m_LyricPosY).LyricWords.at(i).IsMarked = FALSE;
 					}
@@ -258,6 +279,7 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			case VK_DOWN:
 				// check if all word has been marked in the line
 				int i=0;
+
 				for(i=0;i<m_LyricLines->at(m_LyricPosY).LyricWords.size();i++)
 				{
 					if(!m_LyricLines->at(m_LyricPosY).LyricWords.at(i).IsMarked)
@@ -275,11 +297,6 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 //	CStatic::OnKeyDown(nChar, nRepCnt, nFlags);
 }
-
-void CLyricMakerCtrl::SetLyricLines( vector <LyricLine> *Ll )
-{
-	m_LyricLines = Ll;
-}	
 
 /********************************************************************/
 /*																	*/
@@ -356,3 +373,12 @@ void CLyricMakerCtrl::LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWi
 	}
 }
 
+void CLyricMakerCtrl::SetLyricLines( vector <LyricLine> *Ll )
+{
+	m_LyricLines = Ll;
+}	
+
+void CLyricMakerCtrl::SetMediaPlayer(CWMPPlayer4 *MediaPlayer)
+{
+	m_MediaPlayer = MediaPlayer;
+}
