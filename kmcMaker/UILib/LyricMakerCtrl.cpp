@@ -18,6 +18,7 @@ CLyricMakerCtrl::CLyricMakerCtrl()
 	m_hLyricFont = NULL;
 	m_LyricPosY = 0;
 	m_LyricPosX = 0;
+	m_TextBoard = NULL;
 }
 
 
@@ -55,7 +56,8 @@ END_MESSAGE_MAP()
 void CLyricMakerCtrl::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
-	DrawLyric();
+	m_TextBoard->Draw();
+//	DrawLyric();
 }
 
 
@@ -131,10 +133,10 @@ void CLyricMakerCtrl::DrawLyricLine(int nLine, BOOL bCallByDrallAll,int DrewLine
 		top = (5+m_FontHeight* DrewLineNum);
 	}else
 	{
-		top = (5+m_FontHeight * nLine);
+		top = (5+m_FontHeight * nLine - ((nLine > MidLineNum) ? nLine-MidLineNum: 0)*m_FontHeight);
 	}
 
-	CRect FontRect(20, top , m_ClientWith, m_ClientHeight);
+	CRect FontRect(20, top , m_ClientWidth, m_ClientHeight);
 	COLORREF oldColor;
 
 	CString UnMarkedWords;
@@ -173,7 +175,7 @@ void CLyricMakerCtrl::DrawLyric()
 	CDC *pDC = GetDC();
 
 	// Draw Background
-	BitBlt(pDC->m_hDC, 0, 0, m_ClientWith, m_ClientHeight, m_hBackgroundDC, 0, 0, SRCCOPY);
+	BitBlt(pDC->m_hDC, 0, 0, m_ClientWidth, m_ClientHeight, m_hBackgroundDC, 0, 0, SRCCOPY);
 //	StretchBlt(pDC->m_hDC,0, 0, m_ClientWith, m_ClientHeight, m_hBackgroundDC, 0, 0, 800,600, SRCCOPY);
 
 	if( m_LyricLines == NULL) return;
@@ -206,14 +208,19 @@ void CLyricMakerCtrl::DrawLyric()
 void CLyricMakerCtrl::OnSize(UINT nType, int cx, int cy) 
 {
 	CStatic::OnSize(nType, cx, cy);
-	CRect rect;
-	GetClientRect(rect);
-	m_ClientWith = rect.Width();
-	m_ClientHeight = rect.Height();
+
+	if(m_TextBoard != NULL)
+	{
+		m_TextBoard->SetBoardWidth(cx);
+		m_TextBoard->SetBoardHeight(cy);
+	}
+
+//	m_ClientWith = cx;
+//	m_ClientHeight = cy;
 
 	// calculate line count for client font should be draw
-	m_DrawLineCount = m_ClientHeight / m_FontHeight;
-	m_MidLineNum = m_DrawLineCount / 2;
+//	m_DrawLineCount = m_ClientHeight / m_FontHeight;
+//	m_MidLineNum = m_DrawLineCount / 2;
 }
 
 UINT CLyricMakerCtrl::OnGetDlgCode()
@@ -253,26 +260,7 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 				}
 				break;
 			case VK_RIGHT:
-				if(m_LyricPosX < WordNum)
-				{
-					if(m_LyricPosX == 0)
-					{
-						TRACE("行开始");
-					}
-					m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked = TRUE;
-					m_LyricPosX++;
-					DrawLyricLine(m_LyricPosY);
-				}
-				else //if( m_LyricPosY <= LineNum)
-				{
-					TRACE("行结束");
-					m_LyricPosY++;
-					m_LyricPosX = 0;
-					m_LyricLines->at(m_LyricPosY).LyricWords.at(m_LyricPosX).IsMarked = TRUE;
-
-					DrawLyricLine(m_LyricPosY);
-					//DrawLyric();
-				}
+				m_TextBoard->MarkNextWord();
 				break;
 			case VK_UP:
 				if(m_LyricPosY>0)
@@ -394,6 +382,21 @@ void CLyricMakerCtrl::LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWi
 
 void CLyricMakerCtrl::SetLyricLines( vector <LyricLine> *Ll )
 {
+	if(m_TextBoard != NULL)
+	{
+		delete m_TextBoard;
+	}
+
+	m_TextBoard = new TextBoard(Ll,this);
+	CRect rect;
+	GetClientRect(rect);
+	if(m_TextBoard != NULL)
+	{
+		m_TextBoard->SetBoardWidth(rect.Width());
+		m_TextBoard->SetBoardHeight(rect.Height());
+	}
+
+
 	m_LyricLines = Ll;
 }	
 
@@ -401,3 +404,4 @@ void CLyricMakerCtrl::SetMediaPlayer(CWMPPlayer4 *MediaPlayer)
 {
 	m_MediaPlayer = MediaPlayer;
 }
+
