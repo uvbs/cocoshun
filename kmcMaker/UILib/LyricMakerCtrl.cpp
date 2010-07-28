@@ -322,7 +322,7 @@ void CLyricMakerCtrl::CTextBoard::MarkNextWord()
 {
 	int WordNum = LyricLines->at(LyricPosY).LyricWords.size();
 	double curTime = GetCurrentPosition();
-	if(LyricPosX < WordNum)
+	if(LyricPosX < WordNum )
 	{
 		if(LyricPosX == 0)
 		{
@@ -334,6 +334,7 @@ void CLyricMakerCtrl::CTextBoard::MarkNextWord()
 			LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).StartTime = curTime;
 		}	
 		
+		TRACE("%d,%d \n",LyricPosY,LyricPosX);
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = TRUE;
 		LyricPosX++;
 		DrawLine(LyricPosY);
@@ -343,24 +344,26 @@ void CLyricMakerCtrl::CTextBoard::MarkNextWord()
 		// »»ÐÐ
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).EndTime = curTime;
 		LyricLines->at(LyricPosY).EndTime = curTime;
+
+		//debug
+// 		CString kmc;
+// 		m_kmcBuffer->GetKmcLyric(kmc);
+// 		pWnd->MessageBox(kmc);
 		
 		LyricPosY++;
 		LyricPosX = 0;
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = TRUE;
-		
+		LyricPosX++;
+		TRACE("warp %d,%d \n",LyricPosY,LyricPosX);
 		// warp line
 		if(LyricPosY > MidLineNum-1)
 			Draw();
-		//DrawLine(LyricPosY);
+		else
+			DrawLine(LyricPosY);
 	}
-
-	CString kmc;
-	m_kmcBuffer->GetKmcLyric(kmc);
-	//TRACE("%s",kmc);
-	//TRACE(kmc);
 }
 
-long CLyricMakerCtrl::CTextBoard::GetCurrentPosition()
+double CLyricMakerCtrl::CTextBoard::GetCurrentPosition()
 {
 	double CurPlayTime = ((CMakeLyricDlg *)(pWnd->GetParent()))->m_MediaPlayer.GetControls().GetCurrentPosition();
 	return CurPlayTime;
