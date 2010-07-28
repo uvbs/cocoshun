@@ -19,6 +19,7 @@ protected:
 	{
 		protected:
 			vector <LyricLine> *LyricLines;
+			CWMPPlayer4 *MediaPlayer;
 			CDC *pDC;
 			CWnd *pWnd;
 			int LineCount;
@@ -35,6 +36,12 @@ protected:
 			HDC BitMap;
 			int BmpWidth;
 			int BmpHeight;
+
+			double GetCurPlayTime()
+			{
+				
+				return MediaPlayer->GetControls().GetCurrentPosition();
+			}
 
 			void LoadPicture(int nResourceID)
 			{
@@ -138,28 +145,86 @@ protected:
 			}
 		
 		public:
+			void MoveNextLine()
+			{
+				// check if all word has been marked in the line
+				int i=0;
+				
+				for(i=0;i<LyricLines->at(LyricPosY).LyricWords.size();i++)
+				{
+					if(!LyricLines->at(LyricPosY).LyricWords.at(i).IsMarked)
+						break;
+				}
+				
+				if( i==LyricLines->at(LyricPosY).LyricWords.size() && LyricPosY < LineCount-1)
+				{
+					LyricPosY++;
+					LyricPosX = 0;
+					Draw(); 
+				}
+			}
+			void MovePrevLine()
+			{
+				if(LyricPosY>0)
+				{
+					int i;
+					// clear all marked flag of lyric word in current line  
+					for(i=0;i<LyricLines->at(LyricPosY).LyricWords.size();i++)
+					{
+						LyricLines->at(LyricPosY).LyricWords.at(i).IsMarked = FALSE;
+					}
+					
+					LyricPosY--;
+					
+					// clear all marked flag of lyric word in previos line  
+					for(i=0;i<LyricLines->at(LyricPosY).LyricWords.size();i++)
+					{
+						LyricLines->at(LyricPosY).LyricWords.at(i).IsMarked = FALSE;
+					}
+					LyricPosX = 0;
+					Draw(); 
+				}
+			}
+			void UnMarkPrevWord()
+			{
+				if(LyricPosX > 0)
+				{
+					LyricPosX--;
+					LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = FALSE;
+					DrawLine(LyricPosY);
+				}
+			}
 			void MarkNextWord()
 			{
 				int WordNum = LyricLines->at(LyricPosY).LyricWords.size();
+				double curTime = GetCurPlayTime();
 				if(LyricPosX < WordNum)
 				{
 					if(LyricPosX == 0)
 					{
-						TRACE("行开始");
-					}
+						LyricLines->at(LyricPosY).StartTime = curTime;
+						LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).StartTime = curTime;
+					}else
+					{
+						LyricLines->at(LyricPosY).LyricWords.at(LyricPosX - 1 ).EndTime = curTime;
+						LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).StartTime = curTime;
+					}	
+
 					LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = TRUE;
 					LyricPosX++;
 					DrawLine(LyricPosY);
 				}
-				else
+				else if(LyricPosY < LineCount-1)
 				{
-					TRACE("行结束");
+					LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).EndTime = curTime;
+					LyricLines->at(LyricPosY).EndTime = curTime;
+
 					LyricPosY++;
 					LyricPosX = 0;
 					LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = TRUE;
-					//Draw();
 
-					if(LyricPosY > MidLineNum)
+					// warp line
+					if(LyricPosY > MidLineNum-1)
 						Draw();
 					//DrawLine(LyricPosY);
 				}
@@ -177,7 +242,6 @@ protected:
 				{
 					BoardPosY = MidLineNum - 1;
 				}
-
 				DrawLine(BoardPosY, LyricPosY);
 			}
 
@@ -221,26 +285,21 @@ protected:
 				// draw background bitmap
  				BitBlt(pDC->m_hDC, 0, 0, BoardWith, BoardHeight, BitMap, 0, 0, SRCCOPY);
 // 				//	StretchBlt(pDC->m_hDC,0, 0, m_ClientWith, m_ClientHeight, m_hBackgroundDC, 0, 0, 800,600, SRCCOPY);
-// 				
-// 				if( LyricLines == NULL) return;
-// 				
-// 				int StartDrawLine = 0;
-// 				if(m_LyricPosY > m_MidLineNum)
-// 				{
-// 					StartDrawLine += (m_LyricPosY-m_MidLineNum) + 1;
-// 				}
-// 				
+ 				if( LyricLines == NULL) return;
+				
  				// Draw Line
 				int LinePosY = FontHeight*MidLineNum + 5; //(DrawLineCount / 4) * FontHeight + 8;
 				CPen pen3DDKShadow(PS_SOLID, 2, RGB(0,240,0)); // Black
 				pDC->SelectObject(pen3DDKShadow);
 				pDC->MoveTo(0, LinePosY);
 				pDC->LineTo(800, LinePosY );
-
-				TRACE("LyricPosY=%d, \n",LyricPosY);
+				
 				// Draw all lyric
  				int DrewLineNum = 0;
- 				for(int i=LyricPosY;i<LyricLines->size() 
+				int i = (LyricPosY > MidLineNum-1) ? (LyricPosY - MidLineNum + 1) : 0;
+				//TRACE("LyricPosY=%d,MidLineNum=%d,i=%d \n",LyricPosY,MidLineNum,i);
+
+ 				for(;i<LyricLines->size() 
  					&& DrewLineNum< BoardCY;i++,DrewLineNum++)
  				{
 					DrawLine(DrewLineNum , i);
@@ -259,16 +318,19 @@ protected:
 				MidLineNum = BoardCY / 2;
 			}			
 			
-			TextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd)
+			TextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd,CWMPPlayer4 *MediaPlayer)
 			{
 				this->LyricLines = LyricLines;
 				this->pWnd = Wnd;
+				this->MediaPlayer = MediaPlayer;
+
 				this->pDC = this->pWnd->GetDC();
 				this->LineCount = LyricLines->size();
 				this->LyricPosX = 0;
 				this->LyricPosY = 0;
 				this->BitMap = NULL;
 				this->LyricFont = NULL;
+
 				InitGraph();
 			}
 
@@ -276,7 +338,7 @@ protected:
 			{
 				if(pDC != NULL)
 				{
-					pWnd->ReleaseDC(pDC);
+					::ReleaseDC(pWnd->m_hWnd,pDC->GetSafeHdc());
 				}
 
 				if(LyricFont != NULL)
@@ -293,15 +355,6 @@ protected:
 	};
 
 	TextBoard *m_TextBoard;
-
-	HDC m_hBackgroundDC; 
-	HDC m_hLyricDC; 
-	HFONT m_hLyricFont;
-	int m_FontHeight;
-	int m_ClientWidth;
-	int m_ClientHeight;
-	int m_LyricPosY;
-	int m_LyricPosX;
 
 	vector <LyricLine> *m_LyricLines;
 	CWMPPlayer4 *m_MediaPlayer;
@@ -322,12 +375,7 @@ public:
 
 	// Generated message map functions
 protected:
-	int m_DrawLineCount;
-	int m_MidLineNum;
-	void DrawLyricLine(int nLine,BOOL bCallByDrallAll= FALSE, int DrewLineNum = 0);
-	void DrawLyric();
 	void Initialize();
-	void LoadPicture(int nResourceID, HDC &hDestinationDC, int &nWidth, int &nHeight, HDC hDC);
 
 	//{{AFX_MSG(LyricMakerCtrl)
 	afx_msg void OnPaint();
