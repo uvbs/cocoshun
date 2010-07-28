@@ -60,7 +60,7 @@ void CMakeLyricDlg::OnBtnOpen()
 {
 	m_MediaPlayer.SetUrl(_T(".\\Test\\Ê®Äê.mp3"));
 	m_MediaPlayer.GetControls().play();
-//	TRACE("%s\n", m_MediaPlayer.GetControls().GetCurrentPositionString());
+	SetFocusToLyricMaker();
 //	m_MediaPlayer.SetUrl(FileName);
 //	m_MediaPlayer.Run();
 //	CString str;

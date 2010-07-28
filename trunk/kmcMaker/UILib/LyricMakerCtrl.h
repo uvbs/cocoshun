@@ -49,7 +49,7 @@ protected:
 			void MovePrevLine();
 			void UnMarkPrevWord();
 			void MarkNextWord();
-			long GetCurrentPosition();
+			double GetCurrentPosition();
 			void SetCurrentPosition(double newPos);
 			void DrawLine(int LyricPosY);
 			void DrawLine(int BoardPosY, int LyricPosY);
