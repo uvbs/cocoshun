@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 CMakeLyricDlg::CMakeLyricDlg(CWnd* pParent /*=NULL*/)
-	: CResizingDialog(CMakeLyricDlg::IDD, pParent)
+: CResizingDialog(CMakeLyricDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CMakeLyricDlg)
 	//}}AFX_DATA_INIT
@@ -28,7 +28,7 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CMakeLyricDlg)
 	DDX_Control(pDX, IDC_LYRIC_MAKER, m_LyricMaker);
-	DDX_Control(pDX, IDC_MEDIA_PLAYER, m_MediaPlayer);
+	DDX_Control(pDX, IDC_MEDIAPLAYER, m_MediaPlayer);
 	//}}AFX_DATA_MAP
 }
 
@@ -48,8 +48,9 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
-	SetControlInfo(IDC_MEDIA_PLAYER, ANCHORE_BOTTOM | ANCHORE_LEFT);
+	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_BOTTOM | ANCHORE_LEFT);
 
+	SetFocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -59,7 +60,7 @@ void CMakeLyricDlg::OnBtnOpen()
 {
 	m_MediaPlayer.SetUrl(_T(".\\Test\\Ê®Äê.mp3"));
 	m_MediaPlayer.GetControls().play();
-	SetFocusToLyricMaker();
+//	TRACE("%s\n", m_MediaPlayer.GetControls().GetCurrentPositionString());
 //	m_MediaPlayer.SetUrl(FileName);
 //	m_MediaPlayer.Run();
 //	CString str;
