@@ -19,6 +19,7 @@ protected:
 	class CTextBoard
 	{
 		protected:
+			int GetTextWidth(CString Text);
 			CKmcBuffer *m_kmcBuffer;
 			vector <LyricLine> *LyricLines;
 			CWMPPlayer4 *MediaPlayer;
@@ -43,21 +44,27 @@ protected:
 			void LoadPicture(int nResourceID);
 			void CreateFont();
 			void InitGraph();
-
-		public:
-			void MoveNextLine();
-			void MovePrevLine();
-			void UnMarkPrevWord();
-			void MarkNextWord();
+			void SetPlayPosition();
 			double GetCurrentPosition();
 			void SetCurrentPosition(double newPos);
 			void DrawLine(int LyricPosY);
 			void DrawLine(int BoardPosY, int LyricPosY);
-			void Draw();
-			void SetBoardWidth(int Width);
-			void SetBoardHeight(int Height);
+
+		public:
 			CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd,CWMPPlayer4 *MediaPlayer);
 			~CTextBoard();
+
+			void Draw();
+
+			void MarkWordEnd();
+			void MovePrevLine();
+			void UnMarkPrevWord();
+			void MarkNextWord();
+
+			void SetBoardWidth(int Width);
+			void SetBoardHeight(int Height);
+	private:
+		int DrawWordIncrementX;
 	};
 
 	CTextBoard *m_TextBoard;
@@ -79,6 +86,8 @@ public:
 	void SetMediaPlayer(CWMPPlayer4 *MediaPlayer);
 	virtual ~CLyricMakerCtrl();
 
+	void StartDrawIncrementWord(CDC *pDC,CString Word, CRect FontRect, int WordWidth);
+	void StopDrawIncrementWord();
 	// Generated message map functions
 protected:
 	void Initialize();
@@ -92,6 +101,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	
 private:
+	CDC *m_TextBoardDC;
+	int m_IncrementWordWidth;
+	CRect m_IncrementWordRect;
+	CString m_IncrementWord;
 };
 
 //{{AFX_INSERT_LOCATION}}
