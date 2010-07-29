@@ -315,7 +315,7 @@ void CLyricMakerCtrl::CTextBoard::SetPlayPosition()
 {
 	// set media player position
 	double StartTime = LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).StartTime;
-	TRACE("StartTime = %.3f \n", StartTime);
+//	TRACE("StartTime = %.3f \n", StartTime);
 	SetCurrentPosition(StartTime);
 }
 
@@ -335,12 +335,12 @@ void CLyricMakerCtrl::CTextBoard::MarkNextWord()
 			LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).StartTime = curTime;
 		}	
 		
-		TRACE("%d,%d \n",LyricPosY,LyricPosX);
+//		TRACE("%d,%d \n",LyricPosY,LyricPosX);
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = TRUE;
 		LyricPosX++;
 		DrawLine(LyricPosY);
 	}
-	else 
+	else if(LyricPosY < LyricLines->size() - 1)
 	{
 		// set last word in current line
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).EndTime = curTime;
@@ -359,7 +359,7 @@ void CLyricMakerCtrl::CTextBoard::MarkNextWord()
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).StartTime = curTime;
 		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).IsMarked = TRUE;
 		LyricPosX++;
-		TRACE("warp %d,%d \n",LyricPosY,LyricPosX);
+//		TRACE("warp %d,%d \n",LyricPosY,LyricPosX);
 
 		// warp line
 		if(LyricPosY > MidLineNum-1)
@@ -425,16 +425,16 @@ void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY)
 	if(!MarkedWords.IsEmpty())
 	{
 //		TRACE("y = %d, x=%d\n",LyricPosY,LyricPosX);
-		CString CurWord = LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).Word;
-		int MarkedWordsWidth = GetTextWidth(MarkedWords);
-		int CurWordWidth = GetTextWidth(CurWord);
-		int DrawWidth = MarkedWordsWidth - CurWordWidth;
-
-		FontRect.right = FontRect.left + DrawWidth;
+// 		CString CurWord = LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).Word;
+// 		int MarkedWordsWidth = GetTextWidth(MarkedWords);
+// 		int CurWordWidth = GetTextWidth(CurWord);
+// 		int DrawWidth = MarkedWordsWidth - CurWordWidth;
+// 
+// 		FontRect.right = FontRect.left + DrawWidth;
 		pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
 
-		FontRect.left = FontRect.left + DrawWidth;
-		((CLyricMakerCtrl*)pWnd)->StartDrawIncrementWord(pDC,CurWord,FontRect,CurWordWidth);
+// 		FontRect.left = FontRect.left + DrawWidth;
+// 		((CLyricMakerCtrl*)pWnd)->StartDrawIncrementWord(pDC,CurWord,FontRect,CurWordWidth);
 	}
 
 //	int MaxX = FontRect.left+GetTextWidth(MarkedWords);
@@ -466,6 +466,7 @@ void CLyricMakerCtrl::CTextBoard::Draw()
 	int DrewLineNum = 0;
 	int i = (LyricPosY > MidLineNum-1) ? (LyricPosY - MidLineNum + 1) : 0;
 	//TRACE("LyricPosY=%d,MidLineNum=%d,i=%d \n",LyricPosY,MidLineNum,i);
+	//TRACE("i=%d, lcount=%d, boardcy=%d\n",i,LyricLines->size(),BoardCY);
 	
 	for(;i<LyricLines->size() 
 		&& DrewLineNum< BoardCY;i++,DrewLineNum++)
@@ -541,18 +542,18 @@ void CLyricMakerCtrl::StartDrawIncrementWord(CDC *pDC,CString Word, CRect FontRe
 }
 void CLyricMakerCtrl::OnTimer( UINT nIDEvent )
 {
-	if(nIDEvent == 1)
-	{
-		if(m_IncrementWordRect.right<m_IncrementWordRect.left + m_IncrementWordWidth)
-			m_IncrementWordRect.right ++;
-		SetTextColor(m_TextBoardDC->m_hDC, RGB(240,0,0));
-		m_TextBoardDC->DrawText(m_IncrementWord, m_IncrementWordRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
-	}
+// 	if(nIDEvent == 1)
+// 	{
+// 		if(m_IncrementWordRect.right<m_IncrementWordRect.left + m_IncrementWordWidth)
+// 			m_IncrementWordRect.right ++;
+// 		SetTextColor(m_TextBoardDC->m_hDC, RGB(240,0,0));
+// 		m_TextBoardDC->DrawText(m_IncrementWord, m_IncrementWordRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
+// 	}
 	CStatic::OnTimer(nIDEvent);
 }
 void CLyricMakerCtrl::StopDrawIncrementWord()
 {
 
-	KillTimer(1);
+// 	KillTimer(1);
 }
 
