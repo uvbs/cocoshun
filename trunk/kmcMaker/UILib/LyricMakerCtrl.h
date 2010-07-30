@@ -48,7 +48,7 @@ protected:
 			double GetCurrentPosition();
 			void SetCurrentPosition(double newPos);
 			void DrawLine(int LyricPosY);
-			void DrawLine(int BoardPosY, int LyricPosY);
+			void DrawLine(int BoardPosY, int LyricPosY, BOOL bMarkDraw = FALSE);
 
 		public:
 			CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd,CWMPPlayer4 *MediaPlayer);
