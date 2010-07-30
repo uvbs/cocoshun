@@ -110,10 +110,8 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		
 		// check if playing
 		long PlayState = ((CMakeLyricDlg *)(GetParent()))->m_MediaPlayer.GetPlayState();
-		if( PlayState !=PLAYSTATE_PLAY )
-		{
-			return;
-		}
+// 		if( PlayState != PLAYSTATE_PLAY )
+// 			return;
 		
 		switch(nChar)
 		{
@@ -391,10 +389,10 @@ void CLyricMakerCtrl::CTextBoard::DrawLine(int LyricPosY)
 	{
 		BoardPosY = MidLineNum - 1;
 	}
-	DrawLine(BoardPosY, LyricPosY);
+	DrawLine(BoardPosY, LyricPosY, TRUE);
 }
 
-void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY)
+void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY, BOOL bMarkDraw)
 {
 	if( LyricLines == NULL) return;
 	
@@ -419,31 +417,29 @@ void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY)
 	pDC->DrawText(Ll.Line, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
 	
 	SetTextColor(pDC->m_hDC, RGB(240,0,0));
-//	pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
+	pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
 
 	// draw marked font
 	if(!MarkedWords.IsEmpty())
 	{
 //		TRACE("y = %d, x=%d\n",LyricPosY,LyricPosX);
-// 		CString CurWord = LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).Word;
-// 		int MarkedWordsWidth = GetTextWidth(MarkedWords);
-// 		int CurWordWidth = GetTextWidth(CurWord);
-// 		int DrawWidth = MarkedWordsWidth - CurWordWidth;
-// 
-// 		FontRect.right = FontRect.left + DrawWidth;
-		pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
+		if(bMarkDraw && LyricPosX>0)
+		{
+			TRACE("LyricPosX = %d",LyricPosY-1);
+			CString CurWord = LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).Word;
 
-// 		FontRect.left = FontRect.left + DrawWidth;
-// 		((CLyricMakerCtrl*)pWnd)->StartDrawIncrementWord(pDC,CurWord,FontRect,CurWordWidth);
+			int MarkedWordsWidth = GetTextWidth(MarkedWords);
+			int CurWordWidth = GetTextWidth(CurWord);
+			int DrawWidth = MarkedWordsWidth - CurWordWidth;
+
+ 			FontRect.right = FontRect.left + DrawWidth;
+			pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
+
+			FontRect.left = FontRect.left + DrawWidth;
+	 		((CLyricMakerCtrl*)pWnd)->StartDrawIncrementWord(pDC,CurWord,FontRect,CurWordWidth);
+		}
 	}
 
-//	int MaxX = FontRect.left+GetTextWidth(MarkedWords);
-// 	for(int x=FontRect.left;x<MaxX;x++)
-// 	{
-// 		FontRect.right = x;
-// 		Sleep(100);
-// 		pDC->DrawText(MarkedWords, FontRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
-// 	}
 	// set back old values
 	pDC->SetTextColor(oldColor);
 }
@@ -542,18 +538,17 @@ void CLyricMakerCtrl::StartDrawIncrementWord(CDC *pDC,CString Word, CRect FontRe
 }
 void CLyricMakerCtrl::OnTimer( UINT nIDEvent )
 {
-// 	if(nIDEvent == 1)
-// 	{
-// 		if(m_IncrementWordRect.right<m_IncrementWordRect.left + m_IncrementWordWidth)
-// 			m_IncrementWordRect.right ++;
-// 		SetTextColor(m_TextBoardDC->m_hDC, RGB(240,0,0));
-// 		m_TextBoardDC->DrawText(m_IncrementWord, m_IncrementWordRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
-// 	}
+	if(nIDEvent == 1)
+	{
+		if(m_IncrementWordRect.right<m_IncrementWordRect.left + m_IncrementWordWidth)
+			m_IncrementWordRect.right ++;
+		SetTextColor(m_TextBoardDC->m_hDC, RGB(240,0,0));
+		m_TextBoardDC->DrawText(m_IncrementWord, m_IncrementWordRect, DT_TOP|DT_LEFT|DT_NOPREFIX | DT_SINGLELINE);
+	}
 	CStatic::OnTimer(nIDEvent);
 }
 void CLyricMakerCtrl::StopDrawIncrementWord()
 {
-
-// 	KillTimer(1);
+ 	KillTimer(1);
 }
 
