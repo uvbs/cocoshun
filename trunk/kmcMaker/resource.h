@@ -29,7 +29,12 @@
 #define IDC_BTN_OPEN                    1023
 #define IDC_LYRIC_MAKER                 1024
 #define IDC_LYRIC_MAKER2                1025
+#define IDC_BTN_PRIVIEW                 1025
 #define IDC_MEDIAPLAYER                 1033
+#define IDC_STATIC_TIP                  1035
+#define IDC_BTN_SAVELYRIC               1036
+#define IDC_BTP_PRVIEW                  1037
+#define IDC_KMC_PRIVEW                  1039
 
 // Next default values for new objects
 // 
@@ -37,7 +42,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1034
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

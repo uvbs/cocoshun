@@ -36,6 +36,7 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CMakeLyricDlg)
 	ON_BN_CLICKED(IDC_BTN_OPEN, OnBtnOpen)
+	ON_BN_CLICKED(IDC_BTN_PRIVIEW, OnBtnPriview)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -47,9 +48,11 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	CResizingDialog::OnInitDialog();
 
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
+	SetControlInfo(IDC_STATIC_TIP,ANCHORE_RIGHT);
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
+	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_BOTTOM | ANCHORE_LEFT);
-
+	
 	SetFocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -161,3 +164,7 @@ void CMakeLyricDlg::SetFocusToLyricMaker()
 	m_LyricMaker.SetFocus();
 }
 
+void CMakeLyricDlg::OnBtnPriview() 
+{
+	m_LyricMaker.Preview();
+}

@@ -13,12 +13,29 @@ struct LyricWord
 	double EndTime;
 	CString Word;
 	COLORREF Color;
-	BOOL IsMarked;
+	BOOL MarkedStart;
+	BOOL MarkedEnd;
 
 	LyricWord()
 	{
 		IsLyric = TRUE;
-		IsMarked = FALSE;
+		UnMark();
+	}
+
+	BOOL IsMarkedAll()
+	{
+		return MarkedStart && MarkedEnd;
+	}
+
+	BOOL IsMarkedStart()
+	{
+		return MarkedStart && !MarkedEnd;
+	}
+
+	void UnMark()
+	{
+		MarkedStart = FALSE;
+		MarkedEnd = FALSE;
 	}
 
 	double DelayTime()

@@ -6,20 +6,23 @@
 #endif // _MSC_VER > 1000
 // SaveLyricDlg.h : header file
 //
-
+#include "Lyric.h"
+#include "./UILib/ResizingDialog.h"
+#include "KMCBuffer.h"
 /////////////////////////////////////////////////////////////////////////////
 // CSaveLyricDlg dialog
 
-class CSaveLyricDlg : public CDialog
+class CSaveLyricDlg : public CResizingDialog
 {
 // Construction
 public:
 	CSaveLyricDlg(CWnd* pParent = NULL);   // standard constructor
-
+	~CSaveLyricDlg();
+	void SetLyricLine(vector <LyricLine> *LyricLines);
 // Dialog Data
 	//{{AFX_DATA(CSaveLyricDlg)
 	enum { IDD = IDD_SAVELYRICDLG_DIALOG };
-		// NOTE: the ClassWizard will add data members here
+	CRichEditCtrl	m_KmcPreview;
 	//}}AFX_DATA
 
 
@@ -32,10 +35,13 @@ public:
 
 // Implementation
 protected:
-
+	vector <LyricLine> *m_LyricLines;
+	CKmcBuffer *m_KmcBuffer;
 	// Generated message map functions
 	//{{AFX_MSG(CSaveLyricDlg)
-		// NOTE: the ClassWizard will add member functions here
+	afx_msg void OnBtnSavelyric();
+	afx_msg void OnBtpPrview();
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
