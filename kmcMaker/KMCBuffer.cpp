@@ -34,14 +34,18 @@ void CKmcBuffer::GetKmcLyric(CString &KmcLyric)
 		return;
 	}
 
-	CString lStart = "<l t=\"";
-	CString lClose = "\">";
-	CString lEnd = "</l>\n";
+	CString xmlHeader = _T("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+	CString kmcStart = _T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\">\n");
+	CString kmcEnd = _T("</kmc>\n");
+	CString lStart = _T("    <l t=\"");
+	CString lClose = _T("\">");
+	CString lEnd = _T("</l>\n");
 
-	KmcLyric += lStart;
-		 
+	KmcLyric += xmlHeader;
+	KmcLyric += kmcStart;
 	for(int i=0; i<m_LyricLines->size();i++)
 	{
+		KmcLyric += lStart;
 		CString Line;
 		vector<LyricWord> Lws = m_LyricLines->at(i).LyricWords;
 
@@ -51,7 +55,7 @@ void CKmcBuffer::GetKmcLyric(CString &KmcLyric)
 		{
 			CString Delay;
 			LyricWord Lw = Lws.at(j);
-			if(Lw.IsMarked)
+			if(Lw.IsMarkedAll())
 			{
 				Delay.Format("%.0f", (Lw.EndTime - Lw.StartTime) * 1000);
 				Line += Delay;
@@ -61,11 +65,13 @@ void CKmcBuffer::GetKmcLyric(CString &KmcLyric)
 				}
 			}
 		}
+		Line += Line;
+		Line += lClose;
+		Line += m_LyricLines->at(i).Line;
+		Line += lEnd;
 		KmcLyric += Line;
-		KmcLyric += lClose;
-		KmcLyric += m_LyricLines->at(i).Line;
-		KmcLyric += lEnd;
 	}
+	KmcLyric += kmcEnd;
 }
 
 CString CKmcBuffer::DoubleToTime(double time)

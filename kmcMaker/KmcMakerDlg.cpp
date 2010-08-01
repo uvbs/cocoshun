@@ -250,7 +250,9 @@ void CKmcMakerDlg::OnCheckStep2()
 
 void CKmcMakerDlg::OnCheckStep3() 
 {
-	m_CheckGroup.SetCheck(2);		
+	m_CheckGroup.SetCheck(2);
+//	m_MakeLyricDlg->m_LyricLines
+	m_SaveLyricDlg->SetLyricLine(&m_MakeLyricDlg->m_LyricLines);
 }
 
 // LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 

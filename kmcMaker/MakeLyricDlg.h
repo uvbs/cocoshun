@@ -47,6 +47,7 @@ protected:
 	//{{AFX_MSG(CMakeLyricDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBtnOpen();
+	afx_msg void OnBtnPriview();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

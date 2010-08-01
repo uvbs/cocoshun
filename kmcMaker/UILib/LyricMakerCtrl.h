@@ -7,6 +7,15 @@
 #include "../Lyric.h"
 #include "../wmpplayer4.h"
 #include "../KmcBuffer.h"
+#define PLAYSTATE_READY 0
+#define PLAYSTATE_PLAY  3
+#define PLAYSTATE_PAUSE 2
+#define PLAYSTATE_STOP 1
+
+#define COLOR_BLACK RGB(0,0,0)
+#define COLOR_RED RGB(250,0,0)
+#define COLOR_GREEN RGB(0,250,0)
+#define COLOR_BLUE RGB(0,0,250)
 
 class CLyricMakerCtrl : public CStatic
 {
@@ -19,8 +28,8 @@ protected:
 	class CTextBoard
 	{
 		protected:
+			LyricWord *GetLyricWord(int y, int x);
 			int GetTextWidth(CString Text);
-			CKmcBuffer *m_kmcBuffer;
 			vector <LyricLine> *LyricLines;
 			CWMPPlayer4 *MediaPlayer;
 			CDC *pDC;
@@ -42,7 +51,7 @@ protected:
 
 
 			void LoadPicture(int nResourceID);
-			void CreateFont();
+			void SetFont();
 			void InitGraph();
 			void SetPlayPosition();
 			double GetCurrentPosition();
@@ -83,13 +92,17 @@ public:
 
 // Implementation
 public:
+	void StopPrivew();
 	void SetMediaPlayer(CWMPPlayer4 *MediaPlayer);
 	virtual ~CLyricMakerCtrl();
 
 	void StartDrawIncrementWord(CDC *pDC,CString Word, CRect FontRect, int WordWidth);
 	void StopDrawIncrementWord();
+	void Preview();
+
 	// Generated message map functions
 protected:
+	BOOL m_IsPreview;
 	void Initialize();
 	//{{AFX_MSG(LyricMakerCtrl)
 	afx_msg void OnPaint();
@@ -99,6 +112,7 @@ protected:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+		
 	
 private:
 	CDC *m_TextBoardDC;

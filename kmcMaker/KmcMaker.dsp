@@ -337,14 +337,14 @@ SOURCE=.\ReadMe.txt
 # 	2:10:HeaderFile:wmpplayerapplication.h
 # 	2:8:ImplFile:wmpplayerapplication.cpp
 # End Section
-# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
-# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
-# 	2:16:DefaultSinkClass:CWMPPlayer4
-# End Section
 # Section KmcMaker : {9104D1AB-80C9-4FED-ABF0-2E6417A6DF14}
 # 	2:5:Class:CWMPSettings
 # 	2:10:HeaderFile:wmpsettings.h
 # 	2:8:ImplFile:wmpsettings.cpp
+# End Section
+# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
+# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
+# 	2:16:DefaultSinkClass:CWMPPlayer4
 # End Section
 # Section KmcMaker : {A12DCF7D-14AB-4C1B-A8CD-63909F06025B}
 # 	2:5:Class:CWMPError
@@ -381,14 +381,6 @@ SOURCE=.\ReadMe.txt
 # 	2:10:HeaderFile:wmpnetwork.h
 # 	2:8:ImplFile:wmpnetwork.cpp
 # End Section
-# Section KmcMaker : {00000000-0000-0000-0000-800000800000}
-# 	1:12:IDR_KMCMAKER:106
-# End Section
-# Section KmcMaker : {10A13217-23A7-439B-B1C0-D847C79B7774}
-# 	2:5:Class:CWMPPlaylistCollection
-# 	2:10:HeaderFile:wmpplaylistcollection.h
-# 	2:8:ImplFile:wmpplaylistcollection.cpp
-# End Section
 # Section KmcMaker : {4A976298-8C0D-11D3-B389-00C04F68574B}
 # 	2:5:Class:CWMPStringCollection
 # 	2:10:HeaderFile:wmpstringcollection.h
@@ -398,6 +390,14 @@ SOURCE=.\ReadMe.txt
 # 	2:5:Class:CWMPMediaCollection
 # 	2:10:HeaderFile:wmpmediacollection.h
 # 	2:8:ImplFile:wmpmediacollection.cpp
+# End Section
+# Section KmcMaker : {00000000-0000-0000-0000-800000800000}
+# 	1:12:IDR_KMCMAKER:106
+# End Section
+# Section KmcMaker : {10A13217-23A7-439B-B1C0-D847C79B7774}
+# 	2:5:Class:CWMPPlaylistCollection
+# 	2:10:HeaderFile:wmpplaylistcollection.h
+# 	2:8:ImplFile:wmpplaylistcollection.cpp
 # End Section
 # Section KmcMaker : {74C09E02-F828-11D2-A74B-00A0C905F36E}
 # 	2:5:Class:CWMPControls
