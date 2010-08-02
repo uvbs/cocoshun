@@ -56,7 +56,7 @@ BOOL CImportLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_IMPORT,ANCHORE_LEFT | ANCHORE_BOTTOM);
 
 	m_LyricEditor.SetFocus();
-	LoadLyric(_T(".\\Test\\十年.txt"));
+//	LoadLyric(_T(".\\Test\\十年.lrc"));
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -64,7 +64,7 @@ BOOL CImportLyricDlg::OnInitDialog()
 
 void CImportLyricDlg::OnImportLyric() 
 {
- 	TCHAR szFilter[] = _T("Lyric (*.lrc)|*.lrc|All Files (*.*)|*.*||");
+ 	TCHAR szFilter[] = _T("Lyric (*.lrc)|*.lrc|Lyric (*.txt)|*.txt|All Files (*.*)|*.*||");
  	CFileDialogEx ImportFileDlg(TRUE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,szFilter);;
  	if( ImportFileDlg.DoModal() == IDOK)
 	{

@@ -106,8 +106,8 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		
 		// check if playing
 		long PlayState = ((CMakeLyricDlg *)(GetParent()))->m_MediaPlayer.GetPlayState();
-// 		if( PlayState != PLAYSTATE_PLAY )
-// 			return;
+ 		if( PlayState != PLAYSTATE_PLAY )
+ 			return;
 		
 		switch(nChar)
 		{
@@ -228,7 +228,7 @@ void CLyricMakerCtrl::CTextBoard::LoadPicture(int nResourceID)
 void CLyricMakerCtrl::CTextBoard::SetFont()
 {
 	// create a bunch of fonts
-	LyricFont = ::CreateFont(25, 0, 0, 0, 
+	LyricFont = ::CreateFont(20, 0, 0, 0, 
 		FW_BOLD, FALSE, FALSE, 0, 
 		DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS,
@@ -386,8 +386,8 @@ void CLyricMakerCtrl::CTextBoard::UnMarkPrevWord()
 		GetLyricWord(LyricPosY,LyricPosX)->UnMark();
 //		LyricLines->at(LyricPosY).LyricWords.at(LyricPosX).UnMark();
 		//LyricLines->at(LyricPosY).LyricWords.at(LyricPosX-1).UnMark();
-		DrawLine(LyricPosY);
-//		Draw();
+//		DrawLine(LyricPosY);
+		Draw();
 	}
 }
 
@@ -429,21 +429,30 @@ void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY, BOOL bM
 	for(int j=0;j<Ll.LyricWords.size();j++)
 	{
 		LyricWord Lw = Ll.LyricWords.at(j);
-		if(Lw.IsMarkedAll())
+		if(Lw.IsLyric)
 		{
-			MarkedWords += Lw.Word;
-		}
-		if(Lw.IsMarkedStart())
-		{
-			MarkedStart += Lw.Word;
+			if(Lw.IsMarkedAll())
+			{
+				MarkedWords += Lw.Word;
+			}
+			if(Lw.IsMarkedStart())
+			{
+				MarkedStart += Lw.Word;
+			}
 		}
 	}
 
-	TRACE("MarkedWords(%s), MarkedStart(%s)\n",MarkedWords,MarkedStart );
+//	TRACE("MarkedWords(%s), MarkedStart(%s)\n",MarkedWords,MarkedStart );
 
 	// draw line 
 	oldColor = pDC->SetTextColor( COLOR_BLACK);
-	pDC->DrawText(Ll.Line, FontRect, DT_TOP|DT_LEFT);
+	CString lLine = Ll.Line;
+	LyricWord *pLw = GetLyricWord(LyricPosY,0);
+	if(!pLw->IsLyric)
+	{
+		lLine = lLine.Mid(pLw->Word.GetLength(),lLine.GetLength());
+	}
+	pDC->DrawText(lLine, FontRect, DT_TOP|DT_LEFT);
 	
 // 	if(MarkedStart.IsEmpty() || MarkedWords.IsEmpty())
 // 		return;

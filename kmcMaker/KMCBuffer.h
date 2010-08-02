@@ -10,15 +10,17 @@
 #endif // _MSC_VER > 1000
 
 #include "Lyric.h"
-
+#include "LyricText.h"
 class CKmcBuffer  
 {
 public:
 	void GetKmcLyric(CString &KmcLyric);
 	CKmcBuffer(vector <LyricLine> *LyricLines);
+	void SetLyricHeader(CLyricText::LyricHeader *LyricHeader ){m_LyricHeader = LyricHeader;};
 	virtual ~CKmcBuffer();
 
 private:
+	CLyricText::LyricHeader *m_LyricHeader;
 	vector <LyricLine> *m_LyricLines;
 protected:
 	CString DoubleToTime(double time);

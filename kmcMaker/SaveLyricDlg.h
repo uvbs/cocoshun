@@ -9,6 +9,7 @@
 #include "Lyric.h"
 #include "./UILib/ResizingDialog.h"
 #include "KMCBuffer.h"
+#include "LyricText.h"
 /////////////////////////////////////////////////////////////////////////////
 // CSaveLyricDlg dialog
 
@@ -18,11 +19,18 @@ class CSaveLyricDlg : public CResizingDialog
 public:
 	CSaveLyricDlg(CWnd* pParent = NULL);   // standard constructor
 	~CSaveLyricDlg();
-	void SetLyricLine(vector <LyricLine> *LyricLines);
+	void SetLyricInfo(vector <LyricLine> *LyricLines,CLyricText::LyricHeader *LyricHeader);
+	
+	void UpdatePreviewLyric();
+
 // Dialog Data
 	//{{AFX_DATA(CSaveLyricDlg)
 	enum { IDD = IDD_SAVELYRICDLG_DIALOG };
 	CRichEditCtrl	m_KmcPreview;
+	CString	m_editTi;
+	CString	m_editAl;
+	CString	m_editAr;
+	CString	m_editBy;
 	//}}AFX_DATA
 
 
@@ -36,12 +44,18 @@ public:
 // Implementation
 protected:
 	vector <LyricLine> *m_LyricLines;
+	CLyricText::LyricHeader *m_LyricHeader;
+
 	CKmcBuffer *m_KmcBuffer;
 	// Generated message map functions
 	//{{AFX_MSG(CSaveLyricDlg)
 	afx_msg void OnBtnSavelyric();
 	afx_msg void OnBtpPrview();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnChangeEditTi();
+	afx_msg void OnChangeEditBy();
+	afx_msg void OnChangeEditAr();
+	afx_msg void OnChangeEditAl();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

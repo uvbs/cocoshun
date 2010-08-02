@@ -60,8 +60,25 @@ void CLyricText::SplitLRC()
 			|| ((Pos = Text.Find(Al)) != -1) || ((Pos = Text.Find(By)) != -1))
 		{
 			int PosNext = Text.ReverseFind(LRC_FLAG);
-			Text = Text.Mid(Pos + 4, PosNext - (Pos + 4));
-			m_Lines.SetAt(i, Li);
+			CString Info = Text.Mid(Pos + 4, PosNext - (Pos + 4));
+			if((Pos = Text.Find(Ti)) != -1)
+			{
+				m_LyricHeader.ti = Info;
+			}
+			if((Pos = Text.Find(Ar)) != -1)
+			{
+				m_LyricHeader.ar = Info;	
+			}
+			if((Pos = Text.Find(Al)) != -1)
+			{
+				m_LyricHeader.al = Info;	
+			}
+			if((Pos = Text.Find(By)) != -1)
+			{
+				m_LyricHeader.by = Info;
+			}
+			Text = _T("");
+			m_Lines.SetAt(i,Li);
 			continue;
 		}
 
@@ -76,10 +93,10 @@ void CLyricText::SplitLRC()
 			Text.TrimRight();
 		}
 
-		if(Text.IsEmpty()) 
-			m_Lines.RemoveAt(i);
-		else
-			m_Lines.SetAt(i, Li);
+// 		if(Text.IsEmpty()) 
+// 			m_Lines.RemoveAt(i);
+// 		else
+		m_Lines.SetAt(i, Li);
 	}
 }
 

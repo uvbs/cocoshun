@@ -35,6 +35,14 @@
 #define IDC_BTN_SAVELYRIC               1036
 #define IDC_BTP_PRVIEW                  1037
 #define IDC_KMC_PRIVEW                  1039
+#define IDC_EDIT_TI                     1040
+#define IDC_EDIT_AR                     1041
+#define IDC_EDIT_AL                     1042
+#define IDC_EDIT_BY                     1043
+#define IDC_STATIC_TI                   1044
+#define IDC_STATIC_AR                   1045
+#define IDC_STATIC_AL                   1046
+#define IDC_STATIC_BY                   1047
 
 // Next default values for new objects
 // 
@@ -42,7 +50,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_CONTROL_VALUE         1048
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

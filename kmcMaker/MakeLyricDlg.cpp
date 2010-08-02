@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "KmcMaker.h"
 #include "MakeLyricDlg.h"
+#include "UILib/FileDialogEx.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,7 +53,10 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_BOTTOM | ANCHORE_LEFT);
-	
+
+// 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
+// 	m_MediaPlayer.GetControls().play();
+
 	SetFocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -61,14 +65,16 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 void CMakeLyricDlg::OnBtnOpen() 
 {
-	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
-	m_MediaPlayer.GetControls().play();
+	TCHAR szFilter[] = _T("所有媒体文件 (*.mp3;*.wav;*.wmv;*.mpeg;*.mpg;*.asf)|*.mp3; *.wav; *.wmv; *.mpeg; *.mpg; *.asf|音频文件 (*.mp3;*.wav;*.wmv)|*.mp3; *.wav; *.wmv|视频频文件 (*.mpeg;*.mpg;*.asf)|*.mpeg; *.mpg; *.asf|All Files (*.*)|*.*||");
+	CFileDialogEx FileDlg(TRUE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,szFilter);;
+	if( FileDlg.DoModal() == IDOK)
+	{
+		CString fname = FileDlg.GetPathName();
+		m_MediaPlayer.SetUrl(fname);
+	}
+// 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
+// 	m_MediaPlayer.GetControls().play();
 	SetFocusToLyricMaker();
-//	m_MediaPlayer.SetUrl(FileName);
-//	m_MediaPlayer.Run();
-//	CString str;
-//	str.Format(_T("%f"),m_MediaPlayer.GetDuration());
-//	MessageBox(str);
 }
 
 void CMakeLyricDlg::InitLyric(CString Lyric)
@@ -78,6 +84,9 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 
 	m_LyricLines.clear();
 	CString Line;
+	TCHAR lBracket = _T('(');
+	TCHAR rBracket = _T(')');
+
 	int nCount=0;
 	while(AfxExtractSubString(Line, Lyric, nCount++, '\n'))
 	{
@@ -93,25 +102,42 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 
 			// check chinese
 			TCHAR ch = Line.GetAt(Pos);
-			if(ch & 0x80)
+
+			if(LL.LyricWords.empty())
 			{
-				LyWord.IsChs = TRUE;
-				LyWord.Word = Line.Mid(Pos,2);
-				Pos+=2;
-	
-				// add space
-				//int increment;
-				CString StrSpace;
-				GetSpace(Line, Pos, StrSpace);
-				LyWord.Word += StrSpace;
+				// 设置括号中不为歌词的word
+				if(ch==lBracket)
+				{
+					int rPos = Line.Find(rBracket);
+					if( rPos != -1)
+					{
+						LyWord.IsLyric = FALSE;
+						LyWord.Word = Line.Mid(0, rPos+1);
+						Pos = LyWord.Word.GetLength();
+					}
+				}
 			}else
 			{
-				LyWord.IsChs = FALSE;
-				GetEnWord(Line, Pos, LyWord.Word);
+				if(ch & 0x80)
+				{
+					LyWord.IsChs = TRUE;
+					LyWord.Word = Line.Mid(Pos,2);
+					Pos+=2;
+		
+					// add space
+					//int increment;
+					CString StrSpace;
+					GetSpace(Line, Pos, StrSpace);
+					LyWord.Word += StrSpace;
+				}else
+				{
+					LyWord.IsChs = FALSE;
+					GetEnWord(Line, Pos, LyWord.Word);
 
-				CString StrSpace;
-				GetSpace(Line, Pos, StrSpace);
-				LyWord.Word += StrSpace;
+					CString StrSpace;
+					GetSpace(Line, Pos, StrSpace);
+					LyWord.Word += StrSpace;
+				}
 			}
 			LL.LyricWords.push_back(LyWord);
 		}
