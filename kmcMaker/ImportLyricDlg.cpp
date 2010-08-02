@@ -56,7 +56,8 @@ BOOL CImportLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_IMPORT,ANCHORE_LEFT | ANCHORE_BOTTOM);
 
 	m_LyricEditor.SetFocus();
-//	LoadLyric(_T(".\\Test\\十年.lrc"));
+	LoadLyric(_T(".\\Test\\十年.txt"));
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }

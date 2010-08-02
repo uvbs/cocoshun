@@ -79,8 +79,11 @@ void CMakeLyricDlg::OnBtnOpen()
 
 void CMakeLyricDlg::InitLyric(CString Lyric)
 {
-//	Lyric = "一   个老虎 English \n二Chinese\n";
-	if(Lyric.IsEmpty()) return;
+	if(Lyric.IsEmpty()) 
+	{
+		m_LyricMaker.SetLyricLines( &m_LyricLines);
+		return;
+	}
 
 	m_LyricLines.clear();
 	CString Line;
@@ -95,15 +98,17 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 		LL.Line = Line;
 
 		int Pos = 0;
+		int n = -1;
 		int Len = Line.GetLength();
 		while(Pos < Len)
 		{
+			n++;
 			LyricWord LyWord;
 
 			// check chinese
 			TCHAR ch = Line.GetAt(Pos);
 
-			if(LL.LyricWords.empty())
+			if( n == 0)
 			{
 				// 设置括号中不为歌词的word
 				if(ch==lBracket)
@@ -116,34 +121,32 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 						Pos = LyWord.Word.GetLength();
 					}
 				}
+			}
+
+			if(ch & 0x80)
+			{
+				LyWord.IsChs = TRUE;
+				LyWord.Word = Line.Mid(Pos,2);
+				Pos+=2;
+	
+				// add space
+				//int increment;
+				CString StrSpace;
+				GetSpace(Line, Pos, StrSpace);
+				LyWord.Word += StrSpace;
 			}else
 			{
-				if(ch & 0x80)
-				{
-					LyWord.IsChs = TRUE;
-					LyWord.Word = Line.Mid(Pos,2);
-					Pos+=2;
-		
-					// add space
-					//int increment;
-					CString StrSpace;
-					GetSpace(Line, Pos, StrSpace);
-					LyWord.Word += StrSpace;
-				}else
-				{
-					LyWord.IsChs = FALSE;
-					GetEnWord(Line, Pos, LyWord.Word);
+				LyWord.IsChs = FALSE;
+				GetEnWord(Line, Pos, LyWord.Word);
 
-					CString StrSpace;
-					GetSpace(Line, Pos, StrSpace);
-					LyWord.Word += StrSpace;
-				}
+				CString StrSpace;
+				GetSpace(Line, Pos, StrSpace);
+				LyWord.Word += StrSpace;
 			}
 			LL.LyricWords.push_back(LyWord);
 		}
 		m_LyricLines.push_back(LL);
 	}
-
 	m_LyricMaker.SetLyricLines( &m_LyricLines);
 	m_LyricMaker.SetMediaPlayer( &m_MediaPlayer);
 }

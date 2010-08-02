@@ -29,7 +29,8 @@ protected:
 	{
 		protected:
 			LyricWord *GetLyricWord(int y, int x);
-			int GetTextWidth(CString Text);
+			int GetTextWidth(CString &Text);
+			int GetTextWidth(LPCTSTR pText);
 			vector <LyricLine> *LyricLines;
 			CWMPPlayer4 *MediaPlayer;
 			CDC *pDC;
@@ -44,8 +45,10 @@ protected:
 
 			int BoardCY;
 			int MidLineNum;
+			
+			HDC m_hBackGround;
 
-			HDC BitMap;
+			HDC hBitMap;
 			int BmpWidth;
 			int BmpHeight;
 
@@ -58,11 +61,12 @@ protected:
 			void SetCurrentPosition(double newPos);
 			void DrawLine(int LyricPosY);
 			void DrawLine(int BoardPosY, int LyricPosY, BOOL bMarkDraw = FALSE);
-
+		
 		public:
 			CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd,CWMPPlayer4 *MediaPlayer);
 			~CTextBoard();
 
+			void RefreshBackground();
 			void Draw();
 
 			void MarkWordEnd();
@@ -72,8 +76,13 @@ protected:
 
 			void SetBoardWidth(int Width);
 			void SetBoardHeight(int Height);
-	private:
-		int DrawWordIncrementX;
+
+		private:
+			LyricWord* GetWord(int y,int x);
+			void DrawWord(HDC hDC, int y, int x);
+			LPCTSTR GetLyricLineText(int y);
+			LyricLine* GetLyricLine(int y);
+			void DrawBackground();
 	};
 
 	CTextBoard *m_TextBoard;
@@ -103,7 +112,6 @@ public:
 	// Generated message map functions
 protected:
 	BOOL m_IsPreview;
-	void Initialize();
 	//{{AFX_MSG(LyricMakerCtrl)
 	afx_msg void OnPaint();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
