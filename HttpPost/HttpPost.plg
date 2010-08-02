@@ -1,0 +1,28 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: HttpPost - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16BA.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/HttpPost.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ   /c 
+"E:\Source\cocoshun\HttpPost\HttpPostDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16BA.tmp" 
+Creating command line "link.exe Wininet.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/HttpPost.pdb" /debug /machine:I386 /out:"Debug/HttpPost.exe" /pdbtype:sept  .\Debug\HttpPost.obj .\Debug\HttpPostDlg.obj .\Debug\StdAfx.obj .\Debug\HttpPost.res "
+<h3>Output Window</h3>
+Compiling...
+HttpPostDlg.cpp
+E:\Source\cocoshun\HttpPost\HttpPostDlg.cpp(104) : error C2065: 'INTERNET_FLAG_CACHE' : undeclared identifier
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+HttpPost.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
