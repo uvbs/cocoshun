@@ -14,19 +14,32 @@
 class CLyricText : public CTextBuffer
 {
 public:
+	struct LyricHeader
+	{
+		CString ti;
+		CString ar;
+		CString al;
+		CString by;
+	};
+	
+	LyricHeader m_LyricHeader;
+
 	CString GetFormat();
 	void SplitLRC();
 	BOOL LoadLyric(LPCTSTR pszFileName);
 	CLyricText();
 	virtual ~CLyricText();
 
-protected:
-	struct LyricTextInfo
-	{
-		LineInfo Line;
-	};
+	LyricHeader *GetLyricHeader(){return &m_LyricHeader;};
 
-	LyricTextInfo m_LyricText;
+protected:
+
+// 	struct LyricTextInfo
+// 	{
+// 		LineInfo Line;
+// 	};
+// 
+// 	LyricTextInfo m_LyricText;
 
 private:
 

@@ -180,7 +180,7 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	// 右下角画上调整大小的角
 	DrawGripper(TRUE);
 
-	OnCheckStep2();
+	OnCheckStep1();
 	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -241,18 +241,25 @@ void CKmcMakerDlg::OnCheckStep1()
 
 void CKmcMakerDlg::OnCheckStep2() 
 {
-	m_CheckGroup.SetCheck(1);
 	CString Lyric;
 	m_ImportLyricDlg->m_LyricEditor.GetWindowText(Lyric);
+	Lyric.TrimLeft();
+	Lyric.TrimRight();
+	if(Lyric.IsEmpty())
+	{
+		MessageBox(_T("请导入歌词^_^!"));
+		return;
+	}
 	m_MakeLyricDlg->InitLyric(Lyric);
 	m_MakeLyricDlg->SetFocusToLyricMaker();
+	m_CheckGroup.SetCheck(1);
 }
 
 void CKmcMakerDlg::OnCheckStep3() 
 {
 	m_CheckGroup.SetCheck(2);
 //	m_MakeLyricDlg->m_LyricLines
-	m_SaveLyricDlg->SetLyricLine(&m_MakeLyricDlg->m_LyricLines);
+	m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());	
 }
 
 // LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
