@@ -50,11 +50,6 @@ struct LyricLine
 	double EndTime;		
 	CString Line;
 	vector <LyricWord> LyricWords;
-
-// 	LyricLine()
-// 	{
-// 		LyricWords.clear();
-// 	}
 };
 
 

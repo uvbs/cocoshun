@@ -283,7 +283,16 @@ void CKmcMakerDlg::OnSize(UINT nType, int cx, int cy)
 
 LRESULT CKmcMakerDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
 {
-	m_ImportLyricDlg->SendMessage(WM_CUSTOM_MSG_DROPFILE,wParam,lParam);
+	if(m_CheckGroup.GetCheck() == 0)
+	{
+		m_ImportLyricDlg->SendMessage(WM_CUSTOM_MSG_DROPFILE,wParam,lParam);
+	}
+
+	if(m_CheckGroup.GetCheck() == 1)
+	{
+		m_MakeLyricDlg->SendMessage(WM_CUSTOM_MSG_DROPFILE,wParam,lParam);
+	}
+	
 	return 1L;
 }
 

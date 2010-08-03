@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CSaveLyricDlg
+LastClass=CImportLyricDlg
 LastTemplate=CStatic
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
@@ -58,8 +58,8 @@ Control4=IDOK,button,1342373889
 Type=1
 Class=CKmcMakerDlg
 ControlCount=7
-Control1=IDOK,button,1342242817
-Control2=IDCANCEL,button,1342242816
+Control1=IDOK,button,1073807361
+Control2=IDCANCEL,button,1073807360
 Control3=IDC_CHECK_STEP1,button,1342246915
 Control4=IDC_CHECK_STEP2,button,1342246915
 Control5=IDC_CHECK_STEP3,button,1342246915
@@ -69,9 +69,22 @@ Control7=IDC_DLG_AREA,button,1342177287
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
 Class=CImportLyricDlg
-ControlCount=2
+ControlCount=15
 Control1=IDC_LYRIC_EDITOR,RICHEDIT,1353781700
 Control2=IDC_BTN_IMPORT,button,1342242816
+Control3=IDC_STATIC_TIP,static,1342308352
+Control4=IDC_CHECK_DEL_XML_HTML,button,1342242819
+Control5=IDC_CHECK_DEL_LRC,button,1342242819
+Control6=IDC_CHECK_DEL_KSC,button,1342242819
+Control7=IDC_CHECK_DEL_SPACE,button,1342242819
+Control8=IDC_STATIC_FILTER_OPTION,button,1342177287
+Control9=IDC_CHECK_REPLACE,button,1342242819
+Control10=IDC_EDIT_REPLACE_TXT,edit,1350631552
+Control11=IDC_STATIC_FOR,static,1342308352
+Control12=IDC_EDIT_TARGET_TXT,edit,1350631552
+Control13=IDC_STATIC_HELP,button,1342177287
+Control14=IDC_BTN_FILTER,button,1342242816
+Control15=IDC_BTN_NEXTSTEP,button,1342242816
 
 [CLS:CImportLyricDlg]
 Type=0
@@ -79,7 +92,7 @@ HeaderFile=ImportLyricDlg.h
 ImplementationFile=ImportLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
-LastObject=IDC_COMBO_ENCODE
+LastObject=IDC_EDIT_REPLACE_TXT
 VirtualFilter=dWC
 
 [DLG:IDD_MAKELYRICDLG_DIALOG]
@@ -123,7 +136,7 @@ ImplementationFile=SaveLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=IDC_EDIT_AL
+LastObject=CSaveLyricDlg
 
 [CLS:CPreviewCtrl]
 Type=0

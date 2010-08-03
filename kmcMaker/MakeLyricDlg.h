@@ -43,6 +43,7 @@ public:
 
 // Implementation
 protected:
+	LRESULT OnAcceptDropFile(WPARAM wParam = 0, LPARAM lParam = 0 );
 	// Generated message map functions
 	//{{AFX_MSG(CMakeLyricDlg)
 	virtual BOOL OnInitDialog();

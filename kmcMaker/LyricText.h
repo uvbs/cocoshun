@@ -22,8 +22,6 @@ public:
 		CString by;
 	};
 	
-	LyricHeader m_LyricHeader;
-
 	CString GetFormat();
 	void SplitLRC();
 	BOOL LoadLyric(LPCTSTR pszFileName);
@@ -34,15 +32,8 @@ public:
 
 protected:
 
-// 	struct LyricTextInfo
-// 	{
-// 		LineInfo Line;
-// 	};
-// 
-// 	LyricTextInfo m_LyricText;
-
 private:
-
+	LyricHeader m_LyricHeader;
 };
 
 #endif // !defined(AFX_LYRICTEXT_H__7495BEF2_571B_47CE_9518_FFCF425E4A06__INCLUDED_)

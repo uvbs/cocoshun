@@ -54,8 +54,8 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_BOTTOM | ANCHORE_LEFT);
 
-// 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
-// 	m_MediaPlayer.GetControls().play();
+	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
+	m_MediaPlayer.GetControls().play();
 
 	SetFocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -72,8 +72,6 @@ void CMakeLyricDlg::OnBtnOpen()
 		CString fname = FileDlg.GetPathName();
 		m_MediaPlayer.SetUrl(fname);
 	}
-// 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
-// 	m_MediaPlayer.GetControls().play();
 	SetFocusToLyricMaker();
 }
 
@@ -196,4 +194,12 @@ void CMakeLyricDlg::SetFocusToLyricMaker()
 void CMakeLyricDlg::OnBtnPriview() 
 {
 	m_LyricMaker.Preview();
+}
+
+LRESULT CMakeLyricDlg::OnAcceptDropFile( WPARAM wParam /*= 0*/, LPARAM lParam /*= 0 */ )
+{
+	TCHAR *DropFileName = (TCHAR *)wParam;
+	m_MediaPlayer.SetUrl(DropFileName);
+
+	return 0;
 }
