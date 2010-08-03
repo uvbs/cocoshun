@@ -69,6 +69,11 @@ void CCheckBTGroup::SetCheck(int n)
 	}
 }
 
+int CCheckBTGroup::GetCheck()
+{
+	return m_nSelected;
+}
+
 void CCheckBTGroup::ReSizePages()
 {
 	// get the rect of dialog page area

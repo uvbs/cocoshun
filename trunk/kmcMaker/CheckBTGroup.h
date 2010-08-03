@@ -34,6 +34,7 @@ public:
 	void ReSizePages();
 
 	void SetCheck(int n);
+	int GetCheck();
 	CCheckBTGroup();
 	virtual ~CCheckBTGroup();
 	void Init(CheckGroupInfo ChkGrpInfo);

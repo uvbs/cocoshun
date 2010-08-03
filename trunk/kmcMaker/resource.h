@@ -43,6 +43,18 @@
 #define IDC_STATIC_AR                   1045
 #define IDC_STATIC_AL                   1046
 #define IDC_STATIC_BY                   1047
+#define IDC_CHECK_DEL_XML_HTML          1048
+#define IDC_CHECK_DEL_LRC               1049
+#define IDC_CHECK_DEL_KSC               1050
+#define IDC_CHECK_DEL_SPACE             1051
+#define IDC_CHECK_REPLACE               1052
+#define IDC_EDIT_REPLACE_TXT            1053
+#define IDC_EDIT_TARGET_TXT             1054
+#define IDC_STATIC_FOR                  1055
+#define IDC_STATIC_FILTER_OPTION        1056
+#define IDC_STATIC_HELP                 1057
+#define IDC_BTN_FILTER                  1058
+#define IDC_BTN_NEXTSTEP                1059
 
 // Next default values for new objects
 // 
@@ -50,7 +62,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1048
+#define _APS_NEXT_CONTROL_VALUE         1060
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

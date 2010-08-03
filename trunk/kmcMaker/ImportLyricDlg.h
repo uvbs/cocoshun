@@ -27,6 +27,8 @@ public:
 	enum { IDD = IDD_IMPORTLYRICDLG_DIALOG };
 	CButton m_BtnImport;
 	CMyRichEdit m_LyricEditor;
+	CString	m_EditReplaceTxt;
+	CString	m_EditTargetTxt;
 	//}}AFX_DATA
 
 
@@ -40,13 +42,20 @@ public:
 // Implementation
 protected:
 	BOOL LoadLyric(LPCTSTR pszFileName);
-
+	BOOL GetCheck(UINT ID);
+	
+	int GetFileLenght( LPCTSTR pszFileName );
 	// Generated message map functions
 	//{{AFX_MSG(CImportLyricDlg)
 	virtual void OnCancel();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnImportLyric();
 	virtual void OnOK();
+	afx_msg void OnCheckDelXmlHtml();
+	afx_msg void OnCheckDelLrc();
+	afx_msg void OnCheckDelKsc();
+	afx_msg void OnCheckDelSpace();
+	afx_msg void OnCheckReplace();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
@@ -55,6 +64,8 @@ protected:
 	CMapStringToPtr	m_mapCodePageDescsToCodePages;
 	CString				m_sCurrentCPDesc;
 
+private:
+	CString m_OrgText;
 };
 
 //{{AFX_INSERT_LOCATION}}

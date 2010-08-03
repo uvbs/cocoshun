@@ -52,6 +52,8 @@ protected:
 			int BmpWidth;
 			int BmpHeight;
 
+			BOOL bDrawIncrementWord;
+			int  nDrawIncrementWordWidth;
 
 			void LoadPicture(int nResourceID);
 			void SetFont();
@@ -63,6 +65,7 @@ protected:
 			void DrawLine(int BoardPosY, int LyricPosY, BOOL bMarkDraw = FALSE);
 		
 		public:
+			void DrawIncrementWord();
 			CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd,CWMPPlayer4 *MediaPlayer);
 			~CTextBoard();
 
@@ -78,8 +81,12 @@ protected:
 			void SetBoardHeight(int Height);
 
 		private:
+			void StopDrawIncrementWord();
+			void StartDrawIncrementWord();
+			void RefreshMidLine();
+			int GetLineOffset();
 			LyricWord* GetWord(int y,int x);
-			void DrawWord(HDC hDC, int y, int x);
+			void DrawWord(HDC hDC, int y, int x, BOOL bOffset = TRUE);
 			LPCTSTR GetLyricLineText(int y);
 			LyricLine* GetLyricLine(int y);
 			void DrawBackground();
@@ -106,7 +113,6 @@ public:
 	virtual ~CLyricMakerCtrl();
 
 	void StartDrawIncrementWord(CDC *pDC,CString Word, CRect FontRect, int WordWidth);
-	void StopDrawIncrementWord();
 	void Preview();
 
 	// Generated message map functions
