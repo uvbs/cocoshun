@@ -22,6 +22,7 @@
 #define IDC_CHECK_STEP2                 1004
 #define IDC_CHECK_STEP3                 1005
 #define IDC_RADIO1                      1006
+#define IDC_RADIO_KMC                   1006
 #define IDC_DLG_AREA                    1007
 #define IDC_LYRIC_EDITOR                1008
 #define IDC_STATIC_TOPLINE              1010
@@ -55,6 +56,14 @@
 #define IDC_STATIC_HELP                 1057
 #define IDC_BTN_FILTER                  1058
 #define IDC_BTN_NEXTSTEP                1059
+#define IDC_BTN_PREVSTEP                1060
+#define IDC_RADIO_XML                   1060
+#define IDC_BTN_EXIT                    1062
+#define IDC_BTN_SAVE_PREVSTEP           1063
+#define IDC_STATIC_SAVETIP              1064
+#define IDC_STATIC_TIPEXT               1065
+#define IDC_STATIC_KEY_TIP              1066
+#define IDC_SLIDER1                     1067
 
 // Next default values for new objects
 // 
@@ -62,7 +71,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1060
+#define _APS_NEXT_CONTROL_VALUE         1068
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif
