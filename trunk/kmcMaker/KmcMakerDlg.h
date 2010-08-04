@@ -23,7 +23,11 @@ class CKmcMakerDlg : public CResizingDialog
 public:
 	CKmcMakerDlg(CWnd* pParent = NULL);	// standard constructor
 	~CKmcMakerDlg();
-
+	
+	// 把消息映射函数拿出来，用于子页面调用 
+	afx_msg void OnCheckStep1();
+	afx_msg void OnCheckStep2();
+	afx_msg void OnCheckStep3();
 // Dialog Data
 	//{{AFX_DATA(CKmcMakerDlg)
 	enum { IDD = IDD_KMCMAKER_DIALOG };
@@ -35,7 +39,6 @@ public:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 // 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
 	HICON m_hIcon;
@@ -46,9 +49,7 @@ protected:
  	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
  	afx_msg void OnPaint();
  	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg void OnCheckStep1();
-	afx_msg void OnCheckStep2();
-	afx_msg void OnCheckStep3();
+
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	//}}AFX_MSG

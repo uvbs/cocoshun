@@ -247,8 +247,8 @@ void CKmcMakerDlg::OnCheckStep2()
 	Lyric.TrimRight();
 	if(Lyric.IsEmpty())
 	{
-// 		MessageBox(_T("请导入歌词^_^!"));
-// 		return;
+		MessageBox(_T("请导入歌词^_^!"),_T("提示"),MB_OK | MB_ICONEXCLAMATION);
+		return;
 	}
 	m_MakeLyricDlg->InitLyric(Lyric);
 	m_MakeLyricDlg->SetFocusToLyricMaker();

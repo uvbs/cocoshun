@@ -5,6 +5,7 @@
 	#include "stdafx.h"
 
 #include "textfile.h"
+#define CODE_TEST_LEN 1000 //测试编码格式的长度
 
 #if PEK_TX_TECHLEVEL == 0
  //Include iostream if running in ANSI mode.
@@ -693,14 +694,13 @@ void CTextFileRead::ReadBOM()
 	if( IsOpen() )
 	{
 //		unsigned char bytes[2];
-		const int TestLen = 100;
-		unsigned char bytes[TestLen];
+		unsigned char bytes[CODE_TEST_LEN];
 
 		//Read the first two bytes
 //		ReadByte(bytes[0]);
 //		ReadByte(bytes[1]);
 
-		for(int i=0;i<TestLen;i++)
+		for(int i=0;i<CODE_TEST_LEN;i++)
 		{
 			ReadByte(bytes[i]);
 		}
@@ -711,9 +711,6 @@ void CTextFileRead::ReadBOM()
 			m_encoding = UNI16_LE;
 		else if( bytes[0] == 0xFE && bytes[1] == 0xFF)
 			m_encoding = UNI16_BE;
-		// 用测试字符串的方法判断UTF-8编码
-		else if(IsUTF8(bytes,TestLen))
-			m_encoding = UTF_8;
 		else if( bytes[0] == 0xEF && bytes[1] == 0xBB)
 		{
 			//This is probably UTF-8, check the third byte
@@ -728,6 +725,9 @@ void CTextFileRead::ReadBOM()
 				ResetFilePointer();
 			}
 		}
+		// 用测试字符串的方法判断UTF-8编码
+		else if(IsUTF8(bytes,CODE_TEST_LEN))
+			m_encoding = UTF_8;
 		else
 		{
 			m_encoding = ASCII;
@@ -1290,9 +1290,15 @@ bool CTextFileRead::ReadCharLine(string& line)
 
 BOOL CTextFileRead::IsUTF8(const void *pBuffer, long size)
 {
-	BOOL IsUTF8 = true;   
-    unsigned char* start = (unsigned char*)pBuffer;   
-    unsigned char* end = (unsigned char*)pBuffer + size;   
+	BOOL IsUTF8 = true;
+	int strLen = _tcslen((const char*)pBuffer);
+
+	//测试长度大于字符串长度，取字符串长度
+	size = size > strLen ? strLen : size;
+
+    unsigned char* start = (unsigned char*)pBuffer;
+    unsigned char* end = (unsigned char*)pBuffer + size; 
+	
     while (start < end)   
     {   
         if (*start < 0x80) // (10000000): 值小于0x80的为ASCII字符   

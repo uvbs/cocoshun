@@ -6,6 +6,7 @@
 #include "ImportLyricDlg.h"
 #include <sys/types.h>
 #include <sys/stat.h>  
+#include "KmcMakerDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,11 +45,8 @@ void CImportLyricDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CImportLyricDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CImportLyricDlg)
 	ON_BN_CLICKED(IDC_BTN_IMPORT, OnImportLyric)
-	ON_BN_CLICKED(IDC_CHECK_DEL_XML_HTML, OnCheckDelXmlHtml)
-	ON_BN_CLICKED(IDC_CHECK_DEL_LRC, OnCheckDelLrc)
-	ON_BN_CLICKED(IDC_CHECK_DEL_KSC, OnCheckDelKsc)
-	ON_BN_CLICKED(IDC_CHECK_DEL_SPACE, OnCheckDelSpace)
-	ON_BN_CLICKED(IDC_CHECK_REPLACE, OnCheckReplace)
+	ON_BN_CLICKED(IDC_BTN_FILTER, OnBtnFilter)
+	ON_BN_CLICKED(IDC_BTN_NEXTSTEP, OnBtnNextstep)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -77,12 +75,17 @@ BOOL CImportLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_CHECK_DEL_SPACE,ANCHORE_RIGHT );
 	SetControlInfo(IDC_CHECK_REPLACE,ANCHORE_RIGHT );
 	SetControlInfo(IDC_EDIT_REPLACE_TXT,ANCHORE_RIGHT );
+	SetControlInfo(IDC_CHECK_DEL_EMPTYLINE,ANCHORE_RIGHT );
 	SetControlInfo(IDC_STATIC_FOR,ANCHORE_RIGHT );
 	SetControlInfo(IDC_EDIT_TARGET_TXT,ANCHORE_RIGHT );
 	SetControlInfo(IDC_BTN_FILTER,ANCHORE_RIGHT );
+	SetControlInfo(IDC_STATIC_FIND,ANCHORE_RIGHT );
 
 	SetControlInfo(IDC_BTN_IMPORT,ANCHORE_RIGHT );
 	SetControlInfo(IDC_BTN_NEXTSTEP,ANCHORE_RIGHT );
+
+	SetCheck(IDC_CHECK_DEL_SPACE);
+	SetCheck(IDC_CHECK_DEL_EMPTYLINE);
 	
 	m_LyricEditor.SetFocus();
 	LoadLyric(_T(".\\Test\\十年.txt"));
@@ -136,8 +139,11 @@ BOOL CImportLyricDlg::LoadLyric(LPCTSTR pszFileName)
 		return FALSE;
 	}
 
-	m_LyricEditor.SetWindowText(m_LyricText.GetText());
-	m_LyricEditor.GetWindowText(m_OrgText);
+	CString Text;
+//	m_LyricEditor.GetWindowText(Text);
+	m_LyricText.GetText(Text);
+	m_LyricEditor.SetWindowText(Text);
+// 	m_LyricEditor.GetWindowText(m_OrgText);
 
 	return TRUE;
 }
@@ -152,39 +158,49 @@ int CImportLyricDlg::GetFileLenght( LPCTSTR pszFileName )
 	return (unsigned long)buf.st_size;
 }
 
-void CImportLyricDlg::OnCheckDelXmlHtml() 
-{
-	
-}
-
-void CImportLyricDlg::OnCheckDelLrc() 
-{
-	if(GetCheck(IDC_CHECK_DEL_LRC))
-	{
-		m_LyricText.SplitLRC();
-		m_LyricEditor.SetWindowText(m_LyricText.GetText());
-	}else
-	{
-		m_LyricEditor.SetWindowText(m_OrgText);
-	}
-}
-
-void CImportLyricDlg::OnCheckDelKsc() 
-{
-	
-}
-
-void CImportLyricDlg::OnCheckDelSpace() 
-{
-	
-}
-
-void CImportLyricDlg::OnCheckReplace() 
-{
-	
-}
 
 BOOL CImportLyricDlg::GetCheck( UINT ID )
 {
 	return ((CButton *)GetDlgItem(ID))->GetCheck();
+}
+
+void CImportLyricDlg::SetCheck( UINT ID,BOOL bCheck )
+{
+	((CButton *)GetDlgItem(ID))->SetCheck(bCheck);
+}
+void CImportLyricDlg::OnBtnFilter() 
+{
+	// 得到过滤参数
+	UpdateData(TRUE);
+
+	// 去换行符
+	int p = m_EditReplaceTxt.Find(LINE_SEPARATOR);
+	if(p != -1)
+	{
+		m_EditReplaceTxt = m_EditReplaceTxt.Mid(0, p);
+	}
+
+	CLyricText::FilterParam filterParam(
+		GetCheck(IDC_CHECK_DEL_SPACE),
+		GetCheck(IDC_CHECK_DEL_EMPTYLINE),
+		GetCheck(IDC_CHECK_DEL_XML_HTML),
+		GetCheck(IDC_CHECK_DEL_KSC),
+		GetCheck(IDC_CHECK_DEL_LRC),
+		GetCheck(IDC_CHECK_REPLACE),
+		m_EditReplaceTxt,m_EditTargetTxt);
+	m_LyricText.SetFilterParam(&filterParam);
+//	m_LyricText.ProcessFilter();
+
+	CString Text;
+//	m_LyricEditor.GetWindowText(Text);
+	m_LyricText.GetFilterText(Text);
+	m_LyricEditor.SetWindowText(Text);
+
+	m_LyricEditor.SetWindowText(Text);
+}
+
+
+void CImportLyricDlg::OnBtnNextstep() 
+{
+	((CKmcMakerDlg *)GetParent())->OnCheckStep2();
 }

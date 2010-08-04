@@ -43,6 +43,7 @@ public:
 protected:
 	BOOL LoadLyric(LPCTSTR pszFileName);
 	BOOL GetCheck(UINT ID);
+	void SetCheck(UINT ID,BOOL bCheck = TRUE);
 	
 	int GetFileLenght( LPCTSTR pszFileName );
 	// Generated message map functions
@@ -51,11 +52,8 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnImportLyric();
 	virtual void OnOK();
-	afx_msg void OnCheckDelXmlHtml();
-	afx_msg void OnCheckDelLrc();
-	afx_msg void OnCheckDelKsc();
-	afx_msg void OnCheckDelSpace();
-	afx_msg void OnCheckReplace();
+	afx_msg void OnBtnFilter();
+	afx_msg void OnBtnNextstep();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
