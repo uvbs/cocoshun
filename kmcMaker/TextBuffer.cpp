@@ -35,10 +35,11 @@ BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 		FileReader.Close();
 		return FALSE;
 	}
-	m_Lines.RemoveAll();
+	m_Lines.clear();
+//	m_Lines.SetSize(0,4096);
+
 	m_FileName = pszFileName;
 
-	m_Lines.SetSize(0,4096);
 	CString Line;
 	int LineNum = 0;
 	while(FileReader.ReadLine(Line))
@@ -47,7 +48,7 @@ BOOL CTextBuffer::LoadFromFile(LPCTSTR pszFileName)
 		Li.Num = LineNum++;
 		Li.Text = Line;
 
-		m_Lines.Add(Li);
+		m_Lines.push_back(Li);
 	}
 	FileReader.Close();
 
@@ -64,9 +65,9 @@ BOOL CTextBuffer::SaveToFile(LPCTSTR pszFileName)
 	}
 	
 	CString Line;
-	for(int i=0; i<m_Lines.GetSize();i++)
+	for(int i=0; i<m_Lines.size();i++)
 	{
-		LineInfo Li = m_Lines.GetAt(i);
+		LineInfo Li = m_Lines.at(i);
 		FileWriter.Write(Li.Text + LINE_SEPARATOR);
 	}
 
@@ -74,18 +75,16 @@ BOOL CTextBuffer::SaveToFile(LPCTSTR pszFileName)
 	return TRUE;
 }
 
-CString CTextBuffer::GetText()
+void CTextBuffer::GetText(CString &Text)
 {
-	if(m_Lines.GetSize()==0)
+	if(m_Lines.size()==0)
 	{
-		return _T("");
+		Text = _T("");
+		return;
 	}
 
-	CString Text;
-	for(int i=0;i<m_Lines.GetSize();i++)
+	for(int i=0;i<m_Lines.size();i++)
 	{
-		Text += m_Lines.GetAt(i).Text + LINE_SEPARATOR;
+		Text += m_Lines.at(i).Text + LINE_SEPARATOR;
 	}
-
-	return Text;
 }

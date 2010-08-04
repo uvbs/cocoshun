@@ -11,12 +11,15 @@
 #include "Util/textfile.h"
 #include <afxtempl.h>
 
+#include <vector>
+using std::vector;
+
 #define LINE_SEPARATOR _T("\n")
 
 class CTextBuffer  
 {
 public:
-	CString GetText();
+	void GetText(CString &Text);
 	BOOL SaveToFile(LPCTSTR pszFileName);
 	BOOL LoadFromFile(LPCTSTR pszFileName);
 	CTextBuffer();
@@ -36,7 +39,7 @@ protected:
 	};
 
 	//	Lines of text
-	CArray <LineInfo, LineInfo&> m_Lines;
+	vector <LineInfo> m_Lines;
 
 	CString m_FileName;
 };

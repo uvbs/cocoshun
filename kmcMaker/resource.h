@@ -58,12 +58,14 @@
 #define IDC_BTN_NEXTSTEP                1059
 #define IDC_BTN_PREVSTEP                1060
 #define IDC_RADIO_XML                   1060
+#define IDC_CHECK_DEL_EMPTYLINE         1060
 #define IDC_BTN_EXIT                    1062
 #define IDC_BTN_SAVE_PREVSTEP           1063
 #define IDC_STATIC_SAVETIP              1064
 #define IDC_STATIC_TIPEXT               1065
 #define IDC_STATIC_KEY_TIP              1066
 #define IDC_SLIDER1                     1067
+#define IDC_STATIC_FIND                 1068
 
 // Next default values for new objects
 // 
@@ -71,7 +73,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1068
+#define _APS_NEXT_CONTROL_VALUE         1069
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif
