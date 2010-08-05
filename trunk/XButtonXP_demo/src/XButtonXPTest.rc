@@ -1,0 +1,310 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "#ifdef _VC60\r\n"
+    "/////////////////////////////////////////////////////////////////////////////\r\n"
+    "//\r\n"
+    "// 24\r\n"
+    "//\r\n"
+    "1                      24      MOVEABLE PURE   ""app.manifest""\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "hans.ico"
+IDI_MFC16               ICON    DISCARDABLE     "mfc16.ico"
+IDI_MFC256              ICON    DISCARDABLE     "mfc256.ico"
+IDI_MFC24BPP            ICON    DISCARDABLE     "mfc24bpp.ico"
+IDI_MFC32BPP            ICON    DISCARDABLE     "mfc32bpp.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 270, 131
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About XHtmlTreeTest"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,14,20,20,SS_CENTERIMAGE | 
+                    WS_BORDER
+    LTEXT           "XButtonXPTest Version 1.3",IDC_STATIC,40,13,140,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright © 2005-2008 Hans Dietrich",IDC_STATIC,40,27,
+                    165,8
+    LTEXT           "This software is released into the public domain.  You are free to use it in any way you like.",
+                    IDC_STATIC,40,43,165,18
+    LTEXT           "This software is provided ""as is"" with no expressed or implied warranty.  I accept no liability for any damage or loss of business that this software may cause. ",
+                    IDC_STATIC,40,67,165,34
+    LTEXT           "Send email to Hans Dietrich",IDC_ABOUT_EMAIL,90,113,90,
+                    8,SS_CENTERIMAGE
+    DEFPUSHBUTTON   "OK",IDOK,209,9,50,14,WS_GROUP
+END
+
+IDD_XBUTTONXPTEST_DIALOG DIALOGEX 0, 0, 190, 268
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "XButtonXPTest"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Standard Pushbutton ",IDC_STATIC,10,6,170,49,WS_GROUP
+    PUSHBUTTON      "Button 1",IDC_BUTTON1,45,18,90,30,WS_GROUP
+    EDITTEXT        IDC_EDIT1,136,37,18,11,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    GROUPBOX        "Icon && Text",IDC_STATIC,20,76,150,39,WS_GROUP
+    CONTROL         "Icon on Left",IDC_ICON_LEFT,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,31,89,56,10
+    CONTROL         "Icon on Right",IDC_ICON_RIGHT,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,31,101,61,10
+    CONTROL         "No Icon",IDC_ICON_NO,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,111,89,43,10
+    CONTROL         "No Text",IDC_TEXT_NO,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,111,101,43,10
+    GROUPBOX        "Options",IDC_STATIC,20,121,150,67,WS_GROUP
+    CONTROL         "Enable theming",IDC_THEME,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,31,134,67,10
+    CONTROL         "Use toolbar style",IDC_TOOLBAR,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,31,146,70,10
+    CONTROL         "Toggle button",IDC_TOGGLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,31,158,62,10
+    CONTROL         "Disabled",IDC_DISABLED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,111,134,45,10
+    CONTROL         "Multi-line",IDC_MULTILINE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,111,146,45,10
+    CONTROL         "Default",IDC_DEFAULT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,111,158,41,10
+    LTEXT           "Icon:",IDC_STATIC,31,174,18,8
+    COMBOBOX        IDC_ICON_COMBO,50,171,48,57,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Colors...",IDC_COLORS,111,170,45,14
+    PUSHBUTTON      "Button 2",IDC_BUTTON2,45,192,90,30,WS_GROUP
+    EDITTEXT        IDC_EDIT2,136,211,18,11,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    GROUPBOX        "XButtonXP ",IDC_STATIC,10,63,170,165,WS_GROUP
+    CONTROL         "Display message when pressed",IDC_MESSAGEBOX,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,11,233,117,10
+    CONTROL         "Display hatch background",IDC_PATTERN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,11,245,101,10
+    DEFPUSHBUTTON   "Close",IDOK,140,233,40,14,WS_GROUP
+    PUSHBUTTON      "Help",IDC_ONLINE_HELP,140,249,40,14,WS_GROUP
+END
+
+IDD_COLOR_DIALOG DIALOGEX 0, 0, 258, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "XButtonXPTest - Colors"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Colors",IDC_STATIC,10,6,238,38,WS_GROUP
+    LTEXT           "Text Color:",IDC_STATIC,20,21,36,8
+    PUSHBUTTON      "",IDC_TEXT_COLOR,58,19,50,14,WS_GROUP
+    LTEXT           "Background Color:",IDC_STATIC,122,21,61,8
+    PUSHBUTTON      "",IDC_BACKGROUND_COLOR,185,19,50,14,WS_GROUP
+    PUSHBUTTON      "Reset Colors",IDC_RESET_COLORS,70,54,54,14
+    DEFPUSHBUTTON   "OK",IDOK,198,54,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,134,54,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,3,0,1
+ PRODUCTVERSION 1,3,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "Article", "www.codeproject.com\0"
+            VALUE "E-mail", "hdietrich@gmail.com\0"
+            VALUE "FileDescription", "XButtonXPTest.exe\0"
+            VALUE "FileVersion", "1, 3, 0, 1\0"
+            VALUE "LegalCopyright", "Copyright © 2005-2008 Hans Dietrich\0"
+            VALUE "OriginalFilename", "XButtonXPTest.exe\0"
+            VALUE "ProductName", "XButtonXPTest\0"
+            VALUE "ProductVersion", "1, 3, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_XBUTTONXPTEST_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 183
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 261
+    END
+
+    IDD_COLOR_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_XBUTTONXPTEST_DIALOG DLGINIT
+BEGIN
+    IDC_ICON_COMBO, 0x403, 9, 0
+0x3631, 0x6320, 0x6c6f, 0x726f, "\000" 
+    IDC_ICON_COMBO, 0x403, 10, 0
+0x3532, 0x2036, 0x6f63, 0x6f6c, 0x0072, 
+    IDC_ICON_COMBO, 0x403, 7, 0
+0x3432, 0x6220, 0x7070, "\000" 
+    IDC_ICON_COMBO, 0x403, 7, 0
+0x3233, 0x6220, 0x7070, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About XButtonXPTest..."
+    IDS_MAILTO              "mailto:hdietrich@gmail.com?subject=XButtonXP"
+    IDS_ONLINE_HELP         "http://www.codeproject.com/KB/buttons/XButtonXP.aspx"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "afxres.rc"         // Standard components
+#endif
+#ifdef _VC60
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+1                      24      MOVEABLE PURE   "app.manifest"
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
