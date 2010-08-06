@@ -126,6 +126,10 @@ SOURCE=.\UILib\BCMenu.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UILib\BitmapSlider.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\UILib\BtnST.cpp
 # End Source File
 # Begin Source File
@@ -207,6 +211,18 @@ SOURCE=.\wmpcontrols.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\wmperror.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\wmperroritem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\wmpmedia.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\wmpplayer4.cpp
 # End Source File
 # End Group
@@ -216,6 +232,10 @@ SOURCE=.\wmpplayer4.cpp
 # Begin Source File
 
 SOURCE=.\UILib\BCMenu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UILib\BitmapSlider.h
 # End Source File
 # Begin Source File
 
@@ -263,6 +283,10 @@ SOURCE=.\MakeLyricDlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UILib\memdc.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\UILib\MyRichEdit.h
 # End Source File
 # Begin Source File
@@ -299,6 +323,18 @@ SOURCE=.\wmpcontrols.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\wmperror.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\wmperroritem.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\wmpmedia.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\wmpplayer4.h
 # End Source File
 # End Group
@@ -321,6 +357,22 @@ SOURCE=.\res\KmcMaker.rc2
 
 SOURCE=.\res\logo.bmp
 # End Source File
+# Begin Source File
+
+SOURCE=.\res\mp_channel.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\mp_channel_active.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\mp_thumb.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\mp_thumb_active.bmp
+# End Source File
 # End Group
 # Begin Source File
 
@@ -332,30 +384,6 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project
-# Section KmcMaker : {40897764-CEAB-47BE-AD4A-8E28537F9BBF}
-# 	2:5:Class:CWMPPlayerApplication
-# 	2:10:HeaderFile:wmpplayerapplication.h
-# 	2:8:ImplFile:wmpplayerapplication.cpp
-# End Section
-# Section KmcMaker : {9104D1AB-80C9-4FED-ABF0-2E6417A6DF14}
-# 	2:5:Class:CWMPSettings
-# 	2:10:HeaderFile:wmpsettings.h
-# 	2:8:ImplFile:wmpsettings.cpp
-# End Section
-# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
-# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
-# 	2:16:DefaultSinkClass:CWMPPlayer4
-# End Section
-# Section KmcMaker : {A12DCF7D-14AB-4C1B-A8CD-63909F06025B}
-# 	2:5:Class:CWMPError
-# 	2:10:HeaderFile:wmperror.h
-# 	2:8:ImplFile:wmperror.cpp
-# End Section
-# Section KmcMaker : {EE4C8FE2-34B2-11D3-A3BF-006097C9B344}
-# 	2:5:Class:CWMPCdromCollection
-# 	2:10:HeaderFile:wmpcdromcollection.h
-# 	2:8:ImplFile:wmpcdromcollection.cpp
-# End Section
 # Section KmcMaker : {D5F0F4F1-130C-11D3-B14E-00C04F79FAA6}
 # 	2:5:Class:CWMPPlaylist
 # 	2:10:HeaderFile:wmpplaylist.h
@@ -366,6 +394,11 @@ SOURCE=.\ReadMe.txt
 # 	2:10:HeaderFile:wmpclosedcaption.h
 # 	2:8:ImplFile:wmpclosedcaption.cpp
 # End Section
+# Section KmcMaker : {EE4C8FE2-34B2-11D3-A3BF-006097C9B344}
+# 	2:5:Class:CWMPCdromCollection
+# 	2:10:HeaderFile:wmpcdromcollection.h
+# 	2:8:ImplFile:wmpcdromcollection.cpp
+# End Section
 # Section KmcMaker : {3614C646-3B3B-4DE7-A81E-930E3F2127B3}
 # 	2:5:Class:CWMPErrorItem
 # 	2:10:HeaderFile:wmperroritem.h
@@ -375,6 +408,14 @@ SOURCE=.\ReadMe.txt
 # 	2:5:Class:CWMPMedia
 # 	2:10:HeaderFile:wmpmedia.h
 # 	2:8:ImplFile:wmpmedia.cpp
+# End Section
+# Section KmcMaker : {00000000-0000-0000-0000-800000800000}
+# 	1:12:IDR_KMCMAKER:106
+# End Section
+# Section KmcMaker : {10A13217-23A7-439B-B1C0-D847C79B7774}
+# 	2:5:Class:CWMPPlaylistCollection
+# 	2:10:HeaderFile:wmpplaylistcollection.h
+# 	2:8:ImplFile:wmpplaylistcollection.cpp
 # End Section
 # Section KmcMaker : {EC21B779-EDEF-462D-BBA4-AD9DDE2B29A7}
 # 	2:5:Class:CWMPNetwork
@@ -390,14 +431,6 @@ SOURCE=.\ReadMe.txt
 # 	2:5:Class:CWMPMediaCollection
 # 	2:10:HeaderFile:wmpmediacollection.h
 # 	2:8:ImplFile:wmpmediacollection.cpp
-# End Section
-# Section KmcMaker : {00000000-0000-0000-0000-800000800000}
-# 	1:12:IDR_KMCMAKER:106
-# End Section
-# Section KmcMaker : {10A13217-23A7-439B-B1C0-D847C79B7774}
-# 	2:5:Class:CWMPPlaylistCollection
-# 	2:10:HeaderFile:wmpplaylistcollection.h
-# 	2:8:ImplFile:wmpplaylistcollection.cpp
 # End Section
 # Section KmcMaker : {74C09E02-F828-11D2-A74B-00A0C905F36E}
 # 	2:5:Class:CWMPControls
@@ -432,4 +465,23 @@ SOURCE=.\ReadMe.txt
 # Section KmcMaker : {05589FA1-C356-11CE-BF01-00AA0055595A}
 # 	2:21:DefaultSinkHeaderFile:activemovie3.h
 # 	2:16:DefaultSinkClass:CActiveMovie3
+# End Section
+# Section KmcMaker : {40897764-CEAB-47BE-AD4A-8E28537F9BBF}
+# 	2:5:Class:CWMPPlayerApplication
+# 	2:10:HeaderFile:wmpplayerapplication.h
+# 	2:8:ImplFile:wmpplayerapplication.cpp
+# End Section
+# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
+# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
+# 	2:16:DefaultSinkClass:CWMPPlayer4
+# End Section
+# Section KmcMaker : {9104D1AB-80C9-4FED-ABF0-2E6417A6DF14}
+# 	2:5:Class:CWMPSettings
+# 	2:10:HeaderFile:wmpsettings.h
+# 	2:8:ImplFile:wmpsettings.cpp
+# End Section
+# Section KmcMaker : {A12DCF7D-14AB-4C1B-A8CD-63909F06025B}
+# 	2:5:Class:CWMPError
+# 	2:10:HeaderFile:wmperror.h
+# 	2:8:ImplFile:wmperror.cpp
 # End Section

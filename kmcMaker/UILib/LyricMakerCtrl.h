@@ -7,10 +7,7 @@
 #include "../Lyric.h"
 #include "../wmpplayer4.h"
 #include "../KmcBuffer.h"
-#define PLAYSTATE_READY 0
-#define PLAYSTATE_PLAY  3
-#define PLAYSTATE_PAUSE 2
-#define PLAYSTATE_STOP 1
+
 
 #define COLOR_BLACK RGB(0,0,0)
 #define COLOR_RED RGB(250,0,0)

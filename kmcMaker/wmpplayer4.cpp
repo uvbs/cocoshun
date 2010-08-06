@@ -9,6 +9,8 @@
 
 // Dispatch interfaces referenced by this interface
 #include "wmpcontrols.h"
+#include "wmpmedia.h"
+#include "WMPError.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CWMPPlayer4
@@ -69,11 +71,11 @@ LPDISPATCH CWMPPlayer4::GetSettings()
 	return result;
 }
 
-LPDISPATCH CWMPPlayer4::GetCurrentMedia()
+CWMPMedia CWMPPlayer4::GetCurrentMedia()
 {
-	LPDISPATCH result;
-	InvokeHelper(0x6, DISPATCH_PROPERTYGET, VT_DISPATCH, (void*)&result, NULL);
-	return result;
+	LPDISPATCH pDispatch;
+	InvokeHelper(0x6, DISPATCH_PROPERTYGET, VT_DISPATCH, (void*)&pDispatch, NULL);
+	return CWMPMedia(pDispatch);
 }
 
 void CWMPPlayer4::SetCurrentMedia(LPDISPATCH newValue)
@@ -156,11 +158,11 @@ BOOL CWMPPlayer4::GetIsOnline()
 	return result;
 }
 
-LPDISPATCH CWMPPlayer4::GetError()
+CWMPError CWMPPlayer4::GetError()
 {
-	LPDISPATCH result;
-	InvokeHelper(0x11, DISPATCH_PROPERTYGET, VT_DISPATCH, (void*)&result, NULL);
-	return result;
+	LPDISPATCH pDispatch;
+	InvokeHelper(0x11, DISPATCH_PROPERTYGET, VT_DISPATCH, (void*)&pDispatch, NULL);
+	return CWMPError(pDispatch);
 }
 
 CString CWMPPlayer4::GetStatus()
@@ -307,4 +309,21 @@ void CWMPPlayer4::openPlayer(LPCTSTR bstrURL)
 		VTS_BSTR;
 	InvokeHelper(0x1c, DISPATCH_METHOD, VT_EMPTY, NULL, parms,
 		 bstrURL);
+}
+
+BOOL CWMPPlayer4::IsPlay()
+{
+	return GetPlayState() == PLAYSTATE_PLAY;
+}
+
+BOOL CWMPPlayer4::IsPause()
+{
+	return GetPlayState() == PLAYSTATE_PAUSE;
+}
+
+
+
+BOOL CWMPPlayer4::IsStop()
+{
+	return GetPlayState() == PLAYSTATE_STOP;
 }
