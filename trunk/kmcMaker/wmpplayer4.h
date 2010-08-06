@@ -10,8 +10,17 @@
 //  Microsoft Visual C++, your modifications will be overwritten.
 #include "wmpcontrols.h"
 
+#define PLAYSTATE_READY 0
+#define PLAYSTATE_STOP 1
+#define PLAYSTATE_PAUSE 2
+#define PLAYSTATE_PLAY  3
+#define PLAYSTATE_BUFFERING 6 //正在缓冲
+#define PLAYSTATE_FINISHED 8  //完成
+
 // Dispatch interfaces referenced by this interface
 class CWMPControls;
+class CWMPMedia;
+class CWMPError;
 
 /////////////////////////////////////////////////////////////////////////////
 // CWMPPlayer4 wrapper class
@@ -46,6 +55,9 @@ public:
 
 // Operations
 public:
+	BOOL IsStop();
+	BOOL IsPause();
+	BOOL IsPlay();
 	void close();
 	CString GetUrl();
 	void SetUrl(LPCTSTR lpszNewValue);
@@ -53,7 +65,7 @@ public:
 	long GetPlayState();
 	CWMPControls GetControls();
 	LPDISPATCH GetSettings();
-	LPDISPATCH GetCurrentMedia();
+	CWMPMedia GetCurrentMedia();
 	void SetCurrentMedia(LPDISPATCH newValue);
 	LPDISPATCH GetMediaCollection();
 	LPDISPATCH GetPlaylistCollection();
@@ -65,7 +77,7 @@ public:
 	LPDISPATCH GetCdromCollection();
 	LPDISPATCH GetClosedCaption();
 	BOOL GetIsOnline();
-	LPDISPATCH GetError();
+	CWMPError GetError();
 	CString GetStatus();
 	LPDISPATCH GetDvd();
 	LPDISPATCH newPlaylist(LPCTSTR bstrName, LPCTSTR bstrURL);

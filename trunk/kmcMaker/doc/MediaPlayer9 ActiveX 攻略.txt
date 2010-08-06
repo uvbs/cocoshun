@@ -1,0 +1,2038 @@
+https://addons.mozilla.org/en-US/firefox/addon/1879
+ 
+1 MediaPlayer9 ActiveX 攻略  
+ 
+
+作者：小高 
+
+一、安装 
+        这个不用多说，多数人都知道，在Delphi7中选择“Component ——Import ActiveX Control...”菜单，会弹出“Import ActiveX0”窗口。在列表中选择“Windows Media Player(Version 1.0)”，再点击“Install”...... 
+
+        当然，得先安装Mediaplayer 9。另外，最好是使用Delphi7，因为我发现Mp9 ActiveX在Delphi7提供的内容比Delphi6更丰富，delphi6以下的版本我就没有测试过了。 
+
+二、一孔之见 
+
+[基本属性] 
+
+URL:string                            可以指定媒体位置 
+enableContextMenu:Boolean 显示/不显示播放位置的右键菜单 
+fullScreen:boolean                 全屏显示 
+stretchToFit:boolean              非全屏状态时是否伸展到最佳大小 
+uMode:string                         播放器的模式，full：有下面的控制条; none：只有播放部份没有控制条 
+playState:integer                    当前控件状态，下面是三种基本状态： 
+3：正在播放 
+2：暂停 
+1：已停止 
+状态变化时会触发OnStatusChange事件 
+
+[controls] 
+可通过WindowsMediaPlayer.controls对播放器进行控制并取得相关的一些信息： 
+ controls.play;       播放 
+ controls.stop;       停止 
+ controls.pause;      暂停 
+ controls.currentPosition：Double 当前播放进度 
+ controls.currentPositionString：string 时间格式的字符串 "0:32" 
+
+[currentMedia] 
+可以通过WindowsMediaPlayer.currentMedia取得当前媒体的信息 
+ currentMedia.duration  Double 总长度 
+ currentMedia.durationString 时间格式的字符串 "4:34" 
+
+[settings] 
+可以通过WindowsMediaPlayer.settings对播放器进行设置，包括音量和声道等。 
+settings.volume:integer 音量 （0-100） 
+settings.balance:integer 声道，通过它应该可以进行立体声、左声道、右声道的控制。但对应的取值尚不清楚。 
+
+三、罗嗦一句 
+        以上我提到的，全是我已经在windows98+Mediaplayer9+delphi7环境下试过了的，其实Mediaplayer9的ActiveX还有好多的属性、方法，我没法一一列出（其实多数是我搞不明白啦，原来下过一个英文的SDK，有详细介绍，不过我看不太懂），一人之力有限，还希望有心人能多多挖掘，多多交流。 
+
+@@ 易语言COM包装支持库  
+
+记录格式说明：  
+“@@ 语言 = xxxx”：记录当前翻译用语言的种类，必须在首部，请不要更改。  
+“@@ 类型库 = xxxx”：如果为包装类型库，则记录类型库的相关信息，请不要更改。  
+“@@ 组件 = xxxx”：如果为包装组件，则记录组件的相关信息，请不要更改，与类型库信息不能同时存在。  
+“##1”：表示某翻译项的开始，格式为“##1 项目原名 = 翻译后的名称”，  
+下行首直到下一翻译项标记处记录有关此项目的详细解释信息。  
+“##0”：记录被屏蔽的项目，被屏蔽项目将不会被包装支持库输出。  
+格式为“##0 项目原名”，不能屏蔽参数。  
+
+------------------------------------------------------------  
+
+@@ 语言 = 1  
+
+@@ 组件 = {6BF52A52-394A-11d3-B153-00C04F79FAA6},Windows媒体播放器  
+Windows Media Player控件，需要Windows Media Player 9或以上版本  
+
+##0 IWMPEvents = Notuseful  
+
+
+##1 IWMPEvents.OpenStateChange =  
+Sent when the control changes OpenState  
+
+##1 IWMPEvents.PlayStateChange =  
+Sent when the control changes PlayState  
+
+##1 IWMPEvents.AudioLanguageChange =  
+Sent when the current audio language has changed  
+
+##1 IWMPEvents.StatusChange =  
+Sent when the status string changes  
+
+##1 IWMPEvents.ScriptCommand =  
+Sent when a synchronized command or URL is received  
+
+##1 IWMPEvents.NewStream =  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+2 MediaPlayer9 ActiveX 攻略  
+ Sent when a new stream is started in a channel  
+
+##1 IWMPEvents.Disconnect =  
+Sent when the control is disconnected from the server  
+
+##1 IWMPEvents.Buffering =  
+Sent when the control begins or ends buffering  
+
+##1 IWMPEvents.Error =  
+Sent when the control has an error condition  
+
+##1 IWMPEvents.Warning =  
+Sent when the control encounters a problem  
+
+##1 IWMPEvents.EndOfStream =  
+Sent when the end of file is reached  
+
+##1 IWMPEvents.PositionChange =  
+Indicates that the current position of the movie has changed  
+
+##1 IWMPEvents.MarkerHit =  
+Sent when a marker is reached  
+
+##1 IWMPEvents.DurationUnitChange =  
+Indicates that the unit used to express duration and position has changed  
+
+##1 IWMPEvents.CdromMediaChange =  
+Indicates that the CD ROM media has changed  
+
+##1 IWMPEvents.PlaylistChange =  
+Sent when a playlist changes  
+
+##1 IWMPEvents.CurrentPlaylistChange =  
+Sent when the current playlist changes  
+
+##1 IWMPEvents.CurrentPlaylistItemAvailable =  
+Sent when a current playlist item becomes available  
+
+##1 IWMPEvents.MediaChange =  
+Sent when a media object changes  
+
+##1 IWMPEvents.CurrentMediaItemAvailable =  
+Sent when a current media item becomes available  
+
+##1 IWMPEvents.CurrentItemChange =  
+Sent when the item selection on the current playlist changes  
+
+##1 IWMPEvents.MediaCollectionChange =  
+Sent when the media collection needs to be requeried  
+
+##1 IWMPEvents.MediaCollectionAttributeStringAdded =  
+Sent when an attribute string is added in the media collection  
+
+##1 IWMPEvents.MediaCollectionAttributeStringRemoved =  
+Sent when an attribute string is removed from the media collection  
+
+##1 IWMPEvents.MediaCollectionAttributeStringChanged =  
+Sent when an attribute string is changed in the media collection  
+
+##1 IWMPEvents.PlaylistCollectionChange =  
+Sent when playlist collection needs to be requeried  
+
+##1 IWMPEvents.PlaylistCollectionPlaylistAdded =  
+Sent when a playlist is added to the playlist collection  
+
+##1 IWMPEvents.PlaylistCollectionPlaylistRemoved =  
+Sent when a playlist is removed from the playlist collection  
+
+##1 IWMPEvents.PlaylistCollectionPlaylistSetAsDeleted =  
+Sent when a playlist has been set or reset as deleted  
+
+##1 IWMPEvents.ModeChange =  
+Playlist playback mode has changed  
+
+##1 IWMPEvents.MediaError =  
+Sent when the media object has an error condition  
+
+##1 IWMPEvents.OpenPlaylistSwitch =  
+Current playlist switch with no open state change  
+
+##1 IWMPEvents.DomainChange =  
+Send a current domain  
+
+##1 IWMPEvents.SwitchedToPlayerApplication =  
+Sent when display switches to player application  
+
+##1 IWMPEvents.SwitchedToControl =  
+Sent when display switches to control  
+
+##1 IWMPEvents.PlayerDockedStateChange =  
+Sent when the player docks or undocks  
+
+##1 IWMPEvents.PlayerReconnect =  
+Sent when the OCX reconnects to the player  
+
+##1 IWMPEvents.Click =  
+Occurs when a user clicks the mouse  
+
+##1 IWMPEvents.DoubleClick =  
+Occurs when a user double-clicks the mouse  
+
+##1 IWMPEvents.KeyDown =  
+Occurs when a key is pressed  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+3 MediaPlayer9 ActiveX 攻略  
+ 
+##1 IWMPEvents.KeyPress =  
+Occurs when a key is pressed and released  
+
+##1 IWMPEvents.KeyUp =  
+Occurs when a key is released  
+
+##1 IWMPEvents.MouseDown =  
+Occurs when a mouse button is pressed  
+
+##1 IWMPEvents.MouseMove =  
+Occurs when a mouse pointer is moved  
+
+##1 IWMPEvents.MouseUp =  
+Occurs when a mouse button is released  
+
+##0 WMPPlaylistChangeEventType = Notuseful  
+
+
+##1 WMPPlaylistChangeEventType.wmplcUnknown =  
+Unknown  
+
+##1 WMPPlaylistChangeEventType.wmplcClear =  
+Clear  
+
+##1 WMPPlaylistChangeEventType.wmplcInfoChange =  
+InfoChange  
+
+##1 WMPPlaylistChangeEventType.wmplcMove =  
+Move  
+
+##1 WMPPlaylistChangeEventType.wmplcDelete =  
+Delete  
+
+##1 WMPPlaylistChangeEventType.wmplcInsert =  
+Insert  
+
+##1 WMPPlaylistChangeEventType.wmplcAppend =  
+Append  
+
+##1 WMPPlaylistChangeEventType.wmplcPrivate =  
+Private  
+
+##1 WMPPlaylistChangeEventType.wmplcNameChange =  
+NameChange  
+
+##1 WMPPlaylistChangeEventType.wmplcMorph =  
+Morph  
+
+##1 WMPPlaylistChangeEventType.wmplcSort =  
+Sort  
+
+##1 WMPPlaylistChangeEventType.wmplcLast =  
+Last  
+
+##1 WindowsMediaPlayer = WMP播放器  
+Windows媒体播放器控件  
+
+##1 WindowsMediaPlayer.close = 关闭  
+关闭媒体播放器  
+
+##1 WindowsMediaPlayer.URL = 地址  
+返回或设置要播放的媒体文件的文件名或者URL，例如"c:\1.mp3"，"http://www.cnn.com/video.asf"  
+
+##1 WindowsMediaPlayer.openState = 打开状态  
+返回播放器的打开状态  
+
+##1 WindowsMediaPlayer.playState = 播放状态  
+返回播放器的播放状态，使用"播放状态"枚举常量  
+
+##1 WindowsMediaPlayer.Getcontrols = 取控制  
+获取控制对象  
+
+##1 WindowsMediaPlayer.Getsettings = 取设定  
+获取设定对象  
+
+##1 WindowsMediaPlayer.GetcurrentMedia = 取当前媒体  
+获取当前媒体对象  
+
+##0 WindowsMediaPlayer.GetmediaCollection = Notuseful  
+获取媒体集合对象  
+
+##0 WindowsMediaPlayer.GetplaylistCollection = Notuseful  
+获取播放列表集合对象  
+
+##1 WindowsMediaPlayer.versionInfo = 版本信息  
+返回Windows Media Player的版本信息  
+
+##0 WindowsMediaPlayer.launchURL = Notuseful  
+
+
+##1 WindowsMediaPlayer.Getnetwork = 取网络  
+获取网络对象  
+
+##1 WindowsMediaPlayer.GetcurrentPlaylist = 取当前播放列表  
+获取当前播放列表对象  
+
+##1 WindowsMediaPlayer.GetcdromCollection = 取光驱集  
+获取光驱集合对象  
+
+##0 WindowsMediaPlayer.GetclosedCaption = Notuseful  
+Returns the closed caption handler  
+
+##1 WindowsMediaPlayer.isOnline = 在线  
+返回当前计算机是否连接到了Internet上  
+
+##0 WindowsMediaPlayer.GetError = Notuseful  
+获取错误对象  
+
+##1 WindowsMediaPlayer.status = 状态  
+以文本型方式返回当前播放器的状态  
+
+##0 WindowsMediaPlayer.Getdvd = Notuseful  
+获取DVD对象  
+
+##0 WindowsMediaPlayer.newPlaylist = Notuseful  
+创建一个新的播放列表  
+
+##1 WindowsMediaPlayer.newPlaylist.bstrName = 播放列表名  
+新的播放列表的名称  
+
+##1 WindowsMediaPlayer.newMedia = 创建媒体对象  
+创建一个新的媒体对象  
+
+##1 WindowsMediaPlayer.newMedia.bstrURL = 媒体文件  
+媒体文件名，例如："c:\1.mp3"，"http://www.cnn.com/capsaddam.wmv"  
+
+##1 WindowsMediaPlayer.enabled = 可用  
+返回或设置控件是否可用  
+
+##1 WindowsMediaPlayer.fullScreen = 全屏模式  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+4 MediaPlayer9 ActiveX 攻略  
+ 返回或设置控件是否使用全屏幕模式  
+
+##1 WindowsMediaPlayer.enableContextMenu = 菜单可用  
+返回或设置在Windows Media Player控件界面中是否使用菜单  
+
+##1 WindowsMediaPlayer.uiMode = 界面模式  
+返回或设置控件界面的模式，可以为以下文本型常量之一："invisible"、#隐藏所有；  
+"none"、#只显示视频或者音频效果；"mini"、#MINI模式；"full"、#完整模式；"custom"、#自定义效果  
+
+##1 WindowsMediaPlayer.stretchToFit = 自适应尺寸  
+返回或设置视频大小是否适应控件大小  
+
+##1 WindowsMediaPlayer.windowlessVideo = 无窗口模式  
+返回或设置控件播放视频是否在无窗口模式  
+
+##1 WindowsMediaPlayer.isRemote = 远程模式  
+返回播放器是否在远程方式下运行  
+
+##0 WindowsMediaPlayer.GetplayerApplication = Notuseful  
+获取播放程序对象  
+
+##1 WindowsMediaPlayer.openPlayer = 打开播放器  
+使用指定的URL连接来打开Windows Media Player主程序  
+
+##1 WindowsMediaPlayer.openPlayer.bstrURL = URL  
+例如:"c:\1.mp3","http://www.cnn.com/video.wmv"  
+
+##1 WindowsMediaPlayer.SetcurrentMedia = 置当前媒体  
+设置当前媒体对象  
+
+##1 WindowsMediaPlayer.SetcurrentMedia.属性值 = 媒体对象  
+媒体对象  
+
+##1 WindowsMediaPlayer.SetcurrentPlaylist = 置当前播放列表  
+设置当前播放列表  
+
+##1 WindowsMediaPlayer.SetcurrentPlaylist.属性值 = 播放列表  
+播放列表对象  
+
+##1 _WMPOCXEvents.OpenStateChange = 打开状态被改变  
+当前打开状态被改变的时候触发此事件  
+
+##1 _WMPOCXEvents.OpenStateChange.NewState = 新的状态  
+使用"打开状态"枚举常量  
+
+##1 _WMPOCXEvents.PlayStateChange = 播放状态被改变  
+当播放状态属性被改变的时候触发此事件  
+
+##1 _WMPOCXEvents.PlayStateChange.NewState = 新的状态  
+请参见"播放状态"枚举常量  
+
+##1 _WMPOCXEvents.AudioLanguageChange = 音频语言被改变  
+当音频语言被改变的时候触发此事件  
+
+##1 _WMPOCXEvents.AudioLanguageChange.LangID = 语言标识  
+新的语言的标识(LCID)  
+
+##1 _WMPOCXEvents.StatusChange = 状态被改变  
+当前状态属性被改变的时候触发此事件  
+
+##0 _WMPOCXEvents.ScriptCommand = Notuseful  
+Sent when a synchronized command or URL is received  
+
+##0 _WMPOCXEvents.NewStream = Notuseful  
+Sent when a new stream is started in a channel  
+
+##0 _WMPOCXEvents.Disconnect = Notuseful  
+Sent when the control is disconnected from the server  
+
+##1 _WMPOCXEvents.Buffering = 正在缓冲  
+本时间在Windows Media Player控件缓冲或下载，并且在缓冲开始或结尾部分时触发。  
+
+##1 _WMPOCXEvents.Buffering.Start = 是否在开头  
+如果为 真，正在缓冲开头，反之，为正在缓冲结尾  
+
+##1 _WMPOCXEvents.Error = 错误发生  
+当发生错误的时候触发此事件  
+
+##0 _WMPOCXEvents.Warning = Notuseful  
+Sent when the control encounters a problem  
+
+##0 _WMPOCXEvents.EndOfStream = Notuseful  
+Sent when the end of file is reached  
+
+##1 _WMPOCXEvents.PositionChange = 位置被改变  
+当播放位置被改变的时候触发此事件  
+
+##1 _WMPOCXEvents.PositionChange.oldPosition = 旧的位置  
+
+
+##1 _WMPOCXEvents.PositionChange.newPosition = 新的位置  
+
+
+##0 _WMPOCXEvents.MarkerHit = Notuseful  
+Sent when a marker is reached  
+
+##0 _WMPOCXEvents.DurationUnitChange = Notuseful  
+Indicates that the unit used to express duration and position has changed  
+
+##1 _WMPOCXEvents.CdromMediaChange = 光驱媒体更改  
+本事件在CD/DVD光驱在弹出或插入时被触发  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+5 MediaPlayer9 ActiveX 攻略  
+ 
+##1 _WMPOCXEvents.CdromMediaChange.CdromNum = 光驱序号  
+光盘驱动器的序号  
+
+##0 _WMPOCXEvents.PlaylistChange = Notuseful  
+Sent when a playlist changes  
+
+##0 _WMPOCXEvents.CurrentPlaylistChange = Notuseful  
+Sent when the current playlist changes  
+
+##0 _WMPOCXEvents.CurrentPlaylistItemAvailable = Notuseful  
+Sent when a current playlist item becomes available  
+
+##0 _WMPOCXEvents.MediaChange = Notuseful  
+Sent when a media object changes  
+
+##0 _WMPOCXEvents.CurrentMediaItemAvailable = Notuseful  
+Sent when a current media item becomes available  
+
+##0 _WMPOCXEvents.CurrentItemChange = Notuseful  
+该事件在"WMP控制"对象的"当前项目"被改变的时候被触发  
+
+##0 _WMPOCXEvents.MediaCollectionChange = Notuseful  
+Sent when the media collection needs to be requeried  
+
+##0 _WMPOCXEvents.MediaCollectionAttributeStringAdded = Notuseful  
+Sent when an attribute string is added in the media collection  
+
+##0 _WMPOCXEvents.MediaCollectionAttributeStringRemoved = Notuseful  
+Sent when an attribute string is removed from the media collection  
+
+##0 _WMPOCXEvents.MediaCollectionAttributeStringChanged = Notuseful  
+Sent when an attribute string is changed in the media collection  
+
+##0 _WMPOCXEvents.PlaylistCollectionChange = Notuseful  
+Sent when playlist collection needs to be requeried  
+
+##0 _WMPOCXEvents.PlaylistCollectionPlaylistAdded = Notuseful  
+Sent when a playlist is added to the playlist collection  
+
+##0 _WMPOCXEvents.PlaylistCollectionPlaylistRemoved = Notuseful  
+Sent when a playlist is removed from the playlist collection  
+
+##0 _WMPOCXEvents.PlaylistCollectionPlaylistSetAsDeleted = Notuseful  
+Sent when a playlist has been set or reset as deleted  
+
+##0 _WMPOCXEvents.ModeChange = Notuseful  
+Playlist playback mode has changed  
+
+##1 _WMPOCXEvents.MediaError = 媒体发生错误  
+当媒体对象发生错误的时候触发此事件  
+
+##1 _WMPOCXEvents.MediaError.pMediaObject = 媒体对象  
+发生错误的媒体对象  
+
+##0 _WMPOCXEvents.OpenPlaylistSwitch = Notuseful  
+Current playlist switch with no open state change  
+
+##0 _WMPOCXEvents.DomainChange = Notuseful  
+Send a current domain  
+
+##0 _WMPOCXEvents.SwitchedToPlayerApplication = Notuseful  
+该事件在远程控件切换到完整的播放程序时被触发  
+
+##0 _WMPOCXEvents.SwitchedToControl = Notuseful  
+该事件在远程控件切换回控件时被触发  
+
+##0 _WMPOCXEvents.PlayerDockedStateChange = Notuseful  
+Sent when the player docks or undocks  
+
+##1 _WMPOCXEvents.PlayerReconnect = 播放器重新连接  
+当控件重新连接到播放器的时候触发此事件  
+
+##1 _WMPOCXEvents.Click = 被单击  
+当用户单击左键的时候触发此事件  
+
+##1 _WMPOCXEvents.Click.nButton = 鼠标按钮  
+0、#左键；1、右键；2、中键；  
+
+##1 _WMPOCXEvents.Click.nShiftState = Shift键状态  
+0、Shift键被按下；1、Ctrl键被按下；2、Alt键被按下；  
+
+##1 _WMPOCXEvents.Click.fX = 横坐标  
+横坐标  
+
+##1 _WMPOCXEvents.Click.fY = 纵坐标  
+纵坐标  
+
+##1 _WMPOCXEvents.DoubleClick = 鼠标双击  
+当前鼠标双击的时候触发此事件  
+
+##1 _WMPOCXEvents.DoubleClick.nButton = 鼠标按键  
+为以下常量之一：0、#左键； 1、#右键；2、#中键；  
+
+##1 _WMPOCXEvents.DoubleClick.nShiftState = Shift键状态  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+6 MediaPlayer9 ActiveX 攻略  
+ 为以下常量之一：0、#Shift键被按下；1、#Ctrl键被按下；2、#Alt键被按下  
+
+##1 _WMPOCXEvents.DoubleClick.fX = 横坐标  
+横坐标  
+
+##1 _WMPOCXEvents.DoubleClick.fY = 纵坐标  
+纵坐标  
+
+##1 _WMPOCXEvents.KeyDown = 按下按键  
+当按下键盘上的某键的时候触发此事件  
+
+##1 _WMPOCXEvents.KeyPress = 键输入  
+当键盘上的某键被按下并抬起一次触发此事件  
+
+##1 _WMPOCXEvents.KeyPress.nKeyAscii = 键码  
+对应Ascii码  
+
+##1 _WMPOCXEvents.KeyUp = 放开按键  
+当放开键盘上的某个按键的时候触发此事件  
+
+##1 _WMPOCXEvents.KeyUp.nKeyCode = 键码  
+对应Ascii码  
+
+##1 _WMPOCXEvents.KeyUp.nShiftState = Shift键状态  
+为以下常量之一：0、#Shift键被按下；1、#Ctrl键被按下；2、#Alt键被按下  
+
+##1 _WMPOCXEvents.MouseDown = 鼠标按键被按下  
+当鼠标按键被按下的时候触发此事件  
+
+##1 _WMPOCXEvents.MouseDown.nButton = 鼠标按键  
+为以下常量之一：0、#左键； 1、#右键；2、#中键；  
+
+##1 _WMPOCXEvents.MouseDown.nShiftState = Shift键状态  
+为以下常量之一：0、#Shift键被按下；1、#Ctrl键被按下；2、#Alt键被按下  
+
+##1 _WMPOCXEvents.MouseDown.fX = 横坐标  
+横坐标  
+
+##1 _WMPOCXEvents.MouseDown.fY = 纵坐标  
+纵坐标  
+
+##1 _WMPOCXEvents.MouseMove = 鼠标移动  
+当鼠标移动的时候触发此事件  
+
+##1 _WMPOCXEvents.MouseMove.nButton = 鼠标按键  
+为以下常量之一：0、#左键； 1、#右键；2、#中键；  
+
+##1 _WMPOCXEvents.MouseMove.nShiftState = Shift键状态  
+为以下常量之一：0、#Shift键被按下；1、#Ctrl键被按下；2、#Alt键被按下  
+
+##1 _WMPOCXEvents.MouseMove.fX = 横坐标  
+横坐标  
+
+##1 _WMPOCXEvents.MouseMove.fY = 纵坐标  
+纵坐标  
+
+##1 _WMPOCXEvents.MouseUp = 鼠标按键被抬起  
+当鼠标按键被抬起的时候触发此时间  
+
+##1 _WMPOCXEvents.MouseUp.nButton = 鼠标按键  
+为以下常量之一：0、#左键； 1、#右键；2、#中键；  
+
+##1 _WMPOCXEvents.MouseUp.nShiftState = Shift键状态  
+为以下常量之一：0、#Shift键被按下；1、#Ctrl键被按下；2、#Alt键被按下  
+
+##1 _WMPOCXEvents.MouseUp.fX = 横坐标  
+横坐标  
+
+##1 _WMPOCXEvents.MouseUp.fY = 纵坐标  
+纵坐标  
+
+##0 IWMPCore2 = Notuseful  
+
+
+##1 IWMPCore2.close =  
+Closes the media  
+
+##1 IWMPCore2.URL =  
+Returns or sets the URL  
+
+##1 IWMPCore2.openState =  
+Returns the open state of the player  
+
+##1 IWMPCore2.playState =  
+Returns the play state of the player  
+
+##1 IWMPCore2.Getcontrols =  
+Returns the control handler  
+
+##1 IWMPCore2.Getsettings =  
+Returns the settings handler  
+
+##1 IWMPCore2.GetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPCore2.GetmediaCollection =  
+Returns the media collection handler  
+
+##1 IWMPCore2.GetplaylistCollection =  
+Returns the playlist collection handler  
+
+##1 IWMPCore2.versionInfo =  
+Returns the version information for the player  
+
+##1 IWMPCore2.Getnetwork =  
+Returns the network information handler  
+
+##1 IWMPCore2.GetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##1 IWMPCore2.GetcdromCollection =  
+Get the CDROM drive collection  
+
+##1 IWMPCore2.GetclosedCaption =  
+Returns the closed caption handler  
+
+##1 IWMPCore2.isOnline =  
+Returns whether the machine is online.  
+
+##1 IWMPCore2.GetError =  
+Returns the error object  
+
+##1 IWMPCore2.status =  
+Returns status string  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+7 MediaPlayer9 ActiveX 攻略  
+ 
+##1 IWMPCore2.Getdvd =  
+Returns the DVD handler  
+
+##1 IWMPCore2.SetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPCore2.SetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##0 IWMPCore = Notuseful  
+本对象是Windows Media Player控件的核心部分，使用它可以取得大量常用的Windows Media Player提供的对象  
+
+##1 IWMPCore.close = 关闭WMP  
+关闭Windows Media Player  
+
+##1 IWMPCore.URL = 媒体位置  
+返回或设置媒体对象的位置，例如:"c:\1.mpg","c:\1.mp3"  
+
+##1 IWMPCore.openState =  
+Returns the open state of the player  
+
+##1 IWMPCore.playState =  
+Returns the play state of the player  
+
+##1 IWMPCore.Getcontrols =  
+Returns the control handler  
+
+##1 IWMPCore.Getsettings =  
+Returns the settings handler  
+
+##1 IWMPCore.GetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPCore.GetmediaCollection =  
+Returns the media collection handler  
+
+##1 IWMPCore.GetplaylistCollection =  
+Returns the playlist collection handler  
+
+##1 IWMPCore.versionInfo = 版本信息  
+返回当前Windows Media Player的版本信息  
+
+##1 IWMPCore.Getnetwork =  
+Returns the network information handler  
+
+##1 IWMPCore.GetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##1 IWMPCore.GetcdromCollection =  
+Get the CDROM drive collection  
+
+##1 IWMPCore.GetclosedCaption =  
+Returns the closed caption handler  
+
+##1 IWMPCore.isOnline =  
+Returns whether the machine is online.  
+
+##1 IWMPCore.GetError =  
+Returns the error object  
+
+##1 IWMPCore.status =  
+Returns status string  
+
+##1 IWMPCore.SetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPCore.SetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##1 WMPOpenState = 打开状态  
+本对象枚举了Windows Media Player在打开媒体文件时，所有可能的状态  
+
+##1 WMPOpenState.wmposUndefined = 不确定  
+不确定的状态  
+
+##1 WMPOpenState.wmposPlaylistChanging = 播放列表被改变  
+新的播放列表已被加载  
+
+##1 WMPOpenState.wmposPlaylistLocating = 正在定位播放列表  
+正在定位播放列表  
+
+##1 WMPOpenState.wmposPlaylistConnecting = 正在连接播放列表  
+正在连接服务器上的播放列表  
+
+##1 WMPOpenState.wmposPlaylistLoading = 正在加载播放列表  
+正在加载播放列表  
+
+##1 WMPOpenState.wmposPlaylistOpening = 正在打开播放列表  
+正在打开播放列表  
+
+##1 WMPOpenState.wmposPlaylistOpenNoMedia = 播放列表打开  
+播放列表处于打开状态  
+
+##1 WMPOpenState.wmposPlaylistChanged = 播放列表被改变  
+播放列表被改变  
+
+##1 WMPOpenState.wmposMediaChanging = 媒体被改变  
+新的媒体文件已被加载  
+
+##1 WMPOpenState.wmposMediaLocating = 定位媒体  
+正在定位媒体文件  
+
+##1 WMPOpenState.wmposMediaConnecting = 连接媒体  
+正在连接服务器上的媒体文件  
+
+##1 WMPOpenState.wmposMediaLoading = 加载媒体  
+正在加载媒体  
+
+##1 WMPOpenState.wmposMediaOpening = 正在打开媒体文件  
+正在打开媒体文件  
+
+##1 WMPOpenState.wmposMediaOpen = 媒体被打开  
+媒体已被打开  
+
+##1 WMPOpenState.wmposBeginCodecAcquisition = 开始获取编码器  
+开始获取编码器  
+
+##1 WMPOpenState.wmposEndCodecAcquisition = 结束编码器获取  
+结束编码器获取  
+
+##1 WMPOpenState.wmposBeginLicenseAcquisition = 开始许可证获取  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+8 MediaPlayer9 ActiveX 攻略  
+ 开始许可证获取  
+
+##1 WMPOpenState.wmposEndLicenseAcquisition = 结束许可证获取  
+结束许可证获取  
+
+##1 WMPOpenState.wmposBeginIndividualization = 开始个性化设置  
+开始个性化设置  
+
+##1 WMPOpenState.wmposEndIndividualization = 结束个性化设置  
+结束个性化设置  
+
+##1 WMPOpenState.wmposMediaWaiting = 正在等待  
+正在等待媒体文件  
+
+##1 WMPOpenState.wmposOpeningUnknownURL = 打开未知类型的URL  
+正在打开一个未知类型的URL  
+
+##1 WMPPlayState = 播放状态  
+本对象枚举了Windows Media Player在播放媒体文件时，所有可能的状态  
+
+##1 WMPPlayState.wmppsUndefined = 未知状态  
+未知状态  
+
+##1 WMPPlayState.wmppsStopped = 播放暂停  
+播放暂停  
+
+##1 WMPPlayState.wmppsPaused = 播放暂停  
+播放暂停  
+
+##1 WMPPlayState.wmppsPlaying = 正在播放  
+正在播放  
+
+##1 WMPPlayState.wmppsScanForward = 向前搜索  
+向前搜索流媒体数据  
+
+##1 WMPPlayState.wmppsScanReverse = 向后搜索  
+向后搜索流媒体数据  
+
+##1 WMPPlayState.wmppsBuffering = 正在缓冲  
+媒体文件正在被缓冲  
+
+##1 WMPPlayState.wmppsWaiting = 等待加载  
+等待加载流媒体  
+
+##1 WMPPlayState.wmppsMediaEnded = 播放结束  
+播放结束  
+
+##1 WMPPlayState.wmppsTransitioning = 准备新媒体  
+准备新的媒体文件  
+
+##1 WMPPlayState.wmppsReady = 播放准备就绪  
+播放准备就绪  
+
+##1 WMPPlayState.wmppsReconnecting = 尝试重新连接  
+尝试重新连接流媒体数据  
+
+##1 WMPPlayState.wmppsLast = 上一次状态  
+状态没有改变  
+
+##1 IWMPControls = WMP控制  
+本对象提供了控制媒体播放的各种方法，例如：播放、暂停......  
+
+##0 IWMPControls.GetisAvailable = Notuseful  
+Returns whether or not the specified media functionality is available  
+
+##1 IWMPControls.play = 播放  
+播放当前媒体项目  
+
+##1 IWMPControls.stop = 停止  
+停止播放  
+
+##1 IWMPControls.pause = 暂停  
+暂停当前正在播放的内容  
+
+##1 IWMPControls.fastForward = 快进  
+快进  
+
+##1 IWMPControls.fastReverse = 快退  
+快退  
+
+##1 IWMPControls.currentPosition = 当前位置  
+返回或者设置从开始处到当前播放位置的长度，以秒为单位。  
+
+##1 IWMPControls.currentPositionString = 当前位置文本  
+返回当前播放位置的文本表达。  
+
+##1 IWMPControls.next = 下一个  
+将当前播放项目设为播放列表(PlayList)中的下一个项目  
+
+##1 IWMPControls.previous = 前一个  
+与"下一个"命令作用正好相反  
+
+##1 IWMPControls.GetcurrentItem = 取当前项目  
+获取当前媒体对象  
+
+##0 IWMPControls.currentMarker = Notuseful  
+设置或返回当前标记号  
+
+##1 IWMPControls.playItem = 播放项目  
+开始播放指定的媒体项目  
+
+##1 IWMPControls.playItem.pIWMPMedia = 媒体项目  
+要播放的媒体项目("WMP媒体"对象)  
+
+##1 IWMPControls.SetcurrentItem = 置当前媒体  
+设置当前媒体对象  
+
+##1 IWMPControls.SetcurrentItem.属性值 = 媒体对象  
+要设置的"WMP媒体"对象  
+
+##1 IWMPMedia = WMP媒体  
+本对象提供返回或设置一个多媒体剪辑的属性  
+
+##1 IWMPMedia.GetisIdentical = 判断相等  
+判断参数所提供的媒体对象和本媒体对象是否是同样的  
+
+##1 IWMPMedia.GetisIdentical.pIWMPMedia = 媒体对象  
+要判断的媒体对象("WMP媒体"对象)  
+
+##1 IWMPMedia.sourceURL = 源连接  
+返回本媒体对象的原始URL连接  
+
+##1 IWMPMedia.name = 媒体名称  
+返回媒体的名称  
+
+##1 IWMPMedia.imageSourceWidth = 源图像宽度  
+返回图像的原始宽度，以象素为单位  
+
+##1 IWMPMedia.imageSourceHeight = 源图像高度  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+9 MediaPlayer9 ActiveX 攻略  
+ 返回图像的原始高度，以象素为单位  
+
+##1 IWMPMedia.markerCount = 标记数量  
+返回文件中标记的数量  
+
+##1 IWMPMedia.getMarkerTime = 取标记时间  
+通过序号获取标记时间  
+
+##1 IWMPMedia.getMarkerTime.MarkerNum = 序号  
+标记序号  
+
+##1 IWMPMedia.getMarkerName = 取标记名  
+通过标记序号获取标记名  
+
+##1 IWMPMedia.getMarkerName.MarkerNum = 序号  
+标记序号  
+
+##1 IWMPMedia.duration = 播放位置  
+以秒为单位返回或设置播放的位置  
+
+##1 IWMPMedia.durationString = 播放位置文本  
+返回以文本方式表达的当前的播放位置，"HH:MM:SS"格式  
+
+##1 IWMPMedia.attributeCount = 属性的数量  
+返回本媒体的属性的数量  
+
+##1 IWMPMedia.getAttributeName = 取属性名  
+通过属性序号取得属性的名称，注意：属性序号必须在0 ~ 属性数量-1 的范围内  
+
+##1 IWMPMedia.getItemInfo = 取项目信息  
+通过项目名获取项目信息  
+
+##1 IWMPMedia.getItemInfo.bstrItemName = 项目名  
+项目名，可为下列文本型常量之一（更多项目名，请参见Windows Media Player 9 SDK 文档中的"Available Attributes"部分）：  
+"Author"、#本媒体剪辑的作者；"Bitrate"、#位比率(秒为单位)；"Copyright"、#版权信息；"CurrenBitrate"、#当前位比率(秒为单位)；"Description"、#媒体内容的描述；"Duration"、#持续时间(秒为单位)；"FileSize"、#文件大小(Bytes为单位)；  
+"FileType"、#文件格式，例如wma,mp3；"SourceURL"、#原始地址；"Title"、#媒体内容的标题"；  
+
+##1 IWMPMedia.setItemInfo = 置项目信息  
+通过属性名设置项目信息  
+
+##1 IWMPMedia.setItemInfo.bstrItemName = 项目名  
+项目的名称  
+
+##1 IWMPMedia.setItemInfo.bstrVal = 值  
+要设置的值  
+
+##1 IWMPMedia.getItemInfoByAtom = 按序取项目信息  
+按照序号获取项目信息  
+
+##0 IWMPMedia.isMemberOf = Notuseful  
+Is the media a member of the given playlist  
+
+##0 IWMPMedia.isReadOnlyItem = Notuseful  
+Is the attribute read only  
+
+##1 IWMPPlaylist = WMP播放列表  
+本对象提供方法操作媒体剪辑列表  
+
+##1 IWMPPlaylist.count = 项目数量  
+返回播放列表中项目的数量  
+
+##1 IWMPPlaylist.name = 名称  
+返回播放列表名  
+
+##1 IWMPPlaylist.attributeCount = 属性数量  
+返回播放列表中关联属性的数量  
+
+##1 IWMPPlaylist.GetattributeName = 取属性名  
+通过序号获取属性名  
+
+##1 IWMPPlaylist.GetattributeName.lIndex = 序号  
+属性的序号  
+
+##1 IWMPPlaylist.GetItem = 取媒体  
+通过序号返回对应的媒体对象("WMP媒体"对象)  
+
+##1 IWMPPlaylist.GetItem.lIndex = 序号  
+项目序号  
+
+##1 IWMPPlaylist.getItemInfo = 取项目信息  
+通过项目名取得项目信息  
+
+##1 IWMPPlaylist.getItemInfo.bstrName = 项目名  
+项目名  
+
+##1 IWMPPlaylist.setItemInfo = 置项目信息  
+设置播放列表的项目信息  
+
+##1 IWMPPlaylist.setItemInfo.bstrName = 项目名  
+项目名  
+
+##1 IWMPPlaylist.setItemInfo.bstrValue = 值  
+要设置的值  
+
+##0 IWMPPlaylist.GetisIdentical = Notuseful  
+Determines if the supplied object is the same as the this one  
+
+##1 IWMPPlaylist.clear = 清空列表  
+清空播放列表中的全部内容  
+
+##1 IWMPPlaylist.insertItem = 插入项目  
+在播放列表中指定位置插入新的项目  
+
+##1 IWMPPlaylist.insertItem.lIndex = 序号  
+插入的序号  
+
+##1 IWMPPlaylist.insertItem.pIWMPMedia = 媒体对象  
+要插入的媒体对象("WMP媒体"对象)  
+
+##1 IWMPPlaylist.appendItem = 追加  
+向播放列表尾部追加项目  
+
+##1 IWMPPlaylist.appendItem.pIWMPMedia = 媒体对象  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+10 MediaPlayer9 ActiveX 攻略  
+ 要追加的媒体对象("WMP媒体"对象)  
+
+##1 IWMPPlaylist.removeItem = 移除  
+通过媒体对象移除播放列表中的指定项目  
+
+##1 IWMPPlaylist.removeItem.pIWMPMedia = 媒体对象  
+要移除的媒体对象("WMP媒体"对象)  
+
+##1 IWMPPlaylist.moveItem = 移动  
+移动项目的位置  
+
+##1 IWMPPlaylist.moveItem.lIndexOld = 旧序号  
+原始序号  
+
+##1 IWMPPlaylist.moveItem.lIndexNew = 新序号  
+新的序号  
+
+##1 IWMPSettings = WMP设定  
+本对象提供了可以改变Windows Media Player多个设定的方法  
+
+##0 IWMPSettings.GetisAvailable = Notuseful  
+Returns whether or not the specified media functionality is available  
+
+##1 IWMPSettings.autoStart = 自动播放  
+返回或设置媒体文件是否自动播放  
+
+##0 IWMPSettings.baseURL = Nutuseful  
+Returns the base URL used for relative path resolution  
+
+##0 IWMPSettings.defaultFrame = Notuseful  
+Returns the frame location that changes when a URL flip occurs  
+
+##0 IWMPSettings.invokeURLs = Notuseful  
+Returns whether URL events should spawn a browser.  
+
+##1 IWMPSettings.mute = 静音  
+返回或设置音频是否静音  
+
+##1 IWMPSettings.playCount = 播放次数  
+返回或设置媒体对象播放的次数  
+
+##0 IWMPSettings.rate = Notuseful  
+Returns current playback rate  
+
+##1 IWMPSettings.balance = 立体声平衡  
+返回或设置音频左右声道的平衡，0为均衡，范围为:-100 ~ 100  
+
+##1 IWMPSettings.volume = 音量  
+返回或设置音量，音量的范围为0 ~ 100  
+
+##0 IWMPSettings.getMode = Notuseful  
+Returns the mode of the playlist  
+
+##0 IWMPSettings.setMode = Notuseful  
+Sets the mode of the playlist  
+
+##1 IWMPSettings.enableErrorDialogs = 显示错误  
+返回或设置是否自动显示错误对话框  
+
+##0 IWMPMediaCollection = Notuseful  
+
+
+##1 IWMPMediaCollection.add =  
+Creates a new media object  
+
+##1 IWMPMediaCollection.getAll =  
+Returns a collection of all the items  
+
+##1 IWMPMediaCollection.getByName =  
+Returns a collection of items with the given name  
+
+##1 IWMPMediaCollection.getByGenre =  
+Returns a collection of items with the given genre  
+
+##1 IWMPMediaCollection.getByAuthor =  
+Returns a collection of items by a given author  
+
+##1 IWMPMediaCollection.getByAlbum =  
+Returns a collection of items from the given album  
+
+##1 IWMPMediaCollection.getByAttribute =  
+Returns a collection of items with the given attribute  
+
+##1 IWMPMediaCollection.remove =  
+Removes an item from the media collection  
+
+##1 IWMPMediaCollection.getAttributeStringCollection =  
+Returns the string collection associated with an attribute  
+
+##1 IWMPMediaCollection.getMediaAtom =  
+Gets an atom associated with an item name which can be requested from an IWMPMedia out of this collection via getItemInfoByAtom  
+
+##1 IWMPMediaCollection.setDeleted =  
+Sets the deleted flag on a media object  
+
+##1 IWMPMediaCollection.isDeleted =  
+Gets the deleted flag on a media object  
+
+##0 IWMPStringCollection = Notuseful  
+
+
+##1 IWMPStringCollection.count =  
+Returns the number of items in the string collection  
+
+##1 IWMPStringCollection.Item =  
+Returns the string at the given index  
+
+##0 IWMPPlaylistCollection = Notuseful  
+
+
+##1 IWMPPlaylistCollection.newPlaylist =  
+Creates a new playlist object  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+11 MediaPlayer9 ActiveX 攻略  
+ 
+##1 IWMPPlaylistCollection.getAll =  
+Returns a playlist array with all the playlists  
+
+##1 IWMPPlaylistCollection.getByName =  
+Returns a playlist array with playlists matching the given name  
+
+##1 IWMPPlaylistCollection.remove =  
+Removes an item from the playlist collection  
+
+##1 IWMPPlaylistCollection.setDeleted =  
+Sets the deleted flag on a playlist object  
+
+##1 IWMPPlaylistCollection.isDeleted =  
+Gets the deleted flag on a playlist object  
+
+##1 IWMPPlaylistCollection.importPlaylist =  
+Imports a playlist object into the library  
+
+##0 IWMPPlaylistArray = Notuseful  
+
+
+##1 IWMPPlaylistArray.count =  
+Returns the number of items in the playlist array  
+
+##1 IWMPPlaylistArray.Item =  
+Returns the playlist object at the given index  
+
+##1 IWMPNetwork = WMP网络  
+本对象提供关联Windows Media Player和网络连接的方法  
+
+##1 IWMPNetwork.bandWidth = 带宽  
+返回地址属性所指向的流媒体的带宽  
+
+##1 IWMPNetwork.recoveredPackets = 被覆盖数据包数  
+返回被覆盖的数据包数  
+
+##0 IWMPNetwork.sourceProtocol = Notuseful  
+Returns the source protocol used to receive data.  
+
+##1 IWMPNetwork.receivedPackets = 已接收数据包  
+返回已接收的数据包数  
+
+##1 IWMPNetwork.lostPackets = 丢包数  
+返回丢包的数量  
+
+##1 IWMPNetwork.receptionQuality = 接收质量  
+返回最近30秒中的接收质量  
+
+##1 IWMPNetwork.bufferingCount = 缓冲数量  
+返回缓冲的数量  
+
+##1 IWMPNetwork.bufferingProgress = 缓冲进度  
+返回缓冲已完成的百分比  
+
+##1 IWMPNetwork.bufferingTime = 缓冲时间  
+以毫秒为单位返回或设置缓冲的时间，范围为：0 ~ 60秒，默认为5秒  
+
+##1 IWMPNetwork.frameRate = 实际帧数  
+当前视频每百秒的帧数  
+
+##0 IWMPNetwork.maxBitRate = Notuseful  
+Maximum possible video bit rate  
+
+##1 IWMPNetwork.bitRate = 位比率  
+返回当前音频或视频流的位比率  
+
+##0 IWMPNetwork.getProxySettings = Notuseful  
+Returns the proxy settings for the specified protocol  
+
+##0 IWMPNetwork.setProxySettings = Notuseful  
+Sets the proxy settings for the specified protocol  
+
+##0 IWMPNetwork.getProxyName = Notuseful  
+Returns the proxy name for the specified protocol  
+
+##0 IWMPNetwork.setProxyName = Notuseful  
+Sets the proxy name for the specified protocol  
+
+##0 IWMPNetwork.getProxyPort = Notuseful  
+Returns the proxy port for the specified protocol  
+
+##0 IWMPNetwork.setProxyPort = Notuseful  
+Sets the proxy port for the specified protocol  
+
+##0 IWMPNetwork.getProxyExceptionList = Notuseful  
+Returns the proxy exception list for the specified protocol  
+
+##0 IWMPNetwork.setProxyExceptionList = Notuseful  
+Sets the proxy exception list for the specified protocol  
+
+##0 IWMPNetwork.getProxyBypassForLocal = Notuseful  
+Returns whether or not to bypass the proxy for local addresses  
+
+##0 IWMPNetwork.setProxyBypassForLocal = Notuseful  
+Sets whether or not to by pass the proxy for local addresses  
+
+##1 IWMPNetwork.maxBandwidth = 最大带宽  
+返回设置允许的最大带宽  
+
+##1 IWMPNetwork.downloadProgress = 下载进度  
+以百分比返回下载进度  
+
+##1 IWMPNetwork.encodedFrameRate = 帧数  
+返回由本媒体文件创建者所提供的每秒的帧数  
+
+##1 IWMPNetwork.framesSkipped = 跳过帧数  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+12 MediaPlayer9 ActiveX 攻略  
+ 返回当回放时跳过的帧数  
+
+##1 IWMPCdromCollection = WMP光驱集  
+本对象提供访问CD/DVD光驱集合的方法  
+
+##1 IWMPCdromCollection.count = 数量  
+返回的CD/DVD光驱的数量  
+
+##1 IWMPCdromCollection.Item = 取项目  
+使用光驱序号获取"WMP光驱"对象  
+
+##1 IWMPCdromCollection.Item.lIndex = 序号  
+光驱的序号，0表示1，该参数必须在"数量"属性 - 1的范围内  
+
+##1 IWMPCdromCollection.getByDriveSpecifier = 取光驱  
+使用具体的光盘标识符取得"WMP光驱"对象  
+
+##1 IWMPCdromCollection.getByDriveSpecifier.bstrDriveSpecifier = 盘符  
+光盘的标识符，例如"f:",必须有";"号  
+
+##1 IWMPCdrom = WMP光驱  
+本对象提供方法访问/操作CD/DVD光驱  
+
+##1 IWMPCdrom.driveSpecifier = 标识符  
+返回光驱的标识符，例如"f:"  
+
+##1 IWMPCdrom.GetPlaylist = 取播放列表  
+获取光驱上的播放列表，为"WMP播放列表"对象  
+
+##1 IWMPCdrom.eject = 弹出光驱  
+弹出/关闭光驱，如果当前光驱为打开状态则关闭，反之则打开  
+
+##0 IWMPClosedCaption = Notuseful  
+
+
+##1 IWMPClosedCaption.SAMIStyle =  
+Returns the previously set SAMI style  
+
+##1 IWMPClosedCaption.SAMILang =  
+Returns the previously set SAMI language  
+
+##1 IWMPClosedCaption.SAMIFileName =  
+Returns the previously set SAMI file name  
+
+##1 IWMPClosedCaption.captioningId =  
+Returns the previously set Captioning ID  
+
+##0 IWMPError = Notuseful  
+
+
+##1 IWMPError.clearErrorQueue =  
+Clears the error queue  
+
+##1 IWMPError.errorCount =  
+Returns the number of error items  
+
+##1 IWMPError.GetItem =  
+Returns an error item object  
+
+##1 IWMPError.webHelp =  
+Launches WebHelp  
+
+##0 IWMPErrorItem = Notuseful  
+
+
+##1 IWMPErrorItem.errorCode =  
+Returns the error code  
+
+##1 IWMPErrorItem.errorDescription =  
+Returns a description of the error  
+
+##1 IWMPErrorItem.GeterrorContext =  
+Returns context information for the error  
+
+##1 IWMPErrorItem.remedy =  
+Returns remedy code for the error  
+
+##1 IWMPErrorItem.customUrl =  
+Returns a custom url for this error (if avail)  
+
+##0 IWMPDVD = So_poor_to_give_up_this_object  
+
+
+##1 IWMPDVD.GetisAvailable =  
+Returns whether or not the specified DVD functionality is available  
+
+##1 IWMPDVD.domain =  
+Returns the current DVD domain  
+
+##1 IWMPDVD.topMenu =  
+Displays the top menu of the DVD  
+
+##1 IWMPDVD.titleMenu =  
+Displays the title menu of the current DVD title  
+
+##1 IWMPDVD.back =  
+Navigates back one menu  
+
+##1 IWMPDVD.resume =  
+Removes the menu from the screen and returns to playing the DVD  
+
+##0 IWMPPlayerApplication = Notuseful  
+
+
+##1 IWMPPlayerApplication.switchToPlayerApplication =  
+Switches the display to player application  
+
+##1 IWMPPlayerApplication.switchToControl =  
+Switches the display to control  
+
+##1 IWMPPlayerApplication.playerDocked =  
+Returns a boolean value specifying whether or not the player is docked  
+
+##1 IWMPPlayerApplication.hasDisplay =  
+Returns a boolean value specifying whether or not the control has display  
+
+##0 IWMPPlayer3 = Notuseful  
+
+
+##1 IWMPPlayer3.close =  
+Closes the media  
+
+##1 IWMPPlayer3.URL =  
+Returns or sets the URL  
+
+##1 IWMPPlayer3.openState =  
+Returns the open state of the player  
+
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+13 MediaPlayer9 ActiveX 攻略  
+ ##1 IWMPPlayer3.playState =  
+Returns the play state of the player  
+
+##1 IWMPPlayer3.Getcontrols =  
+Returns the control handler  
+
+##1 IWMPPlayer3.Getsettings =  
+Returns the settings handler  
+
+##1 IWMPPlayer3.GetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPPlayer3.GetmediaCollection =  
+Returns the media collection handler  
+
+##1 IWMPPlayer3.GetplaylistCollection =  
+Returns the playlist collection handler  
+
+##1 IWMPPlayer3.versionInfo =  
+Returns the version information for the player  
+
+##1 IWMPPlayer3.Getnetwork =  
+Returns the network information handler  
+
+##1 IWMPPlayer3.GetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##1 IWMPPlayer3.GetcdromCollection =  
+Get the CDROM drive collection  
+
+##1 IWMPPlayer3.GetclosedCaption =  
+Returns the closed caption handler  
+
+##1 IWMPPlayer3.isOnline =  
+Returns whether the machine is online.  
+
+##1 IWMPPlayer3.GetError =  
+Returns the error object  
+
+##1 IWMPPlayer3.status =  
+Returns status string  
+
+##1 IWMPPlayer3.Getdvd =  
+Returns the DVD handler  
+
+##1 IWMPPlayer3.enabled =  
+Returns a boolen value specifying whether or not the control is enabled  
+
+##1 IWMPPlayer3.fullScreen =  
+Returns a boolean value specifying whether or not the control is in full screen mode  
+
+##1 IWMPPlayer3.enableContextMenu =  
+Returns a boolean value specifying whether or not the context menu is enabled on the control  
+
+##1 IWMPPlayer3.uiMode =  
+Specifies the ui mode to select  
+
+##1 IWMPPlayer3.stretchToFit =  
+Returns a boolen value specifying whether or not video is stretched  
+
+##1 IWMPPlayer3.windowlessVideo =  
+Returns a boolen value specifying whether or not video is windowless  
+
+##1 IWMPPlayer3.SetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPPlayer3.SetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##0 IWMPPlayer2 = Notuseful  
+
+
+##1 IWMPPlayer2.close =  
+Closes the media  
+
+##1 IWMPPlayer2.URL =  
+Returns or sets the URL  
+
+##1 IWMPPlayer2.openState =  
+Returns the open state of the player  
+
+##1 IWMPPlayer2.playState =  
+Returns the play state of the player  
+
+##1 IWMPPlayer2.Getcontrols =  
+Returns the control handler  
+
+##1 IWMPPlayer2.Getsettings =  
+Returns the settings handler  
+
+##1 IWMPPlayer2.GetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPPlayer2.GetmediaCollection =  
+Returns the media collection handler  
+
+##1 IWMPPlayer2.GetplaylistCollection =  
+Returns the playlist collection handler  
+
+##1 IWMPPlayer2.versionInfo =  
+Returns the version information for the player  
+
+##1 IWMPPlayer2.Getnetwork =  
+Returns the network information handler  
+
+##1 IWMPPlayer2.GetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##1 IWMPPlayer2.GetcdromCollection =  
+Get the CDROM drive collection  
+
+##1 IWMPPlayer2.GetclosedCaption =  
+Returns the closed caption handler  
+
+##1 IWMPPlayer2.isOnline =  
+Returns whether the machine is online.  
+
+##1 IWMPPlayer2.GetError =  
+Returns the error object  
+
+##1 IWMPPlayer2.status =  
+Returns status string  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+14 MediaPlayer9 ActiveX 攻略  
+ 
+##1 IWMPPlayer2.enabled =  
+Returns a boolen value specifying whether or not the control is enabled  
+
+##1 IWMPPlayer2.fullScreen =  
+Returns a boolean value specifying whether or not the control is in full screen mode  
+
+##1 IWMPPlayer2.enableContextMenu =  
+Returns a boolean value specifying whether or not the context menu is enabled on the control  
+
+##1 IWMPPlayer2.uiMode =  
+Specifies the ui mode to select  
+
+##1 IWMPPlayer2.stretchToFit =  
+Returns a boolen value specifying whether or not video is stretched  
+
+##1 IWMPPlayer2.windowlessVideo =  
+Returns a boolen value specifying whether or not video is windowless  
+
+##1 IWMPPlayer2.SetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPPlayer2.SetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##0 IWMPPlayer = Notuseful  
+本对象提供对Windows Media Player用户界面的基本控制。本对象是对WMP核心的一个补充  
+
+##1 IWMPPlayer.close =  
+Closes the media  
+
+##1 IWMPPlayer.URL =  
+Returns or sets the URL  
+
+##1 IWMPPlayer.openState =  
+Returns the open state of the player  
+
+##1 IWMPPlayer.playState =  
+Returns the play state of the player  
+
+##1 IWMPPlayer.Getcontrols =  
+Returns the control handler  
+
+##1 IWMPPlayer.Getsettings =  
+Returns the settings handler  
+
+##1 IWMPPlayer.GetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPPlayer.GetmediaCollection =  
+Returns the media collection handler  
+
+##1 IWMPPlayer.GetplaylistCollection =  
+Returns the playlist collection handler  
+
+##1 IWMPPlayer.versionInfo =  
+Returns the version information for the player  
+
+##1 IWMPPlayer.Getnetwork =  
+Returns the network information handler  
+
+##1 IWMPPlayer.GetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##1 IWMPPlayer.GetcdromCollection =  
+Get the CDROM drive collection  
+
+##1 IWMPPlayer.GetclosedCaption =  
+Returns the closed caption handler  
+
+##1 IWMPPlayer.isOnline =  
+Returns whether the machine is online.  
+
+##1 IWMPPlayer.GetError =  
+Returns the error object  
+
+##1 IWMPPlayer.status =  
+Returns status string  
+
+##1 IWMPPlayer.enabled =  
+Returns a boolen value specifying whether or not the control is enabled  
+
+##1 IWMPPlayer.fullScreen =  
+Returns a boolean value specifying whether or not the control is in full screen mode  
+
+##1 IWMPPlayer.enableContextMenu =  
+Returns a boolean value specifying whether or not the context menu is enabled on the control  
+
+##1 IWMPPlayer.uiMode =  
+Specifies the ui mode to select  
+
+##1 IWMPPlayer.SetcurrentMedia =  
+Returns or sets the current media object  
+
+##1 IWMPPlayer.SetcurrentPlaylist =  
+Returns/sets the current playlist  
+
+##0 IWMPErrorItem2 = Notuseful  
+
+
+##1 IWMPErrorItem2.errorCode =  
+Returns the error code  
+
+##1 IWMPErrorItem2.errorDescription =  
+Returns a description of the error  
+
+##1 IWMPErrorItem2.GeterrorContext =  
+Returns context information for the error  
+
+##1 IWMPErrorItem2.remedy =  
+Returns remedy code for the error  
+
+##1 IWMPErrorItem2.customUrl =  
+Returns a custom url for this error (if avail)  
+
+##1 IWMPErrorItem2.condition =  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+15 MediaPlayer9 ActiveX 攻略  
+ Returns condition for the error  
+
+##0 IWMPControls2 = Notuseful  
+本对象继承自"WMP控制"对象，只有"step"方法是自有的，因此关于本对象方法与属性的用法您可以参阅"WMP控制"对象。  
+
+##1 IWMPControls2.GetisAvailable =  
+Returns whether or not the specified media functionality is available  
+
+##1 IWMPControls2.play =  
+Begins playing media  
+
+##1 IWMPControls2.stop =  
+Stops play of media  
+
+##1 IWMPControls2.pause =  
+Pauses play of media  
+
+##1 IWMPControls2.fastForward =  
+Fast play of media in forward direction  
+
+##1 IWMPControls2.fastReverse =  
+Fast play of media in reverse direction  
+
+##1 IWMPControls2.currentPosition =  
+Returns the current position in media  
+
+##1 IWMPControls2.currentPositionString =  
+Returns the current position in media as a string  
+
+##1 IWMPControls2.next =  
+Sets the current item to the next item in the playlist  
+
+##1 IWMPControls2.previous =  
+Sets the current item to the previous item in the playlist  
+
+##1 IWMPControls2.GetcurrentItem =  
+Returns/Sets the play item  
+
+##1 IWMPControls2.currentMarker =  
+Returns the current marker  
+
+##1 IWMPControls2.playItem =  
+Sets the current item and plays it  
+
+##1 IWMPControls2.step =  
+Advances the video one frame  
+
+##1 IWMPControls2.SetcurrentItem =  
+Returns/Sets the play item  
+
+##0 IWMPMedia2 = Notuseful  
+
+
+##0 IWMPMedia2.GetisIdentical = Notuseful  
+Determines if the supplied object is the same as the this one  
+
+##1 IWMPMedia2.sourceURL = 源连接  
+返回本媒体对象的原始URL连接  
+
+##1 IWMPMedia2.name = 媒体名称  
+返回媒体的名称  
+
+##1 IWMPMedia2.imageSourceWidth = 源图像宽度  
+返回图像的原始宽度  
+
+##1 IWMPMedia2.imageSourceHeight = 源图像高度  
+返回图像的原始高度  
+
+##1 IWMPMedia2.markerCount = 标记数量  
+返回文件中标记的数量  
+
+##1 IWMPMedia2.getMarkerTime = 取标记时间  
+通过序号获取标记时间  
+
+##1 IWMPMedia2.getMarkerTime.MarkerNum = 标记序号  
+通过标记序号获取标记时间  
+
+##1 IWMPMedia2.getMarkerName = 取标记名  
+通过标记序号获取标记名  
+
+##1 IWMPMedia2.getMarkerName.MarkerNum = 序号  
+标记序号  
+
+##1 IWMPMedia2.duration = 播放位置  
+以秒为单位返回或设置播放的位置  
+
+##1 IWMPMedia2.durationString = 播放位置文本  
+返回以文本方式表达的当前的播放位置，"HH:MM:SS"格式  
+
+##1 IWMPMedia2.attributeCount = 属性数量  
+返回当前媒体属性的数量  
+
+##1 IWMPMedia2.getAttributeName = 取属性名  
+通过属性序号取得属性的名称，注意：属性序号必须在0 ~ 属性数量-1 的范围内  
+
+##1 IWMPMedia2.getItemInfo = 取项目信息  
+通过项目名获取项目信息  
+
+##1 IWMPMedia2.getItemInfo.bstrItemName = 项目名  
+项目名称  
+
+##1 IWMPMedia2.setItemInfo = 置项目信息  
+通过属性名设置项目信息  
+
+##1 IWMPMedia2.setItemInfo.bstrItemName = 项目名  
+项目的名称  
+
+##1 IWMPMedia2.setItemInfo.bstrVal = 值  
+要设置的值  
+
+##1 IWMPMedia2.getItemInfoByAtom = 按序取项目信息  
+按照序号获取项目信息  
+
+##1 IWMPMedia2.getItemInfoByAtom.lAtom = 序号  
+项目序号  
+
+##0 IWMPMedia2.isMemberOf = Notuseful  
+Is the media a member of the given playlist  
+
+##1 IWMPMedia2.isReadOnlyItem =  
+Is the attribute read only  
+
+##0 IWMPMedia2.GetError = Notuseful  
+Returns an error item pointer for a media specific error  
+ 
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+16 MediaPlayer9 ActiveX 攻略  
+ 
+##0 IWMPMedia3 = Notuseful  
+
+
+##1 IWMPMedia3.GetisIdentical =  
+Determines if the supplied object is the same as the this one  
+
+##1 IWMPMedia3.sourceURL =  
+Returns the media URL  
+
+##1 IWMPMedia3.name =  
+Returns the name of the media  
+
+##1 IWMPMedia3.imageSourceWidth =  
+Returns the original width of the source images  
+
+##1 IWMPMedia3.imageSourceHeight =  
+Returns the original height of the source images  
+
+##1 IWMPMedia3.markerCount =  
+Returns the number of markers in the file  
+
+##1 IWMPMedia3.getMarkerTime =  
+Returns the time of a marker  
+
+##1 IWMPMedia3.getMarkerName =  
+Returns the name of a marker  
+
+##1 IWMPMedia3.duration =  
+Returns duration of current media  
+
+##1 IWMPMedia3.durationString =  
+Returns duration of current media as a string  
+
+##1 IWMPMedia3.attributeCount =  
+Returns the count of the attributes associated with this media  
+
+##1 IWMPMedia3.getAttributeName =  
+Returns the name of the attribute whose index has been specified  
+
+##1 IWMPMedia3.getItemInfo =  
+Returns the value of specified attribute for this media  
+
+##1 IWMPMedia3.setItemInfo =  
+Sets the value of specified attribute for this media  
+
+##1 IWMPMedia3.getItemInfoByAtom =  
+Gets an item info by atom  
+
+##1 IWMPMedia3.isMemberOf =  
+Is the media a member of the given playlist  
+
+##1 IWMPMedia3.isReadOnlyItem =  
+Is the attribute read only  
+
+##1 IWMPMedia3.GetError =  
+Returns an error item pointer for a media specific error  
+
+##0 IWMPMetadataPicture = Notuseful  
+
+
+##0 IWMPMetadataText = Notuseful  
+
+
+##0 IWMPSettings2 = Notuseful  
+
+
+##1 IWMPSettings2.GetisAvailable =  
+Returns whether or not the specified media functionality is available  
+
+##1 IWMPSettings2.autoStart =  
+Returns whether media should automatically begin playing  
+
+##1 IWMPSettings2.baseURL =  
+Returns the base URL used for relative path resolution  
+
+##1 IWMPSettings2.defaultFrame =  
+Returns the frame location that changes when a URL flip occurs  
+
+##1 IWMPSettings2.invokeURLs =  
+Returns whether URL events should spawn a browser.  
+
+##1 IWMPSettings2.mute =  
+Returns whether audio should be muted.  
+
+##1 IWMPSettings2.playCount =  
+Returns how many times media should play  
+
+##1 IWMPSettings2.rate =  
+Returns current playback rate  
+
+##1 IWMPSettings2.balance =  
+Returns current audio Balance  
+
+##1 IWMPSettings2.volume =  
+Returns current audio volume  
+
+##1 IWMPSettings2.getMode =  
+Returns the mode of the playlist  
+
+##1 IWMPSettings2.setMode =  
+Sets the mode of the playlist  
+
+##1 IWMPSettings2.enableErrorDialogs =  
+Returns whether error dialogs are shown by default when embedded  
+
+##1 IWMPSettings2.defaultAudioLanguage =  
+Returns the LCID of default audio language  
+
+##1 IWMPControls3 = WMP控制3  
+本对象继承自"WMP控制"对象，只有以下方法是自有的：  
+因此关于本对象方法与属性的用法您可以参阅"WMP控制"对象。  
+
+##0 IWMPControls3.GetisAvailable =  
+Returns whether or not the specified media functionality is available  
+
+##0 IWMPControls3.play =  
+Begins playing media  
+
+##0 IWMPControls3.stop =  
+Stops play of media  
+
+##0 IWMPControls3.pause =  
+Pauses play of media  
+
+##0 IWMPControls3.fastForward =  
+Fast play of media in forward direction  
+
+##0 IWMPControls3.fastReverse =  
+Fast play of media in reverse direction  
+
+##0 IWMPControls3.currentPosition =  
+Returns the current position in media  
+
+##0 IWMPControls3.currentPositionString =  
+Returns the current position in media as a string  
+
+##0 IWMPControls3.next =  
+Sets the current item to the next item in the playlist  
+
+##0 IWMPControls3.previous =  
+Sets the current item to the previous item in the playlist  
+
+##0 IWMPControls3.GetcurrentItem =  
+Returns/Sets the play item  
+
+##0 IWMPControls3.currentMarker =  
+Returns the current marker  
+
+##0 IWMPControls3.playItem =  
+Sets the current item and plays it  
+
+##0 IWMPControls3.step =  
+Advances the video one frame  
+
+##1 IWMPControls3.audioLanguageCount = 音频语言数量  
+返回音频所支持的语言的数量  
+
+##1 IWMPControls3.getAudioLanguageID = 取语言标识  
+通过索引获取音频语言标别  
+
+##1 IWMPControls3.getAudioLanguageID.lIndex = 语言索引  
+指定音频语言索引  
+
+##1 IWMPControls3.getAudioLanguageDescription = 取音频语言描述  
+获取指定索引的音频语言的描述  
+
+##1 IWMPControls3.getAudioLanguageDescription.lIndex = 语言索引  
+指定语言索引  
+
+##1 IWMPControls3.currentAudioLanguage = 音频语言  
+返回或设置当前的音频语言  
+
+##1 IWMPControls3.currentAudioLanguageIndex = 音频语言索引  
+获取或设置当前音频语言的索引  
+
+##1 IWMPControls3.getLanguageName = 取语言名  
+使用标识符(LCID)获取音频语言名  
+
+##1 IWMPControls3.getLanguageName.lLangID = 索引  
+索引,LCID  
+
+##1 IWMPControls3.currentPositionTimecode = 位置代码  
+返回或设置当前媒体播放的位置/时间,使用时间代码格式，此属性当前支持SMPTE时间代码 ，例如:"01:00:30:05"  
+
+##0 IWMP  
+ 
+  
+ 作者： yangvb  2005-12-29 17:52 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 
+17 回复：MediaPlayer9 ActiveX 攻略  
+ ##0 IWMPControls3.SetcurrentItem =  
+Returns/Sets the play item  
+
+##0 IWMPClosedCaption2 = Notuseful  
+
+
+##1 IWMPClosedCa  
+ 
+  
+ 作者： yangvb  2005-12-29 17:54 　 回复此发言    
+ 
+--------------------------------------------------------------------------------
+ 

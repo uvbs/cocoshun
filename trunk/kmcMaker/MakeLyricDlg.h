@@ -14,6 +14,7 @@
 #include "UILib/ResizingDialog.h"
 #include "UILib/LyricMakerCtrl.h"
 #include "Lyric.h"
+#include "UILib/BitmapSlider.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
@@ -31,8 +32,11 @@ public:
 	enum { IDD = IDD_MAKELYRICDLG_DIALOG };
 	CLyricMakerCtrl	m_LyricMaker;
 	CWMPPlayer4	m_MediaPlayer;
+	CBitmapSlider m_sliderMP;
 	//}}AFX_DATA
-
+	int		m_nMax;
+	int		m_nMin;
+	int		m_nPos;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -49,9 +53,15 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBtnOpen();
 	afx_msg void OnBtnPriview();
+	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnBtnPlayPause();
+	afx_msg void OnBtnStop();
 	//}}AFX_MSG
+	afx_msg LRESULT OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnBitmapSliderMoving(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 private:
+	void SetMediaTimeInfo();
 	void GetEnWord(CString &Str, int &Pos, CString &StrWord);
 	void GetSpace(CString &Str, int &Pos, CString &StrSpace);
 };

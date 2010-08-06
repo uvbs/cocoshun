@@ -5,6 +5,7 @@
 #include "KmcMaker.h"
 #include "MakeLyricDlg.h"
 #include "UILib/FileDialogEx.h"
+#include "wmpmedia.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -12,6 +13,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#define MEDIA_PLAYER_SLIDER_TIMER 0X10;
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
@@ -31,6 +33,10 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LYRIC_MAKER, m_LyricMaker);
 	DDX_Control(pDX, IDC_MEDIAPLAYER, m_MediaPlayer);
 	//}}AFX_DATA_MAP
+	DDX_Text(pDX, IDC_MAX, m_nMax);
+	DDX_Text(pDX, IDC_MIN, m_nMin);
+	DDX_Text(pDX, IDC_POS, m_nPos);
+	DDX_Control(pDX, IDC_SLIDER_MP, m_sliderMP);
 }
 
 
@@ -38,7 +44,12 @@ BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CMakeLyricDlg)
 	ON_BN_CLICKED(IDC_BTN_OPEN, OnBtnOpen)
 	ON_BN_CLICKED(IDC_BTN_PRIVIEW, OnBtnPriview)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BTN_PLAY_PAUSE, OnBtnPlayPause)
+	ON_BN_CLICKED(IDC_BTN_STOP, OnBtnStop)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(WM_BITMAPSLIDER_MOVED, OnBitmapSliderMoved)
+	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnBitmapSliderMoving)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -48,9 +59,31 @@ BOOL CMakeLyricDlg::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
 
+	// Slider 3 - Media Player
+	m_sliderMP.SetBitmapChannel( IDB_MP_CHANNEL, IDB_MP_CHANNEL_ACTIVE );
+	m_sliderMP.SetBitmapThumb( IDB_MP_THUMB, IDB_MP_THUMB_ACTIVE, TRUE );
+	m_sliderMP.DrawFocusRect( FALSE );
+	m_nMin = 0;
+	m_nMax = 100;
+	m_nPos = 30;
+
+	
+	m_sliderMP.SetRange( m_nMin, m_nMax );
+	m_sliderMP.SetPos( m_nPos );
+	m_sliderMP.SetMargin( 2, 3, 2, 0 );
+	SetControlInfo(IDC_SLIDER_MP,ANCHORE_RIGHT);
+
+	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
+	SetControlInfo(IDC_STATIC_MEDIA_TIMEINFO,ANCHORE_RIGHT);
+
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_STATIC_TIP,ANCHORE_RIGHT);
+
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_RIGHT);
+	SetControlInfo(IDC_BTN_PLAY_PAUSE,ANCHORE_RIGHT);
+	SetControlInfo(IDC_BTN_STOP,ANCHORE_RIGHT);
+
+
 	SetControlInfo(IDC_STATIC_KEY_TIP,ANCHORE_RIGHT);
 	SetControlInfo(IDC_BTN_NEXTSTEP,ANCHORE_RIGHT| ANCHORE_BOTTOM);
 	SetControlInfo(IDC_BTN_PREVSTEP,ANCHORE_RIGHT| ANCHORE_BOTTOM);
@@ -59,6 +92,7 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 	m_MediaPlayer.SetUrl(_T(".\\Test\\Ê®Äê.mp3"));
 	m_MediaPlayer.GetControls().play();
+	SetMediaTimeInfo();
 
 	SetFocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -206,3 +240,81 @@ LRESULT CMakeLyricDlg::OnAcceptDropFile( WPARAM wParam /*= 0*/, LPARAM lParam /*
 
 	return 0;
 }
+
+
+LRESULT CMakeLyricDlg::OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam)
+{
+	CString sMsg;
+	
+// 	switch( wParam ) 
+	{
+		
+// 	case IDC_SLIDER_VOL :
+// 		m_sliderVol2.SetPos( m_sliderVol.GetPos() );
+// 		break;
+// 		
+// 	case IDC_SLIDER_VOL2 :
+// 		m_sliderVol.SetPos( m_sliderVol2.GetPos() );
+// 		break;
+// 		
+// 	case IDC_SLIDER_BALLOON :
+// 		
+// 		sMsg.Format( "%d", lParam );
+// 		AfxMessageBox( sMsg );
+// 		break;
+	}
+	return 0;
+}
+
+LRESULT CMakeLyricDlg::OnBitmapSliderMoving(WPARAM wParam, LPARAM lParam)
+{
+	switch( wParam ) {
+
+	case IDC_SLIDER_MP :
+		m_nPos = m_sliderMP.GetPos();
+		UpdateData( FALSE );
+		break;
+	}
+	
+	return 0;
+}
+
+void CMakeLyricDlg::OnTimer(UINT nIDEvent) 
+{
+	
+	CResizingDialog::OnTimer(nIDEvent);
+}
+
+void CMakeLyricDlg::OnBtnPlayPause() 
+{
+	if(m_MediaPlayer.IsPlay())
+	{
+		m_MediaPlayer.GetControls().pause();
+		GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T(">"));
+		return;
+	}
+	
+	if(m_MediaPlayer.IsStop() || m_MediaPlayer.IsPause())
+	{
+		m_MediaPlayer.GetControls().play();
+		GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T("|"));
+		return;
+	}
+	
+}
+
+void CMakeLyricDlg::OnBtnStop() 
+{
+	if(m_MediaPlayer.IsPlay())
+	{
+		m_MediaPlayer.GetControls().stop();
+	}
+	
+}
+
+void CMakeLyricDlg::SetMediaTimeInfo()
+{
+	CString Duration = m_MediaPlayer.GetCurrentMedia().GetDurationString();
+	GetDlgItem(IDC_STATIC_MEDIA_TIMEINFO)->SetWindowText(Duration);
+}
+

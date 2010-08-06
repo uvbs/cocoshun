@@ -16,6 +16,10 @@
 #define IDI_ICON1                       130
 #define IDB_LOGO                        140
 #define IDB_BACKGROUND                  141
+#define IDB_MP_CHANNEL                  149
+#define IDB_MP_CHANNEL_ACTIVE           150
+#define IDB_MP_THUMB_ACTIVE             151
+#define IDB_MP_THUMB                    152
 #define IDC_ACTIVEMOVIECONTROL1         1000
 #define IDC_MEDIA_PLAYER                1000
 #define IDC_CHECK_STEP1                 1003
@@ -66,14 +70,21 @@
 #define IDC_STATIC_KEY_TIP              1066
 #define IDC_SLIDER1                     1067
 #define IDC_STATIC_FIND                 1068
+#define IDC_SLIDER_MP                   1069
+#define IDC_MAX                         1070
+#define IDC_MIN                         1071
+#define IDC_POS                         1072
+#define IDC_BTN_PLAY_PAUSE              1073
+#define IDC_BTN_STOP                    1074
+#define IDC_STATIC_MEDIA_TIMEINFO       1075
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        149
+#define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1069
+#define _APS_NEXT_CONTROL_VALUE         1076
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif
