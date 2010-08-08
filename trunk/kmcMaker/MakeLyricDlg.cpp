@@ -6,6 +6,7 @@
 #include "MakeLyricDlg.h"
 #include "UILib/FileDialogEx.h"
 #include "wmpmedia.h"
+#include "KmcMakerDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,7 +14,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define MEDIA_PLAYER_SLIDER_TIMER 0X10;
+#define TIMER_MEDIAPLAYER_SLIDER 5000
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
@@ -23,6 +24,7 @@ CMakeLyricDlg::CMakeLyricDlg(CWnd* pParent /*=NULL*/)
 {
 	//{{AFX_DATA_INIT(CMakeLyricDlg)
 	//}}AFX_DATA_INIT
+	m_IsSliderMoving = FALSE;
 }
 
 
@@ -33,10 +35,7 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LYRIC_MAKER, m_LyricMaker);
 	DDX_Control(pDX, IDC_MEDIAPLAYER, m_MediaPlayer);
 	//}}AFX_DATA_MAP
-	DDX_Text(pDX, IDC_MAX, m_nMax);
-	DDX_Text(pDX, IDC_MIN, m_nMin);
-	DDX_Text(pDX, IDC_POS, m_nPos);
-	DDX_Control(pDX, IDC_SLIDER_MP, m_sliderMP);
+	DDX_Control(pDX, IDC_SLIDER_MP, m_SliderMP);
 }
 
 
@@ -47,6 +46,8 @@ BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_BTN_PLAY_PAUSE, OnBtnPlayPause)
 	ON_BN_CLICKED(IDC_BTN_STOP, OnBtnStop)
+	ON_BN_CLICKED(IDC_BTN_PREVSTEP, OnBtnPrevstep)
+	ON_BN_CLICKED(IDC_BTN_NEXTSTEP, OnBtnNextstep)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVED, OnBitmapSliderMoved)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnBitmapSliderMoving)
@@ -59,23 +60,18 @@ BOOL CMakeLyricDlg::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
 
-	// Slider 3 - Media Player
-	m_sliderMP.SetBitmapChannel( IDB_MP_CHANNEL, IDB_MP_CHANNEL_ACTIVE );
-	m_sliderMP.SetBitmapThumb( IDB_MP_THUMB, IDB_MP_THUMB_ACTIVE, TRUE );
-	m_sliderMP.DrawFocusRect( FALSE );
-	m_nMin = 0;
-	m_nMax = 100;
-	m_nPos = 30;
-
+	// 设置滑杆外观
+	m_SliderMP.SetBitmapChannel( IDB_MP_CHANNEL, IDB_MP_CHANNEL_ACTIVE );
+	m_SliderMP.SetBitmapThumb( IDB_MP_THUMB, IDB_MP_THUMB_ACTIVE, TRUE );
+	m_SliderMP.SetMargin( 2, 3, 2, 0 );
+	m_SliderMP.DrawFocusRect( FALSE );
+//	InitPlaySlider();
 	
-	m_sliderMP.SetRange( m_nMin, m_nMax );
-	m_sliderMP.SetPos( m_nPos );
-	m_sliderMP.SetMargin( 2, 3, 2, 0 );
 	SetControlInfo(IDC_SLIDER_MP,ANCHORE_RIGHT);
-
-	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
+	
+	SetControlInfo(IDC_LYRIC_MAKER,ANCHORE_LEFT);
 	SetControlInfo(IDC_STATIC_MEDIA_TIMEINFO,ANCHORE_RIGHT);
-
+	
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_STATIC_TIP,ANCHORE_RIGHT);
 
@@ -92,9 +88,8 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
 	m_MediaPlayer.GetControls().play();
-	SetMediaTimeInfo();
 
-	SetFocusToLyricMaker();
+	FocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -109,7 +104,7 @@ void CMakeLyricDlg::OnBtnOpen()
 		CString fname = FileDlg.GetPathName();
 		m_MediaPlayer.SetUrl(fname);
 	}
-	SetFocusToLyricMaker();
+	FocusToLyricMaker();
 }
 
 void CMakeLyricDlg::InitLyric(CString Lyric)
@@ -223,7 +218,7 @@ void CMakeLyricDlg::GetEnWord(CString &Str, int &Pos, CString &StrWord)
 		Pos--;	
 }
 
-void CMakeLyricDlg::SetFocusToLyricMaker()
+void CMakeLyricDlg::FocusToLyricMaker()
 {
 	m_LyricMaker.SetFocus();
 }
@@ -244,36 +239,23 @@ LRESULT CMakeLyricDlg::OnAcceptDropFile( WPARAM wParam /*= 0*/, LPARAM lParam /*
 
 LRESULT CMakeLyricDlg::OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam)
 {
-	CString sMsg;
-	
-// 	switch( wParam ) 
+	switch( wParam ) 
 	{
-		
-// 	case IDC_SLIDER_VOL :
-// 		m_sliderVol2.SetPos( m_sliderVol.GetPos() );
-// 		break;
-// 		
-// 	case IDC_SLIDER_VOL2 :
-// 		m_sliderVol.SetPos( m_sliderVol2.GetPos() );
-// 		break;
-// 		
-// 	case IDC_SLIDER_BALLOON :
-// 		
-// 		sMsg.Format( "%d", lParam );
-// 		AfxMessageBox( sMsg );
-// 		break;
+		case IDC_SLIDER_MP :
+			m_IsSliderMoving = FALSE;
+			m_MediaPlayer.GetControls().SetCurrentPosition(m_SliderMP.GetPos());
+			break;
 	}
 	return 0;
 }
 
 LRESULT CMakeLyricDlg::OnBitmapSliderMoving(WPARAM wParam, LPARAM lParam)
 {
-	switch( wParam ) {
-
-	case IDC_SLIDER_MP :
-		m_nPos = m_sliderMP.GetPos();
-		UpdateData( FALSE );
-		break;
+	switch( wParam ) 
+	{
+		case IDC_SLIDER_MP :
+			m_IsSliderMoving = TRUE;
+			break;
 	}
 	
 	return 0;
@@ -281,8 +263,11 @@ LRESULT CMakeLyricDlg::OnBitmapSliderMoving(WPARAM wParam, LPARAM lParam)
 
 void CMakeLyricDlg::OnTimer(UINT nIDEvent) 
 {
-	
-	CResizingDialog::OnTimer(nIDEvent);
+	if(nIDEvent == TIMER_MEDIAPLAYER_SLIDER)
+	{
+		if(	!m_IsSliderMoving )
+			ShowPlayerTimeInfo();
+	}
 }
 
 void CMakeLyricDlg::OnBtnPlayPause() 
@@ -308,13 +293,124 @@ void CMakeLyricDlg::OnBtnStop()
 	if(m_MediaPlayer.IsPlay())
 	{
 		m_MediaPlayer.GetControls().stop();
+		InitPlaySlider();
 	}
-	
 }
 
-void CMakeLyricDlg::SetMediaTimeInfo()
+void CMakeLyricDlg::InitMediaCtrls()
 {
-	CString Duration = m_MediaPlayer.GetCurrentMedia().GetDurationString();
-	GetDlgItem(IDC_STATIC_MEDIA_TIMEINFO)->SetWindowText(Duration);
+	ShowPlayerTimeInfo();
+	
+	// 初始化滑杆
+	InitPlaySlider();
 }
 
+
+BEGIN_EVENTSINK_MAP(CMakeLyricDlg, CResizingDialog)
+    //{{AFX_EVENTSINK_MAP(CMakeLyricDlg)
+	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5001 /* OpenStateChange */, OnOpenStateChangeMediaplayer, VTS_I4)
+	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5101 /* PlayStateChange */, OnPlayStateChangeMediaplayer, VTS_I4)
+	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5202 /* PositionChange */, OnPositionChangeMediaplayer, VTS_R8 VTS_R8)
+	//}}AFX_EVENTSINK_MAP
+END_EVENTSINK_MAP()
+
+void CMakeLyricDlg::OnOpenStateChangeMediaplayer(long NewState) 
+{
+	// 为开始播放状态设置控件
+	if(NewState == 13)
+		InitMediaCtrls();
+}
+
+void CMakeLyricDlg::OnPlayStateChangeMediaplayer(long NewState) 
+{
+	if(NewState == PLAYSTATE_BUFFERING 
+		|| NewState == PLAYSTATE_FINISHED 
+		|| NewState == PLAYSTATE_READY
+		|| NewState == PLAYSTATE_PAUSE
+		|| NewState == PLAYSTATE_STOP)
+	{
+		KillTimer(TIMER_MEDIAPLAYER_SLIDER);
+	}
+	if(NewState == PLAYSTATE_PLAY)
+	{
+		SetTimer(TIMER_MEDIAPLAYER_SLIDER, 1000, NULL);
+	}
+	FocusToLyricMaker();
+}
+
+void CMakeLyricDlg::OnPositionChangeMediaplayer(double oldPosition, double newPosition) 
+{
+	FocusToLyricMaker();
+}
+
+void CMakeLyricDlg::ShowPlayerTimeInfo()
+{
+	// 设置播放时间
+	CString CurrentPosition =  m_MediaPlayer.GetControls().GetCurrentPositionString();
+	if(CurrentPosition.IsEmpty())
+		CurrentPosition = _T("00:00");
+	CString Duration = m_MediaPlayer.GetCurrentMedia().GetDurationString();
+	GetDlgItem(IDC_STATIC_MEDIA_TIMEINFO)->SetWindowText(CurrentPosition + _T("/") + Duration);
+
+	double Postion = m_MediaPlayer.GetControls().GetCurrentPosition();
+	m_SliderMP.SetPos(Postion);
+}
+
+void CMakeLyricDlg::InitPlaySlider()
+{
+	double Duration = m_MediaPlayer.GetCurrentMedia().GetDuration();
+
+	m_SliderMP.SetRange(0, Duration );
+	m_SliderMP.SetPos( 0 );
+}
+
+void CMakeLyricDlg::OnBtnPrevstep() 
+{
+	((CKmcMakerDlg *)GetParent())->OnCheckStep1();
+}
+void CMakeLyricDlg::OnBtnNextstep() 
+{
+	if(IsMarkedFirst() && !IsMarkedAll())
+	{
+		m_MediaPlayer.GetControls().pause();
+		MessageBox(_T("请标记完所有的歌词再进行下一步."),
+			_T("提示"),MB_OK | MB_ICONINFORMATION);
+		
+		m_MediaPlayer.GetControls().play();
+		return;
+	}
+
+	OnBtnStop();
+	((CKmcMakerDlg *)GetParent())->OnCheckStep3();
+}
+
+BOOL CMakeLyricDlg::IsMarkedAll()
+{
+	int maxY = m_LyricLines.size() - 1;
+	int maxX = m_LyricLines.at(maxY).LyricWords.size() - 1;
+	return  m_LyricLines.at(maxY).LyricWords.at(maxX).IsMarkedAll();
+}
+
+
+BOOL CMakeLyricDlg::IsMarkedFirst()
+{
+	return  m_LyricLines.at(0).LyricWords.at(0).MarkedStart;
+}
+
+BOOL CMakeLyricDlg::CheckLeaveToPrev()
+{
+	if(IsMarkedFirst())
+	{
+		m_MediaPlayer.GetControls().pause();
+		int ret = MessageBox(_T("返回到上一步将丢失你已经标记的歌词信息，您确定要返回到上一步吗？"),
+			_T("提示"),MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION);
+		
+		if( ret == IDNO)
+		{
+			m_MediaPlayer.GetControls().play();
+			return FALSE;
+		}
+	}
+	OnBtnStop();
+	return TRUE;
+}

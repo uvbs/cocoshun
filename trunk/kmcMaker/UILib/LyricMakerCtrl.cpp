@@ -87,7 +87,8 @@ UINT CLyricMakerCtrl::OnGetDlgCode()
 void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if(nChar == VK_LEFT || nChar == VK_RIGHT 
-		|| nChar == VK_UP|| nChar == VK_DOWN)
+		|| nChar == VK_UP|| nChar == VK_DOWN
+		|| nChar == VK_SPACE)
 	{
 		if( m_LyricLines == NULL) return;
 		
@@ -108,6 +109,9 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			break;
 		case VK_DOWN:
 			m_TextBoard->MarkWordEnd();
+			break;
+		case VK_SPACE:
+			((CMakeLyricDlg *)GetParent())->OnBtnPlayPause();
 			break;
 		}
 	}
