@@ -6,6 +6,7 @@
 #include "SaveLyricDlg.h"
 #include "UILib/FileDialogEx.h"
 #include "Util/textfile.h"
+#include "KmcMakerDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,6 +56,8 @@ BEGIN_MESSAGE_MAP(CSaveLyricDlg, CResizingDialog)
 	ON_EN_CHANGE(IDC_EDIT_BY, OnChangeEditBy)
 	ON_EN_CHANGE(IDC_EDIT_AR, OnChangeEditAr)
 	ON_EN_CHANGE(IDC_EDIT_AL, OnChangeEditAl)
+	ON_BN_CLICKED(IDC_BTN_SAVE_PREVSTEP, OnBtnSavePrevstep)
+	ON_BN_CLICKED(IDC_BTN_EXIT, OnBtnExit)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -87,6 +90,7 @@ void CSaveLyricDlg::OnBtnSavelyric()
 			return;
 		}
 		fw.Write(Kmc);
+		m_bSaved = TRUE;
 	}
 }
 
@@ -116,6 +120,7 @@ void CSaveLyricDlg::SetLyricInfo( vector <LyricLine> *LyricLines ,CLyricText::Ly
 		m_editTi = m_LyricHeader->ti;
 		UpdateData(FALSE);
 	}
+	m_bSaved = FALSE;
 }
 
 
@@ -195,4 +200,36 @@ void CSaveLyricDlg::OnChangeEditAr()
 void CSaveLyricDlg::OnChangeEditAl() 
 {
 	UpdatePreviewLyric();
+}
+
+void CSaveLyricDlg::OnBtnSavePrevstep() 
+{
+	if(CheckLeave())
+		((CKmcMakerDlg *)GetParent())->OnCheckStep2();
+}
+
+void CSaveLyricDlg::OnBtnExit() 
+{
+	((CKmcMakerDlg *)GetParent())->SendMessage(WM_CLOSE);
+}
+
+BOOL CSaveLyricDlg::IsSaved()
+{
+	return m_bSaved;
+}
+
+BOOL CSaveLyricDlg::CheckLeave()
+{
+	if(!IsSaved())
+	{
+		int ret = MessageBox(_T("您还没有保存歌词，确定要离开吗？"),
+			_T("提示"),MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION);
+		
+		if( ret == IDNO)
+		{
+			return FALSE;
+		}
+	}
+
+	return TRUE;
 }

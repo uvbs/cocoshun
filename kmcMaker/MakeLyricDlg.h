@@ -22,31 +22,36 @@ class CMakeLyricDlg : public CResizingDialog
 {
 // Construction
 public:
-	void SetFocusToLyricMaker();
+	BOOL CheckLeaveToPrev();
+	void FocusToLyricMaker();
 	void InitLyric(CString Lyric);
 	CMakeLyricDlg(CWnd* pParent = NULL);   // standard constructor
 	vector <LyricLine> m_LyricLines;
-
+	BOOL IsMarkedAll();
 // Dialog Data
 	//{{AFX_DATA(CMakeLyricDlg)
 	enum { IDD = IDD_MAKELYRICDLG_DIALOG };
 	CLyricMakerCtrl	m_LyricMaker;
 	CWMPPlayer4	m_MediaPlayer;
-	CBitmapSlider m_sliderMP;
+	CBitmapSlider m_SliderMP;
 	//}}AFX_DATA
 	int		m_nMax;
 	int		m_nMin;
 	int		m_nPos;
 
+	// 初子控件作为外部方法调用
+	afx_msg void OnBtnPlayPause();
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMakeLyricDlg)
+	public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
-
+	
 // Implementation
 protected:
+	void InitPlaySlider();
 	LRESULT OnAcceptDropFile(WPARAM wParam = 0, LPARAM lParam = 0 );
 	// Generated message map functions
 	//{{AFX_MSG(CMakeLyricDlg)
@@ -54,14 +59,23 @@ protected:
 	afx_msg void OnBtnOpen();
 	afx_msg void OnBtnPriview();
 	afx_msg void OnTimer(UINT nIDEvent);
-	afx_msg void OnBtnPlayPause();
 	afx_msg void OnBtnStop();
+	afx_msg void OnOpenStateChangeMediaplayer(long NewState);
+	afx_msg void OnPlayStateChangeMediaplayer(long NewState);
+	afx_msg void OnPositionChangeMediaplayer(double oldPosition, double newPosition);
+	afx_msg void OnBtnPrevstep();
+	afx_msg void OnBtnNextstep();
+	DECLARE_EVENTSINK_MAP()
 	//}}AFX_MSG
 	afx_msg LRESULT OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnBitmapSliderMoving(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 private:
-	void SetMediaTimeInfo();
+	BOOL IsMarkedFirst();
+	BOOL m_IsSliderMoving;
+	void InitMediaCtrls();
+	
+	void ShowPlayerTimeInfo();
 	void GetEnWord(CString &Str, int &Pos, CString &StrWord);
 	void GetSpace(CString &Str, int &Pos, CString &StrSpace);
 };

@@ -20,6 +20,7 @@ public:
 		CString ar;
 		CString al;
 		CString by;
+		CString duration;
 	};
 
 	struct FilterParam

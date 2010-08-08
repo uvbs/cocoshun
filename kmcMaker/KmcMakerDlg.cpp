@@ -235,31 +235,59 @@ HCURSOR CKmcMakerDlg::OnQueryDragIcon()
 
 void CKmcMakerDlg::OnCheckStep1() 
 {
+	int nSelectPage = m_CheckGroup.GetCheck();
+	switch(nSelectPage)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	}
 	m_CheckGroup.SetCheck(0);
 	m_ImportLyricDlg->SetFocus();
 }
 
 void CKmcMakerDlg::OnCheckStep2() 
 {
-	CString Lyric;
-	m_ImportLyricDlg->m_LyricEditor.GetWindowText(Lyric);
-	Lyric.TrimLeft();
-	Lyric.TrimRight();
-	if(Lyric.IsEmpty())
+	int nSelectPage = m_CheckGroup.GetCheck();
+	switch(nSelectPage)
 	{
-		MessageBox(_T("请导入歌词^_^!"),_T("提示"),MB_OK | MB_ICONEXCLAMATION);
-		return;
+		case 0:
+			if(m_ImportLyricDlg->CheckLeave())
+			{
+				CString Lyric;
+				m_ImportLyricDlg->GetLyric(Lyric);
+				m_MakeLyricDlg->InitLyric(Lyric);
+				m_MakeLyricDlg->FocusToLyricMaker();
+			}else 
+				return;
+			break;
+		case 2:
+			if(!m_SaveLyricDlg->CheckLeave())
+				return;
+			break;
 	}
-	m_MakeLyricDlg->InitLyric(Lyric);
-	m_MakeLyricDlg->SetFocusToLyricMaker();
+
 	m_CheckGroup.SetCheck(1);
 }
 
 void CKmcMakerDlg::OnCheckStep3() 
 {
-	m_CheckGroup.SetCheck(2);
-//	m_MakeLyricDlg->m_LyricLines
-	m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());	
+
+	int nSelectPage = m_CheckGroup.GetCheck();
+	switch(nSelectPage)
+	{
+	case 0:
+		return;
+		break;
+	case 1:
+		if(m_MakeLyricDlg->CheckLeaveToPrev())
+		{
+			m_CheckGroup.SetCheck(2);
+			m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
+		}
+		break;
+	}
 }
 
 // LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 

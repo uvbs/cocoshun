@@ -204,3 +204,23 @@ void CImportLyricDlg::OnBtnNextstep()
 {
 	((CKmcMakerDlg *)GetParent())->OnCheckStep2();
 }
+
+BOOL CImportLyricDlg::CheckLeave()
+{
+	CString Lyric;
+	m_LyricEditor.GetWindowText(Lyric);
+	Lyric.TrimLeft();
+	Lyric.TrimRight();
+	if(Lyric.IsEmpty())
+	{
+		MessageBox(_T("请先导入歌词^_^!"),_T("提示"),MB_OK | MB_ICONEXCLAMATION);
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+void CImportLyricDlg::GetLyric(CString &Lyric)
+{
+	m_LyricEditor.GetWindowText(Lyric);
+}

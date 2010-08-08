@@ -17,6 +17,8 @@ class CSaveLyricDlg : public CResizingDialog
 {
 // Construction
 public:
+	BOOL CheckLeave();
+	BOOL IsSaved();
 	CSaveLyricDlg(CWnd* pParent = NULL);   // standard constructor
 	~CSaveLyricDlg();
 	void SetLyricInfo(vector <LyricLine> *LyricLines,CLyricText::LyricHeader *LyricHeader);
@@ -47,6 +49,7 @@ protected:
 	CLyricText::LyricHeader *m_LyricHeader;
 
 	CKmcBuffer *m_KmcBuffer;
+	BOOL m_bSaved;
 	// Generated message map functions
 	//{{AFX_MSG(CSaveLyricDlg)
 	afx_msg void OnBtnSavelyric();
@@ -56,6 +59,8 @@ protected:
 	afx_msg void OnChangeEditBy();
 	afx_msg void OnChangeEditAr();
 	afx_msg void OnChangeEditAl();
+	afx_msg void OnBtnSavePrevstep();
+	afx_msg void OnBtnExit();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

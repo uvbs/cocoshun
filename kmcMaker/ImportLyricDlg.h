@@ -19,6 +19,8 @@ class CImportLyricDlg : public CResizingDialog
 {
 // Construction
 public:
+	void GetLyric(CString &Lyric);
+	BOOL CheckLeave();
 	CLyricText m_LyricText;
 	CImportLyricDlg(CWnd* pParent = NULL);   // standard constructor
 
