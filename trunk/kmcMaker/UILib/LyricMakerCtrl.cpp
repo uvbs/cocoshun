@@ -95,6 +95,8 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		// check if playing
 		if(!((CMakeLyricDlg *)GetParent())->m_MediaPlayer.IsPlay())
  			return;
+
+		TRACE("%d\n",nChar);
 		
 		switch(nChar)
 		{

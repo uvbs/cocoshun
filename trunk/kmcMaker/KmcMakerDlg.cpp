@@ -236,20 +236,30 @@ HCURSOR CKmcMakerDlg::OnQueryDragIcon()
 void CKmcMakerDlg::OnCheckStep1() 
 {
 	int nSelectPage = m_CheckGroup.GetCheck();
+	BOOL bLeave = FALSE;
+
 	switch(nSelectPage)
 	{
-	case 0:
-		break;
-	case 1:
-		break;
+		case 1:
+			bLeave = m_MakeLyricDlg->CheckLeaveToPrev();
+			break;
+		case 2:
+			bLeave = m_SaveLyricDlg->CheckLeave();
+			break;
 	}
-	m_CheckGroup.SetCheck(0);
-	m_ImportLyricDlg->SetFocus();
+
+	if(bLeave)
+		m_CheckGroup.SetCheck(0);
+	else
+		m_CheckGroup.SetCheck(nSelectPage);
+// 	m_CheckGroup.SetCheck(0);
+// 	m_ImportLyricDlg->SetFocus();
 }
 
 void CKmcMakerDlg::OnCheckStep2() 
 {
 	int nSelectPage = m_CheckGroup.GetCheck();
+	BOOL bLeave = FALSE;
 	switch(nSelectPage)
 	{
 		case 0:
@@ -258,36 +268,46 @@ void CKmcMakerDlg::OnCheckStep2()
 				CString Lyric;
 				m_ImportLyricDlg->GetLyric(Lyric);
 				m_MakeLyricDlg->InitLyric(Lyric);
-				m_MakeLyricDlg->FocusToLyricMaker();
-			}else 
-				return;
+				bLeave = TRUE;
+			}
 			break;
 		case 2:
-			if(!m_SaveLyricDlg->CheckLeave())
-				return;
+			bLeave = m_SaveLyricDlg->CheckLeave();
 			break;
 	}
 
-	m_CheckGroup.SetCheck(1);
+	if(bLeave)
+	{
+		m_CheckGroup.SetCheck(1);
+		m_MakeLyricDlg->SetFocus();
+		m_MakeLyricDlg->FocusToLyricMaker();
+	}
+	else
+		m_CheckGroup.SetCheck(nSelectPage);
 }
 
 void CKmcMakerDlg::OnCheckStep3() 
 {
-
 	int nSelectPage = m_CheckGroup.GetCheck();
+	BOOL bLeave = FALSE;
 	switch(nSelectPage)
 	{
-	case 0:
-		return;
-		break;
-	case 1:
-		if(m_MakeLyricDlg->CheckLeaveToPrev())
-		{
-			m_CheckGroup.SetCheck(2);
-			m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
-		}
-		break;
+		case 0:
+			bLeave = FALSE;
+			break;
+		case 1:
+			if(m_MakeLyricDlg->CheckLeaveToPrev())
+			{
+				m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
+				bLeave = TRUE;
+			}
+			break;
 	}
+
+	if(bLeave)
+		m_CheckGroup.SetCheck(1);
+	else
+		m_CheckGroup.SetCheck(nSelectPage);
 }
 
 // LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 

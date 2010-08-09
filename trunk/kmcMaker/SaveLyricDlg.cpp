@@ -204,8 +204,7 @@ void CSaveLyricDlg::OnChangeEditAl()
 
 void CSaveLyricDlg::OnBtnSavePrevstep() 
 {
-	if(CheckLeave())
-		((CKmcMakerDlg *)GetParent())->OnCheckStep2();
+	((CKmcMakerDlg *)GetParent())->OnCheckStep2();
 }
 
 void CSaveLyricDlg::OnBtnExit() 
