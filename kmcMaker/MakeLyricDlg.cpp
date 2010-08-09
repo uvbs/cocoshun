@@ -44,10 +44,10 @@ BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	ON_BN_CLICKED(IDC_BTN_OPEN, OnBtnOpen)
 	ON_BN_CLICKED(IDC_BTN_PRIVIEW, OnBtnPriview)
 	ON_WM_TIMER()
-	ON_BN_CLICKED(IDC_BTN_PLAY_PAUSE, OnBtnPlayPause)
 	ON_BN_CLICKED(IDC_BTN_STOP, OnBtnStop)
 	ON_BN_CLICKED(IDC_BTN_PREVSTEP, OnBtnPrevstep)
 	ON_BN_CLICKED(IDC_BTN_NEXTSTEP, OnBtnNextstep)
+	ON_BN_CLICKED(IDC_BTN_PLAY_PAUSE, OnBtnPlayPause)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVED, OnBitmapSliderMoved)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnBitmapSliderMoving)
@@ -285,7 +285,6 @@ void CMakeLyricDlg::OnBtnPlayPause()
 		GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T("|"));
 		return;
 	}
-	
 }
 
 void CMakeLyricDlg::OnBtnStop() 
@@ -335,6 +334,8 @@ void CMakeLyricDlg::OnPlayStateChangeMediaplayer(long NewState)
 	{
 		SetTimer(TIMER_MEDIAPLAYER_SLIDER, 1000, NULL);
 	}
+
+
 	FocusToLyricMaker();
 }
 
@@ -370,17 +371,6 @@ void CMakeLyricDlg::OnBtnPrevstep()
 }
 void CMakeLyricDlg::OnBtnNextstep() 
 {
-	if(IsMarkedFirst() && !IsMarkedAll())
-	{
-		m_MediaPlayer.GetControls().pause();
-		MessageBox(_T("请标记完所有的歌词再进行下一步."),
-			_T("提示"),MB_OK | MB_ICONINFORMATION);
-		
-		m_MediaPlayer.GetControls().play();
-		return;
-	}
-
-	OnBtnStop();
 	((CKmcMakerDlg *)GetParent())->OnCheckStep3();
 }
 
@@ -413,4 +403,26 @@ BOOL CMakeLyricDlg::CheckLeaveToPrev()
 	}
 	OnBtnStop();
 	return TRUE;
+}
+
+BOOL CMakeLyricDlg::CheckLeaveToNext()
+{
+	if(IsMarkedFirst() && !IsMarkedAll())
+	{
+		m_MediaPlayer.GetControls().pause();
+		MessageBox(_T("请标记完所有的歌词再进行下一步."),
+			_T("提示"),MB_OK | MB_ICONINFORMATION);
+		
+		m_MediaPlayer.GetControls().play();
+		return FALSE;
+	}
+	
+	OnBtnStop();
+	return TRUE;
+}
+
+UINT CMakeLyricDlg::OnGetDlgCode()
+{
+	// 让歌词控件能接收KEY消息
+	return DLGC_WANTALLKEYS | DLGC_WANTARROWS;
 }

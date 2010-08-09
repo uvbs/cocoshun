@@ -213,7 +213,7 @@ BOOL CImportLyricDlg::CheckLeave()
 	Lyric.TrimRight();
 	if(Lyric.IsEmpty())
 	{
-		MessageBox(_T("请先导入歌词^_^!"),_T("提示"),MB_OK | MB_ICONEXCLAMATION);
+		MessageBox(_T("请先导入歌词!"),_T("提示"),MB_OK | MB_ICONINFORMATION);
 		return FALSE;
 	}
 

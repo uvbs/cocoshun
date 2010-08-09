@@ -151,7 +151,7 @@ BEGIN
                     7,159,107
     LTEXT           "→:    标记当前字的开始,\n并标记上一字的结束\n↓:    标记当前字的结束\n←:    返回上一个字进行标记\n↑:    返回上一行进行标记\n空格:  开始/暂停播放",
                     IDC_STATIC_TIP,358,176,131,48,NOT WS_GROUP | WS_TABSTOP
-    PUSHBUTTON      "预览(&P)",IDC_BTN_PRIVIEW,350,242,52,17,NOT WS_VISIBLE
+    PUSHBUTTON      "预览(&P)",IDC_BTN_PRIVIEW,401,137,52,17,NOT WS_VISIBLE
     PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,461,243,52,17
     PUSHBUTTON      "上一步(&P)",IDC_BTN_PREVSTEP,406,243,52,17
     GROUPBOX        "按键说明：",IDC_STATIC_KEY_TIP,346,163,162,68,BS_CENTER

@@ -597,7 +597,7 @@ void CLyricMakerCtrl::OnTimer( UINT nIDEvent )
 
 void CLyricMakerCtrl::Preview()
 {
-	SetTimer(2, 10, NULL);
+//	SetTimer(2, 10, NULL);
 	m_IsPreview = TRUE;
 }
 

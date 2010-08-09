@@ -23,6 +23,7 @@ class CMakeLyricDlg : public CResizingDialog
 // Construction
 public:
 	BOOL CheckLeaveToPrev();
+	BOOL CheckLeaveToNext();
 	void FocusToLyricMaker();
 	void InitLyric(CString Lyric);
 	CMakeLyricDlg(CWnd* pParent = NULL);   // standard constructor
@@ -65,6 +66,7 @@ protected:
 	afx_msg void OnPositionChangeMediaplayer(double oldPosition, double newPosition);
 	afx_msg void OnBtnPrevstep();
 	afx_msg void OnBtnNextstep();
+	afx_msg UINT OnGetDlgCode();
 	DECLARE_EVENTSINK_MAP()
 	//}}AFX_MSG
 	afx_msg LRESULT OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam);
