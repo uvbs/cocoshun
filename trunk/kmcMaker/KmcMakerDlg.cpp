@@ -296,7 +296,7 @@ void CKmcMakerDlg::OnCheckStep3()
 			bLeave = FALSE;
 			break;
 		case 1:
-			if(m_MakeLyricDlg->CheckLeaveToPrev())
+			if(m_MakeLyricDlg->CheckLeaveToNext())
 			{
 				m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
 				bLeave = TRUE;
@@ -305,7 +305,7 @@ void CKmcMakerDlg::OnCheckStep3()
 	}
 
 	if(bLeave)
-		m_CheckGroup.SetCheck(1);
+		m_CheckGroup.SetCheck(2);
 	else
 		m_CheckGroup.SetCheck(nSelectPage);
 }

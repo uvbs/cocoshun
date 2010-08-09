@@ -77,6 +77,7 @@
 #define IDC_BTN_PLAY_PAUSE              1073
 #define IDC_BTN_STOP                    1074
 #define IDC_STATIC_MEDIA_TIMEINFO       1075
+#define IDC_BTN_STARTMARK               1076
 
 // Next default values for new objects
 // 
@@ -84,7 +85,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1076
+#define _APS_NEXT_CONTROL_VALUE         1077
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif
