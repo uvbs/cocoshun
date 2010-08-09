@@ -334,9 +334,6 @@ void CMakeLyricDlg::OnPlayStateChangeMediaplayer(long NewState)
 	{
 		SetTimer(TIMER_MEDIAPLAYER_SLIDER, 1000, NULL);
 	}
-
-
-	FocusToLyricMaker();
 }
 
 void CMakeLyricDlg::OnPositionChangeMediaplayer(double oldPosition, double newPosition) 
