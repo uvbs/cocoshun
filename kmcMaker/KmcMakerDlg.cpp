@@ -344,3 +344,5 @@ LRESULT CKmcMakerDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
 	return 1L;
 }
 
+
+

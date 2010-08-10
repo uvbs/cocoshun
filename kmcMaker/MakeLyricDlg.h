@@ -66,7 +66,7 @@ protected:
 	afx_msg void OnPositionChangeMediaplayer(double oldPosition, double newPosition);
 	afx_msg void OnBtnPrevstep();
 	afx_msg void OnBtnNextstep();
-	afx_msg UINT OnGetDlgCode();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	DECLARE_EVENTSINK_MAP()
 	//}}AFX_MSG
 	afx_msg LRESULT OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam);
