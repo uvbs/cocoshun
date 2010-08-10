@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CMakeLyricDlg, CResizingDialog)
 	ON_BN_CLICKED(IDC_BTN_PREVSTEP, OnBtnPrevstep)
 	ON_BN_CLICKED(IDC_BTN_NEXTSTEP, OnBtnNextstep)
 	ON_BN_CLICKED(IDC_BTN_PLAY_PAUSE, OnBtnPlayPause)
+	ON_WM_KEYDOWN()
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVED, OnBitmapSliderMoved)
 	ON_MESSAGE(WM_BITMAPSLIDER_MOVING, OnBitmapSliderMoving)
@@ -289,11 +290,8 @@ void CMakeLyricDlg::OnBtnPlayPause()
 
 void CMakeLyricDlg::OnBtnStop() 
 {
-	if(m_MediaPlayer.IsPlay())
-	{
-		m_MediaPlayer.GetControls().stop();
-		InitPlaySlider();
-	}
+	m_MediaPlayer.GetControls().stop();
+	InitPlaySlider();
 }
 
 void CMakeLyricDlg::InitMediaCtrls()
@@ -334,6 +332,7 @@ void CMakeLyricDlg::OnPlayStateChangeMediaplayer(long NewState)
 	{
 		SetTimer(TIMER_MEDIAPLAYER_SLIDER, 1000, NULL);
 	}
+	FocusToLyricMaker();
 }
 
 void CMakeLyricDlg::OnPositionChangeMediaplayer(double oldPosition, double newPosition) 
@@ -418,8 +417,10 @@ BOOL CMakeLyricDlg::CheckLeaveToNext()
 	return TRUE;
 }
 
-UINT CMakeLyricDlg::OnGetDlgCode()
+
+void CMakeLyricDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	// 让歌词控件能接收KEY消息
-	return DLGC_WANTALLKEYS | DLGC_WANTARROWS;
+	TRACE("OnKeyDown %d\n", nChar);
+	CResizingDialog::OnKeyDown(nChar, nRepCnt, nFlags);
 }
+

@@ -91,6 +91,12 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		|| nChar == VK_SPACE)
 	{
 		if( m_LyricLines == NULL) return;
+
+		if(nChar == VK_SPACE)
+		{
+			((CMakeLyricDlg *)GetParent())->OnBtnPlayPause();
+			return;
+		}
 		
 		// check if playing
 		if(!((CMakeLyricDlg *)GetParent())->m_MediaPlayer.IsPlay())
@@ -111,9 +117,6 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			break;
 		case VK_DOWN:
 			m_TextBoard->MarkWordEnd();
-			break;
-		case VK_SPACE:
-			((CMakeLyricDlg *)GetParent())->OnBtnPlayPause();
 			break;
 		}
 	}

@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CMakeLyricDlg
+LastClass=CKmcMakerDlg
 LastTemplate=CStatic
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
@@ -13,13 +13,13 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=6
-Resource1=IDD_IMPORTLYRICDLG_DIALOG
+Resource1=IDD_MAKELYRICDLG_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_KMCMAKER_DIALOG
+Resource3=IDD_ABOUTBOX
 Class4=CImportLyricDlg
-Resource4=IDD_ABOUTBOX
+Resource4=IDD_KMCMAKER_DIALOG
 Class5=CMakeLyricDlg
-Resource5=IDD_MAKELYRICDLG_DIALOG
+Resource5=IDD_IMPORTLYRICDLG_DIALOG
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
 Resource6=IDD_SAVELYRICDLG_DIALOG
@@ -35,7 +35,7 @@ Type=0
 HeaderFile=KmcMakerDlg.h
 ImplementationFile=KmcMakerDlg.cpp
 Filter=D
-LastObject=IDC_RICHEDIT1
+LastObject=CKmcMakerDlg
 BaseClass=CResizingDialog
 VirtualFilter=dWC
 
@@ -101,17 +101,17 @@ VirtualFilter=dWC
 Type=1
 Class=CMakeLyricDlg
 ControlCount=12
-Control1=IDC_BTN_OPEN,button,1342242816
+Control1=IDC_BTN_OPEN,button,1342177280
 Control2=IDC_LYRIC_MAKER,static,1342373889
 Control3=IDC_MEDIAPLAYER,{6BF52A52-394A-11D3-B153-00C04F79FAA6},1342242816
 Control4=IDC_STATIC_TIP,static,1342242816
 Control5=IDC_BTN_PRIVIEW,button,1073807360
-Control6=IDC_BTN_NEXTSTEP,button,1342242816
-Control7=IDC_BTN_PREVSTEP,button,1342242816
+Control6=IDC_BTN_NEXTSTEP,button,1342177280
+Control7=IDC_BTN_PREVSTEP,button,1342177280
 Control8=IDC_STATIC_KEY_TIP,button,1342178055
 Control9=IDC_SLIDER_MP,static,1342245646
-Control10=IDC_BTN_PLAY_PAUSE,button,1342242816
-Control11=IDC_BTN_STOP,button,1342242816
+Control10=IDC_BTN_PLAY_PAUSE,button,1342177280
+Control11=IDC_BTN_STOP,button,1342177280
 Control12=IDC_STATIC_MEDIA_TIMEINFO,static,1342308354
 
 [CLS:CMakeLyricDlg]
@@ -121,7 +121,7 @@ ImplementationFile=MakeLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=IDC_MEDIAPLAYER
+LastObject=CMakeLyricDlg
 
 [DLG:IDD_SAVELYRICDLG_DIALOG]
 Type=1
