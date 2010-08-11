@@ -10,6 +10,7 @@
 #include "./UILib/ResizingDialog.h"
 #include "KMCBuffer.h"
 #include "LyricText.h"
+#include "UILib/BtnST.h"
 /////////////////////////////////////////////////////////////////////////////
 // CSaveLyricDlg dialog
 
@@ -28,6 +29,9 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CSaveLyricDlg)
 	enum { IDD = IDD_SAVELYRICDLG_DIALOG };
+	CButtonST	m_BtnSaveLyric;
+	CButtonST	m_BtnPrevStep;
+	CButtonST	m_BtnExit;
 	CRichEditCtrl	m_KmcPreview;
 	CString	m_editTi;
 	CString	m_editAl;

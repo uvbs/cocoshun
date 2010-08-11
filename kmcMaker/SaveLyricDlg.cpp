@@ -39,6 +39,9 @@ void CSaveLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSaveLyricDlg)
+	DDX_Control(pDX, IDC_BTN_SAVELYRIC, m_BtnSaveLyric);
+	DDX_Control(pDX, IDC_BTN_SAVE_PREVSTEP, m_BtnPrevStep);
+	DDX_Control(pDX, IDC_BTN_EXIT, m_BtnExit);
 	DDX_Control(pDX, IDC_KMC_PRIVEW, m_KmcPreview);
 	DDX_Text(pDX, IDC_EDIT_TI, m_editTi);
 	DDX_Text(pDX, IDC_EDIT_AL, m_editAl);
@@ -66,8 +69,15 @@ END_MESSAGE_MAP()
 
 void CSaveLyricDlg::OnBtnSavelyric() 
 {
-	TCHAR szFilter[] = _T("Karaoke Media Lyric (*.kmc)|*.kmc|All Files (*.*)|*.*||");
-	CFileDialogEx FileDlg(FALSE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,szFilter);
+	BOOL bCheckKmc = ((CButton *)GetDlgItem(IDC_RADIO_KMC))->GetCheck();
+
+	CString suffixExt = bCheckKmc ? _T(".kmc") : _T(".xml");
+	CString strFilter = bCheckKmc ?_T("Karaoke Media Lyric (*.kmc)|*.kmc|All Files (*.*)|*.*||") : 
+	_T("Karaoke Media Lyric (*.xml)|*.xml|All Files (*.*)|*.*||");
+
+	
+	//TCHAR szFilter[] = _T("Karaoke Media Lyric (*.kmc)|*.kmc|All Files (*.*)|*.*||");
+	CFileDialogEx FileDlg(FALSE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,strFilter);
 
 
 	CString Kmc;
@@ -80,7 +90,7 @@ void CSaveLyricDlg::OnBtnSavelyric()
 		int pos = kmcName.ReverseFind('.');
 		if(pos == -1)
 		{
-			kmcName+=".kmc";
+			kmcName+=suffixExt;
 		}
 
 		CTextFileWrite fw(kmcName,CTextFileBase::UTF_8);
@@ -127,8 +137,12 @@ void CSaveLyricDlg::SetLyricInfo( vector <LyricLine> *LyricLines ,CLyricText::Ly
 BOOL CSaveLyricDlg::OnInitDialog() 
 {
 	CResizingDialog::OnInitDialog();
-	SetControlInfo(IDC_KMC_PRIVEW,RESIZE_BOTH);
+	((CButton *)GetDlgItem(IDC_RADIO_KMC))->SetCheck(TRUE);
 
+	m_BtnSaveLyric.SetIcon(IDI_SAVE);
+	m_BtnPrevStep.SetIcon(IDI_PREV);
+
+	SetControlInfo(IDC_KMC_PRIVEW,RESIZE_BOTH);
 	
 	SetControlInfo(IDC_STATIC_TI, ANCHORE_RIGHT);
 	SetControlInfo(IDC_STATIC_AR,ANCHORE_RIGHT);

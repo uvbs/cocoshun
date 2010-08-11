@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CMakeLyricDlg
+LastClass=CSaveLyricDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
@@ -13,18 +13,18 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_ABOUTBOX
+Resource1=IDD_HELP
 Resource2=IDR_MAINFRAME
 Resource3=IDD_MAKELYRICDLG_DIALOG
 Class4=CImportLyricDlg
-Resource4=IDD_IMPORTLYRICDLG_DIALOG
+Resource4=IDD_ABOUTBOX
 Class5=CMakeLyricDlg
-Resource5=IDD_KMCMAKER_DIALOG
+Resource5=IDD_IMPORTLYRICDLG_DIALOG
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
-Resource6=IDD_SAVELYRICDLG_DIALOG
+Resource6=IDD_KMCMAKER_DIALOG
 Class8=CHelpDlg
-Resource7=IDD_HELP
+Resource7=IDD_SAVELYRICDLG_DIALOG
 
 [CLS:CKmcMakerApp]
 Type=0
@@ -97,7 +97,7 @@ HeaderFile=ImportLyricDlg.h
 ImplementationFile=ImportLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
-LastObject=IDC_EDIT_REPLACE_TXT
+LastObject=IDC_BTN_FILTER
 VirtualFilter=dWC
 
 [DLG:IDD_MAKELYRICDLG_DIALOG]
@@ -124,7 +124,7 @@ ImplementationFile=MakeLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=IDC_BTN_PLAY_PAUSE
+LastObject=IDC_BTN_OPEN
 
 [DLG:IDD_SAVELYRICDLG_DIALOG]
 Type=1
@@ -154,7 +154,7 @@ ImplementationFile=SaveLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=CSaveLyricDlg
+LastObject=IDC_BTN_EXIT
 
 [CLS:CPreviewCtrl]
 Type=0
@@ -173,10 +173,10 @@ Control1=IDC_IE,{8856F961-340A-11D0-A96B-00C04FD705A2},1342242816
 
 [CLS:CHelpDlg]
 Type=0
-HeaderFile=helpdlg.h
-ImplementationFile=helpdlg.cpp
+HeaderFile=HelpDlg.h
+ImplementationFile=HelpDlg.cpp
 BaseClass=CResizingDialog
-LastObject=CHelpDlg
 Filter=D
 VirtualFilter=dWC
+LastObject=CHelpDlg
 

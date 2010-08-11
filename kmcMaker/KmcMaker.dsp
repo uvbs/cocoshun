@@ -359,7 +359,19 @@ SOURCE=.\wmpplayer4.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\res\accept.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\Background.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_eject.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_eject_blue.ico
 # End Source File
 # Begin Source File
 
@@ -376,6 +388,30 @@ SOURCE=.\res\control_play.ico
 # Begin Source File
 
 SOURCE=.\res\control_play_blue.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_stop.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_stop_blue.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\disk.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\exit.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\folder.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\help.ico
 # End Source File
 # Begin Source File
 
@@ -405,6 +441,18 @@ SOURCE=.\res\mp_thumb.bmp
 
 SOURCE=.\res\mp_thumb_active.bmp
 # End Source File
+# Begin Source File
+
+SOURCE=.\res\resultset_next.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\resultset_previous.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\star.ico
+# End Source File
 # End Group
 # Begin Source File
 
@@ -416,31 +464,6 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project
-# Section KmcMaker : {D5F0F4F1-130C-11D3-B14E-00C04F79FAA6}
-# 	2:5:Class:CWMPPlaylist
-# 	2:10:HeaderFile:wmpplaylist.h
-# 	2:8:ImplFile:wmpplaylist.cpp
-# End Section
-# Section KmcMaker : {4F2DF574-C588-11D3-9ED0-00C04FB6E937}
-# 	2:5:Class:CWMPClosedCaption
-# 	2:10:HeaderFile:wmpclosedcaption.h
-# 	2:8:ImplFile:wmpclosedcaption.cpp
-# End Section
-# Section KmcMaker : {EE4C8FE2-34B2-11D3-A3BF-006097C9B344}
-# 	2:5:Class:CWMPCdromCollection
-# 	2:10:HeaderFile:wmpcdromcollection.h
-# 	2:8:ImplFile:wmpcdromcollection.cpp
-# End Section
-# Section KmcMaker : {3614C646-3B3B-4DE7-A81E-930E3F2127B3}
-# 	2:5:Class:CWMPErrorItem
-# 	2:10:HeaderFile:wmperroritem.h
-# 	2:8:ImplFile:wmperroritem.cpp
-# End Section
-# Section KmcMaker : {94D55E95-3FAC-11D3-B155-00C04F79FAA6}
-# 	2:5:Class:CWMPMedia
-# 	2:10:HeaderFile:wmpmedia.h
-# 	2:8:ImplFile:wmpmedia.cpp
-# End Section
 # Section KmcMaker : {00000000-0000-0000-0000-800000800000}
 # 	1:12:IDR_KMCMAKER:106
 # End Section
@@ -507,14 +530,14 @@ SOURCE=.\ReadMe.txt
 # 	2:21:DefaultSinkHeaderFile:webbrowser2.h
 # 	2:16:DefaultSinkClass:CWebBrowser2
 # End Section
-# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
-# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
-# 	2:16:DefaultSinkClass:CWMPPlayer4
-# End Section
 # Section KmcMaker : {40897764-CEAB-47BE-AD4A-8E28537F9BBF}
 # 	2:5:Class:CWMPPlayerApplication
 # 	2:10:HeaderFile:wmpplayerapplication.h
 # 	2:8:ImplFile:wmpplayerapplication.cpp
+# End Section
+# Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
+# 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
+# 	2:16:DefaultSinkClass:CWMPPlayer4
 # End Section
 # Section KmcMaker : {9104D1AB-80C9-4FED-ABF0-2E6417A6DF14}
 # 	2:5:Class:CWMPSettings
@@ -525,4 +548,29 @@ SOURCE=.\ReadMe.txt
 # 	2:5:Class:CWMPError
 # 	2:10:HeaderFile:wmperror.h
 # 	2:8:ImplFile:wmperror.cpp
+# End Section
+# Section KmcMaker : {D5F0F4F1-130C-11D3-B14E-00C04F79FAA6}
+# 	2:5:Class:CWMPPlaylist
+# 	2:10:HeaderFile:wmpplaylist.h
+# 	2:8:ImplFile:wmpplaylist.cpp
+# End Section
+# Section KmcMaker : {4F2DF574-C588-11D3-9ED0-00C04FB6E937}
+# 	2:5:Class:CWMPClosedCaption
+# 	2:10:HeaderFile:wmpclosedcaption.h
+# 	2:8:ImplFile:wmpclosedcaption.cpp
+# End Section
+# Section KmcMaker : {EE4C8FE2-34B2-11D3-A3BF-006097C9B344}
+# 	2:5:Class:CWMPCdromCollection
+# 	2:10:HeaderFile:wmpcdromcollection.h
+# 	2:8:ImplFile:wmpcdromcollection.cpp
+# End Section
+# Section KmcMaker : {3614C646-3B3B-4DE7-A81E-930E3F2127B3}
+# 	2:5:Class:CWMPErrorItem
+# 	2:10:HeaderFile:wmperroritem.h
+# 	2:8:ImplFile:wmperroritem.cpp
+# End Section
+# Section KmcMaker : {94D55E95-3FAC-11D3-B155-00C04F79FAA6}
+# 	2:5:Class:CWMPMedia
+# 	2:10:HeaderFile:wmpmedia.h
+# 	2:8:ImplFile:wmpmedia.cpp
 # End Section
