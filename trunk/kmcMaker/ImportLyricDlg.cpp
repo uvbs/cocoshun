@@ -88,7 +88,7 @@ BOOL CImportLyricDlg::OnInitDialog()
 	SetCheck(IDC_CHECK_DEL_EMPTYLINE);
 	
 	m_LyricEditor.SetFocus();
-	LoadLyric(_T(".\\Test\\Ê®Äê.txt"));
+	LoadLyric(_T(".\\Test\\en.txt"));
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

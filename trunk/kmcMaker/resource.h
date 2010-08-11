@@ -20,6 +20,11 @@
 #define IDB_MP_CHANNEL_ACTIVE           150
 #define IDB_MP_THUMB_ACTIVE             151
 #define IDB_MP_THUMB                    152
+#define IDD_HELP                        153
+#define IDI_PAUSE_GRAY                  155
+#define IDI_PAUSE                       156
+#define IDI_PLAY_GRAY                   157
+#define IDI_PLAY                        158
 #define IDC_ACTIVEMOVIECONTROL1         1000
 #define IDC_MEDIA_PLAYER                1000
 #define IDC_CHECK_STEP1                 1003
@@ -27,6 +32,7 @@
 #define IDC_CHECK_STEP3                 1005
 #define IDC_RADIO1                      1006
 #define IDC_RADIO_KMC                   1006
+#define IDC_CHECK_HELP                  1006
 #define IDC_DLG_AREA                    1007
 #define IDC_LYRIC_EDITOR                1008
 #define IDC_STATIC_TOPLINE              1010
@@ -78,14 +84,15 @@
 #define IDC_BTN_STOP                    1074
 #define IDC_STATIC_MEDIA_TIMEINFO       1075
 #define IDC_BTN_STARTMARK               1076
+#define IDC_IE                          1077
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        153
+#define _APS_NEXT_RESOURCE_VALUE        159
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1077
+#define _APS_NEXT_CONTROL_VALUE         1078
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

@@ -32,6 +32,7 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CMakeLyricDlg)
+	DDX_Control(pDX, IDC_BTN_PLAY_PAUSE, m_BtnPlayPause);
 	DDX_Control(pDX, IDC_LYRIC_MAKER, m_LyricMaker);
 	DDX_Control(pDX, IDC_MEDIAPLAYER, m_MediaPlayer);
 	//}}AFX_DATA_MAP
@@ -61,12 +62,14 @@ BOOL CMakeLyricDlg::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
 
+	//m_BtnPlayPause.SetColor(0,RGB(255,0,0));
+	m_BtnPlayPause.SetIcon(IDI_PLAY, IDI_PLAY_GRAY);
+
 	// ÉèÖÃ»¬¸ËÍâ¹Û
 	m_SliderMP.SetBitmapChannel( IDB_MP_CHANNEL, IDB_MP_CHANNEL_ACTIVE );
 	m_SliderMP.SetBitmapThumb( IDB_MP_THUMB, IDB_MP_THUMB_ACTIVE, TRUE );
 	m_SliderMP.SetMargin( 2, 3, 2, 0 );
 	m_SliderMP.DrawFocusRect( FALSE );
-//	InitPlaySlider();
 	
 	SetControlInfo(IDC_SLIDER_MP,ANCHORE_RIGHT);
 	
@@ -79,7 +82,6 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_OPEN,ANCHORE_RIGHT);
 	SetControlInfo(IDC_BTN_PLAY_PAUSE,ANCHORE_RIGHT);
 	SetControlInfo(IDC_BTN_STOP,ANCHORE_RIGHT);
-
 
 	SetControlInfo(IDC_STATIC_KEY_TIP,ANCHORE_RIGHT);
 	SetControlInfo(IDC_BTN_NEXTSTEP,ANCHORE_RIGHT| ANCHORE_BOTTOM);
@@ -136,7 +138,7 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 			n++;
 			LyricWord LyWord;
 
-			// check chinese
+			
 			TCHAR ch = Line.GetAt(Pos);
 
 			if( n == 0)
@@ -154,6 +156,7 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 				}
 			}
 
+			// check chinese
 			if(ch & 0x80)
 			{
 				LyWord.IsChs = TRUE;
@@ -276,14 +279,16 @@ void CMakeLyricDlg::OnBtnPlayPause()
 	if(m_MediaPlayer.IsPlay())
 	{
 		m_MediaPlayer.GetControls().pause();
-		GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T(">"));
+		m_BtnPlayPause.SetIcon(IDI_PLAY, IDI_PLAY_GRAY);
+		//GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T(">"));
 		return;
 	}
 	
 	if(m_MediaPlayer.IsStop() || m_MediaPlayer.IsPause())
 	{
-		m_MediaPlayer.GetControls().play();
-		GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T("|"));
+		m_MediaPlayer.GetControls().play();\
+		m_BtnPlayPause.SetIcon(IDI_PAUSE, IDI_PAUSE_GRAY);
+		//GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T("|"));
 		return;
 	}
 }

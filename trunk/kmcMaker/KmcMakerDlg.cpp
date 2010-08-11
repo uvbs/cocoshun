@@ -71,6 +71,8 @@ CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 	m_ImportLyricDlg = NULL;
 	m_MakeLyricDlg = NULL;
 	m_SaveLyricDlg = NULL;
+	m_HelpDlg = NULL;
+
 	m_bUseDir=FALSE;
 }
 
@@ -90,6 +92,11 @@ CKmcMakerDlg::~CKmcMakerDlg()
 	{
 		delete []m_SaveLyricDlg;
 	}
+
+	if(m_HelpDlg!=NULL)
+	{
+		delete []m_HelpDlg;
+	}
 }
 
 void CKmcMakerDlg::DoDataExchange(CDataExchange* pDX)
@@ -104,11 +111,11 @@ BEGIN_MESSAGE_MAP(CKmcMakerDlg, CResizingDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_SIZE()
+	ON_BN_CLICKED(IDC_CHECK_HELP, OnCheckHelp)
 	ON_BN_CLICKED(IDC_CHECK_STEP1, OnCheckStep1)
 	ON_BN_CLICKED(IDC_CHECK_STEP2, OnCheckStep2)
 	ON_BN_CLICKED(IDC_CHECK_STEP3, OnCheckStep3)
-	ON_WM_SIZE()
-
 	ON_WM_DROPFILES()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -153,12 +160,15 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	m_MakeLyricDlg->Create(IDD_MAKELYRICDLG_DIALOG,this);
 	m_SaveLyricDlg = new CSaveLyricDlg();
 	m_SaveLyricDlg->Create(IDD_SAVELYRICDLG_DIALOG,this);
+	m_HelpDlg = new CHelpDlg();
+	m_HelpDlg->Create(IDD_HELP,this);
 
 	static ChkBtnIDAndDlg ChkBtnIDAndDlgs[] =
 	{
 		{IDC_CHECK_STEP1, m_ImportLyricDlg},
 		{IDC_CHECK_STEP2, m_MakeLyricDlg},
-		{IDC_CHECK_STEP3, m_SaveLyricDlg}
+		{IDC_CHECK_STEP3, m_SaveLyricDlg},
+		{IDC_CHECK_HELP, m_HelpDlg}
 	};
 
 	static CheckGroupInfo ChkGrpInfo = 
@@ -169,7 +179,7 @@ BOOL CKmcMakerDlg::OnInitDialog()
 		ChkBtnIDAndDlgs
 	};
 
-	m_CheckGroup.Init(ChkGrpInfo);
+	m_CheckGroup.Init(ChkGrpInfo, 4);
 	
 	SetControlInfo(IDOK,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDCANCEL,ANCHORE_LEFT| ANCHORE_BOTTOM);
@@ -246,6 +256,10 @@ void CKmcMakerDlg::OnCheckStep1()
 		case 2:
 			bLeave = m_SaveLyricDlg->CheckLeave();
 			break;
+		case 3:
+			m_CheckGroup.SetCheck(0);
+			return;
+			break;
 	}
 
 	if(bLeave)
@@ -274,6 +288,11 @@ void CKmcMakerDlg::OnCheckStep2()
 		case 2:
 			bLeave = m_SaveLyricDlg->CheckLeave();
 			break;
+		case 3:
+			m_CheckGroup.SetCheck(1);
+			return;
+			break;
+			
 	}
 
 	if(bLeave)
@@ -302,12 +321,22 @@ void CKmcMakerDlg::OnCheckStep3()
 				bLeave = TRUE;
 			}
 			break;
+		case 3:
+			m_CheckGroup.SetCheck(2);
+			return;
+			break;
 	}
 
 	if(bLeave)
 		m_CheckGroup.SetCheck(2);
 	else
 		m_CheckGroup.SetCheck(nSelectPage);
+}
+
+
+void CKmcMakerDlg::OnCheckHelp() 
+{
+	m_CheckGroup.SetCheck(3);
 }
 
 // LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
@@ -343,6 +372,4 @@ LRESULT CKmcMakerDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
 	
 	return 1L;
 }
-
-
 

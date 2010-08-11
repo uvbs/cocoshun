@@ -15,6 +15,7 @@
 #include "UILib/LyricMakerCtrl.h"
 #include "Lyric.h"
 #include "UILib/BitmapSlider.h"
+#include "UILib/BtnST.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMakeLyricDlg dialog
 
@@ -32,6 +33,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CMakeLyricDlg)
 	enum { IDD = IDD_MAKELYRICDLG_DIALOG };
+	CButtonST	m_BtnPlayPause;
 	CLyricMakerCtrl	m_LyricMaker;
 	CWMPPlayer4	m_MediaPlayer;
 	CBitmapSlider m_SliderMP;

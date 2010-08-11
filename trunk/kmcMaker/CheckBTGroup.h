@@ -37,7 +37,7 @@ public:
 	int GetCheck();
 	CCheckBTGroup();
 	virtual ~CCheckBTGroup();
-	void Init(CheckGroupInfo ChkGrpInfo);
+	void Init(CheckGroupInfo ChkGrpInfo, int nPages);
 
 private:
 	BOOL m_IsCreated;

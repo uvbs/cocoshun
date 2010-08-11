@@ -146,6 +146,10 @@ SOURCE=.\UILib\FileDialogEx.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\HelpDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImportLyricDlg.cpp
 # End Source File
 # Begin Source File
@@ -207,6 +211,10 @@ SOURCE=.\Util\textfile.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\webbrowser2.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\wmpcontrols.cpp
 # End Source File
 # Begin Source File
@@ -252,6 +260,10 @@ SOURCE=.\CheckBTGroup.h
 # Begin Source File
 
 SOURCE=.\UILib\FileDialogEx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\HelpDlg.h
 # End Source File
 # Begin Source File
 
@@ -319,6 +331,10 @@ SOURCE=.\Util\textfile.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\webbrowser2.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\wmpcontrols.h
 # End Source File
 # Begin Source File
@@ -344,6 +360,22 @@ SOURCE=.\wmpplayer4.h
 # Begin Source File
 
 SOURCE=.\res\Background.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_pause.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_pause_blue.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_play.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\control_play_blue.ico
 # End Source File
 # Begin Source File
 
@@ -457,6 +489,11 @@ SOURCE=.\ReadMe.txt
 # 	2:10:HeaderFile:activemovie3.h
 # 	2:8:ImplFile:activemovie3.cpp
 # End Section
+# Section KmcMaker : {D30C1661-CDAF-11D0-8A3E-00C04FC9E26E}
+# 	2:5:Class:CWebBrowser2
+# 	2:10:HeaderFile:webbrowser2.h
+# 	2:8:ImplFile:webbrowser2.cpp
+# End Section
 # Section KmcMaker : {6C497D62-8919-413C-82DB-E935FB3EC584}
 # 	2:5:Class:CWMPPlayer4
 # 	2:10:HeaderFile:wmpplayer4.h
@@ -466,14 +503,18 @@ SOURCE=.\ReadMe.txt
 # 	2:21:DefaultSinkHeaderFile:activemovie3.h
 # 	2:16:DefaultSinkClass:CActiveMovie3
 # End Section
-# Section KmcMaker : {40897764-CEAB-47BE-AD4A-8E28537F9BBF}
-# 	2:5:Class:CWMPPlayerApplication
-# 	2:10:HeaderFile:wmpplayerapplication.h
-# 	2:8:ImplFile:wmpplayerapplication.cpp
+# Section KmcMaker : {8856F961-340A-11D0-A96B-00C04FD705A2}
+# 	2:21:DefaultSinkHeaderFile:webbrowser2.h
+# 	2:16:DefaultSinkClass:CWebBrowser2
 # End Section
 # Section KmcMaker : {6BF52A52-394A-11D3-B153-00C04F79FAA6}
 # 	2:21:DefaultSinkHeaderFile:wmpplayer4.h
 # 	2:16:DefaultSinkClass:CWMPPlayer4
+# End Section
+# Section KmcMaker : {40897764-CEAB-47BE-AD4A-8E28537F9BBF}
+# 	2:5:Class:CWMPPlayerApplication
+# 	2:10:HeaderFile:wmpplayerapplication.h
+# 	2:8:ImplFile:wmpplayerapplication.cpp
 # End Section
 # Section KmcMaker : {9104D1AB-80C9-4FED-ABF0-2E6417A6DF14}
 # 	2:5:Class:CWMPSettings
