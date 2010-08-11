@@ -25,6 +25,17 @@
 #define IDI_PAUSE                       156
 #define IDI_PLAY_GRAY                   157
 #define IDI_PLAY                        158
+#define IDI_OPEN                        161
+#define IDI_OPEN_GRAY                   162
+#define IDI_STOP                        164
+#define IDI_STOP_GRAY                   165
+#define IDI_FOLDER                      166
+#define IDI_HELP                        167
+#define IDI_NEXT                        168
+#define IDI_PREV                        169
+#define IDI_STAR                        170
+#define IDI_SAVE                        171
+#define IDI_ACCEPT                      172
 #define IDC_ACTIVEMOVIECONTROL1         1000
 #define IDC_MEDIA_PLAYER                1000
 #define IDC_CHECK_STEP1                 1003
@@ -90,7 +101,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        159
+#define _APS_NEXT_RESOURCE_VALUE        174
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1078
 #define _APS_NEXT_SYMED_VALUE           107

@@ -34,6 +34,8 @@ void CImportLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CImportLyricDlg)
+	DDX_Control(pDX, IDC_BTN_NEXTSTEP, m_BtnNextStep);
+	DDX_Control(pDX, IDC_BTN_FILTER, m_BtnFilter);
 	DDX_Control(pDX, IDC_BTN_IMPORT, m_BtnImport);
 	DDX_Control(pDX, IDC_LYRIC_EDITOR, m_LyricEditor);
 	DDX_Text(pDX, IDC_EDIT_REPLACE_TXT, m_EditReplaceTxt);
@@ -61,6 +63,11 @@ void CImportLyricDlg::OnCancel()
 BOOL CImportLyricDlg::OnInitDialog() 
 {
 	CResizingDialog::OnInitDialog();
+
+	short	shBtnColor = 30;
+	m_BtnImport.SetIcon(IDI_FOLDER);
+	m_BtnFilter.SetIcon(IDI_ACCEPT);
+	m_BtnNextStep.SetIcon(IDI_NEXT);
 	
 	//set Controls
 	SetControlInfo(IDC_LYRIC_EDITOR,RESIZE_BOTH);

@@ -668,7 +668,7 @@ void CLyricMakerCtrl::CTextBoard::RefreshBackground()
 			}
 		}
 //		RefreshMidLine();
-		int LinePosY = 2 + FontHeight* (MidLineNum+GetLineOffset()) - 2; 
+		int LinePosY = 4 + FontHeight* (MidLineNum+GetLineOffset()) - 2; 
 		CPen pen3DDKShadow(PS_SOLID, 2, COLOR_GREEN);
 		SelectObject(m_hBackGround,pen3DDKShadow);
 		MoveToEx(m_hBackGround, 0 , LinePosY,NULL);
@@ -736,8 +736,14 @@ void CLyricMakerCtrl::CTextBoard::DrawWord(HDC hDC, int y, int x, BOOL bOffset)
 	int LineOffset = bOffset ? GetLineOffset() : 0;
 	int nLine = y-LineOffset;
 
+	int PrevWidth = 0;
+	for(int i=0;i<x;i++)
+	{
+		 PrevWidth += GetTextWidth(GetLyricWord(y, i)->Word);
+	}
+
 	RECT rect;
-	rect.left   = 10 +  x*WordWidth;
+	rect.left   = 10 +  PrevWidth;
 	rect.top  =  5 + nLine * FontHeight;
 	rect.right  = BoardWith;
 	rect.bottom = rect.top + FontHeight;
@@ -805,8 +811,13 @@ void CLyricMakerCtrl::CTextBoard::DrawIncrementWord()
 			
 			int nLine = LyricPosY-GetLineOffset();
 			
+			int PrevWidth = 0;
+			for(int i=0;i<LyricPosX;i++)
+			{
+				PrevWidth += GetTextWidth(GetLyricWord(LyricPosY, i)->Word);
+			}
 			RECT rect;
-			rect.left   = 10 +  (LyricPosX-1)*WordWidth;
+			rect.left   = 10 +  PrevWidth- WordWidth; //(LyricPosX-1)*WordWidth;
 			rect.top  = 5 + nLine * FontHeight;
 			rect.right  = rect.left + nDrawIncrementWordWidth;
 			rect.bottom = rect.top + FontHeight;

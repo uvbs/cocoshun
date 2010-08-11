@@ -44,6 +44,7 @@ void CCheckBTGroup::Init(CheckGroupInfo ChkGrpInfo, int nPages)
 		// init check buttons
 		m_CheckBtns[i].SubclassWindow(ChkGrpInfo.Parent->GetDlgItem(ChkGrpInfo.ChkBtnIDAndDlgs[i].CheckBtnID)->m_hWnd);
 		m_CheckBtns[i].SetShade(CShadeButtonST::SHS_SOFTBUMP,8,20,5,RGB(55,55,255));
+		m_CheckBtns[i].SetIcon(AfxGetApp()->LoadIcon(ChkGrpInfo.ChkBtnIDAndDlgs[i].IconID));
 	}
 
 	ReSizePages();

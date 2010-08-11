@@ -165,10 +165,10 @@ BOOL CKmcMakerDlg::OnInitDialog()
 
 	static ChkBtnIDAndDlg ChkBtnIDAndDlgs[] =
 	{
-		{IDC_CHECK_STEP1, m_ImportLyricDlg},
-		{IDC_CHECK_STEP2, m_MakeLyricDlg},
-		{IDC_CHECK_STEP3, m_SaveLyricDlg},
-		{IDC_CHECK_HELP, m_HelpDlg}
+		{IDC_CHECK_STEP1, m_ImportLyricDlg, IDI_FOLDER},
+		{IDC_CHECK_STEP2, m_MakeLyricDlg, IDI_STAR},
+		{IDC_CHECK_STEP3, m_SaveLyricDlg,IDI_SAVE},
+		{IDC_CHECK_HELP, m_HelpDlg,IDI_HELP}
 	};
 
 	static CheckGroupInfo ChkGrpInfo = 
@@ -317,6 +317,10 @@ void CKmcMakerDlg::OnCheckStep3()
 		case 1:
 			if(m_MakeLyricDlg->CheckLeaveToNext())
 			{
+				//取得Duration
+				m_ImportLyricDlg->m_LyricText.GetLyricHeader()->duration = m_MakeLyricDlg->GetMediaDuration();
+
+				//设置歌词信息
 				m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
 				bLeave = TRUE;
 			}
@@ -337,6 +341,7 @@ void CKmcMakerDlg::OnCheckStep3()
 void CKmcMakerDlg::OnCheckHelp() 
 {
 	m_CheckGroup.SetCheck(3);
+	m_HelpDlg->OpenHelp();
 }
 
 // LRESULT CKmcMakerDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 

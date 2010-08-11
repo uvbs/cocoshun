@@ -23,6 +23,7 @@ class CMakeLyricDlg : public CResizingDialog
 {
 // Construction
 public:
+	CString GetMediaDuration();
 	BOOL CheckLeaveToPrev();
 	BOOL CheckLeaveToNext();
 	void FocusToLyricMaker();
@@ -33,6 +34,10 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CMakeLyricDlg)
 	enum { IDD = IDD_MAKELYRICDLG_DIALOG };
+	CButtonST	m_BtnNextStep;
+	CButtonST	m_BtnPrevStep;
+	CButtonST	m_BtnStop;
+	CButtonST	m_BtnOpen;
 	CButtonST	m_BtnPlayPause;
 	CLyricMakerCtrl	m_LyricMaker;
 	CWMPPlayer4	m_MediaPlayer;

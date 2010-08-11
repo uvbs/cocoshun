@@ -16,7 +16,8 @@
 typedef struct ChkBtnIDAndDlg_Tag
 {
 	UINT CheckBtnID;
-	CDialog *Dlg;	
+	CDialog *Dlg;
+	UINT IconID;
 }ChkBtnIDAndDlg;
 
 typedef struct CheckGroupInfo_Tag

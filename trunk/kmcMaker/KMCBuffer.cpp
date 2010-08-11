@@ -42,7 +42,7 @@ void CKmcBuffer::GetKmcLyric(CString &KmcLyric)
 	CString lEnd = _T("</l>\n");
 
 	if(m_LyricHeader != NULL)
-		kmcStart.Format(_T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\">\n"),m_LyricHeader->ti,m_LyricHeader->ar,m_LyricHeader->al,m_LyricHeader->by);
+		kmcStart.Format(_T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\" offset=\"0\" duration=\"%s\">\n"),m_LyricHeader->ti,m_LyricHeader->ar,m_LyricHeader->al,m_LyricHeader->by,m_LyricHeader->duration);
 	KmcLyric += xmlHeader;
 	KmcLyric += kmcStart;
 	for(int i=0; i<m_LyricLines->size();i++)

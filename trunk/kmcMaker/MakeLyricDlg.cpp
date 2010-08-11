@@ -32,6 +32,10 @@ void CMakeLyricDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CMakeLyricDlg)
+	DDX_Control(pDX, IDC_BTN_NEXTSTEP, m_BtnNextStep);
+	DDX_Control(pDX, IDC_BTN_PREVSTEP, m_BtnPrevStep);
+	DDX_Control(pDX, IDC_BTN_STOP, m_BtnStop);
+	DDX_Control(pDX, IDC_BTN_OPEN, m_BtnOpen);
 	DDX_Control(pDX, IDC_BTN_PLAY_PAUSE, m_BtnPlayPause);
 	DDX_Control(pDX, IDC_LYRIC_MAKER, m_LyricMaker);
 	DDX_Control(pDX, IDC_MEDIAPLAYER, m_MediaPlayer);
@@ -62,8 +66,12 @@ BOOL CMakeLyricDlg::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
 
-	//m_BtnPlayPause.SetColor(0,RGB(255,0,0));
-	m_BtnPlayPause.SetIcon(IDI_PLAY, IDI_PLAY_GRAY);
+	//m_BtnNextStep
+	m_BtnOpen.SetIcon(IDI_OPEN);
+	m_BtnPlayPause.SetIcon(IDI_PLAY);
+	m_BtnStop.SetIcon(IDI_STOP);
+	m_BtnPrevStep.SetIcon(IDI_PREV);
+	m_BtnNextStep.SetIcon(IDI_NEXT);
 
 	// …Ë÷√ª¨∏ÀÕ‚π€
 	m_SliderMP.SetBitmapChannel( IDB_MP_CHANNEL, IDB_MP_CHANNEL_ACTIVE );
@@ -429,3 +437,8 @@ void CMakeLyricDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CResizingDialog::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
+
+CString CMakeLyricDlg::GetMediaDuration()
+{
+	return m_MediaPlayer.GetCurrentMedia().GetDurationString();
+}
