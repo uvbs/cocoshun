@@ -16,6 +16,7 @@
 #include "ImportLyricDlg.h"
 #include "MakeLyricDlg.h"
 #include "SaveLyricDlg.h"
+#include "HelpDlg.h"
 
 class CKmcMakerDlg : public CResizingDialog
 {
@@ -49,9 +50,8 @@ protected:
  	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
  	afx_msg void OnPaint();
  	afx_msg HCURSOR OnQueryDragIcon();
-
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-
+	afx_msg void OnCheckHelp();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 	LRESULT OnAcceptDropFile(WPARAM wParam , LPARAM lParam );
@@ -62,6 +62,7 @@ private:
 	CImportLyricDlg *m_ImportLyricDlg;
 	CMakeLyricDlg *m_MakeLyricDlg;
 	CSaveLyricDlg *m_SaveLyricDlg;
+	CHelpDlg      *m_HelpDlg;
 };
 
 //{{AFX_INSERT_LOCATION}}

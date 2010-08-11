@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "KmcMaker"=".\KmcMaker.dsp" - Package Owner=<4>
+Project: "KmcMaker"=.\KmcMaker.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -25,6 +25,7 @@ Package=<3>
 {{{
     {6BF52A52-394A-11D3-B153-00C04F79FAA6}
     {05589FA1-C356-11CE-BF01-00AA0055595A}
+    {8856F961-340A-11D0-A96B-00C04FD705A2}
 }}}
 
 ###############################################################################

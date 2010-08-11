@@ -31,12 +31,12 @@ CCheckBTGroup::~CCheckBTGroup()
 	}
 }
 
-void CCheckBTGroup::Init(CheckGroupInfo ChkGrpInfo)
+void CCheckBTGroup::Init(CheckGroupInfo ChkGrpInfo, int nPages)
 {
 	m_ChkGrpInfo = ChkGrpInfo;
 
 	// init check buttons
-	m_PageNum = sizeof(ChkGrpInfo.ChkBtnIDAndDlgs->CheckBtnID) -1;
+	m_PageNum = nPages ;
 
 	m_CheckBtns = new CShadeButtonST[m_PageNum];
 	for(int i=0; i<m_PageNum; i++)

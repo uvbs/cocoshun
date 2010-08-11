@@ -2,27 +2,29 @@
 
 [General Info]
 Version=1
-LastClass=CKmcMakerDlg
-LastTemplate=CStatic
+LastClass=CMakeLyricDlg
+LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
 
-ClassCount=7
+ClassCount=8
 Class1=CKmcMakerApp
 Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
-ResourceCount=6
-Resource1=IDD_MAKELYRICDLG_DIALOG
+ResourceCount=7
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
+Resource3=IDD_MAKELYRICDLG_DIALOG
 Class4=CImportLyricDlg
-Resource4=IDD_KMCMAKER_DIALOG
+Resource4=IDD_IMPORTLYRICDLG_DIALOG
 Class5=CMakeLyricDlg
-Resource5=IDD_IMPORTLYRICDLG_DIALOG
+Resource5=IDD_KMCMAKER_DIALOG
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
 Resource6=IDD_SAVELYRICDLG_DIALOG
+Class8=CHelpDlg
+Resource7=IDD_HELP
 
 [CLS:CKmcMakerApp]
 Type=0
@@ -57,7 +59,7 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_KMCMAKER_DIALOG]
 Type=1
 Class=CKmcMakerDlg
-ControlCount=7
+ControlCount=8
 Control1=IDOK,button,1073807361
 Control2=IDCANCEL,button,1073807360
 Control3=IDC_CHECK_STEP1,button,1342246915
@@ -65,6 +67,7 @@ Control4=IDC_CHECK_STEP2,button,1342246915
 Control5=IDC_CHECK_STEP3,button,1342246915
 Control6=IDC_STATIC_TOPLINE,static,1342181383
 Control7=IDC_DLG_AREA,button,1342177287
+Control8=IDC_CHECK_HELP,button,1342246915
 
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
@@ -121,7 +124,7 @@ ImplementationFile=MakeLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=CMakeLyricDlg
+LastObject=IDC_BTN_PLAY_PAUSE
 
 [DLG:IDD_SAVELYRICDLG_DIALOG]
 Type=1
@@ -161,4 +164,19 @@ BaseClass=CStatic
 Filter=W
 VirtualFilter=WC
 LastObject=CPreviewCtrl
+
+[DLG:IDD_HELP]
+Type=1
+Class=CHelpDlg
+ControlCount=1
+Control1=IDC_IE,{8856F961-340A-11D0-A96B-00C04FD705A2},1342242816
+
+[CLS:CHelpDlg]
+Type=0
+HeaderFile=helpdlg.h
+ImplementationFile=helpdlg.cpp
+BaseClass=CResizingDialog
+LastObject=CHelpDlg
+Filter=D
+VirtualFilter=dWC
 
