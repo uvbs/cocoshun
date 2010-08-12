@@ -36,6 +36,7 @@
 #define IDI_STAR                        170
 #define IDI_SAVE                        171
 #define IDI_ACCEPT                      172
+#define IDI_EXIT                        174
 #define IDC_ACTIVEMOVIECONTROL1         1000
 #define IDC_MEDIA_PLAYER                1000
 #define IDC_CHECK_STEP1                 1003
@@ -80,6 +81,7 @@
 #define IDC_BTN_PREVSTEP                1060
 #define IDC_RADIO_XML                   1060
 #define IDC_CHECK_DEL_EMPTYLINE         1060
+#define IDC_BTN_PREVSTEP2               1061
 #define IDC_BTN_EXIT                    1062
 #define IDC_BTN_SAVE_PREVSTEP           1063
 #define IDC_STATIC_SAVETIP              1064
@@ -101,7 +103,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        174
+#define _APS_NEXT_RESOURCE_VALUE        175
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1078
 #define _APS_NEXT_SYMED_VALUE           107

@@ -13,18 +13,18 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_HELP
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
 Resource3=IDD_MAKELYRICDLG_DIALOG
 Class4=CImportLyricDlg
-Resource4=IDD_ABOUTBOX
+Resource4=IDD_IMPORTLYRICDLG_DIALOG
 Class5=CMakeLyricDlg
-Resource5=IDD_IMPORTLYRICDLG_DIALOG
+Resource5=IDD_KMCMAKER_DIALOG
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
-Resource6=IDD_KMCMAKER_DIALOG
+Resource6=IDD_SAVELYRICDLG_DIALOG
 Class8=CHelpDlg
-Resource7=IDD_SAVELYRICDLG_DIALOG
+Resource7=IDD_HELP
 
 [CLS:CKmcMakerApp]
 Type=0
@@ -59,7 +59,7 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_KMCMAKER_DIALOG]
 Type=1
 Class=CKmcMakerDlg
-ControlCount=8
+ControlCount=9
 Control1=IDOK,button,1073807361
 Control2=IDCANCEL,button,1073807360
 Control3=IDC_CHECK_STEP1,button,1342246915
@@ -68,6 +68,7 @@ Control5=IDC_CHECK_STEP3,button,1342246915
 Control6=IDC_STATIC_TOPLINE,static,1342181383
 Control7=IDC_DLG_AREA,button,1342177287
 Control8=IDC_CHECK_HELP,button,1342246915
+Control9=IDC_STATIC,static,1342177283
 
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1

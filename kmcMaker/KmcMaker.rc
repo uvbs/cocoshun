@@ -82,6 +82,7 @@ IDI_PREV                ICON    DISCARDABLE     "res\\resultset_previous.ico"
 IDI_STAR                ICON    DISCARDABLE     "res\\star.ico"
 IDI_SAVE                ICON    DISCARDABLE     "res\\disk.ico"
 IDI_ACCEPT              ICON    DISCARDABLE     "res\\accept.ico"
+IDI_EXIT                ICON    DISCARDABLE     "res\\exit.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -103,7 +104,7 @@ IDD_KMCMAKER_DIALOG DIALOGEX 0, 0, 539, 334
 STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | 
     WS_THICKFRAME
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "KmcMaker"
+CAPTION "Karaoke Media Lyric Maker"
 FONT 9, "宋体"
 BEGIN
     DEFPUSHBUTTON   "确定",IDOK,7,313,50,14,NOT WS_VISIBLE
@@ -119,6 +120,7 @@ BEGIN
     GROUPBOX        "",IDC_DLG_AREA,7,51,525,276
     CONTROL         "帮助",IDC_CHECK_HELP,"Button",BS_AUTOCHECKBOX | 
                     BS_PUSHLIKE | WS_TABSTOP,229,7,74,27
+    ICON            IDR_MAINFRAME,IDC_STATIC,512,7,20,20
 END
 
 IDD_IMPORTLYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 470, 286
@@ -137,7 +139,7 @@ BEGIN
     EDITTEXT        IDC_EDIT_REPLACE_TXT,318,178,133,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_TARGET_TXT,318,197,133,14,ES_AUTOHSCROLL
     PUSHBUTTON      "过滤(&F)",IDC_BTN_FILTER,280,215,62,24
-    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,397,243,62,20
+    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,397,243,62,24
     CONTROL         "",IDC_LYRIC_EDITOR,"RICHEDIT",ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_NOHIDESEL | 
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
@@ -169,9 +171,9 @@ BEGIN
     LTEXT           "→:    标记当前字的开始,\n并标记上一字的结束\n↓:    标记当前字的结束\n←:    返回上一个字进行标记\n↑:    返回上一行进行标记\n空格:  开始/暂停播放",
                     IDC_STATIC_TIP,358,176,131,48,NOT WS_GROUP | WS_TABSTOP
     PUSHBUTTON      "预览(&P)",IDC_BTN_PRIVIEW,298,221,52,17,NOT WS_VISIBLE
-    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,451,239,62,20,NOT 
+    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,446,235,62,24,NOT 
                     WS_TABSTOP
-    PUSHBUTTON      "上一步(&P)",IDC_BTN_PREVSTEP,387,239,62,20,NOT 
+    PUSHBUTTON      "上一步(&P)",IDC_BTN_PREVSTEP,382,235,62,24,NOT 
                     WS_TABSTOP
     GROUPBOX        "按键说明：",IDC_STATIC_KEY_TIP,346,163,162,68,BS_CENTER
     CONTROL         149,IDC_SLIDER_MP,"Static",SS_BITMAP | SS_NOTIFY | 
@@ -182,31 +184,31 @@ BEGIN
     RTEXT           "00:00",IDC_STATIC_MEDIA_TIMEINFO,443,138,61,9
 END
 
-IDD_SAVELYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 515, 230
+IDD_SAVELYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 528, 230
 STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
-    EDITTEXT        IDC_EDIT_TI,394,36,94,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_AR,394,55,94,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_AL,394,74,94,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_BY,394,94,94,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "保存歌词(&S)",IDC_BTN_SAVELYRIC,354,164,69,24
+    EDITTEXT        IDC_EDIT_TI,418,36,94,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_AR,418,55,94,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_AL,418,74,94,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_BY,418,94,94,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "保存歌词(&S)",IDC_BTN_SAVELYRIC,378,164,69,24
     CONTROL         "",IDC_KMC_PRIVEW,"RICHEDIT",ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_NOHIDESEL | 
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
-                    WS_TABSTOP,3,5,341,218
-    LTEXT           "歌  名：",IDC_STATIC_TI,354,39,33,8
-    LTEXT           "歌  手：",IDC_STATIC_AR,354,58,33,8
-    LTEXT           "专  辑：",IDC_STATIC_AL,354,78,33,8
-    LTEXT           "编  辑：",IDC_STATIC_BY,354,98,32,8
-    CONTROL         "KMC",IDC_RADIO_KMC,"Button",BS_AUTORADIOBUTTON,354,144,
+                    WS_TABSTOP,3,5,357,218
+    LTEXT           "歌  名:",IDC_STATIC_TI,378,39,29,8
+    LTEXT           "歌  手:",IDC_STATIC_AR,378,58,29,8
+    LTEXT           "专  辑:",IDC_STATIC_AL,378,78,29,8
+    LTEXT           "编  辑:",IDC_STATIC_BY,378,98,32,8
+    CONTROL         "KMC",IDC_RADIO_KMC,"Button",BS_AUTORADIOBUTTON,378,144,
                     28,10
-    CONTROL         "XML",IDC_RADIO_XML,"Button",BS_AUTORADIOBUTTON,395,144,
+    CONTROL         "XML",IDC_RADIO_XML,"Button",BS_AUTORADIOBUTTON,419,144,
                     28,10
-    GROUPBOX        "保存选项",IDC_STATIC_SAVETIP,349,7,152,186,BS_CENTER
-    PUSHBUTTON      "退出(&X)",IDC_BTN_EXIT,439,203,62,20
-    PUSHBUTTON      "上一步(&P)",IDC_BTN_SAVE_PREVSTEP,350,203,62,20
-    LTEXT           "文件后缀",IDC_STATIC_TIPEXT,354,124,33,8
+    GROUPBOX        "保存选项",IDC_STATIC_SAVETIP,367,7,152,186,BS_CENTER
+    PUSHBUTTON      "退出(&X)",IDC_BTN_EXIT,457,197,62,24
+    PUSHBUTTON      "上一步(&P)",IDC_BTN_SAVE_PREVSTEP,368,197,62,24
+    LTEXT           "文件后缀:",IDC_STATIC_TIPEXT,378,124,37,8
 END
 
 IDD_HELP DIALOG DISCARDABLE  0, 0, 380, 244
@@ -239,17 +241,20 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "080404B0"
+        BLOCK "080404b0"
         BEGIN
+            VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "KmcMaker Microsoft 基础类应用程序\0"
+            VALUE "FileDescription", "Karaoke Media Lyric\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "KmcMaker\0"
+            VALUE "InternalName", "Karaoke Media Lyric Maker\0"
             VALUE "LegalCopyright", "版权所有 (C) 2010\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "KmcMaker.EXE\0"
+            VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "KmcMaker 应用程序\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -304,7 +309,7 @@ BEGIN
     IDD_SAVELYRICDLG_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 508
+        RIGHTMARGIN, 521
         TOPMARGIN, 7
         BOTTOMMARGIN, 223
     END
@@ -332,7 +337,6 @@ END
 // Bitmap
 //
 
-IDB_BACKGROUND          BITMAP  DISCARDABLE     "res\\background.bmp"
 IDB_MP_CHANNEL          BITMAP  DISCARDABLE     "res\\mp_channel.bmp"
 IDB_MP_CHANNEL_ACTIVE   BITMAP  DISCARDABLE     "res\\mp_channel_active.bmp"
 IDB_MP_THUMB_ACTIVE     BITMAP  DISCARDABLE     "res\\mp_thumb_active.bmp"
