@@ -97,7 +97,7 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_RIGHT | ANCHORE_TOP);
 
-	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
+//	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
 	m_MediaPlayer.GetControls().play();
 
 	FocusToLyricMaker();

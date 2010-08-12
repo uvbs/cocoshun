@@ -190,7 +190,7 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	// 右下角画上调整大小的角
 	DrawGripper(TRUE);
 
-	OnCheckStep2();
+	OnCheckStep1();
 	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 

@@ -141,6 +141,7 @@ BOOL CSaveLyricDlg::OnInitDialog()
 
 	m_BtnSaveLyric.SetIcon(IDI_SAVE);
 	m_BtnPrevStep.SetIcon(IDI_PREV);
+	m_BtnExit.SetIcon(IDI_EXIT);
 
 	SetControlInfo(IDC_KMC_PRIVEW,RESIZE_BOTH);
 	
