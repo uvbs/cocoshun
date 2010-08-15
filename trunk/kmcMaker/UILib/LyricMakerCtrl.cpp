@@ -48,7 +48,8 @@ END_MESSAGE_MAP()
 void CLyricMakerCtrl::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
-	m_TextBoard->Draw();
+	if(m_TextBoard)
+		m_TextBoard->Draw();
 }
 
 

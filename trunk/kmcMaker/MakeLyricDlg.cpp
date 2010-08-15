@@ -92,12 +92,12 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_STOP,ANCHORE_RIGHT);
 
 	SetControlInfo(IDC_STATIC_KEY_TIP,ANCHORE_RIGHT);
-	SetControlInfo(IDC_BTN_NEXTSTEP,ANCHORE_RIGHT| ANCHORE_BOTTOM);
-	SetControlInfo(IDC_BTN_PREVSTEP,ANCHORE_RIGHT| ANCHORE_BOTTOM);
+	SetControlInfo(IDC_BTN_NEXTSTEP,ANCHORE_RIGHT | ANCHORE_BOTTOM);
+	SetControlInfo(IDC_BTN_PREVSTEP,ANCHORE_RIGHT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_RIGHT | ANCHORE_TOP);
 
-//	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
+	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
 	m_MediaPlayer.GetControls().play();
 
 	FocusToLyricMaker();
@@ -108,7 +108,10 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 void CMakeLyricDlg::OnBtnOpen() 
 {
-	TCHAR szFilter[] = _T("所有媒体文件 (*.mp3;*.wav;*.wmv;*.mpeg;*.mpg;*.asf)|*.mp3; *.wav; *.wmv; *.mpeg; *.mpg; *.asf|音频文件 (*.mp3;*.wav;*.wmv)|*.mp3; *.wav; *.wmv|视频频文件 (*.mpeg;*.mpg;*.asf)|*.mpeg; *.mpg; *.asf|All Files (*.*)|*.*||");
+	TCHAR szFilter[] = _T("所有媒体文件 (*.mp3;*.wav;*.wmv;*.mpeg;*.mpg;*.asf)\
+							|*.mp3; *.wav; *.wmv; *.mpeg; *.mpg; *.asf\
+							|音频文件 (*.mp3;*.wav;*.wmv)|*.mp3; *.wav; *.wmv|\
+							视频频文件 (*.mpeg;*.mpg;*.asf)|*.mpeg; *.mpg; *.asf|All Files (*.*)|*.*||");
 	CFileDialogEx FileDlg(TRUE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,szFilter);;
 	if( FileDlg.DoModal() == IDOK)
 	{
@@ -393,6 +396,8 @@ BOOL CMakeLyricDlg::IsMarkedAll()
 
 BOOL CMakeLyricDlg::IsMarkedFirst()
 {
+	if(m_LyricLines.empty())
+		return FALSE;
 	return  m_LyricLines.at(0).LyricWords.at(0).MarkedStart;
 }
 

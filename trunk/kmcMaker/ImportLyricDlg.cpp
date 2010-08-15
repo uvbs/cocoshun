@@ -104,7 +104,8 @@ BOOL CImportLyricDlg::OnInitDialog()
 
 void CImportLyricDlg::OnImportLyric() 
 {
- 	TCHAR szFilter[] = _T("Lyric (*.lrc)|*.lrc|Lyric (*.txt)|*.txt|All Files (*.*)|*.*||");
+ 	TCHAR szFilter[] = _T("Lyric (*.lrc)|*.lrc|\
+		Lyric (*.txt)|*.txt|All Files (*.*)|*.*||");
  	CFileDialogEx ImportFileDlg(TRUE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,szFilter);;
  	if( ImportFileDlg.DoModal() == IDOK)
 	{
@@ -114,15 +115,14 @@ void CImportLyricDlg::OnImportLyric()
 
 void CImportLyricDlg::OnOK() 
 {
-	// TODO: Add extra validation here
-	
-//	CResizingDialog::OnOK();
+	//不响应OnOK消息
 }
 
 LRESULT CImportLyricDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
 {
+	
 	TCHAR *DropFileName = (TCHAR *)wParam;
-
+	//接受文件手动消息
 	LoadLyric(DropFileName);
 	return 1L;
 }
@@ -147,10 +147,8 @@ BOOL CImportLyricDlg::LoadLyric(LPCTSTR pszFileName)
 	}
 
 	CString Text;
-//	m_LyricEditor.GetWindowText(Text);
 	m_LyricText.GetText(Text);
 	m_LyricEditor.SetWindowText(Text);
-// 	m_LyricEditor.GetWindowText(m_OrgText);
 
 	return TRUE;
 }

@@ -105,7 +105,7 @@ STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU |
     WS_THICKFRAME
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Karaoke Media Lyric Maker"
-FONT 9, "宋体"
+FONT 9, "宋体", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "确定",IDOK,7,313,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "取消",IDCANCEL,60,313,50,14,NOT WS_VISIBLE
@@ -160,7 +160,7 @@ END
 
 IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 520, 266
 STYLE DS_SETFOREGROUND | WS_CHILD
-FONT 9, "宋体"
+FONT 9, "宋体", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "",IDC_BTN_OPEN,348,128,24,24,NOT WS_TABSTOP
     CTEXT           "",IDC_LYRIC_MAKER,7,7,334,252,WS_TABSTOP,
@@ -245,15 +245,15 @@ BEGIN
         BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Karaoke Media Lyric\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Karaoke Media Lyric Maker\0"
+            VALUE "FileVersion", "1.0\0"
             VALUE "InternalName", "Karaoke Media Lyric Maker\0"
             VALUE "LegalCopyright", "版权所有 (C) 2010\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "KmcMaker.EXE\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "KmcMaker 应用程序\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "ProductName", "KmcMaker\0"
+            VALUE "ProductVersion", "1.0\0"
             VALUE "SpecialBuild", "\0"
         END
     END

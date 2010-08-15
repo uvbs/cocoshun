@@ -277,7 +277,7 @@ void CKmcMakerDlg::OnCheckStep2()
 	switch(nSelectPage)
 	{
 		case 0:
-			if(m_ImportLyricDlg->CheckLeave())
+			//if(m_ImportLyricDlg->CheckLeave())
 			{
 				CString Lyric;
 				m_ImportLyricDlg->GetLyric(Lyric);
