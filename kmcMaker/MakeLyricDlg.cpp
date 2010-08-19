@@ -121,15 +121,24 @@ void CMakeLyricDlg::OnBtnOpen()
 	FocusToLyricMaker();
 }
 
+int LocateModifiedLine( CString Lyric, vector<LyricLine> m_LyricLines ) 
+{
+
+	return 0;
+}
+
 void CMakeLyricDlg::InitLyric(CString Lyric)
 {
 	if(Lyric.IsEmpty()) 
 	{
+		m_LyricLines.clear();
 		m_LyricMaker.SetLyricLines( &m_LyricLines);
 		return;
 	}
 
-	m_LyricLines.clear();
+	int nModifiedLine = LocateModifiedLine(Lyric, m_LyricLines);
+
+//	m_LyricLines.clear();
 	CString Line;
 	TCHAR lBracket = _T('(');
 	TCHAR rBracket = _T(')');
@@ -161,7 +170,7 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 					if( rPos != -1)
 					{
 						LyWord.IsLyric = FALSE;
-						LyWord.Word = Line.Mid(0, rPos+1);
+						//LyWord.Word = Line.Mid(0, rPos+1);
 						Pos = LyWord.Word.GetLength();
 					}
 				}
@@ -447,3 +456,5 @@ CString CMakeLyricDlg::GetMediaDuration()
 {
 	return m_MediaPlayer.GetCurrentMedia().GetDurationString();
 }
+
+
