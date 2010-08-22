@@ -121,10 +121,92 @@ void CMakeLyricDlg::OnBtnOpen()
 	FocusToLyricMaker();
 }
 
-int LocateModifiedLine( CString Lyric, vector<LyricLine> m_LyricLines ) 
+/************************************************************************/
+/* 定位修改的歌词行,并删除多余的行                                      */
+/* retrun 返回已经修改的行号											*/
+/************************************************************************/
+int CMakeLyricDlg::FixedModifiedLyric( CString Lyric, vector<LyricLine> &m_LyricLines ) 
 {
+	CString Line;
+	vector<LyricLine> LyriceLinesCopy = m_LyricLines;
 
-	return 0;
+	//重新解析歌词
+	m_LyricLines.clear();
+	ParseTextToLyricLine(Lyric);
+
+	//定位修改位置
+	int nModifiedStart = 0;
+	for(int i=0;i<m_LyricLines.size() && i<LyriceLinesCopy.size() ;i++)
+	{
+		LyricLine &l1 = m_LyricLines.at(i);
+		LyricLine &l2 = LyriceLinesCopy.at(i);
+		if(l1.Line.Compare(l2.Line) == 0 )
+		{
+			BOOL bMarkedAllLine = TRUE;
+			for(int j=0;j<l2.LyricWords.size();j++)
+			{
+				LyricWord lw = l2.LyricWords.at(j);
+				if(!lw.IsMarkedAll())
+				{
+					bMarkedAllLine = FALSE;
+					break;
+				}
+			}
+
+			if(bMarkedAllLine)
+			{
+				nModifiedStart++;
+				l1 = l2;
+			}
+		}else
+		{
+			break;
+		}
+	}
+
+	LyriceLinesCopy.clear();
+	return nModifiedStart;
+// 	vector<LyricLine>::iterator it;
+// 	
+// 	// 得到修改后的歌词行数
+// 	int nLyricTextCount;
+// 	for(nLyricTextCount=0, nCount=0; AfxExtractSubString(Line, Lyric, nCount++, '\n'); )
+// 	{
+// 		if(!Line.IsEmpty())
+// 			nLyricTextCount++;
+// 	}
+// 
+// 	// 删除文本后,也删除歌词结构中多余的行
+// 	if(nLyricTextCount < m_LyricLines.size())
+// 	{
+// 		//从最后vector的最后一个元素开始删除
+// 		while(m_LyricLines.size() > nLyricTextCount)
+// 		{
+// 			it=m_LyricLines.end() - 1 ;
+// 			m_LyricLines.erase(it);
+// 		}
+// 	}
+// 
+// 	// 得到被修改后的开始位置
+// 	int nModifiedStart = 0;
+// 	it=m_LyricLines.begin();
+// 	for(nCount=0;AfxExtractSubString(Line, Lyric, nCount++, '\n') && it!=m_LyricLines.end();)
+// 	{
+// 		if(Line.IsEmpty())
+// 			continue;
+// 
+// 		while(Line.Compare(it->Line)!=0 && it!=m_LyricLines.end())
+// 		{
+// 			m_LyricLines.erase(it);
+// 			continue;
+// 		}
+// 		it++;
+// 		nModifiedStart++;
+// 	}
+// 
+// 
+// 	//解析添加后多出来的歌词文本
+// 	ParseTextToLyricLine( Lyric, nModifiedStart+1);
 }
 
 void CMakeLyricDlg::InitLyric(CString Lyric)
@@ -136,72 +218,19 @@ void CMakeLyricDlg::InitLyric(CString Lyric)
 		return;
 	}
 
-	int nModifiedLine = LocateModifiedLine(Lyric, m_LyricLines);
-
-//	m_LyricLines.clear();
-	CString Line;
-	TCHAR lBracket = _T('(');
-	TCHAR rBracket = _T(')');
-
-	int nCount=0;
-	while(AfxExtractSubString(Line, Lyric, nCount++, '\n'))
+	int nModifiedStart = 0;
+	if(m_LyricLines.empty())
 	{
-		LyricLine LL;
-		if(Line.IsEmpty()) continue;
-		LL.Line = Line;
-
-		int Pos = 0;
-		int n = -1;
-		int Len = Line.GetLength();
-		while(Pos < Len)
-		{
-			n++;
-			LyricWord LyWord;
-
-			
-			TCHAR ch = Line.GetAt(Pos);
-
-			if( n == 0)
-			{
-				// 设置括号中不为歌词的word
-				if(ch==lBracket)
-				{
-					int rPos = Line.Find(rBracket);
-					if( rPos != -1)
-					{
-						LyWord.IsLyric = FALSE;
-						//LyWord.Word = Line.Mid(0, rPos+1);
-						Pos = LyWord.Word.GetLength();
-					}
-				}
-			}
-
-			// check chinese
-			if(ch & 0x80)
-			{
-				LyWord.IsChs = TRUE;
-				LyWord.Word = Line.Mid(Pos,2);
-				Pos+=2;
-	
-				// add space
-				//int increment;
-				CString StrSpace;
-				GetSpace(Line, Pos, StrSpace);
-				LyWord.Word += StrSpace;
-			}else
-			{
-				LyWord.IsChs = FALSE;
-				GetEnWord(Line, Pos, LyWord.Word);
-
-				CString StrSpace;
-				GetSpace(Line, Pos, StrSpace);
-				LyWord.Word += StrSpace;
-			}
-			LL.LyricWords.push_back(LyWord);
-		}
-		m_LyricLines.push_back(LL);
+		//第一次解析
+		ParseTextToLyricLine(Lyric);
+	}else
+	{
+		// 如果歌词结构不为空,则为修改歌词之后返回制作页面
+		nModifiedStart = FixedModifiedLyric(Lyric, m_LyricLines);
+		
 	}
 	m_LyricMaker.SetLyricLines( &m_LyricLines);
+	m_LyricMaker.SetStartLine(nModifiedStart);
 	m_LyricMaker.SetMediaPlayer( &m_MediaPlayer);
 }
 
@@ -415,9 +444,10 @@ BOOL CMakeLyricDlg::CheckLeaveToPrev()
 	if(IsMarkedFirst())
 	{
 		m_MediaPlayer.GetControls().pause();
-		int ret = MessageBox(_T("返回到上一步将丢失你已经标记的歌词信息，您确定要返回到上一步吗？"),
-			_T("提示"),MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION);
-		
+// 		int ret = MessageBox(_T("返回到上一步将丢失你已经标记的歌词信息，您确定要返回到上一步吗？"),
+// 			_T("提示"),MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION);
+		int ret = MessageBox(_T("您还没有标记完歌词,确定要退出吗？"),
+			_T("提示"),MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION);		
 		if( ret == IDNO)
 		{
 			m_MediaPlayer.GetControls().play();
@@ -457,4 +487,74 @@ CString CMakeLyricDlg::GetMediaDuration()
 	return m_MediaPlayer.GetCurrentMedia().GetDurationString();
 }
 
+void CMakeLyricDlg::ParseTextToLyricLine( CString &Lyric , int nStartLine)
+{
+	CString Line;
+	TCHAR lBracket = _T('(');
+	TCHAR rBracket = _T(')');
+	
+	int nCount=0;
+	for(int nLine = 0;AfxExtractSubString(Line, Lyric, nCount++, '\n');nLine++)
+	{
+		if(nLine < nStartLine)
+			continue;
+		LyricLine LL;
+		if(Line.IsEmpty()) 
+			continue;
+		LL.Line = Line;
+		
+		int Pos = 0;
+		int n = -1;
+		int Len = Line.GetLength();
+		while(Pos < Len)
+		{
+			n++;
+			LyricWord LyWord;
+			
+			
+			TCHAR ch = Line.GetAt(Pos);
+			
+			if( n == 0)
+			{
+				// 设置括号中不为歌词的word
+				if(ch==lBracket)
+				{
+					int rPos = Line.Find(rBracket);
+					if( rPos != -1)
+					{
+						LyWord.IsLyric = FALSE;
+						LyWord.Word = Line.Mid(0, rPos+1);
+						Pos = LyWord.Word.GetLength();
+						
+						// 跳过带括号的开头
+						continue;
+					}
+				}
+			}
+			
+			// check Chinese
+			if(ch & 0x80)
+			{
+				LyWord.IsChs = TRUE;
+				LyWord.Word = Line.Mid(Pos,2);
+				Pos+=2;
+				
+				// add space
+				CString StrSpace;
+				GetSpace(Line, Pos, StrSpace);
+				LyWord.Word += StrSpace;
+			}else
+			{
+				LyWord.IsChs = FALSE;
+				GetEnWord(Line, Pos, LyWord.Word);
+				
+				CString StrSpace;
+				GetSpace(Line, Pos, StrSpace);
+				LyWord.Word += StrSpace;
+			}
+			LL.LyricWords.push_back(LyWord);
+		}
+		m_LyricLines.push_back(LL);
+	}
+}
 

@@ -49,6 +49,7 @@
 #define IDC_LYRIC_EDITOR                1008
 #define IDC_STATIC_TOPLINE              1010
 #define IDC_BTN_IMPORT                  1011
+#define IDC_STATIC_TOPLINE2             1011
 #define IDC_BTN_OPEN                    1023
 #define IDC_LYRIC_MAKER                 1024
 #define IDC_LYRIC_MAKER2                1025
@@ -98,6 +99,7 @@
 #define IDC_STATIC_MEDIA_TIMEINFO       1075
 #define IDC_BTN_STARTMARK               1076
 #define IDC_IE                          1077
+#define IDC_BUTTON1                     1078
 
 // Next default values for new objects
 // 
@@ -105,7 +107,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        175
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1078
+#define _APS_NEXT_CONTROL_VALUE         1079
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

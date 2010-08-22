@@ -246,53 +246,28 @@ HCURSOR CKmcMakerDlg::OnQueryDragIcon()
 void CKmcMakerDlg::OnCheckStep1() 
 {
 	int nSelectPage = m_CheckGroup.GetCheck();
-	BOOL bLeave = FALSE;
+	BOOL bLeave = TRUE;
 
-	switch(nSelectPage)
-	{
-		case 1:
-			bLeave = m_MakeLyricDlg->CheckLeaveToPrev();
-			break;
-		case 2:
-			bLeave = m_SaveLyricDlg->CheckLeave();
-			break;
-		case 3:
-			m_CheckGroup.SetCheck(0);
-			return;
-			break;
-	}
+
+	m_MakeLyricDlg->m_MediaPlayer.GetControls().pause();
 
 	if(bLeave)
 		m_CheckGroup.SetCheck(0);
 	else
 		m_CheckGroup.SetCheck(nSelectPage);
-// 	m_CheckGroup.SetCheck(0);
-// 	m_ImportLyricDlg->SetFocus();
 }
 
 void CKmcMakerDlg::OnCheckStep2() 
 {
 	int nSelectPage = m_CheckGroup.GetCheck();
-	BOOL bLeave = FALSE;
+	BOOL bLeave = TRUE;
 	switch(nSelectPage)
 	{
 		case 0:
-//			if(m_ImportLyricDlg->CheckLeave())
-			{
-				CString Lyric;
-				m_ImportLyricDlg->GetLyric(Lyric);
-				m_MakeLyricDlg->InitLyric(Lyric);
-				bLeave = TRUE;
-			}
-			break;
-		case 2:
-			bLeave = m_SaveLyricDlg->CheckLeave();
-			break;
-		case 3:
-			m_CheckGroup.SetCheck(1);
-			return;
-			break;
-			
+			CString Lyric;
+			m_ImportLyricDlg->GetLyric(Lyric);
+			m_MakeLyricDlg->InitLyric(Lyric);
+			break;		
 	}
 
 	if(bLeave)
@@ -308,29 +283,20 @@ void CKmcMakerDlg::OnCheckStep2()
 void CKmcMakerDlg::OnCheckStep3() 
 {
 	int nSelectPage = m_CheckGroup.GetCheck();
-	BOOL bLeave = FALSE;
+	BOOL bLeave = TRUE;
 	switch(nSelectPage)
 	{
-		case 0:
-			bLeave = FALSE;
-			break;
-		case 1:
-			if(m_MakeLyricDlg->CheckLeaveToNext())
-			{
-				//取得Duration
-				m_ImportLyricDlg->m_LyricText.GetLyricHeader()->duration = m_MakeLyricDlg->GetMediaDuration();
 
-				//设置歌词信息
-				m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
-				bLeave = TRUE;
-			}
-			break;
-		case 3:
-			m_CheckGroup.SetCheck(2);
-			return;
+		case 1:
+			//取得Duration
+			m_ImportLyricDlg->m_LyricText.GetLyricHeader()->duration = m_MakeLyricDlg->GetMediaDuration();
+
+			//设置歌词信息
+			m_SaveLyricDlg->SetLyricInfo(&m_MakeLyricDlg->m_LyricLines,m_ImportLyricDlg->m_LyricText.GetLyricHeader());
 			break;
 	}
 
+	m_MakeLyricDlg->m_MediaPlayer.GetControls().pause();
 	if(bLeave)
 		m_CheckGroup.SetCheck(2);
 	else
@@ -340,6 +306,7 @@ void CKmcMakerDlg::OnCheckStep3()
 
 void CKmcMakerDlg::OnCheckHelp() 
 {
+	m_MakeLyricDlg->m_MediaPlayer.GetControls().pause();
 	m_CheckGroup.SetCheck(3);
 	m_HelpDlg->OpenHelp();
 }
@@ -378,3 +345,22 @@ LRESULT CKmcMakerDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
 	return 1L;
 }
 
+
+
+void CKmcMakerDlg::OnCancel() 
+{
+	int nSelectPage = m_CheckGroup.GetCheck();
+	BOOL bLeave = TRUE;
+	switch(nSelectPage)
+	{
+		case 1:
+			if(!m_MakeLyricDlg->CheckLeaveToPrev())
+				return;
+			break;
+		case 2:
+			if(!m_SaveLyricDlg->CheckLeave())
+				return;
+			break;
+	}
+	CResizingDialog::OnCancel();
+}

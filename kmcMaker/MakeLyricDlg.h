@@ -28,6 +28,7 @@ public:
 	BOOL CheckLeaveToNext();
 	void FocusToLyricMaker();
 	void InitLyric(CString Lyric);
+
 	CMakeLyricDlg(CWnd* pParent = NULL);   // standard constructor
 	vector <LyricLine> m_LyricLines;
 	BOOL IsMarkedAll();
@@ -49,6 +50,7 @@ public:
 
 	// 初子控件作为外部方法调用
 	afx_msg void OnBtnPlayPause();
+	afx_msg void OnBtnStop();
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMakeLyricDlg)
@@ -59,6 +61,9 @@ public:
 	
 // Implementation
 protected:
+	void ParseTextToLyricLine( CString &Lyric, int nStartLine=0 );
+	int FixedModifiedLyric( CString Lyric, vector<LyricLine> &m_LyricLines ) ;
+
 	void InitPlaySlider();
 	LRESULT OnAcceptDropFile(WPARAM wParam = 0, LPARAM lParam = 0 );
 	// Generated message map functions
@@ -67,7 +72,6 @@ protected:
 	afx_msg void OnBtnOpen();
 	afx_msg void OnBtnPriview();
 	afx_msg void OnTimer(UINT nIDEvent);
-	afx_msg void OnBtnStop();
 	afx_msg void OnOpenStateChangeMediaplayer(long NewState);
 	afx_msg void OnPlayStateChangeMediaplayer(long NewState);
 	afx_msg void OnPositionChangeMediaplayer(double oldPosition, double newPosition);

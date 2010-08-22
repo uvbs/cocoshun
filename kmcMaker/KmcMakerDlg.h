@@ -29,6 +29,7 @@ public:
 	afx_msg void OnCheckStep1();
 	afx_msg void OnCheckStep2();
 	afx_msg void OnCheckStep3();
+	virtual void OnCancel();
 // Dialog Data
 	//{{AFX_DATA(CKmcMakerDlg)
 	enum { IDD = IDD_KMCMAKER_DIALOG };
@@ -36,7 +37,6 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CKmcMakerDlg)
-	public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	//}}AFX_VIRTUAL
