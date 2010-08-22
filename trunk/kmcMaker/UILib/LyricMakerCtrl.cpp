@@ -720,6 +720,7 @@ void CLyricMakerCtrl::CTextBoard::DrawBackground()
 void CLyricMakerCtrl::CTextBoard::DrawWord(HDC hDC, int y, int x, BOOL bOffset)
 {
 	LyricWord*  pWord = GetWord(y, x);
+	if(!pWord->IsLyric) return;
 
 	if(pWord == NULL)
 		return;
@@ -840,4 +841,14 @@ void CLyricMakerCtrl::CTextBoard::StopDrawIncrementWord()
 {
 	bDrawIncrementWord = FALSE;
 	((CLyricMakerCtrl *)pWnd)->KillTimer(1);
+}
+
+void CLyricMakerCtrl::SetStartLine(int nModifiedStart)
+{
+	m_TextBoard->SetStartLine(nModifiedStart);
+}
+
+void CLyricMakerCtrl::CTextBoard::SetStartLine(int nModifiedStart)
+{
+	LyricPosY = nModifiedStart;
 }

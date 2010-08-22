@@ -62,6 +62,7 @@ protected:
 			void DrawLine(int BoardPosY, int LyricPosY, BOOL bMarkDraw = FALSE);
 		
 		public:
+			void SetStartLine(int nModifiedStart);
 			void DrawIncrementWord();
 			CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wnd,CWMPPlayer4 *MediaPlayer);
 			~CTextBoard();
@@ -105,6 +106,7 @@ public:
 
 // Implementation
 public:
+	void SetStartLine(int nModifiedStart);
 	void StopPrivew();
 	void SetMediaPlayer(CWMPPlayer4 *MediaPlayer);
 	virtual ~CLyricMakerCtrl();

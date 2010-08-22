@@ -224,7 +224,9 @@ void CSaveLyricDlg::OnBtnSavePrevstep()
 
 void CSaveLyricDlg::OnBtnExit() 
 {
-	((CKmcMakerDlg *)GetParent())->SendMessage(WM_CLOSE);
+	((CKmcMakerDlg *)GetParent())->OnCancel();
+// 	if(CheckLeave())
+// 		((CKmcMakerDlg *)GetParent())->SendMessage(WM_CLOSE);
 }
 
 BOOL CSaveLyricDlg::IsSaved()
@@ -236,7 +238,7 @@ BOOL CSaveLyricDlg::CheckLeave()
 {
 	if(!IsSaved())
 	{
-		int ret = MessageBox(_T("您还没有保存歌词，确定要离开吗？"),
+		int ret = MessageBox(_T("您还没有保存歌词，确定要退出吗？"),
 			_T("提示"),MB_YESNO | MB_DEFBUTTON2 | MB_ICONQUESTION);
 		
 		if( ret == IDNO)
