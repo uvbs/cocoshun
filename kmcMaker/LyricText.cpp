@@ -79,12 +79,14 @@ void CLyricText::ProcessLine(CString &Line)
 		Line = _T("");
 		return;
 	}
-	ProcessKsc(Line);
 
 	if(m_FilterParam == NULL)
 	{
 		return;
 	}
+
+	if(m_FilterParam->bRemoveKsc)
+		ProcessKsc(Line);
 
 	// 过滤LRC时间标签
 	if(m_FilterParam->bRemoveLrc)
@@ -99,17 +101,17 @@ void CLyricText::ProcessLine(CString &Line)
 	}
 
 	// 裁掉Ksc时间标签
-	if(m_FilterParam->bRemoveKsc)
-	{
-		// 裁掉LRC时间标签
-		Pos = Line.ReverseFind(LRC_FLAG);
-		if(Pos !=-1)
-		{
-			int nCount = Line.GetLength() - Pos;
-			if(nCount>0)
-				Line = Line.Mid(Pos + 1, nCount);
-		}
-	}
+// 	if(m_FilterParam->bRemoveKsc)
+// 	{
+// 		// 裁掉LRC时间标签
+// 		Pos = Line.ReverseFind(LRC_FLAG);
+// 		if(Pos !=-1)
+// 		{
+// 			int nCount = Line.GetLength() - Pos;
+// 			if(nCount>0)
+// 				Line = Line.Mid(Pos + 1, nCount);
+// 		}
+// 	}
 
 	if(m_FilterParam->IsReplaceAble())
 	{
@@ -202,7 +204,7 @@ void CLyricText::ProcessKsc(CString &Line)
 	if(StartWith(Line,Karaoke_Artist))
 	{
 		int pos = Line.ReverseFind(',');
-		CString Artist = Line.Mid(pos+2,Line.GetLength()- pos -3);
+		CString Artist = Line.Mid(pos+3,Line.GetLength()- pos -6);
 		m_LyricHeader.ar = Artist;
 		Line = _T("");
 		return;
@@ -210,7 +212,6 @@ void CLyricText::ProcessKsc(CString &Line)
 	
 	if(m_FilterParam && m_FilterParam->bRemoveKsc)
 	{
-
 		if(StartWith(Line,Karaoke_Add))
 		{
 			GetAddLine(Line);
