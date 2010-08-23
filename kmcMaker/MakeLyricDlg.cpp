@@ -6,6 +6,8 @@
 #include "MakeLyricDlg.h"
 #include "UILib/FileDialogEx.h"
 #include "wmpmedia.h"
+#include "wmperror.h"
+#include "WMPErrorItem.h"
 #include "KmcMakerDlg.h"
 
 #ifdef _DEBUG
@@ -97,8 +99,8 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_RIGHT | ANCHORE_TOP);
 
-	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
-	m_MediaPlayer.GetControls().play();
+ 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
+ 	m_MediaPlayer.GetControls().play();
 
 	FocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -362,6 +364,8 @@ BEGIN_EVENTSINK_MAP(CMakeLyricDlg, CResizingDialog)
 	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5001 /* OpenStateChange */, OnOpenStateChangeMediaplayer, VTS_I4)
 	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5101 /* PlayStateChange */, OnPlayStateChangeMediaplayer, VTS_I4)
 	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5202 /* PositionChange */, OnPositionChangeMediaplayer, VTS_R8 VTS_R8)
+	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5501 /* Error */, OnErrorMediaplayer, VTS_NONE)
+	ON_EVENT(CMakeLyricDlg, IDC_MEDIAPLAYER, 5821 /* MediaError */, OnMediaErrorMediaplayer, VTS_DISPATCH)
 	//}}AFX_EVENTSINK_MAP
 END_EVENTSINK_MAP()
 
@@ -558,3 +562,12 @@ void CMakeLyricDlg::ParseTextToLyricLine( CString &Lyric , int nStartLine)
 	}
 }
 
+void CMakeLyricDlg::OnErrorMediaplayer() 
+{
+	TRACE("OnErrorMediaplayer\n");
+}
+
+void CMakeLyricDlg::OnMediaErrorMediaplayer(LPDISPATCH pMediaObject) 
+{
+	TRACE("OnMediaErrorMediaplayer\n");
+}

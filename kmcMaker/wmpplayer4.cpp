@@ -321,8 +321,6 @@ BOOL CWMPPlayer4::IsPause()
 	return GetPlayState() == PLAYSTATE_PAUSE;
 }
 
-
-
 BOOL CWMPPlayer4::IsStop()
 {
 	return GetPlayState() == PLAYSTATE_STOP;
