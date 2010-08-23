@@ -78,6 +78,8 @@ protected:
 	afx_msg void OnBtnPrevstep();
 	afx_msg void OnBtnNextstep();
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnErrorMediaplayer();
+	afx_msg void OnMediaErrorMediaplayer(LPDISPATCH pMediaObject);
 	DECLARE_EVENTSINK_MAP()
 	//}}AFX_MSG
 	afx_msg LRESULT OnBitmapSliderMoved(WPARAM wParam, LPARAM lParam);

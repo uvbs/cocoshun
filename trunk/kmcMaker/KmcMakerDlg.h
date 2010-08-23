@@ -13,6 +13,7 @@
 // CKmcMakerDlg dialog
 #include "CheckBTGroup.h"
 #include "./UILib/ResizingDialog.h"
+#include "./UILib/BtnST.h"
 #include "ImportLyricDlg.h"
 #include "MakeLyricDlg.h"
 #include "SaveLyricDlg.h"
@@ -33,6 +34,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CKmcMakerDlg)
 	enum { IDD = IDD_KMCMAKER_DIALOG };
+	CButtonST	m_BtnCancel;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -60,9 +62,9 @@ private:
 	CCheckBTGroup m_CheckGroup;
 
 	CImportLyricDlg *m_ImportLyricDlg;
-	CMakeLyricDlg *m_MakeLyricDlg;
-	CSaveLyricDlg *m_SaveLyricDlg;
-	CHelpDlg      *m_HelpDlg;
+	CMakeLyricDlg	*m_MakeLyricDlg;
+	CSaveLyricDlg	*m_SaveLyricDlg;
+	CHelpDlg		*m_HelpDlg;
 };
 
 //{{AFX_INSERT_LOCATION}}

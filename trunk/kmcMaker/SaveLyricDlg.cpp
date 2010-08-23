@@ -225,8 +225,6 @@ void CSaveLyricDlg::OnBtnSavePrevstep()
 void CSaveLyricDlg::OnBtnExit() 
 {
 	((CKmcMakerDlg *)GetParent())->OnCancel();
-// 	if(CheckLeave())
-// 		((CKmcMakerDlg *)GetParent())->SendMessage(WM_CLOSE);
 }
 
 BOOL CSaveLyricDlg::IsSaved()

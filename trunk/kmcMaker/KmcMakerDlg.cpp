@@ -103,6 +103,7 @@ void CKmcMakerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CKmcMakerDlg)
+	DDX_Control(pDX, IDCANCEL, m_BtnCancel);
 	//}}AFX_DATA_MAP
 }
 
@@ -187,6 +188,8 @@ BOOL CKmcMakerDlg::OnInitDialog()
 	SetControlInfo(IDC_STATIC_TOPLINE, RESIZE_HOR);
 	m_ImportLyricDlg->SetFocus();
 
+	m_BtnCancel.SetIcon(IDI_EXIT);
+
 	// 右下角画上调整大小的角
 	DrawGripper(TRUE);
 
@@ -249,7 +252,8 @@ void CKmcMakerDlg::OnCheckStep1()
 	BOOL bLeave = TRUE;
 
 
-	m_MakeLyricDlg->m_MediaPlayer.GetControls().pause();
+	if(!m_MakeLyricDlg->m_MediaPlayer.GetUrl().IsEmpty())
+		m_MakeLyricDlg->m_MediaPlayer.GetControls().pause();
 
 	if(bLeave)
 		m_CheckGroup.SetCheck(0);
