@@ -13,16 +13,16 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_ABOUTBOX
+Resource1=IDD_SAVELYRICDLG_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_IMPORTLYRICDLG_DIALOG
+Resource3=IDD_KMCMAKER_DIALOG
 Class4=CImportLyricDlg
-Resource4=IDD_MAKELYRICDLG_DIALOG
+Resource4=IDD_ABOUTBOX
 Class5=CMakeLyricDlg
-Resource5=IDD_SAVELYRICDLG_DIALOG
+Resource5=IDD_MAKELYRICDLG_DIALOG
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
-Resource6=IDD_KMCMAKER_DIALOG
+Resource6=IDD_IMPORTLYRICDLG_DIALOG
 Class8=CHelpDlg
 Resource7=IDD_HELP
 
@@ -126,7 +126,7 @@ ImplementationFile=MakeLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=IDC_MEDIAPLAYER
+LastObject=CMakeLyricDlg
 
 [DLG:IDD_SAVELYRICDLG_DIALOG]
 Type=1

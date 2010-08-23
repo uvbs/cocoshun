@@ -103,8 +103,6 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if(!((CMakeLyricDlg *)GetParent())->m_MediaPlayer.IsPlay())
  			return;
 
-		TRACE("%d\n",nChar);
-		
 		switch(nChar)
 		{
 		case VK_LEFT:

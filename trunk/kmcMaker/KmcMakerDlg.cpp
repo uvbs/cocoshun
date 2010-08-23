@@ -182,8 +182,8 @@ BOOL CKmcMakerDlg::OnInitDialog()
 
 	m_CheckGroup.Init(ChkGrpInfo, 4);
 	
-	SetControlInfo(IDOK,ANCHORE_LEFT | ANCHORE_BOTTOM);
-	SetControlInfo(IDCANCEL,ANCHORE_LEFT| ANCHORE_BOTTOM);
+// 	SetControlInfo(IDOK,ANCHORE_LEFT | ANCHORE_BOTTOM);
+// 	SetControlInfo(IDCANCEL,ANCHORE_LEFT| ANCHORE_BOTTOM);
 	SetControlInfo(IDC_DLG_AREA, RESIZE_BOTH);
 	SetControlInfo(IDC_STATIC_TOPLINE, RESIZE_HOR);
 	m_ImportLyricDlg->SetFocus();
@@ -357,6 +357,8 @@ void CKmcMakerDlg::OnCancel()
 	BOOL bLeave = TRUE;
 	switch(nSelectPage)
 	{
+		case 0:
+
 		case 1:
 			if(!m_MakeLyricDlg->CheckLeaveToPrev())
 				return;

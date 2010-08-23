@@ -10,7 +10,8 @@
 //  Microsoft Visual C++, your modifications will be overwritten.
 #include "wmpcontrols.h"
 
-#define PLAYSTATE_READY 0
+//播放状态，1=停止，2=暂停，3=播放，6=正在缓冲，9=正在连接，10=准备就绪
+#define PLAYSTATE_READY 10
 #define PLAYSTATE_STOP 1
 #define PLAYSTATE_PAUSE 2
 #define PLAYSTATE_PLAY  3
@@ -55,6 +56,7 @@ public:
 
 // Operations
 public:
+	BOOL IsReady();
 	BOOL IsStop();
 	BOOL IsPause();
 	BOOL IsPlay();

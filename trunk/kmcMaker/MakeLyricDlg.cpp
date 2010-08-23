@@ -70,8 +70,14 @@ BOOL CMakeLyricDlg::OnInitDialog()
 
 	//m_BtnNextStep
 	m_BtnOpen.SetIcon(IDI_OPEN);
+	m_BtnOpen.SetTooltipText(_T("打开媒体文件"));
+
 	m_BtnPlayPause.SetIcon(IDI_PLAY);
+	m_BtnPlayPause.SetTooltipText(_T("播放/暂停"));
+
 	m_BtnStop.SetIcon(IDI_STOP);
+	m_BtnStop.SetTooltipText(_T("停止播放"));
+
 	m_BtnPrevStep.SetIcon(IDI_PREV);
 	m_BtnNextStep.SetIcon(IDI_NEXT);
 
@@ -99,8 +105,8 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_BTN_PRIVIEW,ANCHORE_LEFT | ANCHORE_BOTTOM);
 	SetControlInfo(IDC_MEDIAPLAYER, ANCHORE_RIGHT | ANCHORE_TOP);
 
- 	m_MediaPlayer.SetUrl(_T(".\\Test\\十年.mp3"));
- 	m_MediaPlayer.GetControls().play();
+//   	m_MediaPlayer.SetUrl(_T(".\\Test\\十年1.mp3"));
+//   	m_MediaPlayer.GetControls().play();
 
 	FocusToLyricMaker();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -119,6 +125,8 @@ void CMakeLyricDlg::OnBtnOpen()
 	{
 		CString fname = FileDlg.GetPathName();
 		m_MediaPlayer.SetUrl(fname);
+		m_BtnPlayPause.SetIcon(IDI_PLAY);
+		InitPlaySlider();
 	}
 	FocusToLyricMaker();
 }
@@ -287,7 +295,7 @@ LRESULT CMakeLyricDlg::OnAcceptDropFile( WPARAM wParam /*= 0*/, LPARAM lParam /*
 {
 	TCHAR *DropFileName = (TCHAR *)wParam;
 	m_MediaPlayer.SetUrl(DropFileName);
-
+	InitPlaySlider();
 	return 0;
 }
 
@@ -327,19 +335,19 @@ void CMakeLyricDlg::OnTimer(UINT nIDEvent)
 
 void CMakeLyricDlg::OnBtnPlayPause() 
 {
+	CString url = m_MediaPlayer.GetUrl();
+	if(url.IsEmpty())
+		return;
+
 	if(m_MediaPlayer.IsPlay())
 	{
 		m_MediaPlayer.GetControls().pause();
-		m_BtnPlayPause.SetIcon(IDI_PLAY, IDI_PLAY_GRAY);
-		//GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T(">"));
 		return;
 	}
 	
-	if(m_MediaPlayer.IsStop() || m_MediaPlayer.IsPause())
+	if(m_MediaPlayer.IsStop() || m_MediaPlayer.IsPause() || m_MediaPlayer.IsReady())
 	{
-		m_MediaPlayer.GetControls().play();\
-		m_BtnPlayPause.SetIcon(IDI_PAUSE, IDI_PAUSE_GRAY);
-		//GetDlgItem(IDC_BTN_PLAY_PAUSE)->SetWindowText(_T("|"));
+		m_MediaPlayer.GetControls().play();
 		return;
 	}
 }
@@ -385,11 +393,15 @@ void CMakeLyricDlg::OnPlayStateChangeMediaplayer(long NewState)
 		|| NewState == PLAYSTATE_STOP)
 	{
 		KillTimer(TIMER_MEDIAPLAYER_SLIDER);
+		m_BtnPlayPause.SetIcon(IDI_PLAY);
+		
 	}
 	if(NewState == PLAYSTATE_PLAY)
 	{
 		SetTimer(TIMER_MEDIAPLAYER_SLIDER, 1000, NULL);
+		m_BtnPlayPause.SetIcon(IDI_PAUSE);
 	}
+
 	FocusToLyricMaker();
 }
 
@@ -481,7 +493,6 @@ BOOL CMakeLyricDlg::CheckLeaveToNext()
 
 void CMakeLyricDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	TRACE("OnKeyDown %d\n", nChar);
 	CResizingDialog::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
@@ -564,10 +575,20 @@ void CMakeLyricDlg::ParseTextToLyricLine( CString &Lyric , int nStartLine)
 
 void CMakeLyricDlg::OnErrorMediaplayer() 
 {
-	TRACE("OnErrorMediaplayer\n");
+	CWMPError   Error=m_MediaPlayer.GetError(); 
+	CWMPErrorItem   ErrorItem=Error.GetItem(0); 
+	CString ErrorMsg;
+	ErrorMsg.Format(_T( "%s"), ErrorItem.GetErrorDescription()); 
+	MessageBox(ErrorMsg,_T("错误"),MB_ICONSTOP);
+	Error.clearErrorQueue();
 }
 
 void CMakeLyricDlg::OnMediaErrorMediaplayer(LPDISPATCH pMediaObject) 
 {
-	TRACE("OnMediaErrorMediaplayer\n");
+	CWMPError   Error=m_MediaPlayer.GetError(); 
+	CWMPErrorItem   ErrorItem=Error.GetItem(0); 
+	CString ErrorMsg;
+	ErrorMsg.Format(_T( "%s"), ErrorItem.GetErrorDescription()); 
+	MessageBox(ErrorMsg,_T("错误"),MB_ICONSTOP);
+	Error.clearErrorQueue();
 }
