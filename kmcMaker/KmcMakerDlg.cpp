@@ -186,6 +186,8 @@ BOOL CKmcMakerDlg::OnInitDialog()
 // 	SetControlInfo(IDCANCEL,ANCHORE_LEFT| ANCHORE_BOTTOM);
 	SetControlInfo(IDC_DLG_AREA, RESIZE_BOTH);
 	SetControlInfo(IDC_STATIC_TOPLINE, RESIZE_HOR);
+	SetControlInfo(IDC_STATIC_LOGO, ANCHORE_RIGHT);
+	
 	m_ImportLyricDlg->SetFocus();
 
 	m_BtnCancel.SetIcon(IDI_EXIT);
@@ -330,7 +332,6 @@ void CKmcMakerDlg::OnSize(UINT nType, int cx, int cy)
 		{
 			m_CheckGroup.ReSizePages();
 		}
-		
 	} 
 }
 
@@ -348,8 +349,6 @@ LRESULT CKmcMakerDlg::OnAcceptDropFile(WPARAM wParam , LPARAM lParam  )
 	
 	return 1L;
 }
-
-
 
 void CKmcMakerDlg::OnCancel() 
 {

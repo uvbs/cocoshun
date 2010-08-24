@@ -79,9 +79,16 @@ void CSaveLyricDlg::OnBtnSavelyric()
 	//TCHAR szFilter[] = _T("Karaoke Media Lyric (*.kmc)|*.kmc|All Files (*.*)|*.*||");
 	CFileDialogEx FileDlg(FALSE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,strFilter);
 
-
 	CString Kmc;
 	m_KmcPreview.GetWindowText(Kmc);
+	for(int i=0;i<Kmc.GetLength();i++)
+	{
+		if(Kmc.GetAt(i) == 0x0a)
+		{
+			MessageBox("OK");
+			break;
+		}
+	}
 	if( FileDlg.DoModal() == IDOK && !Kmc.IsEmpty())
 	{
 		CString kmcName = FileDlg.GetPathName();

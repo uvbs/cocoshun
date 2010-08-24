@@ -71,9 +71,7 @@ BOOL CImportLyricDlg::OnInitDialog()
 	
 	//set Controls
 	SetControlInfo(IDC_LYRIC_EDITOR,RESIZE_BOTH);
-
 	SetControlInfo(IDC_STATIC_TIP,ANCHORE_RIGHT |ANCHORE_TOP );
-
 	SetControlInfo(IDC_STATIC_HELP,ANCHORE_RIGHT );
 	SetControlInfo(IDC_STATIC_FILTER_OPTION,ANCHORE_RIGHT );
 	SetControlInfo(IDC_CHECK_DEL_XML_HTML,ANCHORE_RIGHT );
@@ -95,7 +93,7 @@ BOOL CImportLyricDlg::OnInitDialog()
 	SetCheck(IDC_CHECK_DEL_EMPTYLINE);
 	
 	m_LyricEditor.SetFocus();
-	LoadLyric(_T(".\\Test\\en.txt"));
+// 	LoadLyric(_T(".\\Test\\en.txt"));
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
