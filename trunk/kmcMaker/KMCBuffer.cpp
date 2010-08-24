@@ -34,15 +34,15 @@ void CKmcBuffer::GetKmcLyric(CString &KmcLyric)
 		return;
 	}
 
-	CString xmlHeader = _T("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-	CString kmcStart = _T("<kmc ti=\"\" ar=\"\" al=\"\" by=\"\">\n");
-	CString kmcEnd = _T("</kmc>\n");
+	CString xmlHeader = _T("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n");
+	CString kmcStart = _T("<kmc ti=\"\" ar=\"\" al=\"\" by=\"\">\r\n");
+	CString kmcEnd = _T("</kmc>\r\n");
 	CString lStart = _T("    <l t=\"");
 	CString lClose = _T("\">");
-	CString lEnd = _T("</l>\n");
+	CString lEnd = _T("</l>\r\n");
 
 	if(m_LyricHeader != NULL)
-		kmcStart.Format(_T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\" offset=\"0\" duration=\"%s\">\n"),m_LyricHeader->ti,m_LyricHeader->ar,m_LyricHeader->al,m_LyricHeader->by,m_LyricHeader->duration);
+		kmcStart.Format(_T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\" offset=\"0\" duration=\"%s\">\r\n"),m_LyricHeader->ti,m_LyricHeader->ar,m_LyricHeader->al,m_LyricHeader->by,m_LyricHeader->duration);
 	KmcLyric += xmlHeader;
 	KmcLyric += kmcStart;
 	for(int i=0; i<m_LyricLines->size();i++)

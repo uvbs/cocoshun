@@ -35,12 +35,6 @@ BOOL CLyricText::LoadLyric(LPCTSTR pszFileName)
 {
 	CTextBuffer::LoadFromFile(pszFileName);
 
-// 	CString FileFormat = GetFormat();
-// 
-// 	if(FileFormat == "LRC")
-// 	{
-// 		
-// 	}
 	return TRUE;
 }
 
