@@ -137,7 +137,25 @@ void CSaveLyricDlg::SetLyricInfo( vector <LyricLine> *LyricLines ,CLyricText::Ly
 		m_editTi = m_LyricHeader->ti;
 		UpdateData(FALSE);
 	}
-	m_bSaved = FALSE;
+
+	if(!m_LyricLines->empty())
+	{
+		vector<LyricWord> Lws = m_LyricLines->at(0).LyricWords;
+		BOOL isMarkedLine = TRUE;
+		for(int n=0;n<Lws.size();n++)
+		{
+			LyricWord Lw = Lws.at(n);
+			if(!Lw.IsMarkedAll())
+			{
+				isMarkedLine = FALSE;
+				break;
+			}
+		}
+		m_bSaved = !isMarkedLine;
+	}else
+	{
+		m_bSaved = TRUE;
+	}
 }
 
 
@@ -169,8 +187,8 @@ BOOL CSaveLyricDlg::OnInitDialog()
 	SetControlInfo(IDC_RADIO_XML, ANCHORE_RIGHT);
 	SetControlInfo(IDC_BTN_SAVELYRIC,ANCHORE_RIGHT);
 
-	SetControlInfo(IDC_BTN_SAVE_PREVSTEP, ANCHORE_RIGHT|ANCHORE_BOTTOM);
-	SetControlInfo(IDC_BTN_EXIT, ANCHORE_RIGHT|ANCHORE_BOTTOM);
+	SetControlInfo(IDC_BTN_SAVE_PREVSTEP, ANCHORE_BOTTOM);
+	SetControlInfo(IDC_BTN_EXIT, ANCHORE_BOTTOM);
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

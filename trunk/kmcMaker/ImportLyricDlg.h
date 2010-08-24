@@ -51,6 +51,8 @@ protected:
 	void SetCheck(UINT ID,BOOL bCheck = TRUE);
 	
 	int GetFileLenght( LPCTSTR pszFileName );
+
+	CFont m_LyricFont;
 	// Generated message map functions
 	//{{AFX_MSG(CImportLyricDlg)
 	virtual void OnCancel();

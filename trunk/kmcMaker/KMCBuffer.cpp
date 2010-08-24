@@ -42,36 +42,53 @@ void CKmcBuffer::GetKmcLyric(CString &KmcLyric)
 	CString lEnd = _T("</l>\r\n");
 
 	if(m_LyricHeader != NULL)
-		kmcStart.Format(_T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\" offset=\"0\" duration=\"%s\">\r\n"),m_LyricHeader->ti,m_LyricHeader->ar,m_LyricHeader->al,m_LyricHeader->by,m_LyricHeader->duration);
+		kmcStart.Format(_T("<kmc ti=\"%s\" ar=\"%s\" al=\"%s\" by=\"%s\" offset=\"0\" duration=\"%s\">\r\n")
+		,m_LyricHeader->ti,m_LyricHeader->ar,m_LyricHeader->al,m_LyricHeader->by,m_LyricHeader->duration);
+
 	KmcLyric += xmlHeader;
 	KmcLyric += kmcStart;
 	for(int i=0; i<m_LyricLines->size();i++)
 	{
-		KmcLyric += lStart;
-
 		CString Line;
 		vector<LyricWord> Lws = m_LyricLines->at(i).LyricWords;
-		Line.Format(_T("%s,%s,"), DoubleToTime(m_LyricLines->at(i).StartTime),DoubleToTime(m_LyricLines->at(i).EndTime));
-		for(int j=0;j<Lws.size();j++)
+
+		BOOL isMarkedLine = TRUE;
+		for(int n=0;n<Lws.size();n++)
 		{
-			LyricWord Lw = Lws.at(j);
-			if(Lw.IsMarkedAll())
+			LyricWord Lw = Lws.at(n);
+			if(!Lw.IsMarkedAll())
 			{
-				CString Delay;
-				Delay.Format(_T("%.0f"), (Lw.EndTime - Lw.StartTime) * 1000);
-				Line += Delay;
-				if(j < Lws.size() -1)
-				{
-					Line += ',';
-				}
+				isMarkedLine = FALSE;
+				break;
 			}
 		}
 
-		KmcLyric += Line;
+		if(isMarkedLine)
+		{
+			KmcLyric += lStart;
 
-		KmcLyric += lClose;
-		KmcLyric += m_LyricLines->at(i).Line;
-		KmcLyric += lEnd;
+			Line.Format(_T("%s,%s,"), DoubleToTime(m_LyricLines->at(i).StartTime),DoubleToTime(m_LyricLines->at(i).EndTime));
+			for(int j=0;j<Lws.size();j++)
+			{
+				LyricWord Lw = Lws.at(j);
+				//if(Lw.IsMarkedAll())
+				{
+					CString Delay;
+					Delay.Format(_T("%.0f"), (Lw.EndTime - Lw.StartTime) * 1000);
+					Line += Delay;
+					if(j < Lws.size() -1)
+					{
+						Line += ',';
+					}
+				}
+			}
+
+			KmcLyric += Line;
+
+			KmcLyric += lClose;
+			KmcLyric += m_LyricLines->at(i).Line;
+			KmcLyric += lEnd;
+		}
 	}
 	KmcLyric += kmcEnd;
 }

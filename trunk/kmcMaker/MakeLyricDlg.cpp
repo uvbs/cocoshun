@@ -88,10 +88,7 @@ BOOL CMakeLyricDlg::OnInitDialog()
 	m_SliderMP.DrawFocusRect( FALSE );
 	
 	SetControlInfo(IDC_SLIDER_MP,ANCHORE_RIGHT);
-	
-	SetControlInfo(IDC_LYRIC_MAKER,ANCHORE_LEFT);
 	SetControlInfo(IDC_STATIC_MEDIA_TIMEINFO,ANCHORE_RIGHT);
-	
 	SetControlInfo(IDC_LYRIC_MAKER,RESIZE_BOTH);
 	SetControlInfo(IDC_STATIC_TIP,ANCHORE_RIGHT);
 
