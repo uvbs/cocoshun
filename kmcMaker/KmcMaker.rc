@@ -108,72 +108,72 @@ CAPTION "Karaoke Media Lyric Maker"
 FONT 9, "宋体"
 BEGIN
     DEFPUSHBUTTON   "确定",IDOK,7,313,50,14,NOT WS_VISIBLE
-    PUSHBUTTON      "退出(&X)",IDCANCEL,316,15,74,27
+    PUSHBUTTON      "退出(&X)",IDCANCEL,311,8,74,27
     CONTROL         "1.导入歌词",IDC_CHECK_STEP1,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | WS_TABSTOP,8,15,74,27
+                    BS_PUSHLIKE | WS_TABSTOP,7,8,74,27
     CONTROL         "2.标记歌词",IDC_CHECK_STEP2,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | WS_TABSTOP,85,15,74,27
+                    BS_PUSHLIKE | WS_TABSTOP,83,8,74,27
     CONTROL         "3.预览保存",IDC_CHECK_STEP3,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | WS_TABSTOP,162,15,74,27
-    GROUPBOX        "",IDC_DLG_AREA,7,51,525,276
+                    BS_PUSHLIKE | WS_TABSTOP,159,8,74,27
+    GROUPBOX        "",IDC_DLG_AREA,4,38,531,295
     CONTROL         "帮助",IDC_CHECK_HELP,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | WS_TABSTOP,239,15,74,27
-    ICON            IDR_MAINFRAME,IDC_STATIC_LOGO,505,16,21,21
+                    BS_PUSHLIKE | WS_TABSTOP,235,8,74,27
+    ICON            IDR_MAINFRAME,IDC_STATIC_LOGO,505,16,20,20
     CONTROL         "",IDC_STATIC_TOPLINE2,"Static",SS_BLACKFRAME | 
-                    SS_SUNKEN,8,45,521,1,WS_EX_CLIENTEDGE
+                    SS_SUNKEN | NOT WS_VISIBLE,8,0,521,1,WS_EX_CLIENTEDGE
 END
 
-IDD_IMPORTLYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 470, 286
+IDD_IMPORTLYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 549, 291
 STYLE DS_SETFOREGROUND | WS_CHILD
 FONT 9, "宋体"
 BEGIN
-    PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,385,103,71,26
+    PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,375,118,70,21
     CONTROL         "删除首尾空格",IDC_CHECK_DEL_SPACE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,278,145,67,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,376,157,67,10
     CONTROL         "删除空行",IDC_CHECK_DEL_EMPTYLINE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,382,145,68,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,453,157,68,10
     CONTROL         "过滤lrc歌词标记",IDC_CHECK_DEL_LRC,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,278,159,100,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,376,171,73,10
     CONTROL         "过滤ksc歌词标记",IDC_CHECK_DEL_KSC,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,382,159,73,10
-    EDITTEXT        IDC_EDIT_REPLACE_TXT,318,178,133,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_TARGET_TXT,318,197,133,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "过滤(&F)",IDC_BTN_FILTER,280,212,62,21
-    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,397,237,62,24
+                    BS_AUTOCHECKBOX | WS_TABSTOP,453,171,73,10
+    EDITTEXT        IDC_EDIT_REPLACE_TXT,414,185,121,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_TARGET_TXT,414,205,121,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "过滤(&F)",IDC_BTN_FILTER,375,224,70,21
+    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,479,267,62,24
     CONTROL         "",IDC_LYRIC_EDITOR,"RICHEDIT",ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_NOHIDESEL | 
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
-                    WS_TABSTOP,3,7,259,272
-    LTEXT           "导入文本方法:\n  1、直接手工输入歌词内容；\n  2、粘贴歌词内容；\n  3、点击“导入歌词”按钮从文件导入歌词内容。\n\n提示：\n  1、请根据情况控制每行歌词的长度，太长会超出屏幕将无法显示，尤其是英文，尽量简短为佳。\n  2、如果完成歌词编辑，请点击“下一步”进入制作流程,如果在制作过程中发现内容错误,您还可以回到这里进行编辑。",
-                    IDC_STATIC_TIP,278,11,178,96
+                    WS_TABSTOP,0,0,365,291
+    LTEXT           "导入文本方法:\n  1、直接手工输入歌词内容；\n  2、粘贴歌词内容；\n  3、点击“导入歌词”按钮从文件导入歌词内容。\n提示：\n  1、请根据情况控制每行歌词的长度，太长会超出屏幕将无法显示，尤其是英文，尽量简短为佳。\n  2、如果完成歌词编辑，请点击“下一步”进入制作流程,如果在制作过程中发现内容错误,您还可以回到这里进行编辑。",
+                    IDC_STATIC_TIP,374,15,164,96
     CONTROL         "过滤所有html或xml标记",IDC_CHECK_DEL_XML_HTML,"Button",
-                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,246,256,
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,369,249,
                     100,10
-    GROUPBOX        "内容过滤",IDC_STATIC_FILTER_OPTION,272,134,187,101,
+    GROUPBOX        "内容过滤",IDC_STATIC_FILTER_OPTION,371,146,170,102,
                     BS_CENTER
     CONTROL         "替换",IDC_CHECK_REPLACE,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_TABSTOP,272,269,30,10
-    LTEXT           "替换内容:",IDC_STATIC_FOR,280,199,36,8
-    GROUPBOX        "导入歌词",IDC_STATIC_HELP,271,3,189,128,BS_CENTER
-    LTEXT           "查找内容:",IDC_STATIC_FIND,279,182,37,8
+                    WS_VISIBLE | WS_TABSTOP,374,258,30,10
+    LTEXT           "替换内容:",IDC_STATIC_FOR,376,207,36,8
+    GROUPBOX        "导入歌词",IDC_STATIC_HELP,371,7,170,135,BS_CENTER
+    LTEXT           "查找内容:",IDC_STATIC_FIND,376,189,37,8
 END
 
-IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 520, 266
+IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 520, 282
 STYLE DS_SETFOREGROUND | WS_CHILD
-FONT 9, "宋体", 0, 0, 0x1
+FONT 9, "宋体"
 BEGIN
     PUSHBUTTON      "",IDC_BTN_OPEN,348,128,24,24,NOT WS_TABSTOP
-    CTEXT           "",IDC_LYRIC_MAKER,7,7,334,252,WS_TABSTOP,
+    CTEXT           "",IDC_LYRIC_MAKER,0,0,340,281,WS_TABSTOP,
                     WS_EX_TRANSPARENT | WS_EX_STATICEDGE
     CONTROL         "",IDC_MEDIAPLAYER,
                     "{6BF52A52-394A-11D3-B153-00C04F79FAA6}",WS_TABSTOP,348,
                     7,159,107
     LTEXT           "→:    标记当前字的开始,\n并标记上一字的结束\n↓:    标记当前字的结束\n←:    返回上一个字进行标记\n↑:    返回上一行进行标记\n空格:  开始/暂停播放",
                     IDC_STATIC_TIP,358,176,131,48,NOT WS_GROUP | WS_TABSTOP
-    PUSHBUTTON      "预览(&P)",IDC_BTN_PRIVIEW,298,221,52,17,NOT WS_VISIBLE
-    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,446,235,62,24,NOT 
+    PUSHBUTTON      "预览(&P)",IDC_BTN_PRIVIEW,453,148,52,17,NOT WS_VISIBLE
+    PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,446,257,62,24,NOT 
                     WS_TABSTOP
-    PUSHBUTTON      "上一步(&P)",IDC_BTN_PREVSTEP,348,235,62,24,NOT 
+    PUSHBUTTON      "上一步(&P)",IDC_BTN_PREVSTEP,348,257,62,24,NOT 
                     WS_TABSTOP
     GROUPBOX        "按键说明：",IDC_STATIC_KEY_TIP,346,163,162,68,BS_CENTER
     CONTROL         149,IDC_SLIDER_MP,"Static",SS_BITMAP | SS_NOTIFY | 
@@ -184,7 +184,7 @@ BEGIN
     RTEXT           "00:00",IDC_STATIC_MEDIA_TIMEINFO,442,135,61,9
 END
 
-IDD_SAVELYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 528, 230
+IDD_SAVELYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 528, 242
 STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
@@ -196,7 +196,7 @@ BEGIN
     CONTROL         "",IDC_KMC_PRIVEW,"RICHEDIT",ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_NOHIDESEL | 
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
-                    WS_TABSTOP,3,5,357,218
+                    WS_TABSTOP,0,2,355,239
     LTEXT           "歌  名:",IDC_STATIC_TI,378,39,29,8
     LTEXT           "歌  手:",IDC_STATIC_AR,378,58,29,8
     LTEXT           "专  辑:",IDC_STATIC_AL,378,78,29,8
@@ -205,9 +205,9 @@ BEGIN
                     28,10
     CONTROL         "XML",IDC_RADIO_XML,"Button",BS_AUTORADIOBUTTON,419,144,
                     28,10
-    GROUPBOX        "保存选项",IDC_STATIC_SAVETIP,367,7,152,186,BS_CENTER
-    PUSHBUTTON      "退出(&X)",IDC_BTN_EXIT,457,197,62,24
-    PUSHBUTTON      "上一步(&P)",IDC_BTN_SAVE_PREVSTEP,368,197,62,24
+    GROUPBOX        "保存选项",IDC_STATIC_SAVETIP,363,7,156,186,BS_CENTER
+    PUSHBUTTON      "退出(&X)",IDC_BTN_EXIT,457,216,62,24
+    PUSHBUTTON      "上一步(&P)",IDC_BTN_SAVE_PREVSTEP,364,216,62,24
     LTEXT           "文件后缀:",IDC_STATIC_TIPEXT,378,124,37,8
 END
 
@@ -293,9 +293,9 @@ BEGIN
     IDD_IMPORTLYRICDLG_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 464
+        RIGHTMARGIN, 543
         TOPMARGIN, 7
-        BOTTOMMARGIN, 279
+        BOTTOMMARGIN, 284
     END
 
     IDD_MAKELYRICDLG_DIALOG, DIALOG
@@ -303,7 +303,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 513
         TOPMARGIN, 7
-        BOTTOMMARGIN, 259
+        BOTTOMMARGIN, 275
     END
 
     IDD_SAVELYRICDLG_DIALOG, DIALOG
@@ -311,7 +311,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 521
         TOPMARGIN, 7
-        BOTTOMMARGIN, 223
+        BOTTOMMARGIN, 235
     END
 
     IDD_HELP, DIALOG

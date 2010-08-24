@@ -224,7 +224,7 @@ void CLyricMakerCtrl::CTextBoard::LoadPicture(int nResourceID)
 void CLyricMakerCtrl::CTextBoard::SetFont()
 {
 	// create a bunch of fonts
-	LyricFont = ::CreateFont(20, 0, 0, 0, 
+	LyricFont = ::CreateFont(18, 0, 0, 0, 
 		FW_BOLD, FALSE, FALSE, 0, 
 		DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS,
