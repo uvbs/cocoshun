@@ -94,13 +94,13 @@ BOOL CImportLyricDlg::OnInitDialog()
 	
 	// create a bunch of fonts
 	m_LyricFont.CreateFont(18, 0, 0, 0, 
-		FW_BOLD, FALSE, FALSE, 0, 
+		FW_BLACK, FALSE, FALSE, 0, 
 		DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS,
 		CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY,
 		DEFAULT_PITCH,
-		_T("ºÚÌå"));
+		_T("ËÎÌå"));
 
 	m_LyricEditor.SetFont(&m_LyricFont);
 	m_LyricEditor.SetFocus();
@@ -113,8 +113,8 @@ BOOL CImportLyricDlg::OnInitDialog()
 
 void CImportLyricDlg::OnImportLyric() 
 {
- 	TCHAR szFilter[] = _T("Lyric (*.lrc)|*.lrc|\
-		Lyric (*.txt)|*.txt|All Files (*.*)|*.*||");
+ 	TCHAR szFilter[] = _T("All Files (*.*)|*.*|Lyric Files (*.lrc)|*.lrc|\
+		Text Files(*.txt)|*.txt||");
  	CFileDialogEx ImportFileDlg(TRUE,NULL,NULL,OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,szFilter);;
  	if( ImportFileDlg.DoModal() == IDOK)
 	{

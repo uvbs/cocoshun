@@ -10,6 +10,7 @@
 
 
 #define COLOR_BLACK RGB(0,0,0)
+#define COLOR_WHITE RGB(255,255,255)
 #define COLOR_RED RGB(250,0,0)
 #define COLOR_GREEN RGB(0,250,0)
 #define COLOR_BLUE RGB(0,0,250)
