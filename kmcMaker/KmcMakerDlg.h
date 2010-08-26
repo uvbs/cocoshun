@@ -23,6 +23,9 @@ class CKmcMakerDlg : public CResizingDialog
 {
 // Construction
 public:
+	void CreateLyricFont( int FontSize );
+	CFont& GetLyricFont();
+	int m_nFontsize;
 	CKmcMakerDlg(CWnd* pParent = NULL);	// standard constructor
 	~CKmcMakerDlg();
 	
@@ -45,7 +48,7 @@ public:
 // Implementation
 protected:
 	HICON m_hIcon;
-
+	CFont m_LyricFont;
 	// Generated message map functions
 	//{{AFX_MSG(CKmcMakerDlg)
 	virtual BOOL OnInitDialog();

@@ -28,18 +28,22 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CImportLyricDlg)
 	enum { IDD = IDD_IMPORTLYRICDLG_DIALOG };
+	CSliderCtrl	m_SliderFontsize;
 	CButtonST	m_BtnNextStep;
 	CButtonST	m_BtnFilter;
 	CButtonST m_BtnImport;
 	CMyRichEdit m_LyricEditor;
 	CString	m_EditReplaceTxt;
 	CString	m_EditTargetTxt;
+	CString	m_EditFontsize;
 	//}}AFX_DATA
 
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CImportLyricDlg)
+	public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
@@ -52,7 +56,6 @@ protected:
 	
 	int GetFileLenght( LPCTSTR pszFileName );
 
-	CFont m_LyricFont;
 	// Generated message map functions
 	//{{AFX_MSG(CImportLyricDlg)
 	virtual void OnCancel();
@@ -61,6 +64,8 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnBtnFilter();
 	afx_msg void OnBtnNextstep();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnChangeEditFontsize();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

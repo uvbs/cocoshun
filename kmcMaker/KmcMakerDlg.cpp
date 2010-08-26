@@ -74,10 +74,12 @@ CKmcMakerDlg::CKmcMakerDlg(CWnd* pParent /*=NULL*/)
 	m_HelpDlg = NULL;
 
 	m_bUseDir=FALSE;
+	m_nFontsize = 18;
 }
 
 CKmcMakerDlg::~CKmcMakerDlg()
 {
+	m_LyricFont.DeleteObject();
 	if(m_ImportLyricDlg!=NULL)
 	{
 		delete []m_ImportLyricDlg;
@@ -125,10 +127,25 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CKmcMakerDlg message handlers
 
+void CKmcMakerDlg::CreateLyricFont( int FontSize ) 
+{
+	m_LyricFont.DeleteObject();
+	m_LyricFont.CreateFont(FontSize, 0, 0, 0, 
+		FW_BLACK, FALSE, FALSE, 0, 
+		DEFAULT_CHARSET,
+		OUT_DEFAULT_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY,
+		DEFAULT_PITCH,
+		_T("ËÎÌו"));
+}
+
 BOOL CKmcMakerDlg::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
-	
+
+	CreateLyricFont(m_nFontsize);
+
 	// Add "About..." menu item to system menu.
 	
 	// IDM_ABOUTBOX must be in the system command range.
@@ -368,4 +385,9 @@ void CKmcMakerDlg::OnCancel()
 			break;
 	}
 	CResizingDialog::OnCancel();
+}
+
+CFont& CKmcMakerDlg::GetLyricFont()
+{
+	return m_LyricFont;
 }
