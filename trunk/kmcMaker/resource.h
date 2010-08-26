@@ -89,6 +89,7 @@
 #define IDC_STATIC_TIPEXT               1065
 #define IDC_STATIC_KEY_TIP              1066
 #define IDC_SLIDER1                     1067
+#define IDC_SLIDER_FONTSIZE             1067
 #define IDC_STATIC_FIND                 1068
 #define IDC_SLIDER_MP                   1069
 #define IDC_MAX                         1070
@@ -101,6 +102,8 @@
 #define IDC_IE                          1077
 #define IDC_BUTTON1                     1078
 #define IDC_STATIC_LOGO                 1079
+#define IDC_EDIT_FONTSIZE               1080
+#define IDC_STATIC_FONTSIZE             1081
 
 // Next default values for new objects
 // 
@@ -108,7 +111,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        175
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1080
+#define _APS_NEXT_CONTROL_VALUE         1082
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CMakeLyricDlg
+LastClass=CImportLyricDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "KmcMaker.h"
@@ -22,9 +22,9 @@ Class5=CMakeLyricDlg
 Resource5=IDD_KMCMAKER_DIALOG
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
-Resource6=IDD_HELP
+Resource6=IDD_IMPORTLYRICDLG_DIALOG
 Class8=CHelpDlg
-Resource7=IDD_IMPORTLYRICDLG_DIALOG
+Resource7=IDD_HELP
 
 [CLS:CKmcMakerApp]
 Type=0
@@ -74,7 +74,7 @@ Control9=IDC_STATIC_TOPLINE2,static,1073745927
 [DLG:IDD_IMPORTLYRICDLG_DIALOG]
 Type=1
 Class=CImportLyricDlg
-ControlCount=18
+ControlCount=20
 Control1=IDC_BTN_IMPORT,button,1342242816
 Control2=IDC_CHECK_DEL_SPACE,button,1342242819
 Control3=IDC_CHECK_DEL_EMPTYLINE,button,1342242819
@@ -92,7 +92,9 @@ Control14=IDC_CHECK_REPLACE,button,1073807363
 Control15=IDC_STATIC_FOR,static,1342308352
 Control16=IDC_STATIC_HELP,button,1342178055
 Control17=IDC_STATIC_FIND,static,1342308352
-Control18=IDC_SLIDER1,msctls_trackbar32,1342242840
+Control18=IDC_SLIDER_FONTSIZE,msctls_trackbar32,1342242840
+Control19=IDC_EDIT_FONTSIZE,edit,1350631552
+Control20=IDC_STATIC_FONTSIZE,static,1342308352
 
 [CLS:CImportLyricDlg]
 Type=0
@@ -100,7 +102,7 @@ HeaderFile=ImportLyricDlg.h
 ImplementationFile=ImportLyricDlg.cpp
 BaseClass=CResizingDialog
 Filter=D
-LastObject=IDC_BTN_FILTER
+LastObject=CImportLyricDlg
 VirtualFilter=dWC
 
 [DLG:IDD_MAKELYRICDLG_DIALOG]

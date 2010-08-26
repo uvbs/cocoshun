@@ -14,7 +14,7 @@
 #include <vector>
 using std::vector;
 
-#define LINE_SEPARATOR _T("\n")
+#define LINE_SEPARATOR _T("\r\n")
 
 class CTextBuffer  
 {

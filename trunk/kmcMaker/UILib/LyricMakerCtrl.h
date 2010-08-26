@@ -36,7 +36,7 @@ protected:
 			int LineCount;
 			int LyricPosX;
 			int LyricPosY;
-			HFONT LyricFont;
+			int nFontsize;
 			int FontHeight;
 			int BoardWith;
 			int BoardHeight;

@@ -3,6 +3,7 @@
 #include "../resource.h"
 #include "LyricMakerCtrl.h"
 #include "../MakeLyricDlg.h"
+#include "../KmcMakerDlg.h"
 
 
 #ifdef _DEBUG
@@ -223,18 +224,8 @@ void CLyricMakerCtrl::CTextBoard::LoadPicture(int nResourceID)
 
 void CLyricMakerCtrl::CTextBoard::SetFont()
 {
-	// create a bunch of fonts
-	LyricFont = ::CreateFont(18, 0, 0, 0, 
-		FW_BLACK, FALSE, FALSE, 0, 
-		DEFAULT_CHARSET,
-		OUT_DEFAULT_PRECIS,
-		CLIP_DEFAULT_PRECIS,
-		PROOF_QUALITY,
-		DEFAULT_PITCH,
-		_T("ËÎÌו"));
-	
 	// select font
-	SelectObject(pDC->m_hDC, LyricFont);
+	SelectObject(pDC->m_hDC,  ((CKmcMakerDlg *)(pWnd->GetParent()->GetParent()))->GetLyricFont());
 	
 	// get font height
 	TEXTMETRIC tm;  
@@ -513,7 +504,7 @@ CLyricMakerCtrl::CTextBoard::CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wn
 	this->LyricPosX = 0;
 	this->LyricPosY = 0;
 	this->hBitMap = NULL;
-	this->LyricFont = NULL;
+//	this->LyricFont = NULL;
 	this->m_hBackGround = NULL;
 
 	bDrawIncrementWord = FALSE;
@@ -524,11 +515,6 @@ CLyricMakerCtrl::CTextBoard::CTextBoard (vector <LyricLine> *LyricLines,CWnd *Wn
 
 CLyricMakerCtrl::CTextBoard::~CTextBoard()
 {
-	if(LyricFont != NULL)
-	{
-		DeleteObject(LyricFont);
-	}
-	
 	if(hBitMap != NULL)
 	{
 		DeleteObject(hBitMap);
@@ -627,7 +613,7 @@ void CLyricMakerCtrl::CTextBoard::RefreshBackground()
 
 //		BitBlt(m_hBackGround, 0, 0, rc.right, rc.bottom, hBitMap, 0, 0, SRCCOPY);
 		FillRect(m_hBackGround, &rc, (HBRUSH)COLOR_WHITE);
-		HFONT pOldFont = (HFONT)SelectObject(m_hBackGround, LyricFont);
+		HFONT pOldFont = (HFONT)SelectObject(m_hBackGround, ((CKmcMakerDlg *)(pWnd->GetParent()->GetParent()))->GetLyricFont());
 		COLORREF oldColor = SetTextColor(m_hBackGround, COLOR_BLACK);
 
 		if(LyricLines != NULL && !LyricLines->empty())

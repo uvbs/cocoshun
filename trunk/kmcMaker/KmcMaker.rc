@@ -147,17 +147,19 @@ BEGIN
     LTEXT           "  1、直接手工输入歌词内容；\n  2、粘贴歌词内容；\n  3、点击“导入歌词”按钮从文件导入歌词内容。\n提示：\n  1、请根据情况控制每行歌词的长度，太长会超出屏幕将无法显示，尤其是英文，尽量简短为佳。\n  2、如果完成歌词编辑，请点击“下一步”进入制作流程,如果在制作过程中发现内容错误,您还可以回到这里进行编辑。",
                     IDC_STATIC_TIP,374,19,164,96
     CONTROL         "过滤所有html或xml标记",IDC_CHECK_DEL_XML_HTML,"Button",
-                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,369,249,
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,443,247,
                     100,10
     GROUPBOX        "内容过滤",IDC_STATIC_FILTER_OPTION,371,138,170,102,
                     BS_CENTER
     CONTROL         "替换",IDC_CHECK_REPLACE,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_TABSTOP,374,258,30,10
+                    WS_VISIBLE | WS_TABSTOP,463,257,30,10
     LTEXT           "替换内容:",IDC_STATIC_FOR,376,199,36,8
     GROUPBOX        "导入歌词方法:",IDC_STATIC_HELP,371,7,170,127,BS_CENTER
     LTEXT           "查找内容:",IDC_STATIC_FIND,376,181,37,8
-    CONTROL         "Slider1",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,371,259,100,15
+    CONTROL         "Slider1",IDC_SLIDER_FONTSIZE,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,371,264,57,15
+    EDITTEXT        IDC_EDIT_FONTSIZE,430,265,23,14,ES_AUTOHSCROLL
+    LTEXT           "字体:",IDC_STATIC_FONTSIZE,378,250,21,8
 END
 
 IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 520, 282
