@@ -225,13 +225,13 @@ void CLyricMakerCtrl::CTextBoard::SetFont()
 {
 	// create a bunch of fonts
 	LyricFont = ::CreateFont(18, 0, 0, 0, 
-		FW_BOLD, FALSE, FALSE, 0, 
+		FW_BLACK, FALSE, FALSE, 0, 
 		DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS,
 		CLIP_DEFAULT_PRECIS,
 		PROOF_QUALITY,
 		DEFAULT_PITCH,
-		_T("ºÚÌå"));
+		_T("ËÎÌå"));
 	
 	// select font
 	SelectObject(pDC->m_hDC, LyricFont);
@@ -415,7 +415,7 @@ void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY, BOOL bM
 {
 	if( LyricLines == NULL) return;
 	
-	CRect FontRect(20, (BoardPosY) * FontHeight + 10, BoardWith, BoardHeight);
+	CRect FontRect(20, (BoardPosY) * FontHeight , BoardWith, BoardHeight);
 	COLORREF oldColor;
 	
 	CString MarkedStart;
@@ -488,29 +488,7 @@ void CLyricMakerCtrl::CTextBoard::DrawLine(int BoardPosY, int LyricPosY, BOOL bM
 
 void CLyricMakerCtrl::CTextBoard::Draw()
 {
-	// draw background bitmap
 	DrawBackground();
-// 	BitBlt(pDC->m_hDC, 0, 0, BoardWith, BoardHeight, hBitMap, 0, 0, SRCCOPY);
-//	StretchBlt(pDC->m_hDC,0, 0, m_ClientWith, m_ClientHeight, m_hBackgroundDC, 0, 0, 800,600, SRCCOPY);
-//	if( LyricLines == NULL) return;
-				
-	// Draw Line
-// 	int LinePosY = FontHeight*MidLineNum + 5; 
-// 	CPen pen3DDKShadow(PS_SOLID, 2, COLOR_GREEN);
-// 	pDC->SelectObject(pen3DDKShadow);
-// 	pDC->MoveTo(0, LinePosY);
-// 	pDC->LineTo(BoardWith-2, LinePosY );
-// 	
-// 	// Draw all lyric
-// 	int DrewLineNum = 0;
-// 	int i = (LyricPosY > MidLineNum-1) ? (LyricPosY - MidLineNum + 1) : 0;
-// 	
-// 	for(;i<LyricLines->size() 
-// 		&& DrewLineNum< BoardCY;i++,DrewLineNum++)
-// 	{
-// 		DrawLine(DrewLineNum , i);
-// 	}
-	
 }
 
 void CLyricMakerCtrl::CTextBoard::SetBoardWidth(int Width)
@@ -644,11 +622,11 @@ void CLyricMakerCtrl::CTextBoard::RefreshBackground()
 
 		rc.top = 0;
 		rc.left = 0;
-		rc.bottom = BackgroundHeight;
+		rc.bottom = (LyricLines == NULL || LyricLines->empty()) ? BoardHeight : BackgroundHeight;
 		rc.right = BoardWith;
 
 //		BitBlt(m_hBackGround, 0, 0, rc.right, rc.bottom, hBitMap, 0, 0, SRCCOPY);
-		FillRect(m_hBackGround, &rc, (HBRUSH)GetStockObject(RGB(255,255,255)));
+		FillRect(m_hBackGround, &rc, (HBRUSH)COLOR_WHITE);
 		HFONT pOldFont = (HFONT)SelectObject(m_hBackGround, LyricFont);
 		COLORREF oldColor = SetTextColor(m_hBackGround, COLOR_BLACK);
 
@@ -743,7 +721,7 @@ void CLyricMakerCtrl::CTextBoard::DrawWord(HDC hDC, int y, int x, BOOL bOffset)
 	}
 
 	RECT rect;
-	rect.left   = 10 +  PrevWidth;
+	rect.left   = 5 +  PrevWidth;
 	rect.top  =  5 + nLine * FontHeight;
 	rect.right  = BoardWith;
 	rect.bottom = rect.top + FontHeight;
@@ -817,7 +795,7 @@ void CLyricMakerCtrl::CTextBoard::DrawIncrementWord()
 				PrevWidth += GetTextWidth(GetLyricWord(LyricPosY, i)->Word);
 			}
 			RECT rect;
-			rect.left   = 10 +  PrevWidth- WordWidth; //(LyricPosX-1)*WordWidth;
+			rect.left   = 5 +  PrevWidth- WordWidth; //(LyricPosX-1)*WordWidth;
 			rect.top  = 5 + nLine * FontHeight;
 			rect.right  = rect.left + nDrawIncrementWordWidth;
 			rect.bottom = rect.top + FontHeight;

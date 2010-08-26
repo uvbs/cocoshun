@@ -105,7 +105,7 @@ STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU |
     WS_THICKFRAME
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Karaoke Media Lyric Maker"
-FONT 9, "宋体"
+FONT 9, "宋体", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "确定",IDOK,7,313,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "退出(&X)",IDCANCEL,311,8,74,27
@@ -127,40 +127,42 @@ IDD_IMPORTLYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 549, 291
 STYLE DS_SETFOREGROUND | WS_CHILD
 FONT 9, "宋体"
 BEGIN
-    PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,375,118,70,21
+    PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,375,110,70,21
     CONTROL         "删除首尾空格",IDC_CHECK_DEL_SPACE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,376,157,67,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,376,149,67,10
     CONTROL         "删除空行",IDC_CHECK_DEL_EMPTYLINE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,453,157,68,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,453,149,68,10
     CONTROL         "过滤lrc歌词标记",IDC_CHECK_DEL_LRC,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,376,171,73,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,376,163,73,10
     CONTROL         "过滤ksc歌词标记",IDC_CHECK_DEL_KSC,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,453,171,73,10
-    EDITTEXT        IDC_EDIT_REPLACE_TXT,414,185,121,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_TARGET_TXT,414,205,121,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "过滤(&F)",IDC_BTN_FILTER,375,224,70,21
+                    BS_AUTOCHECKBOX | WS_TABSTOP,453,163,73,10
+    EDITTEXT        IDC_EDIT_REPLACE_TXT,414,177,121,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_TARGET_TXT,414,197,121,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "过滤(&F)",IDC_BTN_FILTER,375,213,70,21
     PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,479,267,62,24
     CONTROL         "",IDC_LYRIC_EDITOR,"RICHEDIT",ES_MULTILINE | 
                     ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_NOHIDESEL | 
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
                     WS_TABSTOP,0,0,365,291
-    LTEXT           "导入文本方法:\n  1、直接手工输入歌词内容；\n  2、粘贴歌词内容；\n  3、点击“导入歌词”按钮从文件导入歌词内容。\n提示：\n  1、请根据情况控制每行歌词的长度，太长会超出屏幕将无法显示，尤其是英文，尽量简短为佳。\n  2、如果完成歌词编辑，请点击“下一步”进入制作流程,如果在制作过程中发现内容错误,您还可以回到这里进行编辑。",
-                    IDC_STATIC_TIP,374,15,164,96
+    LTEXT           "  1、直接手工输入歌词内容；\n  2、粘贴歌词内容；\n  3、点击“导入歌词”按钮从文件导入歌词内容。\n提示：\n  1、请根据情况控制每行歌词的长度，太长会超出屏幕将无法显示，尤其是英文，尽量简短为佳。\n  2、如果完成歌词编辑，请点击“下一步”进入制作流程,如果在制作过程中发现内容错误,您还可以回到这里进行编辑。",
+                    IDC_STATIC_TIP,374,19,164,96
     CONTROL         "过滤所有html或xml标记",IDC_CHECK_DEL_XML_HTML,"Button",
                     BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,369,249,
                     100,10
-    GROUPBOX        "内容过滤",IDC_STATIC_FILTER_OPTION,371,146,170,102,
+    GROUPBOX        "内容过滤",IDC_STATIC_FILTER_OPTION,371,138,170,102,
                     BS_CENTER
     CONTROL         "替换",IDC_CHECK_REPLACE,"Button",BS_AUTOCHECKBOX | NOT 
                     WS_VISIBLE | WS_TABSTOP,374,258,30,10
-    LTEXT           "替换内容:",IDC_STATIC_FOR,376,207,36,8
-    GROUPBOX        "导入歌词",IDC_STATIC_HELP,371,7,170,135,BS_CENTER
-    LTEXT           "查找内容:",IDC_STATIC_FIND,376,189,37,8
+    LTEXT           "替换内容:",IDC_STATIC_FOR,376,199,36,8
+    GROUPBOX        "导入歌词方法:",IDC_STATIC_HELP,371,7,170,127,BS_CENTER
+    LTEXT           "查找内容:",IDC_STATIC_FIND,376,181,37,8
+    CONTROL         "Slider1",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,371,259,100,15
 END
 
 IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 520, 282
 STYLE DS_SETFOREGROUND | WS_CHILD
-FONT 9, "宋体"
+FONT 9, "宋体", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "",IDC_BTN_OPEN,348,128,24,24,NOT WS_TABSTOP
     CTEXT           "",IDC_LYRIC_MAKER,0,0,340,281,WS_TABSTOP,
@@ -216,7 +218,7 @@ STYLE DS_SETFOREGROUND | WS_CHILD
 FONT 9, "宋体"
 BEGIN
     CONTROL         "",IDC_IE,"{8856F961-340A-11D0-A96B-00C04FD705A2}",
-                    WS_TABSTOP,7,7,366,230
+                    WS_TABSTOP,0,0,379,243
 END
 
 
@@ -366,7 +368,7 @@ END
 IDD_HELP DLGINIT
 BEGIN
     IDC_IE, 0x376, 160, 0
-0x0000, 0x0000, 0x004c, 0x0000, 0x38be, 0x0000, 0x23a8, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x004c, 0x0000, 0x3acf, 0x0000, 0x25b9, 0x0000, 0x0000, 
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
 0x0000, 0x0000, 0x004c, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 
 0x0000, 0xd0e0, 0x0057, 0x3573, 0x11cf, 0x69ae, 0x0008, 0x2e2b, 0x6212, 
