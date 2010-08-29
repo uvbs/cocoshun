@@ -68,6 +68,8 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON    DISCARDABLE     "res\\MyToolBox.ico"
 IDI_WIN7                ICON    DISCARDABLE     "res\\win7.ico"
+IDI_GENERAL             ICON    DISCARDABLE     "res\\general.ico"
+IDI_EXIT                ICON    DISCARDABLE     "res\\exit.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -101,25 +103,28 @@ BEGIN
                     BS_PUSHLIKE | WS_TABSTOP,173,7,81,30
 END
 
-IDD_WIN7SETTING_DIALOG DIALOG DISCARDABLE  0, 0, 445, 204
+IDD_WIN7SETTING_DIALOG DIALOG DISCARDABLE  0, 0, 378, 173
 STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
     CONTROL         "隐藏收藏夹(&F)",IDC_CHECK_HIDE_FAVORITES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,27,43,68,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,30,68,10
     CONTROL         "隐藏库(&L)",IDC_CHECK_HIDE_LIBRARIES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,27,75,52,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,47,52,10
     CONTROL         "设置立即生效(重启explorer)",IDC_CHECK_RESTART_EXPLOERE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,107,120,10
-    PUSHBUTTON      "重启Explorer(&R)",IDC_BTN_RESTART_EXPLORER,31,166,81,21
-    GROUPBOX        "资源管理器",IDC_STATIC_EXPLORER,7,7,211,129
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,82,120,10
+    PUSHBUTTON      "重启Explorer(&R)",IDC_BTN_RESTART_EXPLORER,18,105,81,21
+    GROUPBOX        "常用设置",IDC_STATIC_EXPLORER,7,7,324,151
+    CONTROL         "禁止窗口自动排列(需重启)",
+                    IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,64,112,10
 END
 
 IDD_GENERALTOOL_DIALOG DIALOG DISCARDABLE  0, 0, 306, 165
 STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
-    PUSHBUTTON      "重启Explorer(&R)",IDC_BTN_RESTART_EXPLORER,26,108,81,23
+    PUSHBUTTON      "重建图标缓存",IDC_BTN_REBULID_ICON_CACHE,26,108,81,23
 END
 
 
@@ -193,9 +198,9 @@ BEGIN
     IDD_WIN7SETTING_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 438
+        RIGHTMARGIN, 371
         TOPMARGIN, 7
-        BOTTOMMARGIN, 197
+        BOTTOMMARGIN, 166
     END
 
     IDD_GENERALTOOL_DIALOG, DIALOG

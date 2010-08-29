@@ -26,6 +26,11 @@ CTRL_OPERATION Win7Setting::m_SettingOper[]=
     {Write,{HKEY_CLASSES_ROOT,_T("CLSID\\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\\ShellFolder"),_T("Attributes"),DW,0xb090010d}},
     {Write,{HKEY_CLASSES_ROOT,_T("CLSID\\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\\ShellFolder"),_T("Attributes"),DW,0xb080010d}},
     {Query,{HKEY_CLASSES_ROOT,_T("CLSID\\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\\ShellFolder"),_T("Attributes"),DW}},   
+
+    IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,CHECKBOX,
+    {Write,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),DW,0}},
+    {Write,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),DW,1}},
+    {Query,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),DW}},   
 };
 
 Win7Setting::Win7Setting(CWnd* pParent /*=NULL*/)
@@ -50,6 +55,7 @@ BEGIN_MESSAGE_MAP(Win7Setting, CResizingDialog)
 	ON_BN_CLICKED(IDC_BTN_RESTART_EXPLORER, OnBtnRestartExplorer)
 	ON_BN_CLICKED(IDC_CHECK_HIDE_FAVORITES, OnCheckHideFavorites)
 	ON_BN_CLICKED(IDC_CHECK_HIDE_LIBRARIES, OnCheckHideLibraries)
+	ON_BN_CLICKED(IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT, OnCheckDisableWindowAutoArrangement)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -63,6 +69,7 @@ BOOL Win7Setting::OnInitDialog()
     m_ctrlAction.Initialize(this,m_SettingOper);
     m_ctrlAction.Process(IDC_CHECK_HIDE_FAVORITES,TRUE);
     m_ctrlAction.Process(IDC_CHECK_HIDE_LIBRARIES,TRUE);
+     m_ctrlAction.Process(IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,TRUE);
 
 	SetControlInfo(IDC_CHECK_HIDE_FAVORITES,ANCHORE_LEFT);
 	return TRUE;  
@@ -93,4 +100,9 @@ void Win7Setting::OnCheckHideFavorites()
 void Win7Setting::OnCheckHideLibraries() 
 {
     m_ctrlAction.Process(IDC_CHECK_HIDE_LIBRARIES); 	
+}
+
+void Win7Setting::OnCheckDisableWindowAutoArrangement() 
+{
+	m_ctrlAction.Process(IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT); 	
 }

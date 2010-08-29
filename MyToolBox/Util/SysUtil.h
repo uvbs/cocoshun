@@ -25,11 +25,13 @@ enum OSType
 class SysUtil  
 {
 public:
-	SysUtil();
-	virtual ~SysUtil();
+	static void RebulidIconCache();
+
 
 	static void KillProcess(LPCTSTR ExeName);
     static OSType GetOS();
+    SysUtil();
+    virtual ~SysUtil();
 };
 
 #endif // !defined(AFX_SYSUTIL_H__3BCF7500_6B08_4EC9_9451_8603BC793D5C__INCLUDED_)

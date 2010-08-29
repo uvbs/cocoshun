@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MyToolBox.h"
 #include "GeneralTool.h"
+#include "Util/SysUtil.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,6 +36,7 @@ void GeneralTool::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(GeneralTool, CResizingDialog)
 	//{{AFX_MSG_MAP(GeneralTool)
+	ON_BN_CLICKED(IDC_BTN_REBULID_ICON_CACHE, OnBtnRebulidIconCache)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -56,4 +58,9 @@ void GeneralTool::OnOK()
 void GeneralTool::OnCancel() 
 {
 //	CResizingDialog::OnCancel();
+}
+
+void GeneralTool::OnBtnRebulidIconCache() 
+{
+    SysUtil::RebulidIconCache();	
 }

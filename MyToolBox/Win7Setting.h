@@ -47,6 +47,7 @@ protected:
 	afx_msg void OnBtnRestartExplorer();
 	afx_msg void OnCheckHideFavorites();
 	afx_msg void OnCheckHideLibraries();
+	afx_msg void OnCheckDisableWindowAutoArrangement();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

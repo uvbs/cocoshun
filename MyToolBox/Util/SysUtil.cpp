@@ -6,6 +6,7 @@
 #include "SysUtil.h"
 #include "windows.h"
 #include "Tlhelp32.h"
+#include <shlwapi.h> 
 #include <string.h>
 
 #ifdef _DEBUG
@@ -90,4 +91,36 @@ OSType SysUtil::GetOS()
 }
 
 
-
+void SysUtil::RebulidIconCache()
+{
+    TCHAR Content[MAX_PATH] = {0};  //修正   
+    DWORD Contentsize = sizeof(Content) / sizeof(TCHAR);    //修正   
+    DWORD dwType = REG_SZ;   
+    TCHAR RegPath[] = _T("Control Panel\\Desktop\\WindowMetrics");   
+    TCHAR VauleName[] = _T("Shell Icon Size");   
+    
+    
+    if (SHGetValue(HKEY_CURRENT_USER, RegPath, VauleName, &dwType, &Content, &Contentsize) == ERROR_SUCCESS)   
+    {   
+        TCHAR Contenttmp[] = _T("24");   
+        Contentsize = sizeof(Contenttmp) / sizeof(TCHAR);   //修正       
+        if (SHSetValue(HKEY_CURRENT_USER, RegPath, VauleName, REG_SZ, Contenttmp, Contentsize) == ERROR_SUCCESS)   
+        {   
+            SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, SPI_SETNONCLIENTMETRICS,    
+                0, SMTO_ABORTIFHUNG, 5000, NULL);    
+            
+            Contentsize = sizeof(Content) / sizeof(TCHAR);  //修正   
+            if (SHSetValue(HKEY_CURRENT_USER, RegPath, VauleName, REG_SZ, Content, Contentsize) == ERROR_SUCCESS)   
+            {   
+                SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, SPI_SETNONCLIENTMETRICS,    
+                    0, SMTO_ABORTIFHUNG, 5000, NULL);   
+            }   
+        }   
+        printf("%s", "重建图标缓存成功！");   
+    }   
+    else  
+    {   
+        printf("%s", "重建图标缓存失败！");   
+    }   
+//    system("pause");    //修正 别用getchar()
+}
