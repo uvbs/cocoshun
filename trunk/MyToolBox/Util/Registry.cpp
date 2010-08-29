@@ -831,7 +831,6 @@ BOOL CRegistry::WriteRect(CString strName, CRect* pRect)
 
 void CRegistry::GetPermission(LPSTR Path)
 {
- //   LPSTR SamName = "MACHINE\\SAM\\SAM"; //要修改的SAM项路径
     PACL pOldDacl=NULL;
     PACL pNewDacl=NULL;
     DWORD dRet;
@@ -852,7 +851,8 @@ void CRegistry::GetPermission(LPSTR Path)
     if(dRet=ERROR_SUCCESS)
         return;
     //释放DACL和SID
-    if(pNewDacl)LocalFree(pNewDacl);
-    if(pSID)LocalFree(pSID);
-
+    if(pNewDacl)
+        LocalFree(pNewDacl);
+    if(pSID)
+        LocalFree(pSID);
 }

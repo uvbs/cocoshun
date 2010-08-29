@@ -132,7 +132,7 @@ BOOL CMyToolBoxDlg::OnInitDialog()
 	static CCheckBTGroup::ChkBtnIDAndDlg ChkBtnIDAndDlgs[] =
 	{
 		{IDC_BTN_WIN7SETTING, m_Win7Setting, IDI_WIN7},
-		{IDC_BTN_GENERALTOOL, m_GeneralTool, IDI_WIN7},
+		{IDC_BTN_GENERALTOOL, m_GeneralTool, IDI_GENERAL},
 	};
 	
 	static CCheckBTGroup::CheckGroupInfo ChkGrpInfo = 
@@ -143,6 +143,7 @@ BOOL CMyToolBoxDlg::OnInitDialog()
 		ChkBtnIDAndDlgs
 	};
 	m_CheckGroup.Init(ChkGrpInfo, 2);
+    m_BtnExit.SetIcon(IDI_EXIT);
 
 	// 右下角画上调整大小的角
 	DrawGripper(TRUE);
