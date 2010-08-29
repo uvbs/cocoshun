@@ -1,0 +1,27 @@
+// FuncDef.cpp: implementation of the FuncDef class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "MyToolBox.h"
+#include "FuncDef.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+FuncDef::FuncDef()
+{
+
+}
+
+FuncDef::~FuncDef()
+{
+
+}
