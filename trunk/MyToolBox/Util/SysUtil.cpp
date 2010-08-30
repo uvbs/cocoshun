@@ -124,3 +124,77 @@ void SysUtil::RebulidIconCache()
     }   
 //    system("pause");    //ÐÞÕý ±ðÓÃgetchar()
 }
+void SysUtil::BroadcastChanges()
+{
+    DWORD dwResult;
+    
+    SendMessageTimeout (
+        HWND_BROADCAST,
+        WM_SETTINGCHANGE,
+        SPI_SETNONCLIENTMETRICS,
+        (LPARAM) _T("WindowMetrics"),
+        //SMTO_NORMAL|
+        SMTO_ABORTIFHUNG,
+        10000,
+        &dwResult);
+}
+
+void SysUtil::RefreshScreenIcons()
+{
+    bool bResult = false;
+    LPCTSTR pszKeyName = _T("Control Panel\\Desktop\\WindowMetrics");
+    LPCTSTR pszKeyValue = _T("Shell Icon Size");
+    HKEY hKey;
+    TCHAR szShellIconSize[32];
+    
+    if (ERROR_SUCCESS == ::RegOpenKey (HKEY_CURRENT_USER, pszKeyName,
+        &hKey))
+    {
+        DWORD dwType;
+        DWORD cbShellIconSize = sizeof szShellIconSize;
+        
+        if (ERROR_SUCCESS == ::RegQueryValueEx (hKey, pszKeyValue, NULL,
+            &dwType, (LPBYTE) szShellIconSize, &cbShellIconSize))
+        {
+            TCHAR szNewShellIconSize[32];
+            wsprintf (szNewShellIconSize, _T("%d"), atoi (szShellIconSize) - 1);
+            
+            if (ERROR_SUCCESS == ::RegSetValueEx (hKey, pszKeyValue, 0, REG_SZ,
+                (LPBYTE) szNewShellIconSize, _tcslen (szShellIconSize)))
+            {
+                bResult = true;
+            }
+        }
+        
+        ::RegCloseKey (hKey);
+        
+        if (bResult)
+        {
+            BroadcastChanges ();
+        }
+    }
+    
+    if (bResult)
+    {
+        if (ERROR_SUCCESS == ::RegOpenKey (HKEY_CURRENT_USER, pszKeyName,
+            &hKey))
+        {
+            if (ERROR_SUCCESS != ::RegSetValueEx (hKey, pszKeyValue, 0, REG_SZ,
+                (LPBYTE) szShellIconSize, _tcslen (szShellIconSize)))
+            {
+                bResult = false;
+            }
+            
+            ::RegCloseKey (hKey);
+            
+            if (bResult)
+            {
+                BroadcastChanges ();
+            }
+        }
+        else
+        {
+            bResult = false;
+        }
+    }
+}

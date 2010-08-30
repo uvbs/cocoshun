@@ -26,7 +26,8 @@ class SysUtil
 {
 public:
 	static void RebulidIconCache();
-
+    static void RefreshScreenIcons();
+    static void BroadcastChanges();
 
 	static void KillProcess(LPCTSTR ExeName);
     static OSType GetOS();

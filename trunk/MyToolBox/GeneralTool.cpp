@@ -62,5 +62,5 @@ void GeneralTool::OnCancel()
 
 void GeneralTool::OnBtnRebulidIconCache() 
 {
-    SysUtil::RebulidIconCache();	
+    SysUtil::RefreshScreenIcons();
 }
