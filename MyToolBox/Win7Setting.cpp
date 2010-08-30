@@ -28,9 +28,9 @@ CTRL_OPERATION Win7Setting::m_SettingOper[]=
     {Query,{HKEY_CLASSES_ROOT,_T("CLSID\\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\\ShellFolder"),_T("Attributes"),DW}},   
 
     IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,CHECKBOX,
-    {Write,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),DW,0}},
-    {Write,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),DW,1}},
-    {Query,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),DW}},   
+    {Write,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),STRING,0,_T("0")}},
+    {Write,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),STRING,0,_T("1")}},
+    {Query,{HKEY_CURRENT_USER,_T("Control Panel\\Desktop"),_T("WindowArrangementActive"),STRING}},   
 };
 
 Win7Setting::Win7Setting(CWnd* pParent /*=NULL*/)
@@ -45,7 +45,7 @@ void Win7Setting::DoDataExchange(CDataExchange* pDX)
 {
 	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(Win7Setting)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDC_BTN_RESTART_EXPLORER, m_BtnRestartExplorer);
 	//}}AFX_DATA_MAP
 }
 
@@ -65,11 +65,13 @@ END_MESSAGE_MAP()
 BOOL Win7Setting::OnInitDialog() 
 {
 	CResizingDialog::OnInitDialog();
+
+	m_BtnRestartExplorer.SetIcon(IDI_RESTART_EXPLORER);
 	
     m_ctrlAction.Initialize(this,m_SettingOper);
     m_ctrlAction.Process(IDC_CHECK_HIDE_FAVORITES,TRUE);
     m_ctrlAction.Process(IDC_CHECK_HIDE_LIBRARIES,TRUE);
-     m_ctrlAction.Process(IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,TRUE);
+    m_ctrlAction.Process(IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,TRUE);
 
 	SetControlInfo(IDC_CHECK_HIDE_FAVORITES,ANCHORE_LEFT);
 	return TRUE;  

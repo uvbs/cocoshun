@@ -70,6 +70,7 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "res\\MyToolBox.ico"
 IDI_WIN7                ICON    DISCARDABLE     "res\\win7.ico"
 IDI_GENERAL             ICON    DISCARDABLE     "res\\general.ico"
 IDI_EXIT                ICON    DISCARDABLE     "res\\exit.ico"
+IDI_RESTART_EXPLORER    ICON    DISCARDABLE     "res\\ClearShell.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -111,10 +112,8 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,19,30,68,10
     CONTROL         "隐藏库(&L)",IDC_CHECK_HIDE_LIBRARIES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,19,47,52,10
-    CONTROL         "设置立即生效(重启explorer)",IDC_CHECK_RESTART_EXPLOERE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,82,120,10
-    PUSHBUTTON      "重启Explorer(&R)",IDC_BTN_RESTART_EXPLORER,18,105,81,21
-    GROUPBOX        "常用设置",IDC_STATIC_EXPLORER,7,7,324,151
+    PUSHBUTTON      "重启Explorer(&R)",IDC_BTN_RESTART_EXPLORER,20,78,81,21
+    GROUPBOX        "常用设置",IDC_STATIC_EXPLORER,7,7,158,106
     CONTROL         "禁止窗口自动排列(需重启)",
                     IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,19,64,112,10
