@@ -92,12 +92,30 @@ void CLyricMakerCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		|| nChar == VK_UP|| nChar == VK_DOWN
 		|| nChar == VK_SPACE)
 	{
-		if( m_LyricLines == NULL) return;
+		if( m_LyricLines == NULL|| m_LyricLines->empty()) 
+		{
+			MessageBox(_T("请先导入歌词!"),_T("提示"),MB_OK | MB_ICONINFORMATION);
+			return;
+		}
 
 		if(nChar == VK_SPACE)
 		{
 			((CMakeLyricDlg *)GetParent())->OnBtnPlayPause();
 			return;
+		}
+
+		if(nChar == VK_RIGHT)
+		{
+			if(m_MediaPlayer->GetUrl().IsEmpty())
+			{
+				MessageBox(_T("请先打开一首歌曲!"),_T("提示"),MB_OK | MB_ICONINFORMATION);
+				return;
+			}
+			if(m_MediaPlayer->IsPause() || m_MediaPlayer->IsReady())
+			{
+				m_MediaPlayer->GetControls().play();
+				return;
+			}
 		}
 		
 		// check if playing

@@ -252,3 +252,18 @@ void CLyricText::GetAddLine(CString &Line)
 		}
 	}
 }
+
+void CLyricText::SetLyric(CString &Text)
+{
+	m_Lines.clear();
+	int nCount=0;
+	CString Line;
+	for(int nLine = 0;AfxExtractSubString(Line, Text, nCount++, '\n');nLine++)
+	{
+		LineInfo lInfo;
+		lInfo.Num = nCount;
+		Line.Delete(Line.GetLength()-1);
+		lInfo.Text = Line;
+		m_Lines.push_back(lInfo);	
+	}
+}

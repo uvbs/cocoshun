@@ -13,16 +13,16 @@ Class2=CKmcMakerDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_MAKELYRICDLG_DIALOG
+Resource1=IDD_IMPORTLYRICDLG_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
+Resource3=IDD_MAKELYRICDLG_DIALOG
 Class4=CImportLyricDlg
 Resource4=IDD_SAVELYRICDLG_DIALOG
 Class5=CMakeLyricDlg
-Resource5=IDD_KMCMAKER_DIALOG
+Resource5=IDD_ABOUTBOX
 Class6=CSaveLyricDlg
 Class7=CPreviewCtrl
-Resource6=IDD_IMPORTLYRICDLG_DIALOG
+Resource6=IDD_KMCMAKER_DIALOG
 Class8=CHelpDlg
 Resource7=IDD_HELP
 
