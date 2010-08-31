@@ -1,0 +1,50 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: HistoryClear - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/HistoryClear.res" /d "_DEBUG" /d "_AFXDLL" "E:\Source\cocoshun\ClearHistory\HistoryClear.rc"" 
+Creating temporary file "G:\Users\Simon\AppData\Local\Temp\RSP5DFD.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/HistoryClear.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\Source\cocoshun\ClearHistory\HistoryClear.cpp"
+"E:\Source\cocoshun\ClearHistory\HistoryClearDlg.cpp"
+]
+Creating command line "cl.exe @G:\Users\Simon\AppData\Local\Temp\RSP5DFD.tmp" 
+Creating temporary file "G:\Users\Simon\AppData\Local\Temp\RSP5DFE.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/HistoryClear.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\Source\cocoshun\ClearHistory\StdAfx.cpp"
+]
+Creating command line "cl.exe @G:\Users\Simon\AppData\Local\Temp\RSP5DFE.tmp" 
+Creating temporary file "G:\Users\Simon\AppData\Local\Temp\RSP5DFF.tmp" with contents
+[
+Wininet.lib shlwapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/HistoryClear.pdb" /debug /machine:I386 /out:"Debug/HistoryClear.exe" /pdbtype:sept 
+.\Debug\HistoryClear.obj
+.\Debug\HistoryClearDlg.obj
+.\Debug\StdAfx.obj
+.\Debug\HistoryClear.res
+]
+Creating command line "link.exe @G:\Users\Simon\AppData\Local\Temp\RSP5DFF.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+HistoryClear.cpp
+HistoryClearDlg.cpp
+E:\Source\cocoshun\ClearHistory\HistoryClearDlg.cpp(550) : warning C4244: '=' : conversion from 'unsigned long' to 'unsigned short', possible loss of data
+E:\Source\cocoshun\ClearHistory\HistoryClearDlg.cpp(565) : warning C4244: '=' : conversion from 'unsigned long' to 'unsigned short', possible loss of data
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+HistoryClear.exe - 0 error(s), 2 warning(s)
+</pre>
+</body>
+</html>
