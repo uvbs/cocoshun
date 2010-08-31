@@ -2,24 +2,27 @@
 
 [General Info]
 Version=1
-LastClass=Win7Setting
+LastClass=CClearHistoryDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "MyToolBox.h"
 
-ClassCount=5
+ClassCount=6
 Class1=CMyToolBoxApp
 Class2=CMyToolBoxDlg
 Class3=CAboutDlg
 
-ResourceCount=5
-Resource1=IDD_WIN7SETTING_DIALOG
+ResourceCount=7
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_MYTOOLBOX_DIALOG
+Resource3=IDD_CLEAR_HISTORY_DLG
 Class4=Win7Setting
-Resource4=IDD_ABOUTBOX
+Resource4=IDD_WIN7SETTING_DIALOG
 Class5=GeneralTool
 Resource5=IDD_GENERALTOOL_DIALOG
+Class6=CClearHistoryDlg
+Resource6=IDD_MYTOOLBOX_DIALOG
+Resource7=IDD_CLEAR_HISTORY_BOOT_DLG
 
 [CLS:CMyToolBoxApp]
 Type=0
@@ -32,7 +35,7 @@ Type=0
 HeaderFile=MyToolBoxDlg.h
 ImplementationFile=MyToolBoxDlg.cpp
 Filter=D
-LastObject=IDC_BTN_EXIT
+LastObject=CMyToolBoxDlg
 BaseClass=CResizingDialog
 VirtualFilter=dWC
 
@@ -41,6 +44,7 @@ Type=0
 HeaderFile=MyToolBoxDlg.h
 ImplementationFile=MyToolBoxDlg.cpp
 Filter=D
+LastObject=CAboutDlg
 
 [DLG:IDD_ABOUTBOX]
 Type=1
@@ -54,11 +58,12 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_MYTOOLBOX_DIALOG]
 Type=1
 Class=CMyToolBoxDlg
-ControlCount=4
+ControlCount=5
 Control1=IDC_STATIC_DLGAREA,button,1342177287
 Control2=IDC_BTN_WIN7SETTING,button,1342246915
 Control3=IDC_BTN_GENERALTOOL,button,1342246915
 Control4=IDC_BTN_EXIT,button,1342246915
+Control5=IDC_BTN_CLEARTOOL,button,1342246915
 
 [DLG:IDD_WIN7SETTING_DIALOG]
 Type=1
@@ -67,7 +72,7 @@ ControlCount=5
 Control1=IDC_CHECK_HIDE_FAVORITES,button,1342242819
 Control2=IDC_CHECK_HIDE_LIBRARIES,button,1342242819
 Control3=IDC_BTN_RESTART_EXPLORER,button,1342242816
-Control4=IDC_STATIC_EXPLORER,button,1342177287
+Control4=IDC_STATIC_EXPLORER,button,1073741831
 Control5=IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,button,1342242819
 
 [CLS:Win7Setting]
@@ -93,4 +98,31 @@ BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
 LastObject=GeneralTool
+
+[DLG:IDD_CLEAR_HISTORY_DLG]
+Type=1
+Class=CClearHistoryDlg
+ControlCount=4
+Control1=IDOK,button,1342242817
+Control2=IDCANCEL,button,1342242816
+Control3=IDC_CHECK_CLEAR_INTERNAT_TEMP,button,1342242819
+Control4=IDC_CHECK_CLEAR_SYSTEMP,button,1342242819
+
+[CLS:CClearHistoryDlg]
+Type=0
+HeaderFile=ClearHistoryDlg.h
+ImplementationFile=ClearHistoryDlg.cpp
+BaseClass=CDialog
+Filter=D
+VirtualFilter=dWC
+LastObject=CClearHistoryDlg
+
+[DLG:IDD_CLEAR_HISTORY_BOOT_DLG]
+Type=1
+Class=CClearHistoryDlg
+ControlCount=4
+Control1=IDOK,button,1342242817
+Control2=IDCANCEL,button,1342242816
+Control3=IDC_CHECK_CLEAR_INTERNAT_TEMP,button,1342242819
+Control4=IDC_CHECK_CLEAR_SYSTEMP,button,1342242819
 

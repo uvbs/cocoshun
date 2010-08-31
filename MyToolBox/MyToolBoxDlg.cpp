@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MyToolBox.h"
 #include "MyToolBoxDlg.h"
+#include "Util/SysUtil.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -88,6 +89,7 @@ BEGIN_MESSAGE_MAP(CMyToolBoxDlg, CResizingDialog)
 	ON_BN_CLICKED(IDC_BTN_EXIT, OnBtnExit)
 	ON_BN_CLICKED(IDC_BTN_WIN7SETTING, OnBtnWin7setting)
 	ON_BN_CLICKED(IDC_BTN_GENERALTOOL, OnBtnGeneraltool)
+	ON_BN_CLICKED(IDC_BTN_CLEARTOOL, OnBtnCleartool)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -96,6 +98,9 @@ END_MESSAGE_MAP()
 
 BOOL CMyToolBoxDlg::OnInitDialog()
 {
+    // 右下角画上调整大小的角
+	DrawGripper(TRUE);
+
 	CResizingDialog::OnInitDialog();
 
 	// Add "About..." menu item to system menu.
@@ -128,11 +133,14 @@ BOOL CMyToolBoxDlg::OnInitDialog()
 	m_Win7Setting->Create(IDD_WIN7SETTING_DIALOG,this);
 	m_GeneralTool = new GeneralTool();
 	m_GeneralTool->Create(IDD_GENERALTOOL_DIALOG,this);
+    m_ClearTool = new CClearHistoryDlg();
+    m_ClearTool->Create(IDD_CLEAR_HISTORY_DLG,this);
 	
 	static CCheckBTGroup::ChkBtnIDAndDlg ChkBtnIDAndDlgs[] =
 	{
 		{IDC_BTN_WIN7SETTING, m_Win7Setting, IDI_WIN7},
 		{IDC_BTN_GENERALTOOL, m_GeneralTool, IDI_GENERAL},
+        {IDC_BTN_CLEARTOOL, m_ClearTool, IDI_GENERAL},
 	};
 	
 	static CCheckBTGroup::CheckGroupInfo ChkGrpInfo = 
@@ -142,11 +150,8 @@ BOOL CMyToolBoxDlg::OnInitDialog()
 		IDC_STATIC_DLGAREA,
 		ChkBtnIDAndDlgs
 	};
-	m_CheckGroup.Init(ChkGrpInfo, 2);
+	m_CheckGroup.Init(ChkGrpInfo, 3);
     m_BtnExit.SetIcon(IDI_EXIT);
-
-	// 右下角画上调整大小的角
-	DrawGripper(TRUE);
 
 	SetControlInfo(IDC_STATIC_DLGAREA,RESIZE_BOTH);
 	return FALSE;  // return TRUE  unless you set the focus to a control
@@ -224,4 +229,14 @@ void CMyToolBoxDlg::OnBtnWin7setting()
 void CMyToolBoxDlg::OnBtnGeneraltool() 
 {
 	m_CheckGroup.SetCheck(1);
+}
+
+void CMyToolBoxDlg::OnBtnCleartool() 
+{
+	m_CheckGroup.SetCheck(2);
+}
+
+BOOL CMyToolBoxDlg::DestroyWindow() 
+{
+	return CResizingDialog::DestroyWindow();
 }

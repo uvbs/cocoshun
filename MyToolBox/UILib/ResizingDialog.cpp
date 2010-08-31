@@ -31,6 +31,7 @@
 //
 #include "stdafx.h"
 #include "ResizingDialog.h"
+#include "../util/SysUtil.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -89,22 +90,30 @@ END_MESSAGE_MAP()
 //
 BOOL CResizingDialog::OnInitDialog()
 {
-	CDialog::OnInitDialog();
 	if(m_bRememberSize)
 	{
 		// Load the previous size of the dialog box from the INI/Registry
 		CString dialog_name;
 		GetDialogProfileEntry(dialog_name);
 
-		int cx = AfxGetApp()->GetProfileInt(dialog_name,_T("CX"),0);
-		int cy = AfxGetApp()->GetProfileInt(dialog_name,_T("CY"),0);
-		
-		if(cx && cy)
-		{
-			SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOMOVE );
-		}
+// 		int cx = AfxGetApp()->GetProfileInt(dialog_name,_T("CX"),0);
+// 		int cy = AfxGetApp()->GetProfileInt(dialog_name,_T("CY"),0);
+
+        if(m_bDrawGripper)
+        {
+            if(SysUtil::ReadSetting(&theSetting))
+            {
+                int cx = theSetting.WindowSetting.cx;
+                int cy = theSetting.WindowSetting.cy;
+		        if(cx && cy)
+		        {
+			        //SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOMOVE );
+                    SetWindowPos( NULL,cx, cy, 0, 0, SWP_NOSIZE  );
+		        }
+            }
+        }
 	}
-	
+	CDialog::OnInitDialog();
 	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -187,16 +196,24 @@ void CResizingDialog::OnDestroy()
 {
 	// Save the size of the dialog box, so next time
 	// we'll start with this size
-// 	if(m_bRememberSize && m_bSizeChanged && m_old_cx && m_old_cy)
-// 		{
-// 		CRect rc;
-// 		GetWindowRect(&rc);
-// 		CString dialog_name;
-// 		GetDialogProfileEntry(dialog_name);
-// 
-// 		AfxGetApp()->WriteProfileInt(dialog_name,"CX",rc.Width());
-// 		AfxGetApp()->WriteProfileInt(dialog_name,"CY",rc.Height());
-// 		}
+    if(m_bDrawGripper)
+    {
+//        if(m_bRememberSize && m_bSizeChanged && m_old_cx && m_old_cy)
+        {
+            CRect rect;
+//            GetWindowRect(&rc);
+            GetClientRect(rect); 
+            ClientToScreen(&rect);
+            //  		CString dialog_name;
+            //  		GetDialogProfileEntry(dialog_name);
+            
+            theSetting.WindowSetting.cx=rect.left;
+            theSetting.WindowSetting.cy=rect.top;
+            SysUtil::WriteSetting(&theSetting);
+            //  		AfxGetApp()->WriteProfileInt(dialog_name,"CX",rc.Width());
+            //  		AfxGetApp()->WriteProfileInt(dialog_name,"CY",rc.Height());
+        }
+    }
 // 
 // 	// Important: Reset the internal values in case of reuse of the dialog
 // 	// with out deleting.

@@ -13,6 +13,7 @@
 #include "UILib/ResizingDialog.h"
 #include "GeneralTool.h"
 #include "Win7Setting.h"
+#include "ClearHistoryDlg.h"
 #include "UILib/CheckBTGroup.h"
 #include "UILib/Btnst.h"
 
@@ -30,6 +31,8 @@ public:
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMyToolBoxDlg)
+	public:
+	virtual BOOL DestroyWindow();
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	//}}AFX_VIRTUAL
@@ -39,6 +42,7 @@ protected:
 	HICON m_hIcon;
 	CCheckBTGroup m_CheckGroup;
 	GeneralTool *m_GeneralTool;
+    CClearHistoryDlg *m_ClearTool;
 	Win7Setting *m_Win7Setting;
 	// Generated message map functions
 	//{{AFX_MSG(CMyToolBoxDlg)
@@ -51,6 +55,7 @@ protected:
 	afx_msg void OnBtnExit();
 	afx_msg void OnBtnWin7setting();
 	afx_msg void OnBtnGeneraltool();
+	afx_msg void OnBtnCleartool();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
