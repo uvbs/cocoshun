@@ -91,7 +91,6 @@ void Win7Setting::OnBtnRestartExplorer()
 {
 	CString explorerExe = _T("explorer.exe");
 	SysUtil::KillProcess(explorerExe);
-//	WinExec(explorerExe,SW_SHOW);
 }
 
 void Win7Setting::OnCheckHideFavorites() 

@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include "MyToolBox.h"
 #include "MyToolBoxDlg.h"
+#include "ClearHistoryDlg.h"
+#include "setting.h"
+#include "Util/SysUtil.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -53,6 +56,12 @@ BOOL CMyToolBoxApp::InitInstance()
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
+
+ //   LPCTSTR cmdLine = GetCommandLine();
+ //   MessageBox(NULL,cmdLine,"OK",MB_OK);
+//     CClearHistoryDlg clearDlg;
+//     clearDlg.DoModal();
+    SysUtil::ReadSetting(&theSetting);
 
 	CMyToolBoxDlg dlg;
 	m_pMainWnd = &dlg;

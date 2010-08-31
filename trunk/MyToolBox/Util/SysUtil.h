@@ -8,6 +8,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
+#include "../Setting.h"
 
 enum OSType
 {   
@@ -25,9 +26,15 @@ enum OSType
 class SysUtil  
 {
 public:
+	static CString GetSettingFile();
 	static void RebulidIconCache();
     static void RefreshScreenIcons();
     static void BroadcastChanges();
+
+    //取路径或者可执行文件(去掉后缀EXE)的名字
+    static void GetCurrentPathOrMoudle(CString &Path, CString &Moudle);
+    static BOOL WriteSetting(SETTING *Setting);
+    static BOOL ReadSetting(SETTING *Setting);
 
 	static void KillProcess(LPCTSTR ExeName);
     static OSType GetOS();
