@@ -191,7 +191,10 @@ void CImportLyricDlg::OnBtnFilter()
 {
 	// 得到过滤参数
 	UpdateData(TRUE);
+	CString Text;
 
+	m_LyricEditor.GetWindowText(Text);
+	m_LyricText.SetLyric(Text);
 	// 去换行符
 	int p = m_EditReplaceTxt.Find(LINE_SEPARATOR);
 	if(p != -1)
@@ -199,6 +202,7 @@ void CImportLyricDlg::OnBtnFilter()
 		m_EditReplaceTxt = m_EditReplaceTxt.Mid(0, p);
 	}
 
+	// 设置过滤参数
 	CLyricText::FilterParam filterParam(
 		GetCheck(IDC_CHECK_DEL_SPACE),
 		GetCheck(IDC_CHECK_DEL_EMPTYLINE),
@@ -208,10 +212,8 @@ void CImportLyricDlg::OnBtnFilter()
 		GetCheck(IDC_CHECK_REPLACE),
 		m_EditReplaceTxt,m_EditTargetTxt);
 	m_LyricText.SetFilterParam(&filterParam);
-//	m_LyricText.ProcessFilter();
 
-	CString Text;
-//	m_LyricEditor.GetWindowText(Text);
+	Text = _T("");
 	m_LyricText.GetFilterText(Text);
 	m_LyricEditor.SetWindowText(Text);
 }

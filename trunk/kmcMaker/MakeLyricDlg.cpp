@@ -513,6 +513,9 @@ void CMakeLyricDlg::ParseTextToLyricLine( CString &Lyric , int nStartLine)
 		LyricLine LL;
 		if(Line.IsEmpty()) 
 			continue;
+
+		//É¾³ýÐÐÎ²µÄ0x0d
+		Line.Delete(Line.GetLength()-1);
 		LL.Line = Line;
 		
 		int Pos = 0;

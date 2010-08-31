@@ -14,6 +14,7 @@
 class CLyricText : public CTextBuffer
 {
 public:
+	void SetLyric(CString &Text);
 	struct LyricHeader
 	{
 		CString ti;

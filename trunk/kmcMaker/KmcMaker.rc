@@ -127,7 +127,7 @@ IDD_IMPORTLYRICDLG_DIALOG DIALOG DISCARDABLE  0, 0, 549, 291
 STYLE DS_SETFOREGROUND | WS_CHILD
 FONT 9, "宋体"
 BEGIN
-    PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,375,110,70,21
+    PUSHBUTTON      "导入歌词(&I)",IDC_BTN_IMPORT,375,111,70,21
     CONTROL         "删除首尾空格",IDC_CHECK_DEL_SPACE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,376,149,67,10
     CONTROL         "删除空行",IDC_CHECK_DEL_EMPTYLINE,"Button",
@@ -145,7 +145,7 @@ BEGIN
                     ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | 
                     WS_TABSTOP,0,0,365,291
     LTEXT           "  1、直接手工输入歌词内容；\n  2、粘贴歌词内容；\n  3、点击“导入歌词”按钮从文件导入歌词内容。\n提示：\n  1、请根据情况控制每行歌词的长度，太长会超出屏幕将无法显示，尤其是英文，尽量简短为佳。\n  2、如果完成歌词编辑，请点击“下一步”进入制作流程,如果在制作过程中发现内容错误,您还可以回到这里进行编辑。",
-                    IDC_STATIC_TIP,374,19,164,96
+                    IDC_STATIC_TIP,374,19,164,88
     CONTROL         "过滤所有html或xml标记",IDC_CHECK_DEL_XML_HTML,"Button",
                     BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,443,247,
                     100,10
@@ -157,14 +157,14 @@ BEGIN
     GROUPBOX        "导入歌词方法:",IDC_STATIC_HELP,371,7,170,127,BS_CENTER
     LTEXT           "查找内容:",IDC_STATIC_FIND,376,181,37,8
     CONTROL         "Slider1",IDC_SLIDER_FONTSIZE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,371,264,57,15
-    EDITTEXT        IDC_EDIT_FONTSIZE,430,265,23,14,ES_AUTOHSCROLL
-    LTEXT           "字体:",IDC_STATIC_FONTSIZE,378,250,21,8
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,370,264,54,15
+    EDITTEXT        IDC_EDIT_FONTSIZE,424,265,19,14,ES_AUTOHSCROLL
+    LTEXT           "字体大小:",IDC_STATIC_FONTSIZE,376,250,37,8
 END
 
 IDD_MAKELYRICDLG_DIALOG DIALOGEX 0, 0, 520, 282
 STYLE DS_SETFOREGROUND | WS_CHILD
-FONT 9, "宋体", 0, 0, 0x1
+FONT 9, "宋体"
 BEGIN
     PUSHBUTTON      "",IDC_BTN_OPEN,348,128,24,24,NOT WS_TABSTOP
     CTEXT           "",IDC_LYRIC_MAKER,0,0,340,281,WS_TABSTOP,
@@ -172,7 +172,7 @@ BEGIN
     CONTROL         "",IDC_MEDIAPLAYER,
                     "{6BF52A52-394A-11D3-B153-00C04F79FAA6}",WS_TABSTOP,348,
                     7,159,107
-    LTEXT           "→:    标记当前字的开始,\n并标记上一字的结束\n↓:    标记当前字的结束\n←:    返回上一个字进行标记\n↑:    返回上一行进行标记\n空格:  开始/暂停播放",
+    LTEXT           "→:    标记当前字的开始,并标记上一字的结束;在播放暂停时继续播放.\n↓:    标记当前字的结束\n←:    返回上一个字进行标记\n↑:    返回上一行进行标记\n空格:  开始/暂停播放",
                     IDC_STATIC_TIP,358,176,131,48,NOT WS_GROUP | WS_TABSTOP
     PUSHBUTTON      "预览(&P)",IDC_BTN_PRIVIEW,453,148,52,17,NOT WS_VISIBLE
     PUSHBUTTON      "下一步(&N)",IDC_BTN_NEXTSTEP,446,257,62,24,NOT 
