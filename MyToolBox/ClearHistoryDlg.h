@@ -1,6 +1,7 @@
 #if !defined(AFX_CLEARHISTORYDLG_H__75755C5E_33CF_4C4B_873A_792CAAC0F989__INCLUDED_)
 #define AFX_CLEARHISTORYDLG_H__75755C5E_33CF_4C4B_873A_792CAAC0F989__INCLUDED_
 
+#include "SysClearer.h"	// Added by ClassView
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
@@ -27,13 +28,13 @@ public:
 	//{{AFX_VIRTUAL(CClearHistoryDlg)
 	public:
 	virtual BOOL DestroyWindow();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-    static UINT m_CtrlIDs[];
 	// Generated message map functions
 	//{{AFX_MSG(CClearHistoryDlg)
 	virtual void OnOK();
@@ -43,10 +44,20 @@ protected:
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
 private:
-	void ReadCheck();
+	void ReadCheckBoxValue();
+    CSysClearer m_SysClearer;
+
 	void SetCheck(UINT ID,BOOL bCheck);
 	BOOL GetCheck(UINT ID);
+
+    struct CTRLID_SETTING
+    {
+        UINT CtrlID;
+        BOOL *bCheck;
+    };
+    static CTRLID_SETTING m_CtrlAndSetting[];
 };
 
 //{{AFX_INSERT_LOCATION}}
