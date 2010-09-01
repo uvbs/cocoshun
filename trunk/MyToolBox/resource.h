@@ -28,7 +28,17 @@
 #define IDC_BTN_REBULID_ICON_CACHE      1011
 #define IDC_CHECK_CLEAR_INTERNAT_TEMP   1012
 #define IDC_CHECK_CLEAR_SYSTEMP         1013
-#define IDC_CHECK1                      1014
+#define IDC_CHECK_ClearBrowserAddress   1014
+#define IDC_CHECK_ClearFormAutoComplete 1015
+#define IDC_CHECK_ClearAutoPassword     1016
+#define IDC_CHECK_ClearFavorite         1017
+#define IDC_CHECK_ClearRecyclebin       1019
+#define IDC_CHECK_ClearRun              1020
+#define IDC_CHECK_ClearDocument         1021
+#define IDC_CHECK_ClearLastLoginName    1022
+#define IDC_CHECK_ClearFindFile         1023
+#define IDC_CHECK_ClearFindComputer     1024
+#define IDC_CHECK_ClearBrowseAddress    1026
 
 // Next default values for new objects
 // 

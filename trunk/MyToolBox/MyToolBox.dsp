@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 shlwapi.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 shlwapi.lib Wininet.lib /nologo /subsystem:windows /machine:I386
 
 !ELSEIF  "$(CFG)" == "MyToolBox - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 shlwapi.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 shlwapi.lib Wininet.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 
 !ENDIF 
 
@@ -165,6 +165,10 @@ SOURCE=.\StdAfx.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SysClearer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Util\SysUtil.cpp
 # End Source File
 # Begin Source File
@@ -242,6 +246,10 @@ SOURCE=.\UILib\ShadeButtonST.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SysClearer.h
 # End Source File
 # Begin Source File
 
