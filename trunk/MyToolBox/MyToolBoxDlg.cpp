@@ -71,6 +71,14 @@ CMyToolBoxDlg::CMyToolBoxDlg(CWnd* pParent /*=NULL*/)
 
 	m_GeneralTool = NULL;
 	m_Win7Setting = NULL;
+    m_ClearTool = NULL;
+}
+
+CMyToolBoxDlg::~CMyToolBoxDlg()
+{
+    SAFE_DELETE(m_GeneralTool);
+    SAFE_DELETE(m_Win7Setting);
+    SAFE_DELETE(m_ClearTool);
 }
 
 void CMyToolBoxDlg::DoDataExchange(CDataExchange* pDX)
@@ -140,13 +148,13 @@ BOOL CMyToolBoxDlg::OnInitDialog()
 	{
 		{IDC_BTN_WIN7SETTING, m_Win7Setting, IDI_WIN7},
 		{IDC_BTN_GENERALTOOL, m_GeneralTool, IDI_GENERAL},
-        {IDC_BTN_CLEARTOOL, m_ClearTool, IDI_GENERAL},
+        {IDC_BTN_CLEARTOOL, m_ClearTool, IDI_CLEAR},
 	};
 	
 	static CCheckBTGroup::CheckGroupInfo ChkGrpInfo = 
 	{ 
 		this,
-		0, 
+		theSetting.nPageSelect, 
 		IDC_STATIC_DLGAREA,
 		ChkBtnIDAndDlgs
 	};
@@ -224,19 +232,23 @@ void CMyToolBoxDlg::OnBtnExit()
 void CMyToolBoxDlg::OnBtnWin7setting() 
 {
 	m_CheckGroup.SetCheck(0);
+    theSetting.nPageSelect = 0;
 }
 
 void CMyToolBoxDlg::OnBtnGeneraltool() 
 {
 	m_CheckGroup.SetCheck(1);
+    theSetting.nPageSelect = 1;
 }
 
 void CMyToolBoxDlg::OnBtnCleartool() 
 {
 	m_CheckGroup.SetCheck(2);
+    theSetting.nPageSelect = 2;
 }
 
 BOOL CMyToolBoxDlg::DestroyWindow() 
 {
 	return CResizingDialog::DestroyWindow();
 }
+

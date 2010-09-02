@@ -20,6 +20,8 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+#include "UtilDef.h"
+
 //程序配置信息的全局变量,在任何地方可见
 #include "Setting.h"
 extern SETTING theSetting;

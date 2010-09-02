@@ -22,7 +22,7 @@ class CMyToolBoxDlg : public CResizingDialog
 // Construction
 public:
 	CMyToolBoxDlg(CWnd* pParent = NULL);	// standard constructor
-
+    ~CMyToolBoxDlg();
 // Dialog Data
 	//{{AFX_DATA(CMyToolBoxDlg)
 	enum { IDD = IDD_MYTOOLBOX_DIALOG };

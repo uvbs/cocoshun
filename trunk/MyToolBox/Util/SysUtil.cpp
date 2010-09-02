@@ -8,6 +8,7 @@
 #include "Tlhelp32.h"
 #include <shlwapi.h> 
 #include <string.h>
+#include "Registry.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -255,4 +256,36 @@ CString SysUtil::GetSettingFile()
     SysUtil::GetCurrentPathOrMoudle(path,moudle);
 
     return path+moudle + _T(".opt");
+}
+
+void SysUtil::WriteRegRun(CString name, CString cmdLine)
+{
+    CRegistry regstry;
+    regstry.SetRootKey(HKEY_CURRENT_USER);
+    regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),TRUE);
+    regstry.WriteString(name,cmdLine);
+}
+
+void SysUtil::RemoveRegRun( CString name )
+{
+    CRegistry regstry;
+    regstry.SetRootKey(HKEY_CURRENT_USER);
+    regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),TRUE);
+    regstry.DeleteValue(name);
+}
+
+BOOL SysUtil::IsRegRun( CString name )
+{
+    CRegistry regstry;
+    regstry.SetRootKey(HKEY_CURRENT_USER);
+    regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),TRUE);
+    return regstry.ValueExists(name);
+}
+
+CString SysUtil::GetRegRun( CString name )
+{
+    CRegistry regstry;
+    regstry.SetRootKey(HKEY_CURRENT_USER);
+    regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),TRUE);
+    return regstry.ReadString(name, _T(""));
 }

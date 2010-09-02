@@ -27,6 +27,7 @@ struct WINDOW_SETTING
 
 struct SETTING
 {
+    int nPageSelect ;
     HISTORY_SETTING HistorySetting;
     WINDOW_SETTING WindowSetting;
 };
