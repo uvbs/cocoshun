@@ -47,16 +47,19 @@ protected:
 
 private:
 	void ReadCheckBoxValue();
-    CSysClearer m_SysClearer;
+    static CSysClearer m_SysClearer;
 
 	void SetCheck(UINT ID,BOOL bCheck);
 	BOOL GetCheck(UINT ID);
 
+	typedef void (CSysClearer::*FUNC_PTR)();
     struct CTRLID_SETTING
     {
         UINT CtrlID;
         BOOL *bCheck;
+		FUNC_PTR FuncPtr;
     };
+	FUNC_PTR m_func;
     static CTRLID_SETTING m_CtrlAndSetting[];
 };
 
