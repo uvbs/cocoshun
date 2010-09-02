@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 CClearHistoryDlg::CTRLID_SETTING CClearHistoryDlg::m_CtrlAndSetting[]=
 {
-    {IDC_CHECK_CLEAR_INTERNAT_TEMP,&(theSetting.HistorySetting.bClearInternetTemp)},
+    {IDC_CHECK_CLEAR_INTERNAT_TEMP,&(theSetting.HistorySetting.bClearInternetTemp),m_SysClearer.ClearInternetTemp},
     {IDC_CHECK_CLEAR_SYSTEMP,&(theSetting.HistorySetting.bClearSysTempDir)},
     {IDC_CHECK_ClearBrowserAddress,&(theSetting.HistorySetting.bClearBrowserAddress)},
     {IDC_CHECK_ClearFormAutoComplete,&(theSetting.HistorySetting.bClearFormAutoComplete)},
@@ -79,12 +79,17 @@ BOOL CClearHistoryDlg::DestroyWindow()
 
 void CClearHistoryDlg::OnCheckClearInternatTemp() 
 {
-	theSetting.HistorySetting.bClearInternetTemp = GetCheck(IDC_CHECK_CLEAR_INTERNAT_TEMP);
+	m_func = m_SysClearer.ClearAutoPassword;
+	(m_SysClearer.*m_func)();
+//	(m_SysClearer.*(m_CtrlAndSetting[0].FuncPtr))();
+// 	m_CtrlAndSetting[0].Func = this->OnCancel;
+//	(m_SysClearer.*(m_CtrlAndSetting[0]).Func)();
+//	theSetting.HistorySetting.bClearInternetTemp = GetCheck(IDC_CHECK_CLEAR_INTERNAT_TEMP);
 }
 
 void CClearHistoryDlg::OnCheckClearSystemp() 
 {
-	theSetting.HistorySetting.bClearSysTempDir = GetCheck(IDC_CHECK_CLEAR_SYSTEMP);
+//	theSetting.HistorySetting.bClearSysTempDir = GetCheck(IDC_CHECK_CLEAR_SYSTEMP);
 }
 
 BOOL CClearHistoryDlg::GetCheck(UINT ID)
