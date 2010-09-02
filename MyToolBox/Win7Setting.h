@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Win7Setting dialog
 #include "UILib/ResizingDialog.h"
-#include "UILib/BtnST.h"
+#include "UILib/ShadeButtonST.h"
 #include "RegOperate.h"
 #include "FuncDef.h"
 #include "CtrlAction.h"
@@ -24,7 +24,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(Win7Setting)
 	enum { IDD = IDD_WIN7SETTING_DIALOG };
-	CButtonST	m_BtnRestartExplorer;
+	CShadeButtonST	m_BtnRestartExplorer;
 	//}}AFX_DATA
 
 

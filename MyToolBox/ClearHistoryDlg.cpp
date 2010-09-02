@@ -14,24 +14,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CClearHistoryDlg dialog
-
-CClearHistoryDlg::CTRLID_SETTING CClearHistoryDlg::m_CtrlAndSetting[]=
-{
-    {IDC_CHECK_CLEAR_INTERNAT_TEMP,&(theSetting.HistorySetting.bClearInternetTemp),m_SysClearer.ClearInternetTemp},
-    {IDC_CHECK_CLEAR_SYSTEMP,&(theSetting.HistorySetting.bClearSysTempDir)},
-    {IDC_CHECK_ClearBrowserAddress,&(theSetting.HistorySetting.bClearBrowserAddress)},
-    {IDC_CHECK_ClearFormAutoComplete,&(theSetting.HistorySetting.bClearFormAutoComplete)},
-    {IDC_CHECK_ClearAutoPassword,&(theSetting.HistorySetting.bClearAutoPassword)},
-    {IDC_CHECK_ClearFavorite,&(theSetting.HistorySetting.bClearFavorite)},
-    {IDC_CHECK_ClearRecyclebin,&(theSetting.HistorySetting.bClearRecyclebin)},
-    {IDC_CHECK_ClearRun,&(theSetting.HistorySetting.bClearRun)},
-    {IDC_CHECK_ClearDocument,&(theSetting.HistorySetting.bClearDocument)},
-    {IDC_CHECK_ClearLastLoginName,&(theSetting.HistorySetting.bClearLastLoginName)},
-    {IDC_CHECK_ClearFindFile,&(theSetting.HistorySetting.bClearFindFile)},
-    {IDC_CHECK_ClearFindComputer,&(theSetting.HistorySetting.bClearFindComputer)},
-    {IDC_CHECK_ClearBrowseAddress,&(theSetting.HistorySetting.bClearBrowseAddress)},
-};
-
 CClearHistoryDlg::CClearHistoryDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CClearHistoryDlg::IDD, pParent)
 {
@@ -45,15 +27,15 @@ void CClearHistoryDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CClearHistoryDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDOK, m_BtnOK);
 	//}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CClearHistoryDlg, CDialog)
 	//{{AFX_MSG_MAP(CClearHistoryDlg)
-	ON_BN_CLICKED(IDC_CHECK_CLEAR_INTERNAT_TEMP, OnCheckClearInternatTemp)
-	ON_BN_CLICKED(IDC_CHECK_CLEAR_SYSTEMP, OnCheckClearSystemp)
+	ON_BN_CLICKED(IDC_CHECK_CLEAR_AT_SYSSTART, OnCheckClearAtSysStart)
+	ON_BN_CLICKED(IDC_CHECK_DISPLAY_CLEARUI, OnCheckShowClearUI)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -62,12 +44,16 @@ END_MESSAGE_MAP()
 
 void CClearHistoryDlg::OnOK() 
 {
-//    SysUtil::WriteSetting(&theSetting);
-//	CDialog::OnOK();
+    for( int i=0;i<m_arySize;i++)
+    {
+        if(*m_CtrlAndSetting[i].bCheck)
+            (m_SysClearer.*m_CtrlAndSetting[i].FuncPtr)();
+    }
 }
 
 void CClearHistoryDlg::OnCancel() 
 {
+    TRACE("OnCancel\n");
 //	SysUtil::ReadSetting(&theSetting);
 //	CDialog::OnCancel();
 }
@@ -77,19 +63,35 @@ BOOL CClearHistoryDlg::DestroyWindow()
 	return CDialog::DestroyWindow();
 }
 
-void CClearHistoryDlg::OnCheckClearInternatTemp() 
+void CClearHistoryDlg::OnCheckClearAtSysStart() 
 {
-	m_func = m_SysClearer.ClearAutoPassword;
-	(m_SysClearer.*m_func)();
-//	(m_SysClearer.*(m_CtrlAndSetting[0].FuncPtr))();
-// 	m_CtrlAndSetting[0].Func = this->OnCancel;
-//	(m_SysClearer.*(m_CtrlAndSetting[0]).Func)();
-//	theSetting.HistorySetting.bClearInternetTemp = GetCheck(IDC_CHECK_CLEAR_INTERNAT_TEMP);
+    CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_DISPLAY_CLEARUI);
+    if(GetCheck(IDC_CHECK_CLEAR_AT_SYSSTART))
+    {
+        pButton->EnableWindow(TRUE);
+        SysUtil::WriteRegRun(m_strModule,m_strPath);
+    }else
+    {
+        pButton->EnableWindow(FALSE);
+        SysUtil::RemoveRegRun(m_strModule);
+    }
 }
 
-void CClearHistoryDlg::OnCheckClearSystemp() 
+void CClearHistoryDlg::OnCheckShowClearUI() 
 {
-//	theSetting.HistorySetting.bClearSysTempDir = GetCheck(IDC_CHECK_CLEAR_SYSTEMP);
+    if(!GetCheck(IDC_CHECK_CLEAR_AT_SYSSTART))
+        return;
+        
+    SysUtil::GetCurrentPathOrMoudle(m_strPath, m_strModule);
+    if(GetCheck(IDC_CHECK_DISPLAY_CLEARUI))
+    {
+        m_strPath += m_strModule + _T(".exe /clean /showUI");
+        SysUtil::WriteRegRun(m_strModule, m_strPath);
+    }else
+    {
+        m_strPath += m_strModule + _T(".exe /clean");
+        SysUtil::WriteRegRun(m_strModule, m_strPath);
+    }
 }
 
 BOOL CClearHistoryDlg::GetCheck(UINT ID)
@@ -109,8 +111,29 @@ BOOL CClearHistoryDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
+    InitArray();
 	ReadCheckBoxValue();
-	
+
+    SysUtil::GetCurrentPathOrMoudle(m_strPath, m_strModule);
+    m_strPath += m_strModule + _T(".exe /clean");
+
+    BOOL isRegRun = SysUtil::IsRegRun(m_strModule);
+    SetCheck(IDC_CHECK_CLEAR_AT_SYSSTART,isRegRun);
+    if(isRegRun)
+    {
+        CString strRegRun = SysUtil::GetRegRun(m_strModule);
+        int pos = strRegRun.Find(_T("/showUI"), 0);
+
+        SetCheck(IDC_CHECK_DISPLAY_CLEARUI, pos!=-1);
+    }else
+    {
+         CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_DISPLAY_CLEARUI);
+         pButton->EnableWindow(FALSE);
+    }
+
+
+    m_BtnOK.SetShade(CShadeButtonST::SHS_METAL);
+    m_BtnOK.SetIcon(IDI_OK);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -118,8 +141,7 @@ BOOL CClearHistoryDlg::OnInitDialog()
 
 void CClearHistoryDlg::ReadCheckBoxValue()
 {
-    int len = sizeof(m_CtrlAndSetting) / sizeof(CTRLID_SETTING);
-    for( int i=0;i<len;i++)
+    for( int i=0;i<m_arySize;i++)
     {
         UINT ID = m_CtrlAndSetting[i].CtrlID;
         BOOL bCheck = *m_CtrlAndSetting[i].bCheck;
@@ -133,8 +155,7 @@ BOOL CClearHistoryDlg::PreTranslateMessage(MSG* pMsg)
     {
         int index = -1;
 
-        int len = sizeof(m_CtrlAndSetting) / sizeof(CTRLID_SETTING);
-        for( int i=0;i<len;i++)
+        for( int i=0;i<m_arySize;i++)
         {
             if(pMsg->hwnd == (GetDlgItem(m_CtrlAndSetting[i].CtrlID)->GetSafeHwnd()))
             {
@@ -145,11 +166,34 @@ BOOL CClearHistoryDlg::PreTranslateMessage(MSG* pMsg)
 
         if(index != -1)
         {
-            TRACE("%d,%d\n",index,m_CtrlAndSetting[index].CtrlID);
+            //TRACE("%d,%d\n",index,m_CtrlAndSetting[index].CtrlID);
             BOOL bCheck = !GetCheck(m_CtrlAndSetting[index].CtrlID);
             *m_CtrlAndSetting[index].bCheck = bCheck;
         }
     }
 	
 	return CDialog::PreTranslateMessage(pMsg);
+}
+
+void CClearHistoryDlg::InitArray()
+{
+    static CTRLID_SETTING Array[]=
+    {
+        {IDC_CHECK_CLEAR_INTERNAT_TEMP, &(theSetting.HistorySetting.bClearInternetTemp),    m_SysClearer.ClearInternetTemp},
+        {IDC_CHECK_CLEAR_SYSTEMP,       &(theSetting.HistorySetting.bClearSysTempDir),      m_SysClearer.ClearSysTempDir},
+        {IDC_CHECK_ClearBrowserAddress, &(theSetting.HistorySetting.bClearBrowserAddress),  m_SysClearer.ClearBrowseAddress},
+        {IDC_CHECK_ClearFormAutoComplete,&(theSetting.HistorySetting.bClearFormAutoComplete),m_SysClearer.ClearFormAutoComplete},
+        {IDC_CHECK_ClearAutoPassword,   &(theSetting.HistorySetting.bClearAutoPassword),    m_SysClearer.ClearAutoPassword},
+        {IDC_CHECK_ClearFavorite,       &(theSetting.HistorySetting.bClearFavorite),        m_SysClearer.ClearFavorite},
+        {IDC_CHECK_ClearRecyclebin,     &(theSetting.HistorySetting.bClearRecyclebin),      m_SysClearer.ClearRecyclebin},
+        {IDC_CHECK_ClearRun,            &(theSetting.HistorySetting.bClearRun),             m_SysClearer.ClearRun},
+        {IDC_CHECK_ClearDocument,       &(theSetting.HistorySetting.bClearDocument),        m_SysClearer.ClearDocument},
+        {IDC_CHECK_ClearLastLoginName,  &(theSetting.HistorySetting.bClearLastLoginName),   m_SysClearer.ClearLastLoginName},
+        {IDC_CHECK_ClearFindFile,       &(theSetting.HistorySetting.bClearFindFile),        m_SysClearer.ClearFindFile},
+        {IDC_CHECK_ClearFindComputer,   &(theSetting.HistorySetting.bClearFindComputer),    m_SysClearer.ClearFindComputer},
+        {IDC_CHECK_ClearBrowseAddress,  &(theSetting.HistorySetting.bClearBrowseAddress),   m_SysClearer.ClearBrowserAddress},
+    };
+
+    m_arySize = sizeof(Array) / sizeof(CTRLID_SETTING);
+    m_CtrlAndSetting = Array;
 }

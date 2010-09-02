@@ -26,6 +26,11 @@ enum OSType
 class SysUtil  
 {
 public:
+    static void WriteRegRun(CString name, CString cmdLine);
+    static void RemoveRegRun(CString name);
+    static BOOL IsRegRun(CString name);
+    static CString GetRegRun(CString name);
+
 	static CString GetSettingFile();
 	static void RebulidIconCache();
     static void RefreshScreenIcons();

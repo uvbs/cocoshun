@@ -13,15 +13,15 @@ Class2=CMyToolBoxDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_GENERALTOOL_DIALOG
+Resource1=IDD_MYTOOLBOX_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
+Resource3=IDD_WIN7SETTING_DIALOG
 Class4=Win7Setting
-Resource4=IDD_WIN7SETTING_DIALOG
+Resource4=IDD_ABOUTBOX
 Class5=GeneralTool
 Resource5=IDD_CLEAR_HISTORY_DLG
 Class6=CClearHistoryDlg
-Resource6=IDD_MYTOOLBOX_DIALOG
+Resource6=IDD_GENERALTOOL_DIALOG
 Resource7=IDD_CLEAR_HISTORY_BOOT_DLG
 
 [CLS:CMyToolBoxApp]
@@ -59,7 +59,7 @@ Control4=IDOK,button,1342373889
 Type=1
 Class=CMyToolBoxDlg
 ControlCount=5
-Control1=IDC_STATIC_DLGAREA,button,1342177287
+Control1=IDC_STATIC_DLGAREA,button,1073741831
 Control2=IDC_BTN_WIN7SETTING,button,1342246915
 Control3=IDC_BTN_GENERALTOOL,button,1342246915
 Control4=IDC_BTN_EXIT,button,1342246915
@@ -102,7 +102,7 @@ LastObject=GeneralTool
 [DLG:IDD_CLEAR_HISTORY_DLG]
 Type=1
 Class=CClearHistoryDlg
-ControlCount=15
+ControlCount=19
 Control1=IDC_CHECK_CLEAR_INTERNAT_TEMP,button,1342242819
 Control2=IDC_CHECK_CLEAR_SYSTEMP,button,1342242819
 Control3=IDC_CHECK_ClearBrowserAddress,button,1342242819
@@ -117,7 +117,11 @@ Control11=IDC_CHECK_ClearFindFile,button,1342242819
 Control12=IDC_CHECK_ClearFindComputer,button,1342242819
 Control13=IDC_CHECK_ClearFavorite,button,1342242819
 Control14=IDOK,button,1342242817
-Control15=IDCANCEL,button,1342242816
+Control15=IDC_STATIC,button,1342177287
+Control16=IDC_CHECK_CLEAR_AT_SYSSTART,button,1342242819
+Control17=IDC_CHECK_DISPLAY_CLEARUI,button,1342242819
+Control18=IDC_STATIC,static,1342181383
+Control19=IDC_STATIC,static,1342308352
 
 [CLS:CClearHistoryDlg]
 Type=0
@@ -126,7 +130,7 @@ ImplementationFile=ClearHistoryDlg.cpp
 BaseClass=CDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=CClearHistoryDlg
+LastObject=IDOK
 
 [DLG:IDD_CLEAR_HISTORY_BOOT_DLG]
 Type=1

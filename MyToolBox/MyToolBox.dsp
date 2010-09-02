@@ -257,12 +257,20 @@ SOURCE=.\Util\SysUtil.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UtilDef.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Win7Setting.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\res\clear.ico
+# End Source File
 # Begin Source File
 
 SOURCE=.\res\ClearShell.ico
@@ -282,6 +290,10 @@ SOURCE=.\res\MyToolBox.ico
 # Begin Source File
 
 SOURCE=.\res\MyToolBox.rc2
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\OK.ico
 # End Source File
 # Begin Source File
 

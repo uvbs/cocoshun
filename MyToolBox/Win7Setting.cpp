@@ -66,6 +66,7 @@ BOOL Win7Setting::OnInitDialog()
 {
 	CResizingDialog::OnInitDialog();
 
+    m_BtnRestartExplorer.SetShade(CShadeButtonST::SHS_METAL);
 	m_BtnRestartExplorer.SetIcon(IDI_RESTART_EXPLORER);
 	
     m_ctrlAction.Initialize(this,m_SettingOper);

@@ -7,7 +7,7 @@
 #endif // _MSC_VER > 1000
 // ClearHistoryDlg.h : header file
 //
-
+#include "UILib/ShadeButtonST.h"
 /////////////////////////////////////////////////////////////////////////////
 // CClearHistoryDlg dialog
 
@@ -15,11 +15,13 @@ class CClearHistoryDlg : public CDialog
 {
 // Construction
 public:
+	void InitArray();
 	CClearHistoryDlg(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CClearHistoryDlg)
 	enum { IDD = IDD_CLEAR_HISTORY_BOOT_DLG };
+	CShadeButtonST	m_BtnOK;
 	//}}AFX_DATA
 
 
@@ -39,28 +41,32 @@ protected:
 	//{{AFX_MSG(CClearHistoryDlg)
 	virtual void OnOK();
 	virtual void OnCancel();
-	afx_msg void OnCheckClearInternatTemp();
-	afx_msg void OnCheckClearSystemp();
+	afx_msg void OnCheckClearAtSysStart();
+	afx_msg void OnCheckShowClearUI();
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+    CString m_strPath;
+    CString m_strModule;
 private:
+	int m_arySize;
 	void ReadCheckBoxValue();
-    static CSysClearer m_SysClearer;
+    CSysClearer m_SysClearer;
 
 	void SetCheck(UINT ID,BOOL bCheck);
 	BOOL GetCheck(UINT ID);
 
 	typedef void (CSysClearer::*FUNC_PTR)();
+    typedef void (CClearHistoryDlg::*FUNC_PTR1)();
     struct CTRLID_SETTING
     {
         UINT CtrlID;
         BOOL *bCheck;
 		FUNC_PTR FuncPtr;
     };
-	FUNC_PTR m_func;
-    static CTRLID_SETTING m_CtrlAndSetting[];
+
+    CTRLID_SETTING *m_CtrlAndSetting;
 };
 
 //{{AFX_INSERT_LOCATION}}
