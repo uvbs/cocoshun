@@ -13,15 +13,15 @@ Class2=CMyToolBoxDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_MYTOOLBOX_DIALOG
+Resource1=IDD_WIN7SETTING_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_WIN7SETTING_DIALOG
+Resource3=IDD_GENERALTOOL_DIALOG
 Class4=Win7Setting
-Resource4=IDD_ABOUTBOX
+Resource4=IDD_MYTOOLBOX_DIALOG
 Class5=GeneralTool
-Resource5=IDD_CLEAR_HISTORY_DLG
+Resource5=IDD_ABOUTBOX
 Class6=CClearHistoryDlg
-Resource6=IDD_GENERALTOOL_DIALOG
+Resource6=IDD_CLEAR_HISTORY_DLG
 Resource7=IDD_CLEAR_HISTORY_BOOT_DLG
 
 [CLS:CMyToolBoxApp]
@@ -135,9 +135,24 @@ LastObject=IDOK
 [DLG:IDD_CLEAR_HISTORY_BOOT_DLG]
 Type=1
 Class=CClearHistoryDlg
-ControlCount=4
-Control1=IDOK,button,1342242817
-Control2=IDCANCEL,button,1342242816
-Control3=IDC_CHECK_CLEAR_INTERNAT_TEMP,button,1342242819
-Control4=IDC_CHECK_CLEAR_SYSTEMP,button,1342242819
+ControlCount=19
+Control1=IDC_CHECK_CLEAR_INTERNAT_TEMP,button,1342242819
+Control2=IDC_CHECK_CLEAR_SYSTEMP,button,1342242819
+Control3=IDC_CHECK_ClearBrowserAddress,button,1342242819
+Control4=IDC_CHECK_ClearBrowseAddress,button,1342242819
+Control5=IDC_CHECK_ClearFormAutoComplete,button,1342242819
+Control6=IDC_CHECK_ClearAutoPassword,button,1342242819
+Control7=IDC_CHECK_ClearRecyclebin,button,1342242819
+Control8=IDC_CHECK_ClearRun,button,1342242819
+Control9=IDC_CHECK_ClearDocument,button,1342242819
+Control10=IDC_CHECK_ClearLastLoginName,button,1342242819
+Control11=IDC_CHECK_ClearFindFile,button,1342242819
+Control12=IDC_CHECK_ClearFindComputer,button,1342242819
+Control13=IDC_CHECK_ClearFavorite,button,1342242819
+Control14=IDOK,button,1342242817
+Control15=IDC_STATIC,button,1342177287
+Control16=IDC_CHECK_CLEAR_AT_SYSSTART,button,1342242819
+Control17=IDC_CHECK_DISPLAY_CLEARUI,button,1342242819
+Control18=IDC_STATIC,static,1342181383
+Control19=IDC_STATIC,static,1342308352
 

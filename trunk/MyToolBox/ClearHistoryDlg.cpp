@@ -53,9 +53,7 @@ void CClearHistoryDlg::OnOK()
 
 void CClearHistoryDlg::OnCancel() 
 {
-    TRACE("OnCancel\n");
-//	SysUtil::ReadSetting(&theSetting);
-//	CDialog::OnCancel();
+	CDialog::OnCancel();
 }
 
 BOOL CClearHistoryDlg::DestroyWindow() 
@@ -110,6 +108,11 @@ void CClearHistoryDlg::SetCheck(UINT ID,BOOL bCheck)
 BOOL CClearHistoryDlg::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
+
+	if(this->m_nIDHelp == IDD_CLEAR_HISTORY_BOOT_DLG)
+	{
+		MessageBox("OK");
+	}
 
     InitArray();
 	ReadCheckBoxValue();

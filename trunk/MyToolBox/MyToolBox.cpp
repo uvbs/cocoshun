@@ -42,6 +42,8 @@ CMyToolBoxApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 // CMyToolBoxApp initialization
 
+
+
 BOOL CMyToolBoxApp::InitInstance()
 {
 	AfxEnableControlContainer();
@@ -61,7 +63,21 @@ BOOL CMyToolBoxApp::InitInstance()
  //   MessageBox(NULL,cmdLine,"OK",MB_OK);
 //     CClearHistoryDlg clearDlg;
 //     clearDlg.DoModal();
-    SysUtil::ReadSetting(&theSetting);
+//   SysUtil::ReadSetting(&theSetting);
+	if(ExistParameter(_T("/clear"),theApp.m_lpCmdLine))
+	{
+		CClearHistoryDlg clearDlg;
+
+		if(ExistParameter(_T("/showUI"),theApp.m_lpCmdLine))
+		{
+			clearDlg.DoModal();
+		}else
+		{
+
+		}
+		
+		return FALSE;
+	}
 
 	CMyToolBoxDlg dlg;
 	m_pMainWnd = &dlg;
@@ -80,4 +96,9 @@ BOOL CMyToolBoxApp::InitInstance()
 	// Since the dialog has been closed, return FALSE so that we exit the
 	//  application, rather than start the application's message pump.
 	return FALSE;
+}
+
+BOOL CMyToolBoxApp::ExistParameter(CString param, CString cmdLine)
+{
+	return cmdLine.Find(param) != -1;
 }
