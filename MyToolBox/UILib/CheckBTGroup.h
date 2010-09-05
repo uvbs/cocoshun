@@ -13,7 +13,6 @@
 #include "ShadeButtonST.h"
 #include "ResizingDialog.h"
 
-
 class CCheckBTGroup  
 {
 public:
@@ -33,10 +32,17 @@ public:
 
 	BOOL IsCreated();
 	void ReSizePages();
-
+    
+    void GetPanelRect(CRect &rect);
+    
+    void SlideShowPage( int nOld,int nNew );
 	void SetCheck(int n);
 	int GetCheck();
+
+
 	CCheckBTGroup();
+    CCheckBTGroup(CheckGroupInfo ChkGrpInfo, int nPages);
+
 	virtual ~CCheckBTGroup();
 	void Init(CheckGroupInfo ChkGrpInfo, int nPages);
 

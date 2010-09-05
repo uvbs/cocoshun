@@ -14,28 +14,31 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CClearHistoryDlg dialog
-CClearHistoryDlg::CClearHistoryDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CClearHistoryDlg::IDD, pParent)
+CClearHistoryDlg::CClearHistoryDlg(BOOL bStartFromModel,CWnd* pParent /*=NULL*/)
+	: CResizingDialog(CClearHistoryDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CClearHistoryDlg)
 		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
+    m_bStartFromModel = bStartFromModel;
 }
 
 
 void CClearHistoryDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CResizingDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CClearHistoryDlg)
 	DDX_Control(pDX, IDOK, m_BtnOK);
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CClearHistoryDlg, CDialog)
+BEGIN_MESSAGE_MAP(CClearHistoryDlg, CResizingDialog)
 	//{{AFX_MSG_MAP(CClearHistoryDlg)
 	ON_BN_CLICKED(IDC_CHECK_CLEAR_AT_SYSSTART, OnCheckClearAtSysStart)
 	ON_BN_CLICKED(IDC_CHECK_DISPLAY_CLEARUI, OnCheckShowClearUI)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_CHECK_ClearTaskbarIconHistory, OnCHECKClearTaskbarIconHistory)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -47,18 +50,26 @@ void CClearHistoryDlg::OnOK()
     for( int i=0;i<m_arySize;i++)
     {
         if(*m_CtrlAndSetting[i].bCheck)
+        {
             (m_SysClearer.*m_CtrlAndSetting[i].FuncPtr)();
+            if(m_bStartFromModel && m_bShowUI)
+            {
+                SetCheck(m_CtrlAndSetting[i].CtrlID);
+                ShowExecuteLog(m_CtrlAndSetting[i].CtrlID);
+            }
+        }
     }
 }
 
 void CClearHistoryDlg::OnCancel() 
 {
-	CDialog::OnCancel();
+    if(m_bShowUI)
+	    CResizingDialog::OnCancel();
 }
 
 BOOL CClearHistoryDlg::DestroyWindow() 
 {
-	return CDialog::DestroyWindow();
+	return CResizingDialog::DestroyWindow();
 }
 
 void CClearHistoryDlg::OnCheckClearAtSysStart() 
@@ -72,6 +83,7 @@ void CClearHistoryDlg::OnCheckClearAtSysStart()
     {
         pButton->EnableWindow(FALSE);
         SysUtil::RemoveRegRun(m_strModule);
+        SetCheck(IDC_CHECK_DISPLAY_CLEARUI,FALSE);
     }
 }
 
@@ -107,36 +119,40 @@ void CClearHistoryDlg::SetCheck(UINT ID,BOOL bCheck)
 
 BOOL CClearHistoryDlg::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
-
-	if(this->m_nIDHelp == IDD_CLEAR_HISTORY_BOOT_DLG)
-	{
-		MessageBox("OK");
-	}
+    DrawGripper(m_bStartFromModel);	
+    CResizingDialog::OnInitDialog();
 
     InitArray();
 	ReadCheckBoxValue();
 
-    SysUtil::GetCurrentPathOrMoudle(m_strPath, m_strModule);
-    m_strPath += m_strModule + _T(".exe /clean");
-
-    BOOL isRegRun = SysUtil::IsRegRun(m_strModule);
-    SetCheck(IDC_CHECK_CLEAR_AT_SYSSTART,isRegRun);
-    if(isRegRun)
+    if(m_bStartFromModel)
     {
-        CString strRegRun = SysUtil::GetRegRun(m_strModule);
-        int pos = strRegRun.Find(_T("/showUI"), 0);
-
-        SetCheck(IDC_CHECK_DISPLAY_CLEARUI, pos!=-1);
+        SetTimer(1,1000, NULL);
+        m_BtnOK.ShowWindow( SW_HIDE);
     }else
     {
-         CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_DISPLAY_CLEARUI);
-         pButton->EnableWindow(FALSE);
+        SysUtil::GetCurrentPathOrMoudle(m_strPath, m_strModule);
+        m_strPath += m_strModule + _T(".exe /clean");
+        
+        //读取注册表的启动值
+        BOOL isRegRun = SysUtil::IsRegRun(m_strModule);
+        SetCheck(IDC_CHECK_CLEAR_AT_SYSSTART,isRegRun);
+        if(isRegRun)
+        {
+            CString strRegRun = SysUtil::GetRegRun(m_strModule);
+            int pos = strRegRun.Find(_T("/showUI"), 0);
+            
+            SetCheck(IDC_CHECK_DISPLAY_CLEARUI, pos!=-1);
+        }else
+        {
+            CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_DISPLAY_CLEARUI);
+            pButton->EnableWindow(FALSE);
+        }
+        m_BtnOK.SetShade(CShadeButtonST::SHS_METAL);
+        m_BtnOK.SetIcon(IDI_OK);
     }
+    
 
-
-    m_BtnOK.SetShade(CShadeButtonST::SHS_METAL);
-    m_BtnOK.SetIcon(IDI_OK);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -148,7 +164,12 @@ void CClearHistoryDlg::ReadCheckBoxValue()
     {
         UINT ID = m_CtrlAndSetting[i].CtrlID;
         BOOL bCheck = *m_CtrlAndSetting[i].bCheck;
-        SetCheck(ID, bCheck);
+        if(m_bStartFromModel)
+        {
+            //((CButton *)GetDlgItem(ID))->EnableWindow(FALSE);
+        }
+        else
+            SetCheck(ID, bCheck);
     }
 }
 
@@ -175,7 +196,7 @@ BOOL CClearHistoryDlg::PreTranslateMessage(MSG* pMsg)
         }
     }
 	
-	return CDialog::PreTranslateMessage(pMsg);
+	return CResizingDialog::PreTranslateMessage(pMsg);
 }
 
 void CClearHistoryDlg::InitArray()
@@ -195,8 +216,51 @@ void CClearHistoryDlg::InitArray()
         {IDC_CHECK_ClearFindFile,       &(theSetting.HistorySetting.bClearFindFile),        m_SysClearer.ClearFindFile},
         {IDC_CHECK_ClearFindComputer,   &(theSetting.HistorySetting.bClearFindComputer),    m_SysClearer.ClearFindComputer},
         {IDC_CHECK_ClearBrowseAddress,  &(theSetting.HistorySetting.bClearBrowseAddress),   m_SysClearer.ClearBrowserAddress},
+        {IDC_CHECK_ClearTaskbarIconHistory,&(theSetting.HistorySetting.bClearTaskbarIconHistory), m_SysClearer.ClearTaskbarIconHistory},
     };
 
     m_arySize = sizeof(Array) / sizeof(CTRLID_SETTING);
     m_CtrlAndSetting = Array;
+}
+
+void CClearHistoryDlg::AutoClear(BOOL bshowUI)
+{
+    m_bShowUI = bshowUI;
+    InitArray();
+    OnOK();
+}
+
+void CClearHistoryDlg::ShowExecuteLog(UINT ID)
+{
+    CString strOper;
+    CWnd *pWnd = GetDlgItem(ID);
+    pWnd->GetWindowText(strOper);
+
+    CEdit *pEdit = (CEdit *)GetDlgItem(IDC_EDIT_LOG);
+    CString strLog;
+    pEdit->GetWindowText(strLog);
+    strLog += strOper + _T("  完成... \r\n");
+    pEdit->SetWindowText(strLog);
+}
+
+
+void CClearHistoryDlg::OnTimer(UINT nIDEvent) 
+{
+    if(nIDEvent == 1)
+    {
+        static BOOL bFirst = TRUE;
+    
+        if(bFirst && m_bStartFromModel)
+        {
+            AutoClear();
+            bFirst = FALSE;
+        }
+        KillTimer(1);
+    }
+	CResizingDialog::OnTimer(nIDEvent);
+}
+
+void CClearHistoryDlg::OnCHECKClearTaskbarIconHistory() 
+{
+    	
 }

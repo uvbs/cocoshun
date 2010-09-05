@@ -54,6 +54,9 @@ CResizingDialog::CResizingDialog(UINT nIDTemplate, CWnd* pParentWnd) :
 
 	m_bRememberSize = TRUE;
 	m_bDrawGripper = FALSE;
+
+    // ∂¡»°≈‰÷√Œƒº˛
+    SysUtil::ReadSetting(&theSetting);
 }
 
 void CResizingDialog::SetControlInfo(WORD CtrlId,WORD Anchore)			
@@ -101,16 +104,13 @@ BOOL CResizingDialog::OnInitDialog()
 
         if(m_bDrawGripper)
         {
-            if(SysUtil::ReadSetting(&theSetting))
-            {
-                int cx = theSetting.WindowSetting.cx;
-                int cy = theSetting.WindowSetting.cy;
-		        if(cx && cy)
-		        {
-			        //SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOMOVE );
-                    SetWindowPos( NULL,cx, cy, 0, 0, SWP_NOSIZE  );
-		        }
-            }
+            int cx = theSetting.WindowSetting.cx;
+            int cy = theSetting.WindowSetting.cy;
+		    if(cx && cy)
+		    {
+			    //SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOMOVE );
+                SetWindowPos( NULL,cx, cy, 0, 0, SWP_NOSIZE  );
+		    }
         }
 	}
 	CDialog::OnInitDialog();

@@ -278,7 +278,7 @@ BOOL SysUtil::IsRegRun( CString name )
 {
     CRegistry regstry;
     regstry.SetRootKey(HKEY_CURRENT_USER);
-    regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),TRUE);
+    regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),FALSE);
     return regstry.ValueExists(name);
 }
 
@@ -288,4 +288,16 @@ CString SysUtil::GetRegRun( CString name )
     regstry.SetRootKey(HKEY_CURRENT_USER);
     regstry.SetKey(_T("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),TRUE);
     return regstry.ReadString(name, _T(""));
+}
+
+CString SysUtil::GetSysDir()
+{
+    TCHAR dirBuf[MAX_PATH];
+    ::GetSystemDirectory(dirBuf,MAX_PATH);
+    return dirBuf;
+}
+
+HICON SysUtil::GetSystemIcon(int nIndex)
+{
+    return ExtractIcon(NULL, SysUtil::GetSysDir() + _T("\\shell32.dll"),nIndex);
 }

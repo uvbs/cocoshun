@@ -95,9 +95,9 @@ STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION |
     WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "我的工具箱"
-FONT 9, "宋体", 0, 0, 0x1
+FONT 9, "宋体"
 BEGIN
-    GROUPBOX        "",IDC_STATIC_DLGAREA,7,41,337,191,NOT WS_VISIBLE
+    GROUPBOX        "",IDC_STATIC_DLGAREA,3,41,337,191,NOT WS_VISIBLE
     CONTROL         "Win7设置(&W)",IDC_BTN_WIN7SETTING,"Button",
                     BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,7,7,81,30
     CONTROL         "常用工具(&G)",IDC_BTN_GENERALTOOL,"Button",
@@ -108,28 +108,69 @@ BEGIN
                     BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,171,7,81,30
 END
 
-IDD_WIN7SETTING_DIALOG DIALOG DISCARDABLE  0, 0, 319, 164
+IDD_WIN7SETTING_DIALOG DIALOGEX 0, 0, 346, 189
 STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
     CONTROL         "隐藏收藏夹(&F)",IDC_CHECK_HIDE_FAVORITES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,19,30,68,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,39,68,10
     CONTROL         "隐藏库(&L)",IDC_CHECK_HIDE_LIBRARIES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,19,47,52,10
-    PUSHBUTTON      "重启Explorer(&R)",IDC_BTN_RESTART_EXPLORER,18,115,104,
-                    25
-    GROUPBOX        "常用设置",IDC_STATIC_EXPLORER,7,7,305,150,NOT 
-                    WS_VISIBLE
-    CONTROL         "禁止窗口自动排列(需重启)",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,58,52,10
+    CONTROL         "禁止窗口自动排列",
                     IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,19,64,112,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,122,80,10
+    CONTROL         "复制",IDC_CHECK_COPY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,44,32,10
+    CONTROL         "粘贴",IDC_CHECK_PASTE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,56,32,10
+    CONTROL         "剪切",IDC_CHECK_CUT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,68,32,10
+    CONTROL         "撤消",IDC_CHECK_UNDO,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,92,32,10
+    CONTROL         "恢复",IDC_CHECK_REDO,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,104,32,10
+    CONTROL         "打印",IDC_CHECK_PRINT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,116,32,10
+    CONTROL         "邮寄",IDC_CHECK_EMAIL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,128,32,10
+    CONTROL         "刻录",IDC_CHECK_BURN,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,140,32,10
+    CONTROL         "幻灯",IDC_CHECK_SLIDESSHOW,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,152,32,10
+    GROUPBOX        "常用设置",IDC_STATIC,0,2,154,175
+    CONTROL         "List1",IDC_LIST_FolderType,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
+                    WS_TABSTOP,170,38,90,133,WS_EX_STATICEDGE
+    GROUPBOX        "资源管理器工具栏按钮",IDC_STATIC_EXPLORER2,161,2,154,
+                    175
+    LTEXT           "焦点状态:",IDC_STATIC,175,22,43,8
+    LTEXT           ">>",IDC_STATIC,263,89,9,8
+    CONTROL         "删除",IDC_CHECK_DELETE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,278,80,32,10
+    CONTROL         "选定",IDC_RADIO_SELECT,"Button",BS_AUTORADIOBUTTON,228,
+                    22,32,10
+    CONTROL         "未选定",IDC_RADIO_UNSELECT,"Button",BS_AUTORADIOBUTTON,
+                    264,22,40,10
+    CONTROL         "禁止整行选择",IDC_CHECK_DISABLE_FULLROWSELECT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,77,64,10
+    LTEXT           "资源管理器:",IDC_STATIC,17,22,45,8
+    LTEXT           "窗口:",IDC_STATIC,17,105,21,8
 END
 
-IDD_GENERALTOOL_DIALOG DIALOG DISCARDABLE  0, 0, 306, 165
+IDD_GENERALTOOL_DIALOG DIALOGEX 0, 0, 327, 188
 STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
-    PUSHBUTTON      "重建图标缓存",IDC_BTN_REBULID_ICON_CACHE,26,108,81,23
+    PUSHBUTTON      "重建图标缓存",IDC_BTN_REBULID_ICON_CACHE,177,26,88,22
+    GROUPBOX        "启动",IDC_STATIC,0,8,163,167
+    GROUPBOX        "其它",IDC_STATIC,168,9,135,166
+    CONTROL         "List1",IDC_LIST_FolderType,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
+                    WS_TABSTOP,7,22,150,106,WS_EX_STATICEDGE
+    PUSHBUTTON      "Button1",IDC_BUTTON1,7,153,50,14
+    PUSHBUTTON      "重启Explorer",IDC_BTN_RESTART_EXPLORER,177,53,88,22
+    CONTROL         "系统启动时显示开始时间 ",IDC_CHECK_SHOWBOOTTIME,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,135,108,13
 END
 
 IDD_CLEAR_HISTORY_DLG DIALOG DISCARDABLE  0, 0, 339, 183
@@ -137,89 +178,99 @@ STYLE WS_CHILD
 FONT 9, "宋体"
 BEGIN
     CONTROL         "清除Internet临时文件",IDC_CHECK_CLEAR_INTERNAT_TEMP,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,15,96,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,15,96,10
     CONTROL         "清除系统临时文件夹",IDC_CHECK_CLEAR_SYSTEMP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,33,88,10
-    CONTROL         "浏览器地址栏历史地址的清除",
-                    IDC_CHECK_ClearBrowserAddress,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,20,51,120,10
-    CONTROL         "清除浏览网址历史记录",IDC_CHECK_ClearBrowseAddress,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,69,96,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,33,88,10
+    CONTROL         "清除IE浏览历史",IDC_CHECK_ClearBrowserAddress,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,51,72,10
+    CONTROL         "清除IE地址栏历史",IDC_CHECK_ClearBrowseAddress,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,69,80,10
     CONTROL         "清除表单自动完成历史记录",
                     IDC_CHECK_ClearFormAutoComplete,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,20,87,112,10
+                    WS_TABSTOP,14,87,112,10
     CONTROL         "清除自动密码历史记录",IDC_CHECK_ClearAutoPassword,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,105,96,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,105,96,10
     CONTROL         "清空回收站",IDC_CHECK_ClearRecyclebin,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,123,56,10
-    CONTROL         "清除""运行""中的自动匹配历史记录",IDC_CHECK_ClearRun,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,15,136,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,123,56,10
+    CONTROL         "清除""运行""中的自动匹配历史",IDC_CHECK_ClearRun,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,152,15,120,10
     CONTROL         "清除""文档""中的历史记录",IDC_CHECK_ClearDocument,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,69,104,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,69,104,10
     CONTROL         "清除上次登陆用户记录",IDC_CHECK_ClearLastLoginName,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,87,96,10
-    CONTROL         "清除""查找文件""自动匹配历史记录",
-                    IDC_CHECK_ClearFindFile,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,158,33,136,10
-    CONTROL         "清除""查找计算机""自动匹配历史记录",
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,87,96,10
+    CONTROL         "清除""查找文件""自动匹配历史",IDC_CHECK_ClearFindFile,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,33,120,10
+    CONTROL         "清除""查找计算机""自动匹配历史",
                     IDC_CHECK_ClearFindComputer,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,158,51,144,10
+                    WS_TABSTOP,152,51,128,10
     CONTROL         "清除收藏夹中的内容",IDC_CHECK_ClearFavorite,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,158,105,88,10
-    DEFPUSHBUTTON   "开始清理(&S)",IDOK,218,143,84,28
-    GROUPBOX        "清理选项",IDC_STATIC,6,0,326,176
+                    BS_AUTOCHECKBOX | WS_TABSTOP,152,105,88,10
+    DEFPUSHBUTTON   "开始清理(&S)",IDOK,212,143,84,28
+    GROUPBOX        "清理选项",IDC_STATIC,0,0,326,176
     CONTROL         "系统开机时清理",IDC_CHECK_CLEAR_AT_SYSSTART,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,21,144,72,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,144,72,10
     CONTROL         "显示清理界面",IDC_CHECK_DISPLAY_CLEARUI,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,32,159,64,10
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,19,137,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,26,159,64,10
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,13,137,
                     288,1
-    LTEXT           "┗",IDC_STATIC,20,159,8,11
+    LTEXT           "┗",IDC_STATIC,14,159,8,11
+    CONTROL         "清除任务栏图标历史",IDC_CHECK_ClearTaskbarIconHistory,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,123,88,10
 END
 
-IDD_CLEAR_HISTORY_BOOT_DLG DIALOG DISCARDABLE  0, 0, 347, 212
+IDD_CLEAR_HISTORY_BOOT_DLG DIALOG DISCARDABLE  0, 0, 339, 225
 STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "垃圾清理..."
 FONT 9, "宋体"
 BEGIN
+    DEFPUSHBUTTON   "开始清理(&S)",IDOK,218,158,84,28
+    GROUPBOX        "",IDC_STATIC,6,7,326,138
+    CONTROL         "系统开机时清理",IDC_CHECK_CLEAR_AT_SYSSTART,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,21,159,72,
+                    10
+    CONTROL         "显示清理界面",IDC_CHECK_DISPLAY_CLEARUI,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,32,174,64,
+                    10
+    LTEXT           "┗",IDC_STATIC,20,174,8,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_LOG,6,150,326,68,ES_MULTILINE | ES_AUTOHSCROLL
     CONTROL         "清除Internet临时文件",IDC_CHECK_CLEAR_INTERNAT_TEMP,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,15,96,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,15,96,10
     CONTROL         "清除系统临时文件夹",IDC_CHECK_CLEAR_SYSTEMP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,33,88,10
-    CONTROL         "浏览器地址栏历史地址的清除",
-                    IDC_CHECK_ClearBrowserAddress,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,20,51,120,10
-    CONTROL         "清除浏览网址历史记录",IDC_CHECK_ClearBrowseAddress,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,69,96,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,33,88,10
+    CONTROL         "清除IE浏览历史",IDC_CHECK_ClearBrowserAddress,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,51,72,10
+    CONTROL         "清除IE地址栏历史",IDC_CHECK_ClearBrowseAddress,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,69,80,10
     CONTROL         "清除表单自动完成历史记录",
                     IDC_CHECK_ClearFormAutoComplete,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,20,87,112,10
+                    WS_TABSTOP,14,87,112,10
     CONTROL         "清除自动密码历史记录",IDC_CHECK_ClearAutoPassword,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,105,96,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,105,96,10
     CONTROL         "清空回收站",IDC_CHECK_ClearRecyclebin,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,123,56,10
-    CONTROL         "清除""运行""中的自动匹配历史记录",IDC_CHECK_ClearRun,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,15,136,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,123,56,10
+    CONTROL         "清除""运行""中的自动匹配历史",IDC_CHECK_ClearRun,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,152,15,120,10
     CONTROL         "清除""文档""中的历史记录",IDC_CHECK_ClearDocument,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,69,104,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,69,104,10
     CONTROL         "清除上次登陆用户记录",IDC_CHECK_ClearLastLoginName,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,87,96,10
-    CONTROL         "清除""查找文件""自动匹配历史记录",
-                    IDC_CHECK_ClearFindFile,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,158,33,136,10
-    CONTROL         "清除""查找计算机""自动匹配历史记录",
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,87,96,10
+    CONTROL         "清除""查找文件""自动匹配历史",IDC_CHECK_ClearFindFile,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,33,120,10
+    CONTROL         "清除""查找计算机""自动匹配历史",
                     IDC_CHECK_ClearFindComputer,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,158,51,144,10
+                    WS_TABSTOP,152,51,128,10
     CONTROL         "清除收藏夹中的内容",IDC_CHECK_ClearFavorite,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,158,105,88,10
-    DEFPUSHBUTTON   "开始清理(&S)",IDOK,218,143,84,28
-    GROUPBOX        "清理选项",IDC_STATIC,6,0,326,176
-    CONTROL         "系统开机时清理",IDC_CHECK_CLEAR_AT_SYSSTART,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,21,144,72,10
-    CONTROL         "显示清理界面",IDC_CHECK_DISPLAY_CLEARUI,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,32,159,64,10
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,19,137,
-                    288,1
-    LTEXT           "┗",IDC_STATIC,20,159,8,11
+                    BS_AUTOCHECKBOX | WS_TABSTOP,152,105,88,10
+    CONTROL         "清除任务栏图标历史",IDC_CHECK_ClearTaskbarIconHistory,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,123,88,10
+END
+
+IDD_SHOWBOOTTIME_DIALOG DIALOG DISCARDABLE  0, 0, 259, 102
+STYLE DS_MODALFRAME | WS_POPUP
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,105,75,50,14
+    CTEXT           "",IDC_STATIC_SHOWTIP,7,33,245,30
 END
 
 
@@ -293,17 +344,17 @@ BEGIN
     IDD_WIN7SETTING_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 312
+        RIGHTMARGIN, 339
         TOPMARGIN, 7
-        BOTTOMMARGIN, 157
+        BOTTOMMARGIN, 182
     END
 
     IDD_GENERALTOOL_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 299
+        RIGHTMARGIN, 320
         TOPMARGIN, 7
-        BOTTOMMARGIN, 158
+        BOTTOMMARGIN, 181
     END
 
     IDD_CLEAR_HISTORY_DLG, DIALOG
@@ -317,9 +368,17 @@ BEGIN
     IDD_CLEAR_HISTORY_BOOT_DLG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 340
+        RIGHTMARGIN, 332
         TOPMARGIN, 7
-        BOTTOMMARGIN, 205
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_SHOWBOOTTIME_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 252
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 95
     END
 END
 #endif    // APSTUDIO_INVOKED

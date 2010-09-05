@@ -6,7 +6,7 @@
 #endif // _MSC_VER > 1000
 // GeneralTool.h : header file
 //
-
+#include "UILib/ShadeButtonST.h"
 /////////////////////////////////////////////////////////////////////////////
 // GeneralTool dialog
 #include "UILib/ResizingDialog.h"
@@ -20,7 +20,8 @@ public:
 // Dialog Data
 	//{{AFX_DATA(GeneralTool)
 	enum { IDD = IDD_GENERALTOOL_DIALOG };
-		// NOTE: the ClassWizard will add data members here
+	CShadeButtonST m_BtnRebulidIconCache;
+	CShadeButtonST	m_BtnRestartExplorer;
 	//}}AFX_DATA
 
 
@@ -40,6 +41,8 @@ protected:
 	virtual void OnOK();
 	virtual void OnCancel();
 	afx_msg void OnBtnRebulidIconCache();
+	afx_msg void OnBtnRestartExplorer();
+	afx_msg void OnCheckShowboottime();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

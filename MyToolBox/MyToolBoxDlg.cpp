@@ -98,6 +98,7 @@ BEGIN_MESSAGE_MAP(CMyToolBoxDlg, CResizingDialog)
 	ON_BN_CLICKED(IDC_BTN_WIN7SETTING, OnBtnWin7setting)
 	ON_BN_CLICKED(IDC_BTN_GENERALTOOL, OnBtnGeneraltool)
 	ON_BN_CLICKED(IDC_BTN_CLEARTOOL, OnBtnCleartool)
+	ON_WM_TIMER()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -252,3 +253,12 @@ BOOL CMyToolBoxDlg::DestroyWindow()
 	return CResizingDialog::DestroyWindow();
 }
 
+
+void CMyToolBoxDlg::OnTimer(UINT nIDEvent) 
+{
+    if(nIDEvent == 1)
+    {
+        //m_CheckGroup.SlideShowPage()
+    }
+	CResizingDialog::OnTimer(nIDEvent);
+}

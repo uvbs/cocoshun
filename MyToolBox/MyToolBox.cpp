@@ -7,6 +7,7 @@
 #include "ClearHistoryDlg.h"
 #include "setting.h"
 #include "Util/SysUtil.h"
+#include "ShowBootTime.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,38 +43,44 @@ CMyToolBoxApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 // CMyToolBoxApp initialization
 
-
-
 BOOL CMyToolBoxApp::InitInstance()
 {
-	AfxEnableControlContainer();
+// 	AfxEnableControlContainer();
+// 
+// 	// Standard initialization
+// 	// If you are not using these features and wish to reduce the size
+// 	//  of your final executable, you should remove from the following
+// 	//  the specific initialization routines you do not need.
+// 
+// #ifdef _AFXDLL
+// 	Enable3dControls();			// Call this when using MFC in a shared DLL
+// #else
+// 	Enable3dControlsStatic();	// Call this when linking to MFC statically
+// #endif
 
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
 
-#ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
-#else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
-#endif
+    CString cmdLine = theApp.m_lpCmdLine;
 
- //   LPCTSTR cmdLine = GetCommandLine();
- //   MessageBox(NULL,cmdLine,"OK",MB_OK);
-//     CClearHistoryDlg clearDlg;
-//     clearDlg.DoModal();
-//   SysUtil::ReadSetting(&theSetting);
-	if(ExistParameter(_T("/clear"),theApp.m_lpCmdLine))
-	{
-		CClearHistoryDlg clearDlg;
+    CString paramShowBootTime = _T("/showBootTime");
+    if(cmdLine.Find(paramShowBootTime)!=-1)
+    {
+        CShowBootTime dlg;
+        dlg.DoModal();
+        return FALSE;
+    }
 
-		if(ExistParameter(_T("/showUI"),theApp.m_lpCmdLine))
+    CString paramClear = _T("/clean");
+    CString paramShow = _T("/showUI");
+
+    if(cmdLine.Find(paramClear)!=-1)
+	{ 
+		CClearHistoryDlg clearDlg(TRUE);
+        if(cmdLine.Find(paramShow)!=-1)
 		{
 			clearDlg.DoModal();
 		}else
 		{
-
+            clearDlg.AutoClear(FALSE);
 		}
 		
 		return FALSE;
@@ -84,21 +91,12 @@ BOOL CMyToolBoxApp::InitInstance()
 	int nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with OK
 	}
 	else if (nResponse == IDCANCEL)
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with Cancel
 	}
 
 	// Since the dialog has been closed, return FALSE so that we exit the
 	//  application, rather than start the application's message pump.
 	return FALSE;
-}
-
-BOOL CMyToolBoxApp::ExistParameter(CString param, CString cmdLine)
-{
-	return cmdLine.Find(param) != -1;
 }

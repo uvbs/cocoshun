@@ -10,6 +10,7 @@
 #define IDD_GENERALTOOL_DIALOG          104
 #define IDD_CLEAR_HISTORY_DLG           105
 #define IDD_CLEAR_HISTORY_BOOT_DLG      106
+#define IDD_SHOWBOOTTIME_DIALOG         107
 #define IDR_MAINFRAME                   128
 #define IDI_WIN7                        130
 #define IDI_GENERAL                     133
@@ -28,7 +29,9 @@
 #define IDC_STATIC_EXPLORER             1009
 #define IDC_CHECK_DISABLE_WINDOW_AUTO_ARRANGEMENT 1010
 #define IDC_BTN_REBULID_ICON_CACHE      1011
+#define IDC_STATIC_EXPLORER2            1011
 #define IDC_CHECK_CLEAR_INTERNAT_TEMP   1012
+#define IDC_CHECK_DISABLE_FULLROWSELECT 1012
 #define IDC_CHECK_CLEAR_SYSTEMP         1013
 #define IDC_CHECK_ClearBrowserAddress   1014
 #define IDC_CHECK_ClearFormAutoComplete 1015
@@ -43,6 +46,24 @@
 #define IDC_CHECK_ClearFindComputer     1024
 #define IDC_CHECK_DISPLAY_CLEARUI       1025
 #define IDC_CHECK_ClearBrowseAddress    1026
+#define IDC_EDIT_LOG                    1027
+#define IDC_CHECK_ClearTaskbarIconHistory 1028
+#define IDC_LIST_FolderType             1028
+#define IDC_CHECK_COPY                  1029
+#define IDC_CHECK_CUT                   1030
+#define IDC_CHECK_PASTE                 1031
+#define IDC_CHECK_UNDO                  1032
+#define IDC_CHECK_REDO                  1033
+#define IDC_CHECK_PRINT                 1034
+#define IDC_CHECK_EMAIL                 1035
+#define IDC_CHECK_BURN                  1036
+#define IDC_CHECK_SLIDESSHOW            1037
+#define IDC_RADIO_SELECT                1039
+#define IDC_BUTTON1                     1040
+#define IDC_CHECK_DELETE                1041
+#define IDC_CHECK_SHOWBOOTTIME          1041
+#define IDC_RADIO_UNSELECT              1042
+#define IDC_STATIC_SHOWTIP              1042
 
 // Next default values for new objects
 // 
@@ -50,7 +71,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        139
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1019
-#define _APS_NEXT_SYMED_VALUE           106
+#define _APS_NEXT_CONTROL_VALUE         1043
+#define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

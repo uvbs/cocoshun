@@ -39,7 +39,6 @@ public:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	BOOL ExistParameter(CString param, CString cmdLine);
 };
 
 
