@@ -17,6 +17,7 @@ struct HISTORY_SETTING
     BOOL bClearFindFile;
     BOOL bClearFindComputer;
     BOOL bClearBrowseAddress; //清除浏览网址历史记录
+    BOOL bClearTaskbarIconHistory;
 };
 
 struct WINDOW_SETTING

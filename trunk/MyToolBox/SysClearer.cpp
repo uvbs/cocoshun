@@ -252,7 +252,14 @@ void CSysClearer::ClearRecyclebin()
 
 void CSysClearer::ClearRun()
 {
-    // //清"文档"中的历史记录
+    // 清除"运行"中的自动匹配历史记录
+    SHDeleteKey(HKEY_CURRENT_USER, 
+        _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU"));
+}
+
+void CSysClearer::ClearDocument()
+{
+    // 清"文档"中的历史记录
     TCHAR szPath[MAX_PATH];	
     if (SHGetSpecialFolderPath(NULL, szPath, CSIDL_RECENT, FALSE))
     {
@@ -260,12 +267,7 @@ void CSysClearer::ClearRun()
     }
     
     SHDeleteKey(HKEY_CURRENT_USER, 
-        _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs"));
-}
-
-void CSysClearer::ClearDocument()
-{
-    
+        _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs"));    
 }
 
 void CSysClearer::ClearLastLoginName()
@@ -712,4 +714,11 @@ void CSysClearer::ClearSysTempDir()
     {
         EmptyDirectory(szPath, TRUE);
 	}    
+}
+
+void CSysClearer::ClearTaskbarIconHistory()
+{
+    CString key = _T("Local Settings\\Software\\Microsoft\\Windows\\CurrentVersion\\TrayNotify");
+    SHDeleteValue(HKEY_CLASSES_ROOT, key,_T("IconStreams"));
+    SHDeleteValue(HKEY_CLASSES_ROOT, key,_T("PastIconsStream"));
 }

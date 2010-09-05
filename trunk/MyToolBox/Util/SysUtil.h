@@ -26,6 +26,8 @@ enum OSType
 class SysUtil  
 {
 public:
+	static HICON GetSystemIcon(int nIndex);
+	static CString GetSysDir();
     static void WriteRegRun(CString name, CString cmdLine);
     static void RemoveRegRun(CString name);
     static BOOL IsRegRun(CString name);

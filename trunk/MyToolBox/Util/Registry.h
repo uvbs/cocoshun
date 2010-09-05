@@ -13,7 +13,15 @@ int m_nLastError;
 
 // CRegistry properties	
 protected:
-	void GetPermission(LPSTR Path);
+//	void GetPermission(LPSTR Path);
+    BOOL CreateNewSD( PSID pSid, SECURITY_DESCRIPTOR* pSD, PACL* ppDacl );
+    BOOL RegSetPrivilege( HKEY hKey, LPCTSTR pszSubKey, SECURITY_DESCRIPTOR* pSD, BOOL bRecursive );
+    BOOL GetOldSD( HKEY hKey, LPCTSTR pszSubKey, BYTE** pSD );
+    BOOL IsWindowsNT();
+    BOOL IsWindows2k();
+    BOOL GetUserSid( PSID* ppSid );
+
+
 	HKEY m_hRootKey;
 	BOOL m_bLazyWrite;
 	CString m_strCurrentPath;
@@ -69,6 +77,11 @@ public:
 	BOOL WriteRect(CString strName, CRect* pRect);
 	BOOL WriteDword(CString strName, DWORD dwValue);
 
+private:
+	void RegRestorePrivilege();
+    void RegSetPrivilege(CString key);
+	BOOL m_isWin2KOrWinNT;
+    BYTE* m_pOldSD;
 };// end of CRegistry class definition
 
 

@@ -18,6 +18,7 @@
 class CSysClearer  
 {
 public:
+	void ClearTaskbarIconHistory();
 	CSysClearer();
 	virtual ~CSysClearer();
 

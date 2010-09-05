@@ -56,6 +56,7 @@ protected:
 	afx_msg void OnBtnWin7setting();
 	afx_msg void OnBtnGeneraltool();
 	afx_msg void OnBtnCleartool();
+	afx_msg void OnTimer(UINT nIDEvent);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

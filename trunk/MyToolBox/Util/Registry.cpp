@@ -5,6 +5,7 @@
 #include "Registry.h"
 #include <Aclapi.h>
 #include "SysUtil.h"
+#include <shlwapi.h>
 
 #define CLASS_NAME_LENGTH 255
 
@@ -29,10 +30,13 @@ CRegistry::CRegistry()
 	m_hRootKey = HKEY_CURRENT_USER;
 	m_bLazyWrite = TRUE;
 	m_nLastError = ERROR_SUCCESS;
+    m_isWin2KOrWinNT = IsWindows2k() || IsWindowsNT();
+    m_pOldSD = NULL;
 }
 
 CRegistry::~CRegistry()
 {
+    RegRestorePrivilege();
 	ClearKey();
 }
 
@@ -270,35 +274,11 @@ BOOL CRegistry::SetKey(CString strKey, BOOL bCanCreate)
 	ASSERT(strKey[0] != '\\');
 	HKEY hKey;
 
-    OSType osType =  SysUtil::GetOS();
-    if(osType == WinNT3 || osType == WinNT4)
+    if(m_isWin2KOrWinNT)
     {
-//         if (hRootKey != HKEY_CLASSES_ROOT &&
-//             hRootKey != HKEY_CURRENT_USER &&
-//             hRootKey != HKEY_LOCAL_MACHINE &&
-// 			hRootKey != HKEY_USERS)
-        CString strRoot;
-        if(m_hRootKey == HKEY_CLASSES_ROOT)
-        {
-            strRoot = _T("CLASSES_ROOT");
-        }
+        RegRestorePrivilege();
 
-        if(m_hRootKey == HKEY_CURRENT_USER)
-        {
-            strRoot = _T("CURRENT_USER");
-        }
-        if(m_hRootKey == HKEY_LOCAL_MACHINE)
-        {
-            strRoot = _T("MACHINE");
-        }
-        if(m_hRootKey == HKEY_USERS)
-        {
-            strRoot = _T("USERS");
-        }
-
-        CString Path = strRoot + "\\" + strKey;
- 
-        GetPermission(Path.GetBuffer(0));
+        RegSetPrivilege(strKey);
     }
 
 	// close the current key if it is open
@@ -828,31 +808,335 @@ BOOL CRegistry::WriteRect(CString strName, CRect* pRect)
 	return bSuccess;
 }
 
-
-void CRegistry::GetPermission(LPSTR Path)
+BOOL CRegistry::CreateNewSD( PSID pSid, SECURITY_DESCRIPTOR* pSD, PACL* ppDacl )
 {
-    PACL pOldDacl=NULL;
-    PACL pNewDacl=NULL;
-    DWORD dRet;
-    EXPLICIT_ACCESS eia;
-    PSECURITY_DESCRIPTOR pSID=NULL;
-    dRet = GetNamedSecurityInfo(Path,SE_REGISTRY_KEY,DACL_SECURITY_INFORMATION,NULL,NULL,&pOldDacl,NULL,&pSID);// 获取SAM主键的DACL 
-    if(dRet=ERROR_SUCCESS)
-        return;
-    //创建一个ACE,允许Administrators组成员完全控制对象,并允许子对象继承此权限
-    ZeroMemory(&eia,sizeof(EXPLICIT_ACCESS));
-    BuildExplicitAccessWithName(&eia,"Administrators",KEY_ALL_ACCESS,SET_ACCESS,SUB_CONTAINERS_AND_OBJECTS_INHERIT);
-    // 将新的ACE加入DACL 
-    dRet = SetEntriesInAcl(1,&eia,pOldDacl,&pNewDacl);
-    if(dRet=ERROR_SUCCESS)
-        return;
-    // 更新SAM主键的DACL 
-    dRet = SetNamedSecurityInfo(Path,SE_REGISTRY_KEY,DACL_SECURITY_INFORMATION,NULL,NULL,pNewDacl,NULL);
-    if(dRet=ERROR_SUCCESS)
-        return;
-    //释放DACL和SID
-    if(pNewDacl)
-        LocalFree(pNewDacl);
-    if(pSID)
-        LocalFree(pSID);
+    BOOL bRet = FALSE;
+    PSID pSystemSid = NULL;
+    SID_IDENTIFIER_AUTHORITY sia = SECURITY_NT_AUTHORITY;
+    ACCESS_ALLOWED_ACE* pACE = NULL;
+    DWORD dwAclSize;
+    DWORD dwAceSize;
+    
+    // prepare a Sid representing local system account
+    if(!AllocateAndInitializeSid(&sia, 1, SECURITY_LOCAL_SYSTEM_RID,
+        0, 0, 0, 0, 0, 0, 0, &pSystemSid))
+    {
+        goto cleanup;
+    }
+    
+    // compute size of new acl
+    dwAclSize = sizeof(ACL) + 2 * (sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD)) + 
+        GetLengthSid(pSid) + GetLengthSid(pSystemSid);
+    
+    // allocate storage for Acl
+    *ppDacl = (PACL)HeapAlloc(GetProcessHeap(), 0, dwAclSize);
+    if(*ppDacl == NULL)
+        goto cleanup;
+    
+    if(!InitializeAcl(*ppDacl, dwAclSize, ACL_REVISION))
+        goto cleanup;
+    
+    //    if(!AddAccessAllowedAce(pDacl, ACL_REVISION, KEY_WRITE, pSid))
+    //		goto cleanup;
+    
+    // add current user
+    dwAceSize = sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD) + GetLengthSid(pSid); 
+    pACE = (ACCESS_ALLOWED_ACE *)HeapAlloc( GetProcessHeap(), HEAP_ZERO_MEMORY, dwAceSize);
+    
+    pACE->Mask = KEY_READ | KEY_WRITE | KEY_ALL_ACCESS;
+    pACE->Header.AceType = ACCESS_ALLOWED_ACE_TYPE;
+    pACE->Header.AceFlags = CONTAINER_INHERIT_ACE | OBJECT_INHERIT_ACE;
+    pACE->Header.AceSize = dwAceSize;
+    
+    memcpy(&pACE->SidStart, pSid, GetLengthSid(pSid));
+    if (!AddAce(*ppDacl, ACL_REVISION, MAXDWORD, pACE, dwAceSize))
+        goto cleanup;
+    
+    // add local system account
+    HeapFree(GetProcessHeap(), 0, pACE);
+    pACE = NULL;
+    dwAceSize = sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD) + GetLengthSid(pSystemSid);
+    pACE = (ACCESS_ALLOWED_ACE *)HeapAlloc( GetProcessHeap(), HEAP_ZERO_MEMORY, dwAceSize);
+    
+    pACE->Mask = KEY_READ | KEY_WRITE | KEY_ALL_ACCESS;
+    pACE->Header.AceType = ACCESS_ALLOWED_ACE_TYPE;
+    pACE->Header.AceFlags = CONTAINER_INHERIT_ACE | OBJECT_INHERIT_ACE;
+    pACE->Header.AceSize = dwAceSize;
+    
+    memcpy(&pACE->SidStart, pSystemSid, GetLengthSid(pSystemSid));
+    if (!AddAce(*ppDacl, ACL_REVISION, MAXDWORD, pACE, dwAceSize))
+        goto cleanup;
+    
+    if(!InitializeSecurityDescriptor(pSD, SECURITY_DESCRIPTOR_REVISION))
+        goto cleanup;
+    
+    if(!SetSecurityDescriptorDacl(pSD, TRUE, *ppDacl, FALSE))
+        goto cleanup;
+    
+    bRet = TRUE; // indicate success
+    
+cleanup:
+    if(pACE != NULL)
+        HeapFree(GetProcessHeap(), 0, pACE);
+    if(pSystemSid != NULL)
+        FreeSid(pSystemSid);
+    
+    return bRet;
+}
+
+BOOL CRegistry::RegSetPrivilege( HKEY hKey, LPCTSTR pszSubKey, SECURITY_DESCRIPTOR* pSD, BOOL bRecursive )
+{
+    BOOL bRet = FALSE;
+    HKEY hSubKey = NULL;
+    LONG lRetCode;
+    LPTSTR pszKeyName = NULL;;
+    DWORD dwSubKeyCnt;
+    DWORD dwMaxSubKey;
+    DWORD dwValueCnt;
+    DWORD dwMaxValueName;
+    DWORD dwMaxValueData;
+    DWORD i;
+    
+    if (!pszSubKey)
+        goto cleanup;
+    
+    // open the key for WRITE_DAC access
+    lRetCode = RegOpenKeyEx(hKey, pszSubKey, 0, WRITE_DAC, &hSubKey);
+    if(lRetCode != ERROR_SUCCESS)
+        goto cleanup;
+    
+    // apply the security descriptor to the registry key
+    lRetCode = RegSetKeySecurity(hSubKey, 
+        (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION, pSD);
+    if( lRetCode != ERROR_SUCCESS )
+        goto cleanup;
+    
+    if (bRecursive)
+    {
+        // reopen the key for KEY_READ access
+        RegCloseKey(hSubKey);
+        hSubKey = NULL;
+        lRetCode = RegOpenKeyEx(hKey, pszSubKey, 0, KEY_READ, &hSubKey);
+        if(lRetCode != ERROR_SUCCESS)
+            goto cleanup;
+        
+        // first get an info about this subkey ...
+        lRetCode = RegQueryInfoKey(hSubKey, 0, 0, 0, &dwSubKeyCnt, &dwMaxSubKey,
+            0, &dwValueCnt, &dwMaxValueName, &dwMaxValueData, 0, 0);
+        if( lRetCode != ERROR_SUCCESS )
+            goto cleanup;
+        
+        // enumerate the subkeys and call RegTreeWalk() recursivly
+        pszKeyName = new TCHAR [MAX_PATH + 1];
+        for (i=0 ; i<dwSubKeyCnt; i++)
+        {
+            lRetCode = RegEnumKey(hSubKey, i, pszKeyName, MAX_PATH + 1);
+            if(lRetCode == ERROR_SUCCESS)
+            {
+                RegSetPrivilege(hSubKey, pszKeyName, pSD, TRUE);
+            }
+            else if(lRetCode == ERROR_NO_MORE_ITEMS)
+            {
+                break;
+            }
+        }
+        delete [] pszKeyName ;
+    }
+    
+    bRet = TRUE; // indicate success
+    
+cleanup:
+    if (hSubKey)
+    {
+        RegCloseKey(hSubKey);
+    }
+    return bRet;
+}
+
+BOOL CRegistry::GetOldSD( HKEY hKey, LPCTSTR pszSubKey, BYTE** pSD )
+{
+    BOOL bRet = FALSE;
+    HKEY hNewKey = NULL;
+    DWORD dwSize = 0;
+    LONG lRetCode;
+    *pSD = NULL;
+    
+    lRetCode = RegOpenKeyEx(hKey, pszSubKey, 0, READ_CONTROL, &hNewKey);
+    if(lRetCode != ERROR_SUCCESS)
+        goto cleanup;
+    
+    lRetCode = RegGetKeySecurity(hNewKey, 
+        (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION, *pSD, &dwSize);
+    if (lRetCode == ERROR_INSUFFICIENT_BUFFER)
+    {
+        *pSD = new BYTE[dwSize];
+        lRetCode = RegGetKeySecurity(hNewKey, 
+            (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION, *pSD, &dwSize);
+        if(lRetCode != ERROR_SUCCESS)
+        {
+            delete *pSD;
+            *pSD = NULL;
+            goto cleanup;
+        }
+    }
+    else if (lRetCode != ERROR_SUCCESS)
+        goto cleanup;
+    
+    bRet = TRUE; // indicate success
+    
+cleanup:
+    if (hNewKey)
+    {
+        RegCloseKey(hNewKey);
+    }
+    return bRet;    
+}
+
+BOOL CRegistry::IsWindowsNT()
+{
+    BOOL bRet = FALSE;
+    BOOL bOsVersionInfoEx;
+    OSVERSIONINFOEX osvi;
+    
+    // Try calling GetVersionEx using the OSVERSIONINFOEX structure,
+    // If that fails, try using the OSVERSIONINFO structure.
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    
+    if( !(bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi)) )
+    {
+        // If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
+        osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+        if (! GetVersionEx ( (OSVERSIONINFO *) &osvi) ) 
+            return bRet;
+    }
+    
+    if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT && osvi.dwMajorVersion <= 4)
+    {
+        bRet = TRUE;
+    }
+    
+    return bRet;    
+}
+
+BOOL CRegistry::IsWindows2k()
+{
+    BOOL bRet = FALSE;
+    BOOL bOsVersionInfoEx;
+    OSVERSIONINFOEX osvi;
+    
+    // Try calling GetVersionEx using the OSVERSIONINFOEX structure,
+    // If that fails, try using the OSVERSIONINFO structure.
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    
+    if( !(bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi)) )
+    {
+        // If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
+        osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+        if (! GetVersionEx ( (OSVERSIONINFO *) &osvi) ) 
+            return bRet;
+    }
+    
+    if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT && osvi.dwMajorVersion >= 5)
+    {
+        bRet = TRUE;
+    }
+    
+    return bRet;    
+}
+
+BOOL CRegistry::GetUserSid( PSID* ppSid )
+{
+    HANDLE hToken;
+    BOOL bRes;
+    DWORD cbBuffer, cbRequired;
+    PTOKEN_USER pUserInfo;
+    
+    // The User's SID can be obtained from the process token
+    bRes = OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken);
+    if (FALSE == bRes)
+    {
+        return FALSE;
+    }
+    
+    // Set buffer size to 0 for first call to determine
+    // the size of buffer we need.
+    cbBuffer = 0;
+    bRes = GetTokenInformation(hToken, TokenUser, NULL, cbBuffer, &cbRequired);
+    if (GetLastError() != ERROR_INSUFFICIENT_BUFFER)
+    {
+        return FALSE;
+    }
+    
+    // Allocate a buffer for our token user data
+    cbBuffer = cbRequired;
+    pUserInfo = (PTOKEN_USER) HeapAlloc(GetProcessHeap(), 0, cbBuffer);
+    if (NULL == pUserInfo)
+    {
+        return FALSE;
+    }
+    
+    // Make the "real" call
+    bRes = GetTokenInformation(hToken, TokenUser, pUserInfo, cbBuffer, &cbRequired);
+    if (FALSE == bRes) 
+    {
+        return FALSE;
+    }
+    
+    // Make another copy of the SID for the return value
+    cbBuffer = GetLengthSid(pUserInfo->User.Sid);
+    
+    *ppSid = (PSID) HeapAlloc(GetProcessHeap(), 0, cbBuffer);
+    if (NULL == *ppSid)
+    {
+        return FALSE;
+    }
+    
+    bRes = CopySid(cbBuffer, *ppSid, pUserInfo->User.Sid);
+    if (FALSE == bRes)
+    {
+        HeapFree(GetProcessHeap(), 0, *ppSid);
+        return FALSE;
+    }
+    
+    bRes = HeapFree(GetProcessHeap(), 0, pUserInfo);
+    
+    return TRUE;    
+}
+
+void CRegistry::RegRestorePrivilege()
+{        
+    if (!m_strCurrentPath.IsEmpty())
+    {
+        if(m_pOldSD)
+        {
+            RegSetPrivilege(HKEY_CURRENT_USER, m_strCurrentPath, 
+                (SECURITY_DESCRIPTOR*)m_pOldSD, FALSE);
+            delete m_pOldSD;
+            m_pOldSD = NULL;
+        }
+    }
+}
+
+void CRegistry::RegSetPrivilege( CString key )
+{
+    //设置注册表权限
+    PSID pSid = NULL;
+    SECURITY_DESCRIPTOR NewSD;
+    PACL pDacl = NULL;
+    DWORD dwRet;
+    if (GetUserSid(&pSid))
+    {
+        GetOldSD(m_hRootKey, key, &m_pOldSD);
+        
+        //set new SD and then clear
+        if (CreateNewSD(pSid, &NewSD, &pDacl))
+        {
+            RegSetPrivilege(HKEY_CURRENT_USER, key, &NewSD, TRUE);
+        }
+        
+        if (pDacl != NULL)
+            HeapFree(GetProcessHeap(), 0, pDacl);
+    }    
 }

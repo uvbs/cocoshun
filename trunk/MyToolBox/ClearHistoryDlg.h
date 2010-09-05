@@ -8,15 +8,17 @@
 // ClearHistoryDlg.h : header file
 //
 #include "UILib/ShadeButtonST.h"
+#include "UILib/ResizingDialog.h"
 /////////////////////////////////////////////////////////////////////////////
 // CClearHistoryDlg dialog
 
-class CClearHistoryDlg : public CDialog
+class CClearHistoryDlg : public CResizingDialog
 {
 // Construction
 public:
+	void AutoClear(BOOL bShowUI=TRUE);
 	void InitArray();
-	CClearHistoryDlg(CWnd* pParent = NULL);   // standard constructor
+	CClearHistoryDlg(BOOL bStartFromModel=FALSE,CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CClearHistoryDlg)
@@ -37,6 +39,7 @@ public:
 
 // Implementation
 protected:
+	void ShowExecuteLog(UINT ID);
 	// Generated message map functions
 	//{{AFX_MSG(CClearHistoryDlg)
 	virtual void OnOK();
@@ -44,17 +47,23 @@ protected:
 	afx_msg void OnCheckClearAtSysStart();
 	afx_msg void OnCheckShowClearUI();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnCHECKClearTaskbarIconHistory();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
     CString m_strPath;
     CString m_strModule;
 private:
+	BOOL m_bShowUI;
+    //是否从模态对话框起动
+	BOOL m_bStartFromModel;
+
 	int m_arySize;
 	void ReadCheckBoxValue();
     CSysClearer m_SysClearer;
 
-	void SetCheck(UINT ID,BOOL bCheck);
+	void SetCheck(UINT ID,BOOL bCheck = TRUE);
 	BOOL GetCheck(UINT ID);
 
 	typedef void (CSysClearer::*FUNC_PTR)();

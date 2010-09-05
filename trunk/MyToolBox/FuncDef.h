@@ -61,6 +61,21 @@ struct CTRL_OPERATION
     REG_OPERATION Query;	    //²éÑ¯²Ù×÷
 };
 
+
+struct EXP_TOOLBAR_LIST
+{
+    int nIndex;
+    LPCTSTR szGUID;
+    LPCTSTR szName;
+    int nIconIndex;
+};
+
+struct EXP_BUTTON
+{
+    UINT CheckBoxID;
+    LPCTSTR szButton;
+};
+
 enum CRUD
 {
     ACTION,
