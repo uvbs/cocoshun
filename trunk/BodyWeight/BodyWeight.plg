@@ -1,0 +1,21 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: BodyWeight - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/BodyWeight.res" /d "NDEBUG" /d "_AFXDLL" "F:\GOOGLE-SVN\COCOSHUN\BodyWeight\BodyWeight.rc"" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:no /pdb:"Release/BodyWeight.pdb" /machine:I386 /out:"Release/BodyWeight.exe"  ".\Release\BodyWeight.obj" ".\Release\BodyWeightDlg.obj" ".\Release\StdAfx.obj" ".\Release\BodyWeight.res" "
+<h3>Output Window</h3>
+Compiling resources...
+Linking...
+
+
+
+<h3>Results</h3>
+BodyWeight.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
