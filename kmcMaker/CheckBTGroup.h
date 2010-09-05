@@ -46,6 +46,8 @@ private:
 	CheckGroupInfo m_ChkGrpInfo;
 	int m_PageNum;
 	int m_nSelected;
+    void SlideShowPage( int nOld,int nNew );
+    void GetPanelRect( CRect &rect );
 };	
 
 #endif // !defined(AFX_CHECKBTGROUP_H__A310CFC1_CA60_4E37_A545_D0A95070C8AC__INCLUDED_)

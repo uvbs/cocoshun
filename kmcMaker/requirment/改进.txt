@@ -1,1 +1,47 @@
-﻿点过滤的时候有问题
+#define IDC_CHECK_COPY                  1029
+#define IDC_CHECK_CUT                   1030
+#define IDC_CHECK_PASTE                 1031
+#define IDC_CHECK_UNDO                  1032
+#define IDC_CHECK_REDO                  1033
+#define IDC_CHECK_PRINT                 1034
+#define IDC_CHECK_EMAIL                 1035
+#define IDC_CHECK_BURN                  1036
+#define IDC_CHECK_SLIDESSHOW            1037
+
+Windows.Copy;
+Windows.Paste;
+Windows.Cut;
+Windows.Delete;
+Windows.Undo;
+Windows.Redo;
+Windows.Print;
+Windows.Email;
+Windows.Burn;
+Windows.Slideshow;
+
+0,_T("{5c4f28b5-f869-4e84-8e60-f11db97c5cc7}"),_T("所有文件夹"),126
+1,_T("{7d49d726-3c21-4f05-99aa-fdc2c9474656}"),_T("文件"),70
+2,_T("{80213e82-bcfd-4c4f-8817-bb27601267a9}"),_T("压缩文件夹"),279
+3,_T("{b3690e58-e961-423b-b687-386ebfd83239}"),_T("图片"), 128
+4,_T("{94d6ddcc-4a68-4175-a374-bd584a510b78}"),_T("音乐"), 127
+5,_T("{5fa96407-7e77-483c-ac93-691d05850de8}"),_T("影片"),115
+6,_T("{5f4eab9a-6833-4f61-899d-31cf46979d49}"),_T("通用库"),19
+7,_T("{fbb3477e-c9e4-4b3b-a2ba-d3f5d3cd46f9}"),_T("文档库"),110
+8,_T("{0b2baaeb-0042-4dca-aa4d-3ee8648d03e5}"),_T("图片库"),127
+9,_T("{3f2a72a7-99fa-4ddb-a5a8-c604edf61d6b}"),_T("音乐库"),128
+10,_T("{631958a6-ad0f-4035-a745-28ac066dc6ed}"),_T("视频库"),129
+11,_T("{7fde1a1e-8b31-49a5-93b8-6be14cfa4943}"),_T("通用搜索结果"),22
+12,_T("{36011842-dccc-40fe-aa3d-6177ea401788}"),_T("文件搜索结果"),209
+13,_T("{71689ac1-cc88-45d0-8a22-2943c3e7dfb3}"),_T("音乐搜索结果"),55
+14,_T("{4dcafe13-e6a7-4c28-be02-ca8c2126280d}"),_T("图片搜索结果"),55
+15,_T("{ea25fbd7-3bf7-409e-b97f-3352240903f4}"),_T("影片搜索结果"),55
+
+
+
+
+
+
+
+SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\{5c4f28b5-f869-4e84-8e60-f11db97c5cc7}\TasksItemsSelected"}
+SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\{5c4f28b5-f869-4e84-8e60-f11db97c5cc7}\TasksItemsSelected
+SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\{7d49d726-3c21-4f05-99aa-fdc2c9474656}\TasksItemsSelected"}
