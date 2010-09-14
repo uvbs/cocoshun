@@ -6,6 +6,7 @@
 #include <Aclapi.h>
 #include "SysUtil.h"
 #include <shlwapi.h>
+#include <aclapi.h>
 
 #define CLASS_NAME_LENGTH 255
 
@@ -1125,7 +1126,7 @@ void CRegistry::RegSetPrivilege( CString key )
     PSID pSid = NULL;
     SECURITY_DESCRIPTOR NewSD;
     PACL pDacl = NULL;
-    DWORD dwRet;
+//    DWORD dwRet;
     if (GetUserSid(&pSid))
     {
         GetOldSD(m_hRootKey, key, &m_pOldSD);
@@ -1140,3 +1141,271 @@ void CRegistry::RegSetPrivilege( CString key )
             HeapFree(GetProcessHeap(), 0, pDacl);
     }    
 }
+
+void  CRegistry::SetRegPermission(TCHAR *KeyStr)
+{
+    // TODO: Add your control notification handler code here
+    HKEY hKey = 0;
+    SID_IDENTIFIER_AUTHORITY sia = SECURITY_NT_AUTHORITY;
+    PSID pInteractiveSid = NULL;
+    PSID pAdministratorsSid = NULL;
+    SECURITY_DESCRIPTOR sd;
+    PACL pDacl = NULL;
+    DWORD dwAclSize;
+    LONG lRetCode;
+    BOOL bRet;
+    //char KeyStr[200];
+    
+    //strcpy(KeyStr,"SOFTWARE\\LEGEND\\test");
+    
+    lRetCode = RegOpenKeyEx(HKEY_LOCAL_MACHINE, 
+        TEXT(KeyStr),
+        0,
+        WRITE_DAC,
+        &hKey);
+    //open key
+    /*lRetCode = RegOpenKeyEx(HKEY_LOCAL_MACHINE, 
+    TEXT("SOFTWARE\\LEGEND\\test"),
+    0,
+    WRITE_DAC,
+    &hKey);*/
+    //
+    // prepare a Sid representing any Interactively logged-on user
+    //
+    bRet = AllocateAndInitializeSid(
+        &sia,
+        1,
+        SECURITY_INTERACTIVE_RID,
+        0, 0, 0, 0, 0, 0, 0,
+        &pInteractiveSid
+        );
+    
+    //
+    // preprate a Sid representing the well-known admin group
+    //
+    bRet = AllocateAndInitializeSid(
+        &sia,
+        2,
+        SECURITY_BUILTIN_DOMAIN_RID,
+        DOMAIN_ALIAS_RID_ADMINS,
+        0, 0, 0, 0, 0, 0,
+        &pAdministratorsSid
+        );
+    
+    //
+    // compute size of new acl
+    //
+    dwAclSize = sizeof(ACL) +
+        2 * ( sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD) ) +
+        GetLengthSid(pInteractiveSid) +
+        GetLengthSid(pAdministratorsSid) ;
+    
+    //
+    // allocate storage for Acl
+    //
+    pDacl = (PACL)HeapAlloc(GetProcessHeap(), 0, dwAclSize);
+    
+    bRet = InitializeAcl(pDacl, dwAclSize, ACL_REVISION);
+    
+    //
+    // grant the Interactive Sid KEY_READ access to the perf key
+    //
+    bRet = AddAccessAllowedAce(
+        pDacl,
+        ACL_REVISION,
+        KEY_ALL_ACCESS,
+        pInteractiveSid
+        );
+        /*bRet = AddAccessAllowedAce(
+        pDacl,
+        ACL_REVISION,
+        samDesired,
+        pInteractiveSid
+    );*/
+    
+    //
+    // grant the Administrators Sid KEY_ALL_ACCESS access to the perf key
+    //
+    bRet = AddAccessAllowedAce(
+        pDacl,
+        ACL_REVISION,
+        KEY_ALL_ACCESS,
+        pAdministratorsSid
+        );
+    
+    bRet = InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION);
+    
+    bRet = SetSecurityDescriptorDacl(&sd, TRUE, pDacl, FALSE);
+    
+    //
+    // apply the security descriptor to the registry key
+    //
+    lRetCode = RegSetKeySecurity(
+        hKey,
+        (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION,
+        &sd
+        );
+    
+    //clean up
+    RegCloseKey(hKey);
+    RegCloseKey(HKEY_LOCAL_MACHINE);
+    
+    //
+    // free allocated resources
+    //
+    if(pDacl != NULL)
+        HeapFree(GetProcessHeap(), 0, pDacl);
+    
+    if(pInteractiveSid != NULL)
+        FreeSid(pInteractiveSid);
+    
+    if(pAdministratorsSid != NULL)
+        FreeSid(pAdministratorsSid);
+} 
+
+ void CRegistry::SetPermission(LPCTSTR key)
+ {
+//   //开始重新配置使用注册表的权限------------------------------------------------
+// 
+//     LPTSTR lpObjectName;
+//     SE_OBJECT_TYPE ObjectType;        //#include <aclapi.h>
+// 
+//     PACL OldDACL,NewDACL;
+//     PSECURITY_DESCRIPTOR SD;
+//     EXPLICIT_ACCESS ea;
+// 
+//     lpObjectName = "MACHINE\\SYSTEM\\ControlSet001\\Enum\\Root";
+// 
+//     ObjectType =SE_REGISTRY_KEY;
+// 
+//     //建立一个空的ACL;
+//     if (SetEntriesInAcl(0, NULL, NULL, &OldDACL)!=ERROR_SUCCESS)
+//         return;
+// 
+//     if (SetEntriesInAcl(0, NULL, NULL, &NewDACL)!=ERROR_SUCCESS)
+//         return;
+// 
+//     //获取现有的ACL列表到OldDACL
+//     if(GetNamedSecurityInfo(lpObjectName, ObjectType,
+//                           DACL_SECURITY_INFORMATION,
+//                           NULL, NULL,
+//                           &OldDACL,
+//                           NULL, &SD) != ERROR_SUCCESS)
+//          MessageBox(0,"指定的键不存在！","提示",MB_OK);
+// 
+//     //设置用户名"Everyone"对指定的键有所有操作权到结构ea
+//     ZeroMemory(&ea, sizeof(EXPLICIT_ACCESS));
+// 
+//     BuildExplicitAccessWithName(&ea,
+//                                 "Everyone",      // name of trustee
+//                                 GENERIC_ALL,     // type of access
+// SET_ACCESS,      // access mode
+//                                 SUB_CONTAINERS_AND_OBJECTS_INHERIT); //让自健继承他的权限; inheritance mode
+// 
+//     
+//     //合并结构ea和OldDACL的权限列表到新的NewDACL
+//     if(SetEntriesInAcl(1, &ea, NULL, &NewDACL) != ERROR_SUCCESS)
+//           goto Cleanup;
+// 
+//     //把新的ACL写入到指定的键
+//     SetNamedSecurityInfo(lpObjectName, ObjectType,
+//           DACL_SECURITY_INFORMATION,
+//           NULL, NULL,
+//           NewDACL,
+//           NULL);
+// 
+// 
+//     ///////开始操作注册表//////////////////////////////////////////////////////////
+//     //...................................................
+//     ////////////////////////////////////////////////////////////////////////////
+// 
+//     //恢复注册表的权限;
+//     
+//     BuildExplicitAccessWithName(&ea,
+//         "Everyone",      // name of trustee
+//         GENERIC_READ,     // type of access
+//         SET_ACCESS,      // access mode
+//         NO_INHERITANCE); //让自健继承他的权限; inheritance mode
+//     
+//     if(SetEntriesInAcl(1, &ea, NULL, &OldDACL) != ERROR_SUCCESS)
+//         goto Cleanup;
+//     
+//     //把旧的ACL写入到指定的键
+//     SetNamedSecurityInfo(lpObjectName, ObjectType,
+//         DACL_SECURITY_INFORMATION,
+//         NULL, NULL,
+//         OldDACL,
+//         NULL);
+//     
+//     //释放指针
+// Cleanup:
+//     if(SD != NULL)
+//         LocalFree((HLOCAL) SD);
+//     if(NewDACL != NULL)
+//         LocalFree((HLOCAL) NewDACL);
+//     if(OldDACL != NULL)
+//         LocalFree((HLOCAL) OldDACL); 
+    
+     
+//      LPSTR SamName = "MACHINE\\SAM\\SAM"; //要修改的SAM项路径
+//      PACL pOldDacl=NULL;
+//      PACL pNewDacl=NULL;
+//      DWORD dRet;
+//      EXPLICIT_ACCESS eia;
+//      PSECURITY_DESCRIPTOR pSID=NULL;
+//      dRet = GetNamedSecurityInfo(SamName,SE_REGISTRY_KEY,DACL_SECURITY_INFORMATION,NULL,NULL,&pOldDacl,NULL,&pSID);// 获取SAM主键的DACL 
+//      if(dRet=ERROR_SUCCESS)
+//          return;
+//      //创建一个ACE,允许Administrators组成员完全控制对象,并允许子对象继承此权限
+//      ZeroMemory(&eia,sizeof(EXPLICIT_ACCESS));
+//      BuildExplicitAccessWithName(&eia,"Administrators",KEY_ALL_ACCESS,SET_ACCESS,SUB_CONTAINERS_AND_OBJECTS_INHERIT);
+//      // 将新的ACE加入DACL 
+//      dRet = SetEntriesInAcl(1,&eia,pOldDacl,&pNewDacl);
+//      if(dRet=ERROR_SUCCESS)
+//          return;
+//      // 更新SAM主键的DACL 
+//      dRet = SetNamedSecurityInfo(SamName,SE_REGISTRY_KEY,DACL_SECURITY_INFORMATION,NULL,NULL,pNewDacl,NULL);
+//      if(dRet=ERROR_SUCCESS)
+//          return;
+//      //释放DACL和SID
+//      if(pNewDacl)LocalFree(pNewDacl);
+//      if(pSID)LocalFree(pSID);
+
+    m_regPermission.SetPermission(HKEY_LOCAL_MACHINE,"SYSTEM\\ControlSet001\\Enum");
+ }
+// 
+// 
+// void CRegistry::RestoryPermission(LPTSTR key)
+// {
+//     ///////开始操作注册表//////////////////////////////////////////////////////////
+//     //...................................................
+//     ////////////////////////////////////////////////////////////////////////////
+// 
+//     //恢复注册表的权限;
+//     SE_OBJECT_TYPE ObjectType;      
+//     
+//     PACL OldDACL;
+//     EXPLICIT_ACCESS ea;
+// 
+//     ObjectType =SE_REGISTRY_KEY;
+//     BuildExplicitAccessWithName(&ea,
+//                                 "Everyone",      // name of trustee
+//                                 GENERIC_READ,     // type of access
+//                                 SET_ACCESS,      // access mode
+//                                 NO_INHERITANCE); //让自健继承他的权限; inheritance mode
+// 
+//     if(SetEntriesInAcl(1, &ea, NULL, &OldDACL) != ERROR_SUCCESS)
+//     goto Cleanup;
+// 
+//     //把旧的ACL写入到指定的键
+//     SetNamedSecurityInfo(key, ObjectType,
+//                          DACL_SECURITY_INFORMATION,
+//                          NULL, NULL,
+//                          OldDACL,
+//                          NULL);
+// 
+//     //释放指针
+//  Cleanup:
+//     if(OldDACL != NULL)
+//     LocalFree((HLOCAL) OldDACL); 
+// }
