@@ -5,6 +5,7 @@
 #include "MyToolBox.h"
 #include "GeneralTool.h"
 #include "Util/SysUtil.h"
+#include "Util/Registry.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -77,8 +78,13 @@ void GeneralTool::OnBtnRebulidIconCache()
 
 void GeneralTool::OnBtnRestartExplorer() 
 {
-    CString explorerExe = _T("explorer.exe");
-	SysUtil::KillProcess(explorerExe);
+    CRegistry reg;
+    //HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{ED228FDF-9EA8-4870-83b1-96b02CFE0D52}
+//     reg.SetRootKey(HKEY_LOCAL_MACHINE);
+//     reg.SetKey("SOFTWARE\\Classes\\CLSID\\{ED228FDF-9EA8-4870-83b1-96b02CFE0D52}\\test",TRUE);
+    reg.SetPermission("");
+//     CString explorerExe = _T("explorer.exe");
+// 	SysUtil::KillProcess(explorerExe);
 }
 
 void GeneralTool::OnCheckShowboottime() 

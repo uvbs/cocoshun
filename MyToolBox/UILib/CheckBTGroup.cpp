@@ -124,7 +124,7 @@ void CCheckBTGroup::SlideShowPage( int nOld,int nNew )
     MSG				msg;
 
     m_ChkGrpInfo.ChkBtnIDAndDlgs[nNew].Dlg->ShowWindow(SW_SHOW);
-    for(int x=0;x<rect.Width();x+=10)
+    for(int x=0;x<rect.Width();x+=20)
     {
          m_ChkGrpInfo.ChkBtnIDAndDlgs[nOld].Dlg->MoveWindow(rect.left, rect.top , rect.Width()-x , rect.Height());
          m_ChkGrpInfo.ChkBtnIDAndDlgs[nNew].Dlg->MoveWindow(rect.Width()-x, rect.top , rect.Width() , rect.Height());

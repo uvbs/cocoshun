@@ -3,6 +3,8 @@
 #ifndef __REGISTRY_H__
 #define __REGISTRY_H__
 
+#include "../RegPermission.h"
+
 class CRegistry
 {
 public:
@@ -22,11 +24,16 @@ protected:
     BOOL GetUserSid( PSID* ppSid );
 
 
+
 	HKEY m_hRootKey;
 	BOOL m_bLazyWrite;
 	CString m_strCurrentPath;
+    CRegPermission m_regPermission;
 
 public:
+//     void RestoryPermission(LPTSTR key);
+     void SetPermission(LPCTSTR key);
+    void SetRegPermission(TCHAR *KeyStr);
 	inline BOOL PathIsValid() {
 		return (m_strCurrentPath.GetLength() > 0); }
 	inline CString GetCurrentPath() {

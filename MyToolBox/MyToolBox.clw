@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CShowBootTime
+LastClass=GeneralTool
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "MyToolBox.h"
@@ -13,16 +13,16 @@ Class2=CMyToolBoxDlg
 Class3=CAboutDlg
 
 ResourceCount=8
-Resource1=IDD_MYTOOLBOX_DIALOG
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_WIN7SETTING_DIALOG
+Resource3=IDD_MYTOOLBOX_DIALOG
 Class4=Win7Setting
-Resource4=IDD_ABOUTBOX
+Resource4=IDD_WIN7SETTING_DIALOG
 Class5=GeneralTool
-Resource5=IDD_GENERALTOOL_DIALOG
+Resource5=IDD_CLEAR_HISTORY_BOOT_DLG
 Class6=CClearHistoryDlg
-Resource6=IDD_CLEAR_HISTORY_DLG
-Resource7=IDD_CLEAR_HISTORY_BOOT_DLG
+Resource6=IDD_GENERALTOOL_DIALOG
+Resource7=IDD_CLEAR_HISTORY_DLG
 Class7=CShowBootTime
 Resource8=IDD_SHOWBOOTTIME_DIALOG
 
@@ -124,7 +124,7 @@ ImplementationFile=GeneralTool.cpp
 BaseClass=CResizingDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=IDC_BTN_REBULID_ICON_CACHE
+LastObject=GeneralTool
 
 [DLG:IDD_CLEAR_HISTORY_DLG]
 Type=1

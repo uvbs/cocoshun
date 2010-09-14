@@ -149,6 +149,10 @@ SOURCE=.\Util\Registry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RegPermission.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\UILib\ResizingDialog.cpp
 # End Source File
 # Begin Source File
@@ -227,6 +231,10 @@ SOURCE=.\MyToolBoxDlg.h
 # Begin Source File
 
 SOURCE=.\Util\Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RegPermission.h
 # End Source File
 # Begin Source File
 
