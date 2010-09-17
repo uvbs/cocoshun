@@ -80,10 +80,11 @@ void GeneralTool::OnBtnRestartExplorer()
 {
     CRegistry reg;
     //HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{ED228FDF-9EA8-4870-83b1-96b02CFE0D52}
-//     reg.SetRootKey(HKEY_LOCAL_MACHINE);
-//     reg.SetKey("SOFTWARE\\Classes\\CLSID\\{ED228FDF-9EA8-4870-83b1-96b02CFE0D52}\\test",TRUE);
-    reg.SetPermission("");
-//     CString explorerExe = _T("explorer.exe");
+     reg.SetRootKey(HKEY_LOCAL_MACHINE);
+//	reg.SetKey("SOFTWARE\\Classes\\CLSID\\{ED228FDF-9EA8-4870-83b1-96b02CFE0D52}\\test",TRUE);
+//    reg.SetPermission("");
+	reg.SetKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FolderTypes\\{5c4f28b5-f869-4e84-8e60-f11db97c5cc7}",FALSE);
+//   CString explorerExe = _T("explorer.exe");
 // 	SysUtil::KillProcess(explorerExe);
 }
 

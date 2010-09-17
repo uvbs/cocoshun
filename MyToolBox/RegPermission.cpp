@@ -7,6 +7,7 @@
 #include "RegPermission.h"
 #include <windows.h>
 #include <stdio.h>
+#include <Shlwapi.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -20,7 +21,10 @@ static char THIS_FILE[]=__FILE__;
 
 CRegPermission::CRegPermission()
 {
-    
+	m_hKey = NULL;
+	m_pOldSD = NULL;
+    m_bRecursive = FALSE;
+	m_isWinNT = IsWindowsNT() || IsWindows2k();
 }
 
 CRegPermission::~CRegPermission()
@@ -28,567 +32,505 @@ CRegPermission::~CRegPermission()
     
 }
 
-void CRegPermission::SetPermission(HKEY hKey,LPCTSTR szKey)
+//////////////////////////////////////////////////////////////////////////
+// 自己添加代码 start
+void CRegPermission::RegRestorePermission()
 {
-    DWORD   dwRes;
-    m_hRegKey   =   NULL;
-    OSVERSIONINFO       osviVerInfo;
-    osviVerInfo.dwOSVersionInfoSize =   sizeof  (   OSVERSIONINFO);
-    GetVersionEx(   &osviVerInfo);
-    if  (   VER_PLATFORM_WIN32_NT   !=  osviVerInfo.dwPlatformId)
-    {
-        return;
-    }
-    
-    if  (   ERROR_SUCCESS   !=  (   dwRes   =   RegOpenKeyEx    (    hKey,
-        szKey,
-        0,
-        KEY_ALL_ACCESS,
-        &m_hRegKey
-        )
-        )
-        )
-    {
-        printf  (   "RegOpenKeyEx() failed, reason == %d!!\n",  dwRes);
-        
-        return;
-    }
-    
-    DoSetHiveRights ();
-    RegCloseKey (   m_hRegKey);
-    RegCloseKey (   m_hRegKey);
-}
+	if(!m_isWinNT) return;
 
-void CRegPermission::DoSetHiveRights ()
-{
-    SECURITY_DESCRIPTOR         sd;
-    PSID                        psidWorldSid;
-    SID_IDENTIFIER_AUTHORITY    siaWorldSidAuthority    =   SECURITY_WORLD_SID_AUTHORITY;
-    
-    psidWorldSid    =   ( PSID) LocalAlloc  (   LPTR,
-        GetSidLengthRequired    (   1)
-        );
-    
-    InitializeSid   (   psidWorldSid,   &siaWorldSidAuthority,  1);
-    
-    *(  GetSidSubAuthority  (   psidWorldSid,   0)) =   SECURITY_WORLD_RID;
-    
-    RegSetHiveSecurity  (   m_hRegKey,  
-        psidWorldSid,
-        OWNER_SECURITY_INFORMATION,
-        &sd
-        );
+	//restore old SD
+	if (m_pOldSD && m_hKey && !m_subKey.IsEmpty())
+	{
+		RegSetPrivilege(m_hKey, m_subKey, 
+			(SECURITY_DESCRIPTOR*)m_pOldSD, m_bRecursive);
+		delete m_pOldSD;
+	}
 }
 
 
-DWORD CRegPermission::RegSetHiveSecurity  (   HKEY                    hKey,
-                                           PSID                    psid,
-                                           SECURITY_INFORMATION    si,
-                                           PSECURITY_DESCRIPTOR    psd
-                                           )
+
+BOOL CRegPermission::RegSetPermission(HKEY hKey, LPCTSTR pszSubKey, BOOL bRecursive)
 {
-    int     nIdx    =   0;
-    HKEY    hSubKey;
-    char    acSubKey    [   MAX_PATH    +   1];
-    DWORD   dwRes   =   ERROR_SUCCESS;
-    
-    
-    if  (   !AddAccessRights    (   hKey,   psid,   GENERIC_ALL))
-        return  (   GetLastError    ());
-    
-    for (   ;;)
+	if(!m_isWinNT) 
+		return TRUE;
+
+	m_hKey = hKey;
+	m_subKey = pszSubKey;
+	m_bRecursive = bRecursive;
+
+	BOOL bRet = FALSE;
+    SECURITY_DESCRIPTOR NewSD;
+    PACL pDacl = NULL;
+    PSID pSid = NULL;
+    TCHAR szSid[256];
+    if (GetUserSid(&pSid))
     {
-        dwRes   =   RegEnumKey  (   hKey,
-            nIdx,
-            acSubKey,
-            MAX_PATH    +   1
-            );
+        //get the hidden key name
+        GetSidString(pSid, szSid);
         
-        if  (   ERROR_NO_MORE_ITEMS ==  dwRes)
-        {   
-            break;
-        }
+        GetOldSD(HKEY_CURRENT_USER, m_subKey, &m_pOldSD);
         
-        if  (   ERROR_SUCCESS   !=  dwRes)
+        //set new SD and then clear
+        if (CreateNewSD(pSid, &NewSD, &pDacl))
         {
-            break;
+            if(RegSetPrivilege(HKEY_CURRENT_USER, m_subKey, &NewSD, bRecursive))
+			{
+				bRet = TRUE;
+			}
         }
         
-        nIdx++;
-        
-        printf  (   "found '%s'\n", acSubKey);
-        
-        dwRes   =   RegOpenKeyEx    (   hKey,
-            acSubKey,
-            0,
-            KEY_ALL_ACCESS,
-            &hSubKey
-            );
-        
-        if  (   ERROR_SUCCESS   !=  dwRes)
-        {
-            printf  (   "ERROR opening '%s', reason == %d\n",   acSubKey,   dwRes);
-            continue;
-        }
-        
-        dwRes   =   RegSetHiveSecurity  (   hSubKey,
-            psid,
-            si,
-            psd
-            );
-        
-        RegCloseKey (   hSubKey);
-        
-        if  (   ERROR_NO_MORE_ITEMS !=  dwRes)
-        {
-            break;
-        }
-        
-        printf  (   "SUCCEEDED for '%s'\n", acSubKey);
+	}
+
+	if (pDacl != NULL)
+		HeapFree(GetProcessHeap(), 0, pDacl);
+	
+	if (pSid)
+			HeapFree(GetProcessHeap(), 0, pSid);
+
+	return bRet;
+}
+// 自己添加代码 end
+//////////////////////////////////////////////////////////////////////////
+
+
+BOOL CRegPermission::IsWindowsNT()
+{
+    BOOL bRet = FALSE;
+    BOOL bOsVersionInfoEx;
+    OSVERSIONINFOEX osvi;
+    
+    // Try calling GetVersionEx using the OSVERSIONINFOEX structure,
+    // If that fails, try using the OSVERSIONINFO structure.
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    
+    if( !(bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi)) )
+    {
+        // If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
+        osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+        if (! GetVersionEx ( (OSVERSIONINFO *) &osvi) ) 
+            return bRet;
     }
     
-    return  (   dwRes);
+    if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT && osvi.dwMajorVersion <= 4)
+    {
+        bRet = TRUE;
+    }
+    
+	return bRet;    
 }
 
-DWORD  CRegPermission::AddToRegKeySD ( PSECURITY_DESCRIPTOR pRelSD, PSID pGroupSID,
-                                      DWORD dwAccessMask,  HKEY    hSecurityRegKey)
+BOOL CRegPermission::IsWindows2k()
 {
-    PSECURITY_DESCRIPTOR pAbsSD = NULL;
+    BOOL bRet = FALSE;
+    BOOL bOsVersionInfoEx;
+    OSVERSIONINFOEX osvi;
     
-    PACL  pDACL;
+    // Try calling GetVersionEx using the OSVERSIONINFOEX structure,
+    // If that fails, try using the OSVERSIONINFO structure.
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
     
-    DWORD  dwSDLength = 0;
-    DWORD  dwSDRevision;
-    DWORD  dwDACLLength = 0;
-    
-    SECURITY_DESCRIPTOR_CONTROL sdcSDControl;
-    
-    PACL  pNewDACL  = NULL;
-    DWORD  dwAddDACLLength = 0;
-    
-    BOOL  fAceFound = 0;
-    
-    BOOL  fHasDACL  = FALSE;
-    BOOL  fDACLDefaulted = FALSE; 
-    
-    ACCESS_ALLOWED_ACE  *pDACLAce;
-    
-    DWORD  dwError = 0;
-    
-    DWORD  i;
-    
-    
-    // get SD control bits
-    if ( ! GetSecurityDescriptorControl ( pRelSD, 
-        ( PSECURITY_DESCRIPTOR_CONTROL) &sdcSDControl,
-        ( LPDWORD) &dwSDRevision) )
-        return ( GetLastError() );
-    
-    // check if DACL is present
-    if ( SE_DACL_PRESENT & sdcSDControl)
+    if( !(bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi)) )
     {
-        // get dacl 
-        if ( ! GetSecurityDescriptorDacl ( pRelSD, ( LPBOOL) &fHasDACL,
-            ( PACL *) &pDACL, 
-            ( LPBOOL) &fDACLDefaulted) )
-            return ( GetLastError());
-        
-        // get dacl length
-        dwDACLLength = pDACL->AclSize;
-        
-        // now check if SID's ACE is there
-        for ( i = 0; i < pDACL->AceCount; i++)
+        // If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
+        osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+        if (! GetVersionEx ( (OSVERSIONINFO *) &osvi) ) 
+            return bRet;
+    }
+    
+    if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT && osvi.dwMajorVersion >= 5)
+    {
+        bRet = TRUE;
+    }
+    
+	return bRet;    
+}
+
+BOOL CRegPermission::GetUserSid( PSID* ppSid )
+{
+    HANDLE hToken;
+    BOOL bRes;
+    DWORD cbBuffer, cbRequired;
+    PTOKEN_USER pUserInfo;
+    
+    // The User's SID can be obtained from the process token
+    bRes = OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken);
+    if (FALSE == bRes)
+    {
+        return FALSE;
+    }
+    
+    // Set buffer size to 0 for first call to determine
+    // the size of buffer we need.
+    cbBuffer = 0;
+    bRes = GetTokenInformation(hToken, TokenUser, NULL, cbBuffer, &cbRequired);
+    if (GetLastError() != ERROR_INSUFFICIENT_BUFFER)
+    {
+        return FALSE;
+    }
+    
+    // Allocate a buffer for our token user data
+    cbBuffer = cbRequired;
+    pUserInfo = (PTOKEN_USER) HeapAlloc(GetProcessHeap(), 0, cbBuffer);
+    if (NULL == pUserInfo)
+    {
+        return FALSE;
+    }
+    
+    // Make the "real" call
+    bRes = GetTokenInformation(hToken, TokenUser, pUserInfo, cbBuffer, &cbRequired);
+    if (FALSE == bRes) 
+    {
+        return FALSE;
+    }
+    
+    // Make another copy of the SID for the return value
+    cbBuffer = GetLengthSid(pUserInfo->User.Sid);
+    
+    *ppSid = (PSID) HeapAlloc(GetProcessHeap(), 0, cbBuffer);
+    if (NULL == *ppSid)
+    {
+        return FALSE;
+    }
+    
+    bRes = CopySid(cbBuffer, *ppSid, pUserInfo->User.Sid);
+    if (FALSE == bRes)
+    {
+        HeapFree(GetProcessHeap(), 0, *ppSid);
+        return FALSE;
+    }
+    
+    bRes = HeapFree(GetProcessHeap(), 0, pUserInfo);
+    
+	return TRUE;    
+}
+
+void CRegPermission::GetSidString( PSID pSid, LPTSTR szBuffer )
+{
+    //convert SID to string
+    SID_IDENTIFIER_AUTHORITY *psia = ::GetSidIdentifierAuthority( pSid );
+    DWORD dwTopAuthority = psia->Value[5];
+    _stprintf(szBuffer, _T("S-1-%lu"), dwTopAuthority);
+    
+    TCHAR szTemp[32];
+    int iSubAuthorityCount = *(GetSidSubAuthorityCount(pSid));
+    for (int i = 0; i<iSubAuthorityCount; i++) 
+    {
+        DWORD dwSubAuthority = *(GetSidSubAuthority(pSid, i));
+        _stprintf(szTemp, _T("%lu"), dwSubAuthority);
+        _tcscat(szBuffer, _T("-"));
+        _tcscat(szBuffer, szTemp);
+	}    
+}
+
+BOOL CRegPermission::GetOldSD( HKEY hKey, LPCTSTR pszSubKey, BYTE** pSD )
+{
+    BOOL bRet = FALSE;
+    HKEY hNewKey = NULL;
+    DWORD dwSize = 0;
+    LONG lRetCode;
+    *pSD = NULL;
+    
+    lRetCode = RegOpenKeyEx(hKey, pszSubKey, 0, READ_CONTROL, &hNewKey);
+    if(lRetCode != ERROR_SUCCESS)
+        goto cleanup;
+    
+    lRetCode = RegGetKeySecurity(hNewKey, 
+        (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION, *pSD, &dwSize);
+    if (lRetCode == ERROR_INSUFFICIENT_BUFFER)
+    {
+        *pSD = new BYTE[dwSize];
+        lRetCode = RegGetKeySecurity(hNewKey, 
+            (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION, *pSD, &dwSize);
+        if(lRetCode != ERROR_SUCCESS)
         {
-            if ( ! GetAce ( pDACL, i, ( LPVOID *) &pDACLAce) )
-                return ( GetLastError());
-            
-            // check if group sid is already there
-            if ( EqualSid ( ( PSID) &(pDACLAce->SidStart), pGroupSID) )
+            delete *pSD;
+            *pSD = NULL;
+            goto cleanup;
+        }
+    }
+    else if (lRetCode != ERROR_SUCCESS)
+        goto cleanup;
+    
+    bRet = TRUE; // indicate success
+    
+cleanup:
+    if (hNewKey)
+    {
+        RegCloseKey(hNewKey);
+    }
+    return bRet;    
+}
+
+BOOL CRegPermission::CreateNewSD( PSID pSid, SECURITY_DESCRIPTOR* pSD, PACL* ppDacl )
+{
+    BOOL bRet = FALSE;
+    PSID pSystemSid = NULL;
+    SID_IDENTIFIER_AUTHORITY sia = SECURITY_NT_AUTHORITY;
+    ACCESS_ALLOWED_ACE* pACE = NULL;
+    DWORD dwAclSize;
+    DWORD dwAceSize;
+    
+    // prepare a Sid representing local system account
+    if(!AllocateAndInitializeSid(&sia, 1, SECURITY_LOCAL_SYSTEM_RID,
+        0, 0, 0, 0, 0, 0, 0, &pSystemSid))
+    {
+        goto cleanup;
+    }
+    
+    // compute size of new acl
+    dwAclSize = sizeof(ACL) + 2 * (sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD)) + 
+        GetLengthSid(pSid) + GetLengthSid(pSystemSid);
+    
+    // allocate storage for Acl
+    *ppDacl = (PACL)HeapAlloc(GetProcessHeap(), 0, dwAclSize);
+    if(*ppDacl == NULL)
+        goto cleanup;
+    
+    if(!InitializeAcl(*ppDacl, dwAclSize, ACL_REVISION))
+        goto cleanup;
+    
+    //    if(!AddAccessAllowedAce(pDacl, ACL_REVISION, KEY_WRITE, pSid))
+    //		goto cleanup;
+    
+    // add current user
+    dwAceSize = sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD) + GetLengthSid(pSid); 
+    pACE = (ACCESS_ALLOWED_ACE *)HeapAlloc( GetProcessHeap(), HEAP_ZERO_MEMORY, dwAceSize);
+    
+    pACE->Mask = KEY_READ | KEY_WRITE | KEY_ALL_ACCESS;
+    pACE->Header.AceType = ACCESS_ALLOWED_ACE_TYPE;
+    pACE->Header.AceFlags = CONTAINER_INHERIT_ACE | OBJECT_INHERIT_ACE;
+    pACE->Header.AceSize = dwAceSize;
+    
+    memcpy(&pACE->SidStart, pSid, GetLengthSid(pSid));
+    if (!AddAce(*ppDacl, ACL_REVISION, MAXDWORD, pACE, dwAceSize))
+        goto cleanup;
+    
+    // add local system account
+    HeapFree(GetProcessHeap(), 0, pACE);
+    pACE = NULL;
+    dwAceSize = sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD) + GetLengthSid(pSystemSid);
+    pACE = (ACCESS_ALLOWED_ACE *)HeapAlloc( GetProcessHeap(), HEAP_ZERO_MEMORY, dwAceSize);
+    
+    pACE->Mask = KEY_READ | KEY_WRITE | KEY_ALL_ACCESS;
+    pACE->Header.AceType = ACCESS_ALLOWED_ACE_TYPE;
+    pACE->Header.AceFlags = CONTAINER_INHERIT_ACE | OBJECT_INHERIT_ACE;
+    pACE->Header.AceSize = dwAceSize;
+    
+    memcpy(&pACE->SidStart, pSystemSid, GetLengthSid(pSystemSid));
+    if (!AddAce(*ppDacl, ACL_REVISION, MAXDWORD, pACE, dwAceSize))
+        goto cleanup;
+    
+    if(!InitializeSecurityDescriptor(pSD, SECURITY_DESCRIPTOR_REVISION))
+        goto cleanup;
+    
+    if(!SetSecurityDescriptorDacl(pSD, TRUE, *ppDacl, FALSE))
+        goto cleanup;
+    
+    bRet = TRUE; // indicate success
+    
+cleanup:
+    if(pACE != NULL)
+        HeapFree(GetProcessHeap(), 0, pACE);
+    if(pSystemSid != NULL)
+        FreeSid(pSystemSid);
+    
+    return bRet;
+}
+
+BOOL CRegPermission::RegSetPrivilege( HKEY hKey, LPCTSTR pszSubKey, SECURITY_DESCRIPTOR* pSD, BOOL bRecursive )
+{
+    BOOL bRet = FALSE;
+    HKEY hSubKey = NULL;
+    LONG lRetCode;
+    LPTSTR pszKeyName = NULL;;
+    DWORD dwSubKeyCnt;
+    DWORD dwMaxSubKey;
+    DWORD dwValueCnt;
+    DWORD dwMaxValueName;
+    DWORD dwMaxValueData;
+    DWORD i;
+    
+    if (!pszSubKey)
+        goto cleanup;
+    
+    // open the key for WRITE_DAC access
+    lRetCode = RegOpenKeyEx(hKey, pszSubKey, 0, WRITE_DAC, &hSubKey);
+
+
+    if(lRetCode != ERROR_SUCCESS)
+	{
+// 		LPVOID lpMsgBuf;
+// 		FormatMessage( 
+// 			FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+// 			FORMAT_MESSAGE_FROM_SYSTEM | 
+// 			FORMAT_MESSAGE_IGNORE_INSERTS,
+// 			NULL,
+// 			GetLastError(),
+// 			0, // Default language
+// 			(LPTSTR) &lpMsgBuf,
+// 			0,
+// 			NULL 
+// 			);
+// 		// Process any inserts in lpMsgBuf.
+// 		// ...
+// 		// Display the string.
+// 		MessageBox( NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION );
+// 		// Free the buffer.
+// 		LocalFree( lpMsgBuf );
+        goto cleanup;
+	}
+    
+    // apply the security descriptor to the registry key
+    lRetCode = RegSetKeySecurity(hSubKey, 
+        (SECURITY_INFORMATION)DACL_SECURITY_INFORMATION, pSD);
+    if( lRetCode != ERROR_SUCCESS )
+        goto cleanup;
+    
+    if (bRecursive)
+    {
+        // reopen the key for KEY_READ access
+        RegCloseKey(hSubKey);
+        hSubKey = NULL;
+        lRetCode = RegOpenKeyEx(hKey, pszSubKey, 0, KEY_READ, &hSubKey);
+        if(lRetCode != ERROR_SUCCESS)
+            goto cleanup;
+        
+        // first get an info about this subkey ...
+        lRetCode = RegQueryInfoKey(hSubKey, 0, 0, 0, &dwSubKeyCnt, &dwMaxSubKey,
+            0, &dwValueCnt, &dwMaxValueName, &dwMaxValueData, 0, 0);
+        if( lRetCode != ERROR_SUCCESS )
+            goto cleanup;
+        
+        // enumerate the subkeys and call RegTreeWalk() recursivly
+        pszKeyName = new TCHAR [MAX_PATH + 1];
+        for (i=0 ; i<dwSubKeyCnt; i++)
+        {
+            lRetCode = RegEnumKey(hSubKey, i, pszKeyName, MAX_PATH + 1);
+            if(lRetCode == ERROR_SUCCESS)
+            {
+                RegSetPrivilege(hSubKey, pszKeyName, pSD, TRUE);
+            }
+            else if(lRetCode == ERROR_NO_MORE_ITEMS)
+            {
                 break;
-        }
-        
-        
-        
-        
-        // exit if found (means already has been set)
-        if ( i < pDACL->AceCount)
-        {
-            dwError = ERROR_GROUP_EXISTS;
-            
-            return ( dwError);
-        }
-        
-        // get length of new DACL
-        dwAddDACLLength = sizeof ( ACCESS_ALLOWED_ACE) - 
-            sizeof ( DWORD) + GetLengthSid ( pGroupSID);
-    }
-    else
-        // get length of new DACL
-        dwAddDACLLength = sizeof ( ACL) + sizeof ( ACCESS_ALLOWED_ACE) - 
-        sizeof ( DWORD) + GetLengthSid ( pGroupSID);
-    
-    // get memory needed for new DACL
-    if ( ! ( pNewDACL = ( PACL) malloc ( dwDACLLength + dwAddDACLLength) ) )
-        return ( GetLastError());
-    
-    // get the sd length
-    dwSDLength = GetSecurityDescriptorLength ( pRelSD);
-    
-    // get memory for new SD
-    if ( ! ( pAbsSD = ( PSECURITY_DESCRIPTOR) 
-        malloc ( dwSDLength + dwAddDACLLength) ) )
-    {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
-    }
-    
-    // change self-relative SD to absolute by making new SD
-    if ( ! InitializeSecurityDescriptor ( pAbsSD, 
-        SECURITY_DESCRIPTOR_REVISION) )
-    {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
-    }
-    
-    // init new DACL
-    if ( ! InitializeAcl ( pNewDACL, dwDACLLength + dwAddDACLLength, 
-        ACL_REVISION) )
-    {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
-    }
-    
-    // now add in all of the ACEs into the new DACL (if org DACL is there)
-    if ( SE_DACL_PRESENT & sdcSDControl)
-    { 
-        for ( i = 0; i < pDACL->AceCount; i++)
-        {
-            // get ace from original dacl
-            if ( ! GetAce ( pDACL, i, ( LPVOID *) &pDACLAce) )
-            {
-                dwError = GetLastError();
-                
-                goto ErrorExit;
-            }
-            
-            // now add ace to new dacl
-            if ( ! AddAccessAllowedAce ( pNewDACL, 
-                ACL_REVISION, 
-                pDACLAce->Mask,
-                ( PSID) &(pDACLAce->SidStart) ) )
-            {
-                dwError = GetLastError();
-                
-                goto ErrorExit;
             }
         }
+        delete [] pszKeyName ;
     }
     
-    // now add new ACE to new DACL
-    if ( ! AddAccessAllowedAce ( pNewDACL, ACL_REVISION, dwAccessMask,
-        pGroupSID) )
+    bRet = TRUE; // indicate success
+    
+cleanup:
+    if (hSubKey)
     {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
+        RegCloseKey(hSubKey);
     }
-    
-    // check if everything went ok
-    if ( ! IsValidAcl ( pNewDACL) )
-    {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
-    }
-    
-    // now set security descriptor DACL
-    if ( ! SetSecurityDescriptorDacl ( pAbsSD, TRUE, pNewDACL, 
-        fDACLDefaulted) )
-    {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
-    }
-    
-    // check if everything went ok
-    if ( ! IsValidSecurityDescriptor ( pAbsSD) )
-    {
-        dwError = GetLastError();
-        
-        goto ErrorExit;
-    }
-    
-    
-    // now set the reg key security (this will overwrite any existing security)
-    dwError = RegSetKeySecurity ( 
-        hSecurityRegKey, 
-        (SECURITY_INFORMATION)( DACL_SECURITY_INFORMATION),
-        pAbsSD);
-    
-    
-ErrorExit:
-    
-    // free memory
-    if ( pAbsSD)
-        free ( ( VOID *) pAbsSD);
-    if ( pNewDACL)
-        free ( ( VOID *) pNewDACL);
-    
-    return ( dwError);
-}
-/* eof - AddToRegKeySD */
-
-DWORD  CRegPermission::GetRegKeySecurity ( HKEY  hRegKey,    PSECURITY_DESCRIPTOR* ppRegKeySD){
-#define PERR(szApi,lError) printf ( "\n%s: Error %d from %s on line %d", \
-    __FILE__, lError, szApi, __LINE__); //HKEY  hRegKey;   // handle for register key
-    LONG  lError = 0L;  // reg errors 
-    // (GetLastError won't work with registry calls)
-    CHAR  szClassName[MAX_PATH] = ""; // Buffer for class name.
-    DWORD dwcClassLen = MAX_PATH;  // Length of class string.
-    DWORD dwcSubKeys;     // Number of sub keys.
-    DWORD dwcMaxSubKey;    // Longest sub key size.
-    DWORD dwcMaxClass;    // Longest class string.
-    DWORD dwcValues;     // Number of values for this key.
-    DWORD dwcMaxValueName;   // Longest Value name.
-    DWORD dwcMaxValueData;   // Longest Value data.
-    DWORD dwcSDLength;    // Security descriptor length
-    FILETIME ftLastWriteTime;   // Last write time. 
-    
-    if ( ( lError = RegQueryInfoKey ( hRegKey, szClassName, &dwcClassLen, 
-        NULL, &dwcSubKeys, &dwcMaxSubKey, &dwcMaxClass, 
-        &dwcValues, &dwcMaxValueName, &dwcMaxValueData, 
-        &dwcSDLength, &ftLastWriteTime) ) ) {
-        PERR ( "RegQueryInfoKey", lError);  goto CleanUp; }
-    
-    *ppRegKeySD = ( PSECURITY_DESCRIPTOR) LocalAlloc ( LPTR, ( UINT)dwcSDLength);
-    // now get SD 
-    if ( ( lError = RegGetKeySecurity ( hRegKey, 
-        (SECURITY_INFORMATION)( OWNER_SECURITY_INFORMATION
-        | GROUP_SECURITY_INFORMATION
-        | DACL_SECURITY_INFORMATION),
-        *ppRegKeySD, &dwcSDLength) ) ) {
-        PERR ( "RegGetKeySecurity", lError);  goto CleanUp; } // check if SD is good
-    if ( ! IsValidSecurityDescriptor ( *ppRegKeySD)) {  lError = GetLastError();
-    PERR ( "IsValidSecurityDescriptor", lError); }
-CleanUp: // must close reg key
-    //RegCloseKey ( hRegKey); 
-    return ( lError);
-}/* eof - GetRegKeySecurity */
-
-
-SECURITY_DESCRIPTOR  CRegPermission::GetWorldSD()
-{
-    SID_IDENTIFIER_AUTHORITY siaWorld = SECURITY_WORLD_SID_AUTHORITY;
-    PSID psidEveryone = NULL; 
-    int nSidSize ; 
-    int nAclSize ;
-    PACL paclNewDacl = NULL; 
-    SECURITY_DESCRIPTOR sd ;
-    
-    __try{
-        // Create the everyone sid
-        if (!AllocateAndInitializeSid(&siaWorld, 1, SECURITY_WORLD_RID, 0,
-            0, 0, 0, 0, 0, 0, &psidEveryone))
-        {            
-            psidEveryone = NULL ; 
-            __leave;
-        }
-        
-        nSidSize = GetLengthSid(psidEveryone) ;
-        nAclSize = nSidSize * 2 + sizeof(ACCESS_ALLOWED_ACE) + sizeof(ACCESS_DENIED_ACE) + sizeof(ACL) ;
-        paclNewDacl = (PACL) LocalAlloc( LPTR, nAclSize ) ;
-        if( !paclNewDacl )
-            __leave ; 
-        if(!InitializeAcl( paclNewDacl, nAclSize, ACL_REVISION ))
-            __leave ; 
-        if(!AddAccessDeniedAce( paclNewDacl, ACL_REVISION, WRITE_DAC | WRITE_OWNER, psidEveryone ))
-            __leave ; 
-        // I am using GENERIC_ALL here so that this very code can be applied to 
-        // other objects.  Specific access should be applied when possible.
-        if(!AddAccessAllowedAce( paclNewDacl, ACL_REVISION, GENERIC_ALL, psidEveryone ))
-            __leave ; 
-        if(!InitializeSecurityDescriptor( &sd, SECURITY_DESCRIPTOR_REVISION ))
-            __leave ; 
-        if(!SetSecurityDescriptorDacl( &sd, TRUE, paclNewDacl, FALSE ))
-            __leave ; 
-    }__finally{
-        
-        if( !paclNewDacl )
-            LocalFree( paclNewDacl ) ;
-        if( !psidEveryone )
-            FreeSid( psidEveryone ) ;
-        
-    }
-    
-    return sd ; 
+    return bRet;
 }
 
-#define SD_SIZE (65536 + SECURITY_DESCRIPTOR_MIN_LENGTH)
-
-BOOL  CRegPermission::AddAccessRights(HKEY hKey, PSID pSID,   DWORD dwAcessMask)
+BOOL CRegPermission::SetPermission()
 {
-    
-    //  SD variables.
-    
-    UCHAR          ucSDbuf[SD_SIZE];
-    PSECURITY_DESCRIPTOR pSD=(PSECURITY_DESCRIPTOR)ucSDbuf;
-    DWORD          dwSDLengthNeeded   =   SD_SIZE;
-    
-    // ACL variables.
-    
-    PACL           pACL;
-    BOOL           bDaclPresent;
-    BOOL           bDaclDefaulted;
-    ACL_SIZE_INFORMATION AclInfo;
-    
-    // New ACL variables.
-    
-    PACL           pNewACL;
-    DWORD          dwNewACLSize;
-    
-    // New SD variables.
-    
-    UCHAR                NewSD[SECURITY_DESCRIPTOR_MIN_LENGTH];
-    PSECURITY_DESCRIPTOR psdNewSD=(PSECURITY_DESCRIPTOR)NewSD;
-    
-    // Temporary ACE.
-    
-    PVOID          pTempAce;
-    UINT           CurrentAceIndex;
-    
-    // STEP 2: Get SID (parameter).
-    
-    // STEP 3: Get security descriptor (SD) for key.
-    
-    if(ERROR_SUCCESS!=RegGetKeySecurity(hKey,
-        (SECURITY_INFORMATION)(DACL_SECURITY_INFORMATION),
-        pSD,
-        &dwSDLengthNeeded))
-    {
-        printf("Error %d:RegGetKeySecurity\n",GetLastError());
-        return(FALSE);
-    }
-    
-    // STEP 4: Initialize new SD.
-    
-    if(!InitializeSecurityDescriptor
-        (psdNewSD,SECURITY_DESCRIPTOR_REVISION))
-    {
-        printf("Error %d:InitializeSecurityDescriptor\n",GetLastError());
-        return(FALSE);
-    }
-    
-    // STEP 5: Get DACL from SD.
-    
-    if (!GetSecurityDescriptorDacl(pSD,
-        &bDaclPresent,
-        &pACL,
-        &bDaclDefaulted))
-    {
-        printf("Error %d:GetSecurityDescriptorDacl\n",GetLastError());
-        return(FALSE);
-    }
-    
-    // STEP 6: Get key ACL size information.
-    
-    if(!GetAclInformation(pACL,&AclInfo,sizeof(ACL_SIZE_INFORMATION),
-        AclSizeInformation))
-    {
-        printf("Error %d:GetAclInformation\n",GetLastError());
-        return(FALSE);
-    }
-    
-    // STEP 7: Compute size needed for the new ACL.
-    
-    dwNewACLSize = AclInfo.AclBytesInUse +
-        sizeof(ACCESS_ALLOWED_ACE) +
-        GetLengthSid(pSID) - sizeof(DWORD);
-    
-    // STEP 8: Allocate memory for new ACL.
-    
-    pNewACL = (PACL)LocalAlloc(LPTR, dwNewACLSize);
-    
-    // STEP 9: Initialize the new ACL.
-    
-    if(!InitializeAcl(pNewACL, dwNewACLSize, ACL_REVISION2))
-    {
-        printf("Error %d:InitializeAcl\n",GetLastError());
-        LocalFree((HLOCAL) pNewACL);
-        return(FALSE);
-    }
-    
-    // STEP 10: If DACL is present, copy it to a new DACL.
-    
-    if(bDaclPresent)  // Only copy if DACL was present.
-    {
-        // STEP 11: Copy the file's ACEs to our new ACL.
-        
-        if(AclInfo.AceCount)
-        {
-            
-            for(CurrentAceIndex = 0; CurrentAceIndex < AclInfo.AceCount;
-            CurrentAceIndex++)
-            {
-                // STEP 12: Get an ACE.
-                
-                if(!GetAce(pACL,CurrentAceIndex,&pTempAce))
-                {
-                    printf("Error %d: GetAce\n",GetLastError());
-                    LocalFree((HLOCAL) pNewACL);
-                    return(FALSE);
-                }
-                
-                // STEP 13: Add the ACE to the new ACL.
-                
-                if(!AddAce(pNewACL, ACL_REVISION, MAXDWORD, pTempAce,
-                    ((PACE_HEADER)pTempAce)->AceSize))
-                {
-                    printf("Error %d:AddAce\n",GetLastError());
-                    LocalFree((HLOCAL) pNewACL);
-                    return(FALSE);
-                }
-                
-            }
-        }
-    }
-    
-    // STEP 14: Add the access-allowed ACE to the new DACL.
-    
-    if(!AddAccessAllowedAce(pNewACL,ACL_REVISION,dwAcessMask, pSID))
-    {
-        printf("Error %d:AddAccessAllowedAce",GetLastError());
-        LocalFree((HLOCAL) pNewACL);
-        return(FALSE);
-    }
-    
-    // STEP 15: Set our new DACL to the file SD.
-    
-    if (!SetSecurityDescriptorDacl(psdNewSD,
-        TRUE,
-        pNewACL,
-        FALSE))
-    {
-        printf("Error %d:SetSecurityDescriptorDacl",GetLastError());
-        LocalFree((HLOCAL) pNewACL);
-        return(FALSE);
-    }
-    
-    // STEP 16: Set the SD to the key.
-    
-    if (ERROR_SUCCESS!=RegSetKeySecurity(hKey, DACL_SECURITY_INFORMATION,psdNewSD))
-    {
-        printf("Error %d:RegSetKeySecurity\n",GetLastError());
-        LocalFree((HLOCAL) pNewACL);
-        return(FALSE);
-    }
-    
-    // STEP 17: Free the memory allocated for the new ACL.
-    
-    LocalFree((HLOCAL) pNewACL);
-    return(TRUE);
-   } 
-   
-   
+// 	SID_IDENTIFIER_AUTHORITY sia = SECURITY_NT_AUTHORITY;
+//     PSID pAdministratorsSid = NULL;
+//     SECURITY_DESCRIPTOR sd;
+//     PACL pDacl = NULL;
+//     DWORD dwAclSize;
+// 	
+//     // Preprare a Sid representing the well-known admin group
+//     if(!AllocateAndInitializeSid(
+//         &sia,
+//         2,
+//         SECURITY_BUILTIN_DOMAIN_RID,
+//         DOMAIN_ALIAS_RID_ADMINS,
+//         0, 0, 0, 0, 0, 0,
+//         &pAdministratorsSid
+// 		)) 
+//     {
+//      //   MessageBox("AllocateAndInitializeSid (Admins) failed:", GetLastError());
+//         goto final_cleanup;
+//     }
+// 	
+//     // Compute size of new acl
+//     dwAclSize = sizeof(ACL) +
+// 		1 * ( sizeof(ACCESS_ALLOWED_ACE) - sizeof(DWORD) ) +
+// 		GetLengthSid(pAdministratorsSid);
+// 	
+//     // Allocate storage for Acl
+//     pDacl = (PACL)HeapAlloc(GetProcessHeap(), 0, dwAclSize);
+//     if(pDacl == NULL) goto final_cleanup;
+// 	
+//     if(!InitializeAcl(pDacl, dwAclSize, ACL_REVISION)) 
+//     {
+// //        PrintError("InitializeAcl failed: ", GetLastError());
+//         goto final_cleanup;
+//     }
+// 	
+//     // Grant the Administrators Sid KEY_ALL_ACCESS access to the perf key
+//     if(!AddAccessAllowedAce(
+//         pDacl,
+//         ACL_REVISION,
+//         KEY_ALL_ACCESS,
+//         pAdministratorsSid
+//         )) 
+//     {
+//  //       PrintError("AddAccessAllowedAce (Admins) failed: ", GetLastError());
+//         goto final_cleanup;
+//     }
+// 	
+//     // Initialize and set the security descriptor and DACL
+//     if(!InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION)) 
+//     {
+// //        PrintError("InitializeSecurityDescriptor", GetLastError());
+//         goto final_cleanup;
+//     }
+//     if(!SetSecurityDescriptorDacl(&sd, TRUE, pDacl, FALSE)) 
+//     {
+//   //      PrintError("SetSecurityDescriptorDacl", GetLastError());
+//         goto final_cleanup;
+//     }
+// 	
+//     //
+//     // Now we can open the registry to the Enum/HID/<MSR VID/PID> key and enumerate installed MSRs
+//     //
+//     
+//     // Open the registry to the Enum\HID\Vid_04b4&Pid_210 key
+//     HKEY hKey, hDeviceKey;
+//     DWORD dwErr;
+//     if ((dwErr = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+// 		g_szKeyboardDeviceSearchPath,
+// 		0,
+// 		KEY_ENUMERATE_SUB_KEYS,
+// 		&hKey)) != ERROR_SUCCESS)
+//     {
+// //        PrintError(_T("Failed to open the Enum/HID registry key for enumeration: "), dwErr);
+//         goto final_cleanup;
+//     }
+// 	
+//     // Enum all the keys under the Vid_04b4&Pid_210 key
+//     TCHAR szKey[256];
+//     int nIdx = 0;
+//     unsigned char *pSDOld = 0;
+//     while (RegEnumKey(hKey, nIdx, szKey, 256) == ERROR_SUCCESS)
+//     {
+//         TCHAR szDeviceKey[MAX_PATH];
+//         _tcscpy(szDeviceKey, g_szKeyboardDeviceSearchPath);
+//         _tcscat(szDeviceKey, _T("\\"));
+//         _tcscat(szDeviceKey, szKey);
+// 		
+//         hDeviceKey = 0;
+// 		
+//         // Open the enumed key for WRITE_DAC and READ_CONTROL access
+//         if ((dwErr = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+// 			szDeviceKey,
+// 			0,
+// 			WRITE_DAC | READ_CONTROL,
+// 			&hDeviceKey)) != ERROR_SUCCESS)
+//         {
+//  //           PrintError("Failed to open the device key for WRITE_DAC access: ", dwErr);
+//             goto cleanup;
+//         }
+	return FALSE;
+	
+}
