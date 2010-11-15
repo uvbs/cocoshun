@@ -60,5 +60,5 @@ ImplementationFile=LoginDlg.cpp
 BaseClass=CDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=CLoginDlg
+LastObject=IDC_EDIT_QQNUMBER
 
