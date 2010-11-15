@@ -45,6 +45,7 @@ protected:
     afx_msg	BOOL Login();
 	afx_msg void OnPaint();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnKillfocusEditQQnumber();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
