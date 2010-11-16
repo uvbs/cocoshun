@@ -29,8 +29,12 @@ CUtil::~CUtil()
 CString CUtil::binl2hex(int C[]) {
     CString B ="0123456789ABCDEF";
     CString D = "";
-    for (int i = 0; i < sizeof(C) * 4; i++) {
-        D += B.GetAt(C[i >> 2] >> i % 4 * 8 + 4 & 15) + B.GetAt(C[i >> 2] >> i % 4 * 8 & 15);
+	int len = sizeofAry(C);
+    for (int i = 0; i < len * 4; i++) {
+		TCHAR ch1 = B.GetAt((C[i >> 2] >> ((i % 4) * 8 + 4)) & 15) ;
+		TCHAR ch2 = B.GetAt((C[i >> 2] >> ((i % 4) * 8)) & 15);
+		D += ch1;
+		D += ch2;
     }
     return D;
 }
@@ -162,6 +166,7 @@ void CUtil::core_md5(int K[], int F,int ary[]) {
 	ary[1] = I;
 	ary[2] = H;
 	ary[3] = G;
+	ary[4] = 0;
 //     if (mode == 16) {
 //         return Array(I, H)
 //     } else {
@@ -186,7 +191,7 @@ CString CUtil::md5_3(CString B)
     core_md5(Ary1, B.GetLength() * 8,Ary2);
     core_md5(Ary2, 16 * 8,Ary2);
     core_md5(Ary2, 16 * 8,Ary2);
-    return binl2hex(Ary1);
+    return binl2hex(Ary2);
 }
 
 CString CUtil::hex_md5(CString &A) {
