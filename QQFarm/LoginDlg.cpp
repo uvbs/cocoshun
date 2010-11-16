@@ -144,7 +144,7 @@ BOOL CLoginDlg::OnInitDialog()
 	CUtil util;
 	//CString str = util.md5_3("1150403514!B5J");
 	CString str = util.md5_3("123123");
-	str = util.md5(str + "PALAT");
+	str = util.md5(str + "XMFXN");
 	MessageBox(str);
 	
     InitPic();	

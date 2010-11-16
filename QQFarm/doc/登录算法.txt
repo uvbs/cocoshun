@@ -207,3 +207,6 @@ function binl2hex(C) {
 
 md5(md5_3(E.p.value) + F) 
 
+"u=1150403514&p=A38C881B0D841186944DBD553DCA10B2"
+
+"u=1150403514&p=A38C881B0D841186944DBD553DCA10B2&verifycode=xmfxn&=on&aid=15000101&u1=http%3A%2F%2Fimgcache.qq.com%2Fqzone%2Fv5%2Floginsucc.html%3Fpara%3Dizone&ptredirect=1&h=1&from_ui=1&dumy=&fp=loginerroralert"
