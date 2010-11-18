@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "QQFarm.h"
 #include "QQFarmDlg.h"
+#include "LoginDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,7 +55,8 @@ BOOL CQQFarmApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	CQQFarmDlg dlg;
+//	CQQFarmDlg dlg;
+	CLoginDlg dlg;
 	m_pMainWnd = &dlg;
 	int nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

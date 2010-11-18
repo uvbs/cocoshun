@@ -47,8 +47,8 @@ BOOL CQQFarmDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-    CLoginDlg LoginDlg;
-    LoginDlg.DoModal();
+ //   CLoginDlg LoginDlg;
+ //   LoginDlg.DoModal();
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog

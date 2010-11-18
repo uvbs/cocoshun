@@ -33,6 +33,8 @@ public:
 
 // Implementation
 protected:
+	CString m_VerifyCode;
+	CString GenerateRandomString(int n);
     BOOL InitPic();
     
     IPicture* m_pPic;
@@ -46,6 +48,7 @@ protected:
 	afx_msg void OnPaint();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnKillfocusEditQQnumber();
+	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

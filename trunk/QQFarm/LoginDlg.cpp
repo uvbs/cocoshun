@@ -13,7 +13,10 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define QQNC_IMAGE_URL "http://ptlogin2.qq.com/getimage?aid=353&0."
+//#define QQNC_IMAGE_URL "http://ptlogin2.qq.com/getimage?aid=353&0."
+#define QQNC_IMAGE_URL "http://ptlogin2.qq.com/getimage?aid=15000101&0."
+#define QQ_LOGIN_URL   "http://ptlogin2.qq.com/login?u=%s&p=%s&verifycode=%s&aid=15000101"
+
 /////////////////////////////////////////////////////////////////////////////
 // CLoginDlg dialog
 
@@ -66,13 +69,9 @@ BOOL CLoginDlg::Login()
 BOOL CLoginDlg::InitPic() 
 {
     IStream* pStm = NULL;  
-    CString strTmp;
     CString strUrl = QQNC_IMAGE_URL;
-    for(int i = 0 ; i < 16 ; i++)
-    {
-        strTmp.Format("%d",rand()%10);
-        strUrl += strTmp;
-    }
+
+	strUrl += GenerateRandomString(16);
     
     DWORD dwLen = 0;
     
@@ -124,7 +123,7 @@ BOOL CLoginDlg::InitPic()
 void CLoginDlg::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
-
+	
     CRect rect;
     GetWindowRect(rect);
     int x =  rect.Width()/2 - m_Size.cx/2;
@@ -132,7 +131,7 @@ void CLoginDlg::OnPaint()
 	
     if(m_pPic)
     {
-       m_pPic->Render(dc.m_hDC, x , y, m_Size.cx, m_Size.cy, 0, m_nPicHeight, m_nPicWidth, -m_nPicHeight, NULL);
+		m_pPic->Render(dc.m_hDC, x , y, m_Size.cx, m_Size.cy, 0, m_nPicHeight, m_nPicWidth, -m_nPicHeight, NULL);
     }
 }
 
@@ -141,13 +140,15 @@ BOOL CLoginDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	CUtil util;
+	GetDlgItem(IDC_EDIT_QQNUMBER)->SetWindowText("1054799051");
+	GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowText("crazyhsy");
+//	CUtil util;
 	//CString str = util.md5_3("1150403514!B5J");
-	CString str = util.md5_3("123123");
-	str = util.md5(str + "XMFXN");
-	MessageBox(str);
+// 	CString str = util.md5_3("123123");
+// 	str = util.md5(str + "XMFXN");
+// 	MessageBox(str);
 	
-    InitPic();	
+//    InitPic();	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -156,22 +157,47 @@ void CLoginDlg::OnKillfocusEditQQnumber()
 {
 	CInternetSession m_InetSession(_T("session"),0,INTERNET_OPEN_TYPE_PRECONFIG,NULL,NULL,INTERNET_FLAG_DONT_CACHE); //ÉèÖÃ²»»º³å
     CHttpFile* pFile = NULL;
-    IStream* pStm = NULL;  
 	DWORD dwLen = 0;
-	CString strUrlTemplate = _T("http://ptlogin2.qq.com/check?uin=%s&appid=15000101&r=0.5529257158294194");
+	CString strVerifyLogin = _T("http://ptlogin2.qq.com/check?uin=%s&appid=15000101&r=0.") + GenerateRandomString(16);
+	CString retOK = "ptui_checkVC('0',";
 	UpdateData(FALSE);
+
 	CString qNum;
 	GetDlgItem(IDC_EDIT_QQNUMBER)->GetWindowText(qNum);
+	if(qNum.IsEmpty())
+		return;
+
 	CString strUrl;
-	strUrl.Format(strUrlTemplate,qNum);
+	strUrl.Format(strVerifyLogin,qNum);
+
+	CString content;
     try
     {
         pFile = (CHttpFile*)m_InetSession.OpenURL(strUrl);
         
         pFile->QueryInfo(HTTP_QUERY_CONTENT_LENGTH, dwLen); 
-		CString content;
 		pFile->ReadString(content);
-		MessageBox(content);
+		if(content.Find(retOK) != 0)
+		{
+			InitPic();
+		}else
+		{
+			int startPos = content.Find(",'") + 2;
+			int endPos   = content.ReverseFind('\'');
+			m_VerifyCode = content.Mid(startPos, endPos-startPos);
+
+			// login 
+			strUrl = "";
+			CUtil util;
+			CString str = util.md5_3("crazyhsy");
+		 	str = util.md5(str + m_VerifyCode);
+
+			strUrl.Format(QQ_LOGIN_URL,qNum,str,m_VerifyCode);
+			pFile = (CHttpFile*)m_InetSession.OpenURL(strUrl);
+			//pFile->QueryInfo(HTTP_QUERY_CONTENT_LENGTH, dwLen); 
+			pFile->ReadString(content);
+			MessageBox(content);
+		}
 
         if(pFile)  delete pFile;
     }
@@ -179,4 +205,22 @@ void CLoginDlg::OnKillfocusEditQQnumber()
     {
         e->m_dwContext;
     }
+}
+
+void CLoginDlg::OnCancel() 
+{
+	
+	CDialog::OnCancel();
+}
+
+CString CLoginDlg::GenerateRandomString(int n)
+{
+	CString randomString;
+	CString strTmp;
+    for(int i = 0 ; i < n ; i++)
+    {
+        strTmp.Format("%d",rand()%10);
+        randomString += strTmp;
+    }
+	return randomString;
 }
