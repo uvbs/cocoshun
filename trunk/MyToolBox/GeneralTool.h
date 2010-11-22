@@ -34,6 +34,11 @@ public:
 
 // Implementation
 protected:
+	void CheckMaskItem(int nItem, BOOL bCheck);
+	void ReadMaskAD();
+	CString GetHostsPath();
+
+    static CString m_maskADContent[];
 
 	// Generated message map functions
 	//{{AFX_MSG(GeneralTool)
@@ -43,6 +48,11 @@ protected:
 	afx_msg void OnBtnRebulidIconCache();
 	afx_msg void OnBtnRestartExplorer();
 	afx_msg void OnCheckShowboottime();
+	afx_msg void OnButtonOpenhosts();
+	afx_msg void OnCheckMaskYouku();
+	afx_msg void OnCheckMaskTudou();
+	afx_msg void OnCheckMaskXunlei();
+	afx_msg void OnCheckMaskOther();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
