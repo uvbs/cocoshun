@@ -69,6 +69,7 @@
 #define IDC_CHECK_MASK_XUNLEI           1045
 #define IDC_CHECK_MASK_OTHER            1046
 #define IDC_BUTTON_OPENHOSTS            1047
+#define IDC_CHECK_MASK_KU6              1048
 
 // Next default values for new objects
 // 

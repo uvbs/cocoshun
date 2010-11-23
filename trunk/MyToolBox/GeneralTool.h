@@ -53,6 +53,7 @@ protected:
 	afx_msg void OnCheckMaskTudou();
 	afx_msg void OnCheckMaskXunlei();
 	afx_msg void OnCheckMaskOther();
+	afx_msg void OnCheckMaskKu6();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
