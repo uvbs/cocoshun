@@ -41,6 +41,10 @@ _T("\r\n#屏蔽其他广告：\r\n\
 0.0.0.0 googleads.g.doubleclick.net\r\n\
 0.0.0.0 cpro.baidu.com\r\n\
 0.0.0.0 biz5.sandai.net\r\n\r\n"),
+_T("\r\n#屏蔽酷6广告：\r\n\
+0.0.0.0 ad-apac.doubleclick.net\r\n\
+0.0.0.0 st.vq.ku6.cn\r\n\
+0.0.0.0 ku6afp.allyes.com\r\n\r\n"),
 };
 
 GeneralTool::GeneralTool(CWnd* pParent /*=NULL*/)
@@ -72,6 +76,7 @@ BEGIN_MESSAGE_MAP(GeneralTool, CResizingDialog)
 	ON_BN_CLICKED(IDC_CHECK_MASK_TUDOU, OnCheckMaskTudou)
 	ON_BN_CLICKED(IDC_CHECK_MASK_XUNLEI, OnCheckMaskXunlei)
 	ON_BN_CLICKED(IDC_CHECK_MASK_OTHER, OnCheckMaskOther)
+	ON_BN_CLICKED(IDC_CHECK_MASK_KU6, OnCheckMaskKu6)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -190,6 +195,11 @@ void GeneralTool::ReadMaskAD()
         pButton->SetCheck(TRUE);
     }
 
+	if(_tcsstr(buf,m_maskADContent[4]))
+    {
+        pButton = (CButton *)GetDlgItem(IDC_CHECK_MASK_KU6);
+        pButton->SetCheck(TRUE);
+    }
     if(buf)
     {
         delete[] buf;
@@ -221,6 +231,11 @@ void GeneralTool::OnCheckMaskOther()
     CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_MASK_OTHER);
     CheckMaskItem(3,pButton->GetCheck());
 }
+void GeneralTool::OnCheckMaskKu6() 
+{
+    CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_MASK_KU6);
+    CheckMaskItem(4,pButton->GetCheck());
+}
 
 void GeneralTool::CheckMaskItem(int nItem, BOOL bCheck)
 {
@@ -240,11 +255,14 @@ void GeneralTool::CheckMaskItem(int nItem, BOOL bCheck)
         if(!_tcsstr(buf,m_maskADContent[nItem]))
         {
             strcat(buf,m_maskADContent[nItem]);
-
+			
             CFile file;
             CString HostPath = GetHostsPath();
             if(!file.Open(HostPath,CFile::modeCreate | CFile::modeWrite))
+			{
                 MessageBox("不能打开hosts文件");
+
+			}
             file.Write(buf,strlen(buf));
             file.Close();
         }
@@ -268,3 +286,4 @@ void GeneralTool::CheckMaskItem(int nItem, BOOL bCheck)
     }
     
 }
+

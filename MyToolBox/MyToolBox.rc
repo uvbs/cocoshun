@@ -173,14 +173,16 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,7,135,108,13
     GROUPBOX        "屏蔽广告",IDC_STATIC,169,13,133,100
     CONTROL         "屏蔽优酷广告",IDC_CHECK_MASK_YOUKU,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,177,29,64,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,178,27,64,10
     CONTROL         "屏蔽土豆广告",IDC_CHECK_MASK_TUDOU,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,177,42,64,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,178,40,64,10
     CONTROL         "屏蔽迅雷广告",IDC_CHECK_MASK_XUNLEI,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,177,55,64,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,178,53,64,10
     CONTROL         "屏蔽其它广告",IDC_CHECK_MASK_OTHER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,177,68,64,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,178,79,64,10
     PUSHBUTTON      "打开hosts文件",IDC_BUTTON_OPENHOSTS,179,90,77,18
+    CONTROL         "屏蔽酷6广告",IDC_CHECK_MASK_KU6,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,178,66,60,10
 END
 
 IDD_CLEAR_HISTORY_DLG DIALOG DISCARDABLE  0, 0, 339, 183
