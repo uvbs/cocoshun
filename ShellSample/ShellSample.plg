@@ -1,0 +1,36 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ShellSample - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "G:\Users\Simon\AppData\Local\Temp\RSPC2E5.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/ShellSample.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ   /c 
+"E:\Source\cocoshun\ShellSample\ShellSampleDlg.cpp"
+]
+Creating command line "cl.exe @G:\Users\Simon\AppData\Local\Temp\RSPC2E5.tmp" 
+Creating temporary file "G:\Users\Simon\AppData\Local\Temp\RSPC2E6.tmp" with contents
+[
+Psapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/ShellSample.pdb" /debug /machine:I386 /out:"Debug/ShellSample.exe" /pdbtype:sept 
+.\Debug\ShellSample.obj
+.\Debug\ShellSampleDlg.obj
+.\Debug\StdAfx.obj
+.\Debug\ShellSample.res
+.\Debug\EnumProc.obj
+]
+Creating command line "link.exe @G:\Users\Simon\AppData\Local\Temp\RSPC2E6.tmp"
+<h3>Output Window</h3>
+Compiling...
+ShellSampleDlg.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+ShellSample.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
