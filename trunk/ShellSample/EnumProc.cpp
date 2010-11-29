@@ -95,16 +95,13 @@ BOOL CMainWindowIterator::OnWindow(HWND hwnd)
 		DWORD pidwin;
 		
 		//获得窗口对应的threadid，如果和当前的线程id
-		
 		//相等返回true
-		
 		GetWindowThreadProcessId(hwnd, &pidwin);
 		
 		if (pidwin == m_pid)
 		{
 			return TRUE;
 		}
-		
 	}
 	return FALSE;
 }
@@ -193,3 +190,37 @@ HMODULE CProcessModuleIterator::First()
 	return Next();
 }
 
+
+CWindowFinder::CWindowFinder( HWND hwnd,FIND_TYPE FindType, MATCH_TYPE MatchType)
+{
+	m_hWnd = hwnd;
+	m_FindType = FindType;
+	m_MatchType = MatchType;
+}
+
+CWindowFinder::~CWindowFinder()
+{
+	
+}
+
+HWND CWindowFinder::Find( CString str )
+{
+	return NULL;
+}
+
+BOOL CWindowFinder::OnEnumProc(HWND hwnd)
+{
+	//如果窗口可见，而且和当前窗口的id相同
+	
+	if (OnWindow(hwnd))
+	{
+		//把当前窗口添加到窗口数组
+		
+		if (m_count < m_nAlloc)
+		{
+			m_hwnds[m_count++] = hwnd;
+		}
+	}
+	
+	return TRUE; // keep looking
+}

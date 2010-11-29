@@ -244,6 +244,8 @@ void CShellSampleDlg::OnButtonSendmsg()
 					//获得窗口的标题
 					
 					::GetWindowText(hwnd,title,sizeof(title));
+					
+					hwnd = FindWindowEx(hwnd, NULL , "AfxFrameOrView42su",NULL);
 
 					::SendMessage(hwnd,WM_SETTEXT,0,0x31); 
 					
