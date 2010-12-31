@@ -1,0 +1,16 @@
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\bin\FrameWork.web.dll
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\bin\FrameWork.web.pdb
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\bin\FrameWork.dll
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\bin\FrameWork.pdb
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\bin\FrameWork.xml
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\obj\Debug\ResolveAssemblyReference.cache
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\obj\Debug\FrameWork.web.dll
+D:\webhome\FrameWork\Code\src\20080614\FrameWork.web\obj\Debug\FrameWork.web.pdb
+E:\Source\frameworksrc1.06\FrameWork.web\bin\FrameWork.web.dll
+E:\Source\frameworksrc1.06\FrameWork.web\bin\FrameWork.web.pdb
+E:\Source\frameworksrc1.06\FrameWork.web\bin\FrameWork.dll
+E:\Source\frameworksrc1.06\FrameWork.web\bin\FrameWork.pdb
+E:\Source\frameworksrc1.06\FrameWork.web\bin\FrameWork.xml
+E:\Source\frameworksrc1.06\FrameWork.web\obj\Debug\ResolveAssemblyReference.cache
+E:\Source\frameworksrc1.06\FrameWork.web\obj\Debug\FrameWork.web.dll
+E:\Source\frameworksrc1.06\FrameWork.web\obj\Debug\FrameWork.web.pdb
