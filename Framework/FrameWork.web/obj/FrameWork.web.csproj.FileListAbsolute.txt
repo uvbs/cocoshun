@@ -14,3 +14,11 @@ E:\Source\frameworksrc1.06\FrameWork.web\bin\FrameWork.xml
 E:\Source\frameworksrc1.06\FrameWork.web\obj\Debug\ResolveAssemblyReference.cache
 E:\Source\frameworksrc1.06\FrameWork.web\obj\Debug\FrameWork.web.dll
 E:\Source\frameworksrc1.06\FrameWork.web\obj\Debug\FrameWork.web.pdb
+F:\google-svn\cocoshun\Framework\FrameWork.web\bin\FrameWork.web.dll
+F:\google-svn\cocoshun\Framework\FrameWork.web\bin\FrameWork.web.pdb
+F:\google-svn\cocoshun\Framework\FrameWork.web\bin\FrameWork.dll
+F:\google-svn\cocoshun\Framework\FrameWork.web\bin\FrameWork.pdb
+F:\google-svn\cocoshun\Framework\FrameWork.web\bin\FrameWork.xml
+F:\google-svn\cocoshun\Framework\FrameWork.web\obj\Debug\ResolveAssemblyReference.cache
+F:\google-svn\cocoshun\Framework\FrameWork.web\obj\Debug\FrameWork.web.dll
+F:\google-svn\cocoshun\Framework\FrameWork.web\obj\Debug\FrameWork.web.pdb

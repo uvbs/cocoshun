@@ -141,6 +141,13 @@
     <Compile Include="Manager\Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manager\Module\App\News_Add.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>News_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Module\App\News_Add.aspx.designer.cs">
+      <DependentUpon>News_Add.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manager\Module\FrameWork\SystemApp\AppManager\AppManager.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>AppManager.aspx</DependentUpon>
@@ -584,6 +591,7 @@
   <ItemGroup>
     <Content Include="Manager\images\logon\Logon_18.jpg" />
     <Content Include="Manager\images\logon\Logon_7no.gif" />
+    <Content Include="Manager\Module\App\News_Add.aspx" />
     <Content Include="Manager\Web.config" />
   </ItemGroup>
   <ItemGroup>
