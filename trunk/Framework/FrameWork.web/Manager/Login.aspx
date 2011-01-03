@@ -118,9 +118,7 @@
             <td colspan="3" height="20">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="20">
                     <tr>
-                        <td class="down_text">
-                            Powered By <a href="http://www.supesoft.com" target="_blank"><font color="#ffffff">Supesoft.com</font></a>
-                            Information Technology Logistics Inc.</td>
+                        <td class="down_text">Create Date 2011-01</td>
                     </tr>
                 </table>
             </td>

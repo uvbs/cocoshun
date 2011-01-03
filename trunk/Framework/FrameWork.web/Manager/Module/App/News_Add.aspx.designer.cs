@@ -8,15 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrameWork.web {
+namespace FrameWork.web.Manager.Module.App {
     
     
     /// <summary>
-    /// _Default 类。
+    /// WebForm1 类。
     /// </summary>
     /// <remarks>
     /// 自动生成的类。
     /// </remarks>
-    public partial class _Default {
+    public partial class WebForm1 {
     }
 }

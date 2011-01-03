@@ -124,16 +124,15 @@ p{
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="20">
                     <tr>
                         <td class="down_text">
-                            Powered By <a href="http://www.supesoft.com" target="_blank"><font color="#ffffff">Supesoft.com</font></a>
-                            Information Technology Logistics Inc.</td>
+                            Create Date 2011-01</td>
                             <td align="right" width="400" bgcolor="#000000">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
-                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF;" onclick="javascript:showPopWin('About','about.aspx',510, 170, null,false)">&nbsp;<img src="images/about.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">版本信息</font></td>
-                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF;" onclick="javascript:showPopWin('个人设定','UserSet.aspx?rand'+rand(100000000),400, 255, AlertMessageBox,true)">&nbsp;<img src="images/userset.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">个人设定</font></td>
-                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF;" onclick="javascript: window.mainFrame.location.href='right.aspx'">&nbsp;<img src="images/house.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">回到首页</font></td>
-                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF;" onclick="javascript: window.top.location.href = 'LoginOut.aspx'">&nbsp;<img src="images/logout.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">退出系统</font></td>
-                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF;" onclick="javascript:window.open('http://framework.supesoft.com/help/');">&nbsp;<img src="images/help.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">帮助手册</font></td>
+                                    <!-- <td style="cursor:pointer;border-left:1px solid #FFFFFF; height: 17px;" onclick="javascript:showPopWin('About','about.aspx',510, 170, null,false)">&nbsp;<img src="images/about.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">版本信息</font></td> -->
+                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF; height: 17px;" onclick="javascript:showPopWin('个人设定','UserSet.aspx?rand'+rand(100000000),400, 255, AlertMessageBox,true)">&nbsp;<img src="images/userset.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">个人设定</font></td>
+                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF; height: 17px;" onclick="javascript: window.mainFrame.location.href='right.aspx'">&nbsp;<img src="images/house.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">回到首页</font></td>
+                                    <td style="cursor:pointer;border-left:1px solid #FFFFFF; height: 17px;" onclick="javascript: window.top.location.href = 'LoginOut.aspx'">&nbsp;<img src="images/logout.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">退出系统</font></td>
+                                    <!-- <td style="cursor:pointer;border-left:1px solid #FFFFFF; height: 17px;" onclick="javascript:window.open('http://framework.supesoft.com/help/');">&nbsp;<img src="images/help.gif" style="margin-bottom: -3px">&nbsp;<font color="#FFFFFF">帮助手册</font></td> -->
                                 </tr>
                             </table>
                             
