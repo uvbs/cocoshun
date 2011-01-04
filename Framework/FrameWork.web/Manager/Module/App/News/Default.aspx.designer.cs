@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrameWork.web.Module.FrameWork.UserManager {
+namespace FrameWork.web.Manager.Module.App.News {
     
     
     /// <summary>
