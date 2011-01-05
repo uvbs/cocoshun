@@ -141,6 +141,48 @@
     <Compile Include="Manager\Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manager\Module\App\app_News\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_News\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_News\Manager.aspx.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_News\Manager.aspx.designer.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_Notify\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_Notify\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_Notify\Manager.aspx.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_Notify\Manager.aspx.designer.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_StyleShow\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_StyleShow\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_StyleShow\Manager.aspx.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manager\Module\App\app_StyleShow\Manager.aspx.designer.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manager\Module\App\News\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -617,9 +659,20 @@
     <Content Include="Manager\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Manager\Module\App\app_News\Default.aspx" />
+    <Content Include="Manager\Module\App\app_News\Manager.aspx" />
+    <Content Include="Manager\Module\App\app_Notify\Default.aspx" />
+    <Content Include="Manager\Module\App\app_Notify\Manager.aspx" />
+    <Content Include="Manager\Module\App\app_StyleShow\Default.aspx" />
+    <Content Include="Manager\Module\App\app_StyleShow\Manager.aspx" />
     <Content Include="Manager\Module\App\News\SelectGroup.aspx" />
     <Content Include="Manager\Module\App\News\NewsManager.aspx" />
     <Content Include="Manager\Module\App\News\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Manager\Module\App\app_News\web.config" />
+    <Content Include="Manager\Module\App\app_Notify\web.config" />
+    <Content Include="Manager\Module\App\app_StyleShow\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\DataBase\Access\" />
