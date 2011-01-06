@@ -1,5 +1,5 @@
 <%@ Page Language="C#" MasterPageFile="~/Manager/MasterPage/PageTemplate.Master" AutoEventWireup="True"
-    Codebehind="Manager.aspx.cs" Inherits="FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Module.App.app_Notify.Manager"
+    Codebehind="Manager.aspx.cs" Inherits="FrameWork.web.Manager.Module.App.app_Notify.Manager"
     Title="ÎÞ±êÌâÒ³" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageBody" runat="server">

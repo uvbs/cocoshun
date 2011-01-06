@@ -27,7 +27,7 @@ using FrameWork;
 using FrameWork.Components;
 using FrameWork.WebControls;
 
-namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Module.App.app_StyleShow
+namespace FrameWork.web.Manager.Module.App.app_StyleShow
 {
     public partial class Manager : System.Web.UI.Page
     {
@@ -47,7 +47,7 @@ namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Modu
         /// </summary>
         private void OnStart()
         {
-            app_StyleShowEntity ut = BusinessFacadeFrameWork.web.Manager.Module.App.app_StyleShowDisp(IDX);
+            app_StyleShowEntity ut = BusinessFacadeFrameWork.app_StyleShowDisp(IDX);
             OnStartData(ut);
             switch (CMD)
             { 
@@ -68,7 +68,7 @@ namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Modu
                     break;
                 case "Delete":
                     ut.DataTable_Action_ = DataTable_Action.Delete;
-                    if (BusinessFacadeFrameWork.web.Manager.Module.App.app_StyleShowInsertUpdateDelete(ut) > 0)
+                    if (BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut) > 0)
                     {
                         EventMessage.MessageBox(1, "删除成功", string.Format("删除ID:{0}成功!", IDX), Icon_Type.OK, Common.GetHomeBaseUrl("Default.aspx"));
                     }
@@ -170,13 +170,13 @@ namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Modu
             
             
             
-            app_StyleShowEntity ut = BusinessFacadeFrameWork.web.Manager.Module.App.app_StyleShowDisp(IDX);
+            app_StyleShowEntity ut = BusinessFacadeFrameWork.app_StyleShowDisp(IDX);
             
-            ut.Title = Title_Value;
-            ut.AddTime = AddTime_Value;
-            ut.Author = Author_Value;
-            ut.ImagePath = ImagePath_Value;
-            ut.Comment = Comment_Value;
+            ut.Title = Title_Input.Text;
+            ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
+            ut.Author = Author_Input.Text;
+            ut.ImagePath = ImagePath_Input.Text;
+            ut.Comment = Comment_Input.Text;
             
             if (CMD == "New")
             {
@@ -190,7 +190,7 @@ namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Modu
             {
                 EventMessage.MessageBox(2, "不存在操作字符串!", "不存在操作字符串!", Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
             }
-            Int32 rInt = BusinessFacadeFrameWork.web.Manager.Module.App.app_StyleShowInsertUpdateDelete(ut);
+            Int32 rInt = BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut);
             if ( rInt> 0)
             {
                 string OpTxt = string.Format("增加成功!(ID:{0})", rInt);
