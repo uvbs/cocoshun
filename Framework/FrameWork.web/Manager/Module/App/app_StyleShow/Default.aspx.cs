@@ -28,7 +28,7 @@ using FrameWork.web.Manager.Module.App.Components;
 using FrameWork;
 using FrameWork.Components;
 
-namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Module.App.app_StyleShow
+namespace FrameWork.web.Manager.Module.App.app_StyleShow
 {
     public partial class Default : System.Web.UI.Page
     {
@@ -52,7 +52,7 @@ namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Modu
             qp.Orderfld = Orderfld;
             qp.OrderType = OrderType;
             int RecordCount = 0;
-            List<app_StyleShowEntity> lst = BusinessFacadeFrameWork.web.Manager.Module.App.app_StyleShowList(qp, out RecordCount);
+            List<app_StyleShowEntity> lst = BusinessFacadeFrameWork.app_StyleShowList(qp, out RecordCount);
             GridView1.DataSource = lst;
             GridView1.DataBind();
             this.AspNetPager1.RecordCount = RecordCount;
@@ -235,7 +235,7 @@ namespace FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Modu
                     app_StyleShowEntity et = new app_StyleShowEntity();
                     et.DataTable_Action_ = DataTable_Action.Delete;
                     et.ID = IDX;
-                    BusinessFacadeFrameWork.web.Manager.Module.App.app_StyleShowInsertUpdateDelete(et);
+                    BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(et);
                 }
             }
 

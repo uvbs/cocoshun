@@ -1,41 +1,41 @@
-<%@ Page Language="C#" MasterPageFile="~/Manager/MasterPage/PageTemplate.Master" AutoEventWireup="True"
-    Codebehind="Default.aspx.cs" Inherits="FrameWork.web.Manager.Module.App.Web.Module.FrameWork.web.Manager.Module.App.app_News.Default"
-    Title="Œﬁ±ÍÃ‚“≥" %>
+Ôªø<%@ Page Language="C#" MasterPageFile="~/Manager/MasterPage/PageTemplate.Master" AutoEventWireup="True"
+    Codebehind="Default.aspx.cs" Inherits="FrameWork.web.Manager.Module.App.app_News.Default"
+    Title="Êó†Ê†áÈ¢òÈ°µ" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageBody" runat="server">
     <FrameWorkWebControls:HeadMenuWebControls ID="HeadMenuWebControls1" runat="server"
-         HeadOPTxt="¡–±Ì" HeadTitleTxt="">
+         HeadOPTxt="ÂàóË°®" HeadTitleTxt="">
         <FrameWorkWebControls:HeadMenuButtonItem ButtonPopedom="New" ButtonUrl="Manager.aspx?CMD=New"
             ButtonUrlType="Href" ButtonVisible="True" ButtonName="" />
     </FrameWorkWebControls:HeadMenuWebControls>
     <FrameWorkWebControls:TabOptionWebControls ID="TabOptionWebControls1" runat="server">
-        <FrameWorkWebControls:TabOptionItem ID="TabOptionItem1" runat="server" Tab_Name="¡–±Ì">
+        <FrameWorkWebControls:TabOptionItem ID="TabOptionItem1" runat="server" Tab_Name="ÂàóË°®">
             <asp:GridView ID="GridView1" runat="server" OnSorting="GridView1_Sorting" OnRowCreated="GridView1_RowCreated" >
                 <Columns>
-                    <asp:TemplateField SortExpression="ID" HeaderText="–Ú∫≈"> 
+                    <asp:TemplateField SortExpression="ID" HeaderText="Â∫èÂè∑"> 
                         <ItemTemplate>
                         <a href="Manager.aspx?IDX=<%#Eval("ID")%>&CMD=List"><%# (this.AspNetPager1.CurrentPageIndex - 1) * this.AspNetPager1.PageSize + Container.DataItemIndex + 1%></a>
                         </ItemTemplate>
                         <ItemStyle Wrap="True" />  
                         <HeaderStyle Wrap="False" />    
                     </asp:TemplateField>
-                    <asp:BoundField HeaderText="±ÍÃ‚" SortExpression="Title" DataField="Title" />
-                    <asp:BoundField HeaderText="◊˜’ﬂ" SortExpression="Author" DataField="Author" />
-                    <asp:BoundField HeaderText="º”»Î ±º‰" SortExpression="AddTime" DataField="AddTime" />
-                    <asp:BoundField HeaderText="ƒ⁄»›" SortExpression="Content" DataField="Content" />
-                    <asp:BoundField HeaderText="Õº∆¨¬∑æ∂" SortExpression="ImagePath" DataField="ImagePath" />
-                    <asp:BoundField HeaderText=" «∑ÒŒ™Õ∆ºˆ–¬Œ≈" SortExpression="ReCommand" DataField="ReCommand" />
+                    <asp:BoundField HeaderText="Ê†áÈ¢ò" SortExpression="Title" DataField="Title" />
+                    <asp:BoundField HeaderText="‰ΩúËÄÖ" SortExpression="Author" DataField="Author" />
+                    <asp:BoundField HeaderText="Âä†ÂÖ•Êó∂Èó¥" SortExpression="AddTime" DataField="AddTime" />
+                    <asp:BoundField HeaderText="ÂÜÖÂÆπ" SortExpression="Content" DataField="Content" />
+                    <asp:BoundField HeaderText="ÂõæÁâáË∑ØÂæÑ" SortExpression="ImagePath" DataField="ImagePath" />
+                    <asp:BoundField HeaderText="ÊòØÂê¶‰∏∫Êé®ËçêÊñ∞Èóª" SortExpression="ReCommand" DataField="ReCommand" />
                 </Columns>
             </asp:GridView>
             <FrameWorkWebControls:AspNetPager ID="AspNetPager1" runat="server" OnPageChanged="AspNetPager1_PageChanged">
             </FrameWorkWebControls:AspNetPager>
-            <asp:Button ID="Button2" Visible="false" CssClass="button_bak" runat="server" Text="…æ≥˝" OnClientClick="return deleteop();" OnClick="Button2_Click" />
+            <asp:Button ID="Button2" Visible="false" CssClass="button_bak" runat="server" Text="Âà†Èô§" OnClientClick="return deleteop();" OnClick="Button2_Click" />
         </FrameWorkWebControls:TabOptionItem>
-        <FrameWorkWebControls:TabOptionItem ID="TabOptionItem2" runat="server" Tab_Name="≤È—Ø">
+        <FrameWorkWebControls:TabOptionItem ID="TabOptionItem2" runat="server" Tab_Name="Êü•ËØ¢">
             <table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
                 <tr>
                     <td class="table_body">
-                        ±ÍÃ‚</td>
+                        Ê†áÈ¢ò</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                        ◊˜’ﬂ</td>
+                        ‰ΩúËÄÖ</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Author_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                        º”»Î ±º‰</td>
+                        Âä†ÂÖ•Êó∂Èó¥</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                        ƒ⁄»›</td>
+                        ÂÜÖÂÆπ</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Content_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -71,7 +71,7 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                        Õº∆¨¬∑æ∂</td>
+                        ÂõæÁâáË∑ØÂæÑ</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -80,11 +80,11 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                         «∑ÒŒ™Õ∆ºˆ–¬Œ≈</td>
+                        ÊòØÂê¶‰∏∫Êé®ËçêÊñ∞Èóª</td>
                     <td class="table_none">
                      
                         <asp:DropDownList ID="ReCommand_Input" runat="server">
-                            <asp:ListItem Text="≤ªœﬁ" Value=""></asp:ListItem>
+                            <asp:ListItem Text="‰∏çÈôê" Value=""></asp:ListItem>
                             <asp:ListItem Text="True" Value="1"></asp:ListItem>
                             <asp:ListItem Text="False" Value="0"></asp:ListItem>
                         </asp:DropDownList>
@@ -93,7 +93,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" align="right">
-                        <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="≤È—Ø" OnClick="Button1_Click" /></td>
+                        <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="Êü•ËØ¢" OnClick="Button1_Click" /></td>
                 </tr>
             </table>
         </FrameWorkWebControls:TabOptionItem>
@@ -107,45 +107,45 @@ function SelectAll()
    var e=document.getElementsByTagName("input");
    var IsTrue;
    if(document.getElementById("CheckboxAll").value=="0")
-°° {
-°°°° IsTrue=true;
-°°°° document.getElementById("CheckboxAll").value="1"
-°° }
-°° else
-°° {
-°°°°IsTrue=false;
-°°°°document.getElementById("CheckboxAll").value="0"
-°°°°}
-°°°°
-°°for(var i=0;i<e.length;i++)
-°°{
-°°°°if (e[i].type=="checkbox")
-°°°°{
-°°°°   e[i].checked=IsTrue;
-°°°°}
-°°}
+„ÄÄ {
+„ÄÄ„ÄÄ IsTrue=true;
+„ÄÄ„ÄÄ document.getElementById("CheckboxAll").value="1"
+„ÄÄ }
+„ÄÄ else
+„ÄÄ {
+„ÄÄ„ÄÄIsTrue=false;
+„ÄÄ„ÄÄdocument.getElementById("CheckboxAll").value="0"
+„ÄÄ„ÄÄ}
+„ÄÄ„ÄÄ
+„ÄÄfor(var i=0;i<e.length;i++)
+„ÄÄ{
+„ÄÄ„ÄÄif (e[i].type=="checkbox")
+„ÄÄ„ÄÄ{
+„ÄÄ„ÄÄ   e[i].checked=IsTrue;
+„ÄÄ„ÄÄ}
+„ÄÄ}
 }
 function deleteop()
 {
     var checkok = false;
     var e=document.getElementsByTagName("input");
     for(var i=0;i<e.length;i++)
-°°  {
-°°     if (e[i].type=="checkbox")
-°°°°     {
-°°°°         if (e[i].checked==true)
-°°°°         {
-°°°°             checkok = true;
-°°°°             break;°°°°             
-°°°°         }
-°°°°     }  
-°°  }
-°°  if (checkok) 
-        return confirm('…æ≥˝∫Û≤ªø…ª÷∏¥,»∑»œ“™≈˙¡ø…æ≥˝—°÷–º«¬º¬£ø');
+„ÄÄ  {
+„ÄÄ     if (e[i].type=="checkbox")
+„ÄÄ„ÄÄ     {
+„ÄÄ„ÄÄ         if (e[i].checked==true)
+„ÄÄ„ÄÄ         {
+„ÄÄ„ÄÄ             checkok = true;
+„ÄÄ„ÄÄ             break;„ÄÄ„ÄÄ             
+„ÄÄ„ÄÄ         }
+„ÄÄ„ÄÄ     }  
+„ÄÄ  }
+„ÄÄ  if (checkok) 
+        return confirm('Âà†Èô§Âêé‰∏çÂèØÊÅ¢Â§ç,Á°ÆËÆ§Ë¶ÅÊâπÈáèÂà†Èô§ÈÄâ‰∏≠ËÆ∞ÂΩïÂêóÔºü');
     else
     {
         
-        alert("«Î—°‘Ò“™…æ≥˝µƒº«¬º!");
+        alert("ËØ∑ÈÄâÊã©Ë¶ÅÂà†Èô§ÁöÑËÆ∞ÂΩï!");
         return false;
     }
 }
