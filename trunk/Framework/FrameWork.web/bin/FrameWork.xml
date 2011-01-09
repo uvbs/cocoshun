@@ -1962,6 +1962,96 @@
             每页记录数
             </summary>
         </member>
+        <member name="T:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork">
+            <summary>
+            业务逻辑类
+            </summary>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NewsInsertUpdateDelete(FrameWork.web.Manager.Module.App.Components.app_NewsEntity)">
+            <summary>
+            新增/删除/修改 app_NewsEntity ()
+            </summary>
+            <param name="fam">app_NewsEntity实体类</param>
+            <returns>-1:存储过程执行失败,-2:存在相同的主键,Insert:返回插入自动ID,Update:返回更新记录数,Delete:返回删除记录数</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NewsDisp(System.Int32)">
+            <summary>
+            根据ID返回 app_NewsEntity实体类 单笔资料 ()
+            </summary>
+            <param name="ID">ID </param>
+            <returns>返回 app_NewsEntity实体类 ID为0则无记录</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NewsList(FrameWork.Components.QueryParam,System.Int32@)">
+            <summary>
+            返回app_NewsEntity实体类的List对象 ()
+            </summary>
+            <param name="qp">查询类(非安全函数,传入参数请进行Sql字符串过滤)</param>
+            <param name="RecordCount">返回记录总数</param>
+            <returns>app_NewsEntity实体类的List对象()</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NotifyInsertUpdateDelete(FrameWork.web.Manager.Module.App.Components.app_NotifyEntity)">
+            <summary>
+            新增/删除/修改 app_NotifyEntity ()
+            </summary>
+            <param name="fam">app_NotifyEntity实体类</param>
+            <returns>-1:存储过程执行失败,-2:存在相同的主键,Insert:返回插入自动ID,Update:返回更新记录数,Delete:返回删除记录数</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NotifyDisp(System.Int32)">
+            <summary>
+            根据ID返回 app_NotifyEntity实体类 单笔资料 ()
+            </summary>
+            <param name="ID">ID </param>
+            <returns>返回 app_NotifyEntity实体类 ID为0则无记录</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NotifyList(FrameWork.Components.QueryParam,System.Int32@)">
+            <summary>
+            返回app_NotifyEntity实体类的List对象 ()
+            </summary>
+            <param name="qp">查询类(非安全函数,传入参数请进行Sql字符串过滤)</param>
+            <param name="RecordCount">返回记录总数</param>
+            <returns>app_NotifyEntity实体类的List对象()</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(FrameWork.web.Manager.Module.App.Components.app_StyleShowEntity)">
+            <summary>
+            新增/删除/修改 app_StyleShowEntity ()
+            </summary>
+            <param name="fam">app_StyleShowEntity实体类</param>
+            <returns>-1:存储过程执行失败,-2:存在相同的主键,Insert:返回插入自动ID,Update:返回更新记录数,Delete:返回删除记录数</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_StyleShowDisp(System.Int32)">
+            <summary>
+            根据ID返回 app_StyleShowEntity实体类 单笔资料 ()
+            </summary>
+            <param name="ID">ID </param>
+            <returns>返回 app_StyleShowEntity实体类 ID为0则无记录</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_StyleShowList(FrameWork.Components.QueryParam,System.Int32@)">
+            <summary>
+            返回app_StyleShowEntity实体类的List对象 ()
+            </summary>
+            <param name="qp">查询类(非安全函数,传入参数请进行Sql字符串过滤)</param>
+            <param name="RecordCount">返回记录总数</param>
+            <returns>app_StyleShowEntity实体类的List对象()</returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.get_table_fileds(System.String,System.String,System.String,System.String)">
+            <summary>
+            获取表中字段值(非安全函数,传入参数请进行Sql字符串过滤)
+            </summary>
+            <param name="table_name">表名</param>
+            <param name="table_fileds">字段</param>
+            <param name="where_fileds">查询条件字段</param>
+            <param name="where_value">查询值</param>
+            <returns></returns>
+        </member>
+        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.Update_Table_Fileds(System.String,System.String,System.String)">
+            <summary>
+            更新表中字段值(非安全函数,传入参数请进行Sql字符串过滤)
+            </summary>
+            <param name="Table">表名</param>
+            <param name="Table_FiledsValue">需要更新值(不用带Set)</param>
+            <param name="Wheres">更新条件(不用带Where)</param>
+            <returns></returns>
+        </member>
         <member name="T:FrameWork.WebControls.AspNetPager">
             <summary>
       用于ASP.NET Web应用程序中对数据进行分页的的服务器控件。
@@ -6419,96 +6509,6 @@ end
             <summary>
             是否为推荐新闻
             </summary>
-        </member>
-        <member name="T:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork">
-            <summary>
-            业务逻辑类
-            </summary>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NewsInsertUpdateDelete(FrameWork.web.Manager.Module.App.Components.app_NewsEntity)">
-            <summary>
-            新增/删除/修改 app_NewsEntity ()
-            </summary>
-            <param name="fam">app_NewsEntity实体类</param>
-            <returns>-1:存储过程执行失败,-2:存在相同的主键,Insert:返回插入自动ID,Update:返回更新记录数,Delete:返回删除记录数</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NewsDisp(System.Int32)">
-            <summary>
-            根据ID返回 app_NewsEntity实体类 单笔资料 ()
-            </summary>
-            <param name="ID">ID </param>
-            <returns>返回 app_NewsEntity实体类 ID为0则无记录</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NewsList(FrameWork.Components.QueryParam,System.Int32@)">
-            <summary>
-            返回app_NewsEntity实体类的List对象 ()
-            </summary>
-            <param name="qp">查询类(非安全函数,传入参数请进行Sql字符串过滤)</param>
-            <param name="RecordCount">返回记录总数</param>
-            <returns>app_NewsEntity实体类的List对象()</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NotifyInsertUpdateDelete(FrameWork.web.Manager.Module.App.Components.app_NotifyEntity)">
-            <summary>
-            新增/删除/修改 app_NotifyEntity ()
-            </summary>
-            <param name="fam">app_NotifyEntity实体类</param>
-            <returns>-1:存储过程执行失败,-2:存在相同的主键,Insert:返回插入自动ID,Update:返回更新记录数,Delete:返回删除记录数</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NotifyDisp(System.Int32)">
-            <summary>
-            根据ID返回 app_NotifyEntity实体类 单笔资料 ()
-            </summary>
-            <param name="ID">ID </param>
-            <returns>返回 app_NotifyEntity实体类 ID为0则无记录</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_NotifyList(FrameWork.Components.QueryParam,System.Int32@)">
-            <summary>
-            返回app_NotifyEntity实体类的List对象 ()
-            </summary>
-            <param name="qp">查询类(非安全函数,传入参数请进行Sql字符串过滤)</param>
-            <param name="RecordCount">返回记录总数</param>
-            <returns>app_NotifyEntity实体类的List对象()</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(FrameWork.web.Manager.Module.App.Components.app_StyleShowEntity)">
-            <summary>
-            新增/删除/修改 app_StyleShowEntity ()
-            </summary>
-            <param name="fam">app_StyleShowEntity实体类</param>
-            <returns>-1:存储过程执行失败,-2:存在相同的主键,Insert:返回插入自动ID,Update:返回更新记录数,Delete:返回删除记录数</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_StyleShowDisp(System.Int32)">
-            <summary>
-            根据ID返回 app_StyleShowEntity实体类 单笔资料 ()
-            </summary>
-            <param name="ID">ID </param>
-            <returns>返回 app_StyleShowEntity实体类 ID为0则无记录</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.app_StyleShowList(FrameWork.Components.QueryParam,System.Int32@)">
-            <summary>
-            返回app_StyleShowEntity实体类的List对象 ()
-            </summary>
-            <param name="qp">查询类(非安全函数,传入参数请进行Sql字符串过滤)</param>
-            <param name="RecordCount">返回记录总数</param>
-            <returns>app_StyleShowEntity实体类的List对象()</returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.get_table_fileds(System.String,System.String,System.String,System.String)">
-            <summary>
-            获取表中字段值(非安全函数,传入参数请进行Sql字符串过滤)
-            </summary>
-            <param name="table_name">表名</param>
-            <param name="table_fileds">字段</param>
-            <param name="where_fileds">查询条件字段</param>
-            <param name="where_value">查询值</param>
-            <returns></returns>
-        </member>
-        <member name="M:FrameWork.web.Manager.Module.App.BusinessFacadeFrameWork.Update_Table_Fileds(System.String,System.String,System.String)">
-            <summary>
-            更新表中字段值(非安全函数,传入参数请进行Sql字符串过滤)
-            </summary>
-            <param name="Table">表名</param>
-            <param name="Table_FiledsValue">需要更新值(不用带Set)</param>
-            <param name="Wheres">更新条件(不用带Where)</param>
-            <returns></returns>
         </member>
     </members>
 </doc>

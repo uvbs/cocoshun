@@ -21,10 +21,10 @@
                     </asp:TemplateField>
                     <asp:BoundField HeaderText="标题" SortExpression="Title" DataField="Title" />
                     <asp:BoundField HeaderText="作者" SortExpression="Author" DataField="Author" />
-                    <asp:BoundField HeaderText="加入时间" SortExpression="AddTime" DataField="AddTime" />
-                    <asp:BoundField HeaderText="内容" SortExpression="Content" DataField="Content" />
-                    <asp:BoundField HeaderText="图片路径" SortExpression="ImagePath" DataField="ImagePath" />
-                    <asp:BoundField HeaderText="是否为推荐新闻" SortExpression="ReCommand" DataField="ReCommand" />
+                    <asp:BoundField HeaderText="发布时间" SortExpression="AddTime" DataField="AddTime" />
+    <%--                <asp:BoundField HeaderText="内容" SortExpression="Content" DataField="Content" />
+                    <asp:BoundField HeaderText="图片路径" SortExpression="ImagePath" DataField="ImagePath" />--%>
+                    <asp:BoundField HeaderText="推荐" SortExpression="ReCommand" DataField="ReCommand" />
                 </Columns>
             </asp:GridView>
             <FrameWorkWebControls:AspNetPager ID="AspNetPager1" runat="server" OnPageChanged="AspNetPager1_PageChanged">
@@ -53,14 +53,14 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                        加入时间</td>
+                        发布时间</td>
                     <td class="table_none">
                      
-                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input" onfocus="javascript:HS_setDate(this);"></asp:TextBox>
                     
                         </td>
                 </tr>
-                <tr>
+       <%--         <tr>
                     <td class="table_body">
                         内容</td>
                     <td class="table_none">
@@ -77,16 +77,16 @@
                         <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
                         </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td class="table_body">
-                        是否为推荐新闻</td>
+                        推荐</td>
                     <td class="table_none">
                      
                         <asp:DropDownList ID="ReCommand_Input" runat="server">
                             <asp:ListItem Text="不限" Value=""></asp:ListItem>
-                            <asp:ListItem Text="True" Value="1"></asp:ListItem>
-                            <asp:ListItem Text="False" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="是" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="否" Value="0"></asp:ListItem>
                         </asp:DropDownList>
                     
                         </td>
