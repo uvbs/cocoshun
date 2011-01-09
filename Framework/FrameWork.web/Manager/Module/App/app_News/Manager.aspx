@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Manager/MasterPage/PageTemplate.Master" AutoEventWireup="True"
     Codebehind="Manager.aspx.cs" Inherits="FrameWork.web.Manager.Module.App.Manager"
-    Title="无标题页" %>
+    Title="新闻发布" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageBody" runat="server">
     <FrameWorkWebControls:HeadMenuWebControls ID="HeadMenuWebControls1" runat="server"  HeadTitleTxt="">
@@ -33,42 +33,47 @@
 
                 <tr>
                     <td class="table_body">
-                        加入时间</td>
+                        发布时间</td>
                     <td class="table_none">
                      
-                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input" onfocus="javascript:HS_setDate(this);"></asp:TextBox>
                     
                         <asp:Label ID="AddTime_Disp" runat="server"></asp:Label></td>
                 </tr>
 
                 <tr>
-                    <td class="table_body">
+                    <td class="table_body table_body_NoWidth">
                         内容</td>
-                    <td class="table_none">
+                    <td class="table_none table_none_NoWidth" colspan="3">
                      
-                        <asp:TextBox ID="Content_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                 
+                        <asp:TextBox ID="Content_Input" title="请输入内容:" runat="server" Rows="15" TextMode="MultiLine" CssClass="tex_input"></asp:TextBox>
                     
                         <asp:Label ID="Content_Disp" runat="server"></asp:Label></td>
+                                              
                 </tr>
 
                 <tr>
                     <td class="table_body">
-                        图片路径</td>
+                        图片</td>
                     <td class="table_none">
                      
-                        <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-                    
-                        <asp:Label ID="ImagePath_Disp" runat="server"></asp:Label></td>
+                     <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input" Visible=false></asp:TextBox>&nbsp;
+                        <asp:Image ID="News_Image" runat="server" />
+                     <asp:FileUpload ID="ImageUpload" runat="server" contentEditable=false CssClass="text_input" />
+                        <asp:Label ID="ImagePath_Disp" runat="server" Visible=false></asp:Label>
+                        
+                        </td>
                 </tr>
 
                 <tr>
                     <td class="table_body">
-                        是否为推荐新闻</td>
+                        推荐新闻</td>
                     <td class="table_none">
                      
                         <asp:DropDownList ID="ReCommand_Input" runat="server">
-                            <asp:ListItem Text="True" Value="1"></asp:ListItem>
-                            <asp:ListItem Text="False" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="是" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="否" Value="0"></asp:ListItem>
                         </asp:DropDownList>
                     
                         <asp:Label ID="ReCommand_Disp" runat="server"></asp:Label></td>

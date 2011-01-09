@@ -68,6 +68,13 @@ namespace FrameWork.web.Manager.Module.App
                     break;
                 case "Delete":
                     ut.DataTable_Action_ = DataTable_Action.Delete;
+
+                    // 删除图片
+                    if (ut.ImagePath.Length > 0)
+                    {
+                        FileUpLoadCommon.DeleteFile(string.Format("{0}{1}{2}", Common.UpLoadDir, "NewsImages/", ut.ImagePath));
+                        FileUpLoadCommon.DeleteFile(string.Format("{0}{1}s_{2}", Common.UpLoadDir, "NewsImages/", ut.ImagePath));
+                    }
                     if (BusinessFacadeFrameWork.app_NewsInsertUpdateDelete(ut) > 0)
                     {
                         EventMessage.MessageBox(1, "删除成功", string.Format("删除ID:{0}成功!", IDX), Icon_Type.OK, Common.GetHomeBaseUrl("Default.aspx"));
@@ -75,6 +82,7 @@ namespace FrameWork.web.Manager.Module.App
                     else {
                         EventMessage.MessageBox(1, "删除失败", string.Format("删除ID:{0}失败!", IDX), Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
                     }
+
                     break;
                 default :
                     EventMessage.MessageBox(2, "不存在操作字符串!", "不存在操作字符串!", Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
@@ -121,14 +129,35 @@ namespace FrameWork.web.Manager.Module.App
         /// <param name="ut"></param>
         private void OnStartData(app_NewsEntity ut)
         {
-        Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
+                Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
                 Author_Input.Text = Author_Disp.Text = ut.Author.ToString();
-                AddTime_Input.Text = AddTime_Disp.Text = ut.AddTime.ToString();
+                
+                AddTime_Input.Text = AddTime_Disp.Text =  Common.ConvertDate(ut.AddTime);
                 Content_Input.Text = Content_Disp.Text = ut.Content.ToString();
+
+
+                if ((ut.ImagePath + "").Trim() != "")
+                {
+                    News_Image.ImageUrl = Common.BuildDownFileUrl("NewsImages/s_" + ut.ImagePath);
+                    //MaxImgUrl = Common.BuildDownFileUrl("NewsImages/" + ut.U_PhotoUrl);
+
+                }
                 ImagePath_Input.Text = ImagePath_Disp.Text = ut.ImagePath.ToString();
+                             
+                
                 ReCommand_Input.SelectedValue = Convert.ToInt32(ut.ReCommand).ToString();
                 ReCommand_Disp.Text = ut.ReCommand.ToString();
                 
+        }
+
+        /************************************************************************/
+        /* 上传新闻图片                                                                     */
+        /************************************************************************/
+        private string UploadPic()
+        {
+            FileUpLoadCommon fc = new FileUpLoadCommon(Common.UpLoadDir + "NewsImages/", false);
+            fc.SaveFile(ImageUpload, true);
+            return fc.newFileName;
         }
 
         /// <summary>
@@ -136,13 +165,15 @@ namespace FrameWork.web.Manager.Module.App
         /// </summary>
         private void Hidden_Input()
         {
-        Title_Input.Visible = false;
-        Author_Input.Visible = false;
-        AddTime_Input.Visible = false;
-        Content_Input.Visible = false;
-        ImagePath_Input.Visible = false;
-        ReCommand_Input.Visible = false;
-        
+            Title_Input.Visible = false;
+            Author_Input.Visible = false;
+            AddTime_Input.Visible = false;
+            Content_Input.Visible = false;
+            ImagePath_Input.Visible = false;
+            ReCommand_Input.Visible = false;
+            ImageUpload.Visible = false;
+            
+
         }
 
         /// <summary>
@@ -150,13 +181,13 @@ namespace FrameWork.web.Manager.Module.App
         /// </summary>
         private void Hidden_Disp()
         {
-        Title_Disp.Visible = false;
-        Author_Disp.Visible = false;
-        AddTime_Disp.Visible = false;
-        Content_Disp.Visible = false;
-        ImagePath_Disp.Visible = false;
-        ReCommand_Disp.Visible = false;
-        
+            Title_Disp.Visible = false;
+            Author_Disp.Visible = false;
+            AddTime_Disp.Visible = false;
+            Content_Disp.Visible = false;
+            ImagePath_Disp.Visible = false;
+            ReCommand_Disp.Visible = false;
+            News_Image.Visible = false;
         }
 
         /// <summary>
@@ -183,8 +214,11 @@ namespace FrameWork.web.Manager.Module.App
             ut.Author = Author_Input.Text;
             ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
             ut.Content = Content_Input.Text;
-            ut.ImagePath = ImagePath_Input.Text;
-            ut.ReCommand = Convert.ToBoolean( ReCommand_Input.Text);
+
+            ut.ImagePath = UploadPic();
+            //ut.ImagePath = ImagePath_Input.Text;
+            string booleanValue = ReCommand_Input.Text.Equals("1") ? "true" : "false";
+            ut.ReCommand = Convert.ToBoolean(booleanValue);
             
             if (CMD == "New")
             {
