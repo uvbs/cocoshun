@@ -31,7 +31,7 @@ namespace FrameWork.web.Manager.Module.App.app_Notify
 {
     public partial class Manager : System.Web.UI.Page
     {
-        Int32 IDX = (Int32)Common.sink("IDX", MethodType.Get, 4, 0, DataType.Long);
+        int IDX = (int)Common.sink("IDX", MethodType.Get, 4, 0, DataType.Int);
         string CMD = (string)Common.sink("CMD", MethodType.Get, 10, 1, DataType.Str);
         protected void Page_Load(object sender, EventArgs e)
         {

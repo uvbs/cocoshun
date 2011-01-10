@@ -110,15 +110,6 @@ namespace FrameWork.web.Manager.Module.App.app_Notify {
         protected global::System.Web.UI.WebControls.TextBox AddTime_Input;
         
         /// <summary>
-        /// Content_Input 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Content_Input;
-        
-        /// <summary>
         /// Button1 控件。
         /// </summary>
         /// <remarks>
