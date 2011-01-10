@@ -1,6 +1,6 @@
-<%@ Page Language="C#" MasterPageFile="~/Manager/MasterPage/PageTemplate.Master" AutoEventWireup="True"
+ï»¿<%@ Page Language="C#" MasterPageFile="~/Manager/MasterPage/PageTemplate.Master" AutoEventWireup="True"
     Codebehind="Manager.aspx.cs" Inherits="FrameWork.web.Manager.Module.App.app_Notify.Manager"
-    Title="ÎÞ±êÌâÒ³" %>
+    Title="é€šçŸ¥ç®¡ç†" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageBody" runat="server">
     <FrameWorkWebControls:HeadMenuWebControls ID="HeadMenuWebControls1" runat="server"  HeadTitleTxt="">
@@ -8,12 +8,12 @@
             ButtonUrlType="Href" ButtonVisible="True" ButtonName="" />
     </FrameWorkWebControls:HeadMenuWebControls>
     <FrameWorkWebControls:TabOptionWebControls ID="TabOptionWebControls1" runat="server">
-        <FrameWorkWebControls:TabOptionItem ID="TabOptionItem1" runat="server" Tab_Name="²é¿´/ÐÞ¸Ä/Ôö¼Ó">
+        <FrameWorkWebControls:TabOptionItem ID="TabOptionItem1" runat="server" Tab_Name="æŸ¥çœ‹/ä¿®æ”¹/å¢žåŠ ">
             <table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
 
                 <tr>
                     <td class="table_body">
-                        ±êÌâ</td>
+                        æ ‡é¢˜</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -23,7 +23,7 @@
 
                 <tr>
                     <td class="table_body">
-                        Í¨Öª²¿ÃÅ</td>
+                        é€šçŸ¥éƒ¨é—¨</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Notifier_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -33,28 +33,29 @@
 
                 <tr>
                     <td class="table_body">
-                        Í¨ÖªÊ±¼ä</td>
+                        é€šçŸ¥æ—¶é—´</td>
                     <td class="table_none">
                      
-                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input" onfocus="javascript:HS_setDate(this);"></asp:TextBox>
                     
                         <asp:Label ID="AddTime_Disp" runat="server"></asp:Label></td>
                 </tr>
 
                 <tr>
-                    <td class="table_body">
-                        Í¨ÖªÄÚÈÝ</td>
-                    <td class="table_none">
+                
+                    <td class="table_body table_body_NoWidth">
+                        é€šçŸ¥å†…å®¹</td>
+                    <td class="table_none table_none_NoWidth">
                      
-                        <asp:TextBox ID="Content_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                        <asp:TextBox ID="Content_Input" title="è¯·è¾“å…¥å†…å®¹:" runat="server"  Rows="10" TextMode="MultiLine" CssClass="tex_input"></asp:TextBox>
                     
                         <asp:Label ID="Content_Disp" runat="server"></asp:Label></td>
                 </tr>
                               
                 <tr id="ButtonOption" runat="server">
                     <td align="right" colspan="2">
-                        <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="È·¶¨" OnClick="Button1_Click" />
-                        <input id="Reset1" class="button_bak" type="reset" value="ÖØÌî" />
+                        <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="ç¡®å®š" OnClick="Button1_Click" />
+                        <input id="Reset1" class="button_bak" type="reset" value="é‡å¡«" />
                     </td>
                 </tr>
             </table>
