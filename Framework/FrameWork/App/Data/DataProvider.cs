@@ -103,6 +103,7 @@ namespace FrameWork.web.Manager.Module.App.Data
             if (Fileds.ContainsKey("AddTime") && !Convert.IsDBNull(dr["AddTime"])) nc.AddTime = Convert.ToDateTime(dr["AddTime"]); // 加入时间
             if (Fileds.ContainsKey("Content") && !Convert.IsDBNull(dr["Content"])) nc.Content = Convert.ToString(dr["Content"]); // 内容
             if (Fileds.ContainsKey("ImagePath") && !Convert.IsDBNull(dr["ImagePath"])) nc.ImagePath = Convert.ToString(dr["ImagePath"]); // 图片路径
+            if (Fileds.ContainsKey("ImageComment") && !Convert.IsDBNull(dr["ImageComment"])) nc.ImageComment = Convert.ToString(dr["ImageComment"]); // 图片注释
             if (Fileds.ContainsKey("ReCommand") && !Convert.IsDBNull(dr["ReCommand"])) nc.ReCommand = Convert.ToBoolean(dr["ReCommand"]); // 是否为推荐新闻
             return nc;
         }

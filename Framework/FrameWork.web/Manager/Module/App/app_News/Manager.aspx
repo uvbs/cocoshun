@@ -57,14 +57,26 @@
                     <td class="table_body">
                         图片</td>
                     <td class="table_none">
+                     <asp:FileUpload ID="ImageUpload" runat="server" contentEditable=false CssClass="text_input" /><asp:Image ID="News_Image" runat="server" />&nbsp;&nbsp;&nbsp;&nbsp;
+                     
+     
                      
                      <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input" Visible=false></asp:TextBox>&nbsp;
-                        <asp:Image ID="News_Image" runat="server" />
-                     <asp:FileUpload ID="ImageUpload" runat="server" contentEditable=false CssClass="text_input" />
+                        
+                     
                         <asp:Label ID="ImagePath_Disp" runat="server" Visible=false></asp:Label>
                         
                         </td>
                 </tr>
+                <tr>
+                    <td class="table_body">
+                         图片注释</td>
+                      <td class="table_none">
+                         <asp:TextBox ID="ImageComment_Input" runat="server" CssClass="text_input" MaxLength="50"/>
+                         <asp:Label ID="ImageComment_Disp" runat="server"></asp:Label>
+                        
+                        </td>
+                </tr>                
 
                 <tr>
                     <td class="table_body">
