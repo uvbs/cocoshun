@@ -78,8 +78,8 @@ namespace FrameWork.web.Manager.Module.App.Data
                 Conn.Open();
                 if (fam.DataTable_Action_.ToString() == "Insert")
                 {
-                    
-                    CommTxt = "Insert into 	app_News(Title,Author,AddTime,Content,ImagePath,ReCommand)VALUES(@Title,@Author,@AddTime,@Content,@ImagePath,@ReCommand)";
+
+                    CommTxt = "Insert into 	app_News(Title,Author,AddTime,Content,ImagePath,ImageComment,ReCommand)VALUES(@Title,@Author,@AddTime,@Content,@ImagePath,@ImageComment,@ReCommand)";
                     cmd.CommandText = CommTxt;
 
 
@@ -91,12 +91,14 @@ namespace FrameWork.web.Manager.Module.App.Data
                         cmd.Parameters.Add("@AddTime", OleDbType.Date).Value = DBNull.Value; //加入时间
                     cmd.Parameters.Add("@Content", OleDbType.VarWChar).Value = fam.Content; //内容
                     cmd.Parameters.Add("@ImagePath", OleDbType.VarWChar).Value = fam.ImagePath; //图片路径
+                    cmd.Parameters.Add("@ImageComment", OleDbType.VarWChar).Value = fam.ImageComment; //图片注释
+
                     cmd.Parameters.Add("@ReCommand", OleDbType.Boolean).Value = fam.ReCommand; //是否为推荐新闻
                 }
                 else if (fam.DataTable_Action_.ToString() == "Update")
                 {
-                    
-                    CommTxt = "UPDATE app_News SET Title = @Title,Author = @Author,AddTime = @AddTime,Content = @Content,ImagePath = @ImagePath,ReCommand = @ReCommand WHERE (ID = @ID)";
+
+                    CommTxt = "UPDATE app_News SET Title = @Title,Author = @Author,AddTime = @AddTime,Content = @Content,ImagePath = @ImagePath,ImageComment = @ImageComment,ReCommand = @ReCommand WHERE (ID = @ID)";
                     cmd.CommandText = CommTxt;
 
                     cmd.Parameters.Add("@Title", OleDbType.VarWChar).Value = fam.Title; //标题
@@ -107,6 +109,7 @@ namespace FrameWork.web.Manager.Module.App.Data
                         cmd.Parameters.Add("@AddTime", OleDbType.Date).Value = DBNull.Value; //加入时间
                     cmd.Parameters.Add("@Content", OleDbType.VarWChar).Value = fam.Content; //内容
                     cmd.Parameters.Add("@ImagePath", OleDbType.VarWChar).Value = fam.ImagePath; //图片路径
+                    cmd.Parameters.Add("@ImageComment", OleDbType.VarWChar).Value = fam.ImageComment; //图片注释
                     cmd.Parameters.Add("@ReCommand", OleDbType.Boolean).Value = fam.ReCommand; //是否为推荐新闻
                     cmd.Parameters.Add("@", OleDbType.Integer).Value = fam.ID; //
                 }

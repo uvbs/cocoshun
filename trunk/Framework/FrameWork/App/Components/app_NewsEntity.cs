@@ -31,6 +31,7 @@ namespace FrameWork.web.Manager.Module.App.Components
         private DateTime? _AddTime; // 加入时间
         private string _Content=""; // 内容
         private string _ImagePath=""; // 图片路径
+        private string _ImageComment = ""; //图片注释
         private Boolean _ReCommand; // 是否为推荐新闻
         #endregion
 
@@ -95,6 +96,12 @@ namespace FrameWork.web.Manager.Module.App.Components
         {
             set { this._ImagePath = value; }
             get { return this._ImagePath; }
+        }
+
+        public string ImageComment
+        {
+          get { return _ImageComment; }
+          set { _ImageComment = value; }
         }
             
         /// <summary>

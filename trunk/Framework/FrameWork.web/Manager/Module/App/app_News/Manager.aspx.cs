@@ -69,12 +69,8 @@ namespace FrameWork.web.Manager.Module.App
                 case "Delete":
                     ut.DataTable_Action_ = DataTable_Action.Delete;
 
-                    // 删除图片
-                    if (ut.ImagePath.Length > 0)
-                    {
-                        FileUpLoadCommon.DeleteFile(string.Format("{0}{1}{2}", Common.UpLoadDir, "NewsImages/", ut.ImagePath));
-                        FileUpLoadCommon.DeleteFile(string.Format("{0}{1}s_{2}", Common.UpLoadDir, "NewsImages/", ut.ImagePath));
-                    }
+                    //删除图片
+                    removeImge(ut);
                     if (BusinessFacadeFrameWork.app_NewsInsertUpdateDelete(ut) > 0)
                     {
                         EventMessage.MessageBox(1, "删除成功", string.Format("删除ID:{0}成功!", IDX), Icon_Type.OK, Common.GetHomeBaseUrl("Default.aspx"));
@@ -87,6 +83,18 @@ namespace FrameWork.web.Manager.Module.App
                 default :
                     EventMessage.MessageBox(2, "不存在操作字符串!", "不存在操作字符串!", Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
                     break;
+            }
+        }
+
+        /// <summary>
+        /// 删除图片
+        /// </summary>
+        private static void removeImge(app_NewsEntity ut)
+        {
+            if (ut.ImagePath.Length > 0)
+            {
+                FileUpLoadCommon.DeleteFile(string.Format("{0}{1}{2}", Common.UpLoadDir, "NewsImages/", ut.ImagePath));
+                FileUpLoadCommon.DeleteFile(string.Format("{0}{1}s_{2}", Common.UpLoadDir, "NewsImages/", ut.ImagePath));
             }
         }
 
@@ -131,8 +139,14 @@ namespace FrameWork.web.Manager.Module.App
         {
                 Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
                 Author_Input.Text = Author_Disp.Text = ut.Author.ToString();
-                
+
+                if (ut.AddTime == null || ut.AddTime.ToString().Length == 0)
+                {
+                    ut.AddTime = DateTime.Now;
+                }
+
                 AddTime_Input.Text = AddTime_Disp.Text =  Common.ConvertDate(ut.AddTime);
+
                 Content_Input.Text = Content_Disp.Text = ut.Content.ToString();
 
 
@@ -143,6 +157,7 @@ namespace FrameWork.web.Manager.Module.App
 
                 }
                 ImagePath_Input.Text = ImagePath_Disp.Text = ut.ImagePath.ToString();
+                ImageComment_Input.Text = ImageComment_Disp.Text = ut.ImageComment.ToString();
                              
                 
                 ReCommand_Input.SelectedValue = Convert.ToInt32(ut.ReCommand).ToString();
@@ -151,12 +166,20 @@ namespace FrameWork.web.Manager.Module.App
         }
 
         /************************************************************************/
-        /* 上传新闻图片                                                                     */
+        /* 上传新闻图片                                                         */
         /************************************************************************/
-        private string UploadPic()
+        private string UploadPic(app_NewsEntity ut)
         {
+
+
             FileUpLoadCommon fc = new FileUpLoadCommon(Common.UpLoadDir + "NewsImages/", false);
-            fc.SaveFile(ImageUpload, true);
+            
+            // 如果图片上传成功
+            if(fc.SaveFile(ImageUpload, true))
+            {
+                //删除原有图片
+                removeImge(ut);
+            }
             return fc.newFileName;
         }
 
@@ -170,10 +193,9 @@ namespace FrameWork.web.Manager.Module.App
             AddTime_Input.Visible = false;
             Content_Input.Visible = false;
             ImagePath_Input.Visible = false;
+            ImageComment_Input.Visible = false;
             ReCommand_Input.Visible = false;
             ImageUpload.Visible = false;
-            
-
         }
 
         /// <summary>
@@ -186,6 +208,7 @@ namespace FrameWork.web.Manager.Module.App
             AddTime_Disp.Visible = false;
             Content_Disp.Visible = false;
             ImagePath_Disp.Visible = false;
+            ImageComment_Disp.Visible = false;
             ReCommand_Disp.Visible = false;
             News_Image.Visible = false;
         }
@@ -215,7 +238,10 @@ namespace FrameWork.web.Manager.Module.App
             ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
             ut.Content = Content_Input.Text;
 
-            ut.ImagePath = UploadPic();
+            string uploadPicName = UploadPic( ut);
+            if (uploadPicName.Length > 0)
+                ut.ImagePath = uploadPicName;
+            ut.ImageComment = ImageComment_Input.Text;
             //ut.ImagePath = ImagePath_Input.Text;
             string booleanValue = ReCommand_Input.Text.Equals("1") ? "true" : "false";
             ut.ReCommand = Convert.ToBoolean(booleanValue);
@@ -242,10 +268,12 @@ namespace FrameWork.web.Manager.Module.App
             }
             else if (rInt == -2)
             {
+                removeImge(ut);
                 EventMessage.MessageBox(1, "操作失败", "操作失败,存在相同的键值(用户名/数据)!", Icon_Type.Alert, Common.GetHomeBaseUrl("Default.aspx"));
             }
             else
             {
+                removeImge(ut);
                 EventMessage.MessageBox(1, "操作失败", string.Format("操作失败,返回值:{0}!", rInt), Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
             }
         }

@@ -119,13 +119,13 @@ namespace FrameWork.web.Manager.Module.App {
         protected global::System.Web.UI.WebControls.Label Content_Disp;
         
         /// <summary>
-        /// ImagePath_Input 控件。
+        /// ImageUpload 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ImagePath_Input;
+        protected global::System.Web.UI.WebControls.FileUpload ImageUpload;
         
         /// <summary>
         /// News_Image 控件。
@@ -137,13 +137,13 @@ namespace FrameWork.web.Manager.Module.App {
         protected global::System.Web.UI.WebControls.Image News_Image;
         
         /// <summary>
-        /// ImageUpload 控件。
+        /// ImagePath_Input 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload ImageUpload;
+        protected global::System.Web.UI.WebControls.TextBox ImagePath_Input;
         
         /// <summary>
         /// ImagePath_Disp 控件。
@@ -153,6 +153,24 @@ namespace FrameWork.web.Manager.Module.App {
         /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ImagePath_Disp;
+        
+        /// <summary>
+        /// ImageComment_Input 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ImageComment_Input;
+        
+        /// <summary>
+        /// ImageComment_Disp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ImageComment_Disp;
         
         /// <summary>
         /// ReCommand_Input 控件。
