@@ -12,9 +12,19 @@
             <table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
 
                 <tr>
-                    <td class="table_body">
+                  <td width="14%" rowspan="5" class="table_body" style="width: 19%"><p>图片列表</p>
+                    <p>
+                        <asp:ListBox ID="ImageList" SelectionMode="Multiple" Rows="10" runat="server" Width="73%">
+                            <asp:ListItem>Text</asp:ListItem>
+                            <asp:ListItem>Text</asp:ListItem>
+                        </asp:ListBox>
+                    </p>
+                      <p>
+                          &nbsp;</p>
+                  </td>
+                    <td width="18%" class="table_body">
                         标题</td>
-                    <td class="table_none">
+                    <td width="68%" class="table_none">
                      
                         <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
@@ -22,9 +32,9 @@
                 </tr>
 
                 <tr>
-                    <td class="table_body">
-                        图片加入时间</td>
-                    <td class="table_none">
+                  <td class="table_body" style="height: 31px">
+                      图片加入时间</td>
+                    <td class="table_none" style="height: 31px">
                      
                         <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
@@ -32,8 +42,8 @@
                 </tr>
 
                 <tr>
-                    <td class="table_body">
-                        作者</td>
+                  <td class="table_body">
+                      作者</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Author_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -42,8 +52,8 @@
                 </tr>
 
                 <tr>
-                    <td class="table_body">
-                        图片路径</td>
+                  <td class="table_body">
+                      图片路径</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -52,8 +62,8 @@
                 </tr>
 
                 <tr>
-                    <td class="table_body">
-                        图片注释</td>
+                  <td class="table_body">
+                      图片注释</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="Comment_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -62,8 +72,9 @@
                 </tr>
                               
                 <tr id="ButtonOption" runat="server">
-                    <td align="right" colspan="2">
-                        <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="确定" OnClick="Button1_Click" />
+                    <td align="right" colspan="3">
+                        <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="添加" OnClick="Button1_Click" />
+                        <asp:Button ID="Button2" runat="server" CssClass="button_bak" Text="删除" OnClick="Button1_Click" />
                         <input id="Reset1" class="button_bak" type="reset" value="重填" />
                     </td>
                 </tr>
