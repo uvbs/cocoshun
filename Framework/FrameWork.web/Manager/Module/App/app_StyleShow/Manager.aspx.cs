@@ -163,13 +163,8 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         protected void Button1_Click(object sender, EventArgs e)
         {
         
-            
-            
-                    DateTime? AddTime_Value = (DateTime?)Common.sink(AddTime_Input.UniqueID, MethodType.Post, 50, 0, DataType.Dat);
-                
-            
-            
-            
+            DateTime? AddTime_Value = (DateTime?)Common.sink(AddTime_Input.UniqueID, MethodType.Post, 50, 0, DataType.Dat);
+       
             app_StyleShowEntity ut = BusinessFacadeFrameWork.app_StyleShowDisp(IDX);
             
             ut.Title = Title_Input.Text;
@@ -206,6 +201,50 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             {
                 EventMessage.MessageBox(1, "操作失败", string.Format("操作失败,返回值:{0}!", rInt), Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
             }
+        }
+
+        protected void BtnItemDown_Click(object sender, EventArgs e)
+        {
+
+            if(ImageItemList.SelectedIndex != -1)
+            {
+                ListItem item = new ListItem();
+                int nextIndex;
+                item.Value = ImageItemList.SelectedValue;
+                item.Text = ImageItemList.SelectedItem.ToString();
+                nextIndex = (ImageItemList.SelectedIndex) + 1;
+                if (nextIndex == ImageItemList.Items.Count)
+                    return;
+                ImageItemList.Items.Remove(ImageItemList.SelectedItem);
+                ImageItemList.Items.Insert(nextIndex, item.Text);
+                ImageItemList.Items[nextIndex].Value = item.Value;
+                ImageItemList.SelectedIndex = nextIndex;
+
+            }
+        }
+
+        protected void BtnItemUp_Click(object sender, EventArgs e)
+        {
+            if (ImageItemList.SelectedIndex != -1)
+            {
+                ListItem item = new ListItem();
+                int nextIndex;
+                item.Value = ImageItemList.SelectedValue;
+                item.Text = ImageItemList.SelectedItem.ToString();
+                nextIndex = (ImageItemList.SelectedIndex) - 1;
+                if (nextIndex == -1)
+                    return;
+                ImageItemList.Items.Remove(ImageItemList.SelectedItem);
+                ImageItemList.Items.Insert(nextIndex, item.Text);
+                ImageItemList.Items[nextIndex].Value = item.Value;
+                ImageItemList.SelectedIndex = nextIndex;
+
+            }
+        }
+
+        protected void ImageItemList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

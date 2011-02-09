@@ -19,11 +19,11 @@
                         <ItemStyle Wrap="True" />  
                         <HeaderStyle Wrap="False" />    
                     </asp:TemplateField>
-                    <asp:BoundField HeaderText="标题" SortExpression="Title" DataField="Title" />
-                    <asp:BoundField HeaderText="图片加入时间" SortExpression="AddTime" DataField="AddTime" />
-                    <asp:BoundField HeaderText="作者" SortExpression="Author" DataField="Author" />
-                    <asp:BoundField HeaderText="图片路径" SortExpression="ImagePath" DataField="ImagePath" />
-                    <asp:BoundField HeaderText="图片注释" SortExpression="Comment" DataField="Comment" />
+                    <asp:BoundField HeaderText="标题" SortExpression="Title" DataField="Title" HeaderStyle-Width="50%"/>
+                    <asp:BoundField HeaderText="发布时间" SortExpression="AddTime" DataField="AddTime" HeaderStyle-Width="20%"/>
+                    <asp:BoundField HeaderText="作者" SortExpression="Author" DataField="Author"  HeaderStyle-Width="20%"/>
+  <%--                  <asp:BoundField HeaderText="图片路径" SortExpression="ImagePath" DataField="ImagePath" />
+                    <asp:BoundField HeaderText="图片注释" SortExpression="Comment" DataField="Comment" />--%>
                 </Columns>
             </asp:GridView>
             <FrameWorkWebControls:AspNetPager ID="AspNetPager1" runat="server" OnPageChanged="AspNetPager1_PageChanged">
@@ -43,7 +43,7 @@
                 </tr>
                 <tr>
                     <td class="table_body">
-                        图片加入时间</td>
+                        发布时间</td>
                     <td class="table_none">
                      
                         <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
@@ -59,7 +59,7 @@
                     
                         </td>
                 </tr>
-                <tr>
+       <%--         <tr>
                     <td class="table_body">
                         图片路径</td>
                     <td class="table_none">
@@ -76,7 +76,7 @@
                         <asp:TextBox ID="Comment_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
                         </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td colspan="4" align="right">
                         <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="查询" OnClick="Button1_Click" /></td>

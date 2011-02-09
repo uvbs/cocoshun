@@ -12,35 +12,26 @@
             <table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
 
                 <tr>
-                    <td width="8%" rowspan="5" class="table_body" style="width: 19%"><p>图片列表</p>
-                        <p >
-          <%--                  <asp:ListBox ID="ImageList" SelectionMode="Multiple" Rows="10" runat="server" Width="73%">
-                                <asp:ListItem>Text</asp:ListItem>
-                                <asp:ListItem>Text</asp:ListItem>
-                            </asp:ListBox>--%>
-                            <SELECT id="ImageList" style="WIDTH: 100%;" size="10">
-                                <OPTION value=1>1</OPTION>
-                                <OPTION value=2>2</OPTION>
-                                <OPTION value=3>3</OPTION>
-                                <OPTION value=4>4</OPTION>
-                                <OPTION value=5>5</OPTION>
-                                <OPTION value=6>6</OPTION>
-                                <OPTION value=7>7</OPTION>
-                                <OPTION value=8>8</OPTION>
-                                <OPTION value=9>9</OPTION>
-                            </SELECT>
-                    </p></td>
-                  <td width="24%" rowspan="5" class="table_body" style="width: 19%"><p>&nbsp;</p>
+                  <td rowspan="5" class="table_body" style="width: 14%"><p>图片列表</p>
                     <p>
-                        <INPUT class="upBtn" type="button" value="向上↑" onMouseDown="setTimeStart('up');" onMouseUp="clearTimeout(x);"
-                        onclick="upListItem();clearTimeout(x);" ID="Button3" NAME="Button1">
-                                                <INPUT style="WIDTH: 48px; HEIGHT: 22px" type="button" value="↓向下" class="downBtn" onMouseDown="setTimeStart('down');"
-                        onmouseup="clearTimeout(x);" onClick="downListItem();clearTimeout(x);" ID="Button4" NAME="Button2">                    
-                    </p>
+                        <asp:ListBox ID="ImageItemList" SelectionMode="Multiple" Rows="10" runat="server" Width="73%" OnSelectedIndexChanged="ImageItemList_SelectedIndexChanged">
+   <%--                         <asp:ListItem Value="1">1</asp:ListItem>
+                            <asp:ListItem Value="2">2</asp:ListItem>
+                            <asp:ListItem Value="3">3</asp:ListItem>--%>
+                        </asp:ListBox>
+                          </p>
+                      <p>
+                          &nbsp;</p>
                   </td>
-                    <td width="20%" class="table_body">
+                  <td rowspan="5" class="table_body" style="width: 6%"><p></p>
+                    <p><asp:Button ID="BtnItemUp" runat="server" OnClick="BtnItemUp_Click" Text="上移" />&nbsp;</p>
+                      <p>
+                          <asp:Button ID="BtnItemDown" runat="server" OnClick="BtnItemDown_Click" Text="下移" />
+                      </p>
+                  </td>
+                    <td width="18%" class="table_body">
                         标题</td>
-                    <td width="48%" class="table_none">
+                    <td width="68%" class="table_none">
                      
                         <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
@@ -88,7 +79,7 @@
                 </tr>
                               
                 <tr id="ButtonOption" runat="server">
-                    <td align="right" colspan="4">
+                    <td align="right" colspan="3">
                         <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="添加" OnClick="Button1_Click" />
                         <asp:Button ID="Button2" runat="server" CssClass="button_bak" Text="删除" OnClick="Button1_Click" />
                         <input id="Reset1" class="button_bak" type="reset" value="重填" />
@@ -97,79 +88,4 @@
             </table>
         </FrameWorkWebControls:TabOptionItem>
     </FrameWorkWebControls:TabOptionWebControls>
-    
-<script language="javascript" type="text/javascript">
-    var x=null;
-    var listObj=null;
-    //鼠标按下不放时的操作
-    function setTimeStart(type)
-    {
-        listObj=document.getElementById('ImageList');
-        //超过0.3秒启动连续的向上(下)的操作
-        if(type=="up")
-        {
-        x=setTimeout(upListItem,300);
-        }else
-        {
-        x=setTimeout(downListItem,300);
-        }
-    }
-    //将选中item向上
-    function upListItem()
-    {
-        var selIndex=listObj.selectedIndex;
-        if(selIndex<0)
-        {
-            if(x!=null){clearTimeout(x);}
-            alert("请先选中一项！");
-            return;
-            }
-            if(selIndex==0)
-            {
-            if(x!=null){clearTimeout(x);}
-            //alert("已经移到第一位！");
-            return;
-        }
-        var selValue=listObj.options[selIndex].value;
-        var selText=listObj.options[selIndex].text;
-        listObj.options[selIndex].value=listObj.options[selIndex-1].value;
-        listObj.options[selIndex].text=listObj.options[selIndex-1].text;
-        listObj.options[selIndex-1].value=selValue;
-        listObj.options[selIndex-1].text=selText;
-        listObj.selectedIndex=selIndex-1;
-        if(selIndex+1>0)
-        {
-         x=setTimeout(upListItem,200)
-        }
-    }
-    //将选中item向下
-    function downListItem()
-    {
-         var selIndex=listObj.selectedIndex;
-        if(selIndex<0)
-        {
-            if(x!=null){clearTimeout(x);}
-            alert("请先选中一项！");
-            return;
-        }
-        if(selIndex==listObj.options.length-1)
-        {
-         if(x!=null){clearTimeout(x);}
-         //alert("已经移到最后一位！");
-        return;
-        }
-        
-        var selValue=listObj.options[selIndex].value;
-        var selText=listObj.options[selIndex].text;
-        listObj.options[selIndex].value=listObj.options[selIndex+1].value;
-        listObj.options[selIndex].text=listObj.options[selIndex+1].text;
-        listObj.options[selIndex+1].value=selValue;
-        listObj.options[selIndex+1].text=selText;
-        listObj.selectedIndex=selIndex+1;
-        if(selIndex+1<listObj.options.length-1)
-        {
-            x=setTimeout(downListItem,200)
-        }
-    }
-</script>    
 </asp:Content>
