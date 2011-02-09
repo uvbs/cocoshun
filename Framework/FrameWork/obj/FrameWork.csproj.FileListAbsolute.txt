@@ -97,4 +97,3 @@ F:\google-svn\cocoshun\Framework\FrameWork\obj\Debug\FrameWork.WebControls.AspNe
 F:\google-svn\cocoshun\Framework\FrameWork\obj\Debug\FrameWork.csproj.GenerateResource.Cache
 F:\google-svn\cocoshun\Framework\FrameWork\obj\Debug\FrameWork.dll
 F:\google-svn\cocoshun\Framework\FrameWork\obj\Debug\FrameWork.pdb
-F:\google-svn\cocoshun\Framework\FrameWork\bin\Debug\FrameWork.XML
