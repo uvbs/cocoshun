@@ -9,83 +9,78 @@
     </FrameWorkWebControls:HeadMenuWebControls>
     <FrameWorkWebControls:TabOptionWebControls ID="TabOptionWebControls1" runat="server">
         <FrameWorkWebControls:TabOptionItem ID="TabOptionItem1" runat="server" Tab_Name="查看/修改/增加">
-            <table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
-
+<table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
+				<tr class="table_body">
+               	  <td colspan="3" align="right"><span class="table_body">标题</span></td>
+                	<td width="66%" align="left"><span class="table_body">
+                	  <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                      <asp:Label ID="Title_Disp" runat="server"></asp:Label>
+                	</span></td>
+                </tr>
+				<tr class="table_body">
+               	  <td colspan="3" align="right"><span class="table_body" style="height: 31px">加入时间</span></td>
+                	<td align="left"><span class="table_body" style="height: 31px">
+                	  <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                      <asp:Label ID="AddTime_Disp" runat="server"></asp:Label>
+                	</span></td>
+                </tr>
+				<tr class="table_body">
+               	  <td colspan="3" align="right"><span class="table_body">作者</span></td>
+                	<td align="left"><span class="table_body">
+                	  <asp:TextBox ID="Author_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                      <asp:Label ID="Author_Disp" runat="server"></asp:Label>
+                	</span></td>
+                </tr>                                
                 <tr>
-                  <td rowspan="5" class="table_body" style="width: 14%"><p>图片列表</p>
+                  <td width="11%" rowspan="3" align="center" class="table_body" style="width: 14%"><p>
+                    顺序调整</p>
                     <p>
-                        <asp:ListBox ID="ImageItemList" SelectionMode="Multiple" Rows="10" runat="server" Width="73%" OnSelectedIndexChanged="ImageItemList_SelectedIndexChanged">
-   <%--                         <asp:ListItem Value="1">1</asp:ListItem>
+                      <asp:ListBox ID="ImageItemList2" SelectionMode="Multiple" Rows="10" runat="server"  OnSelectedIndexChanged="ImageItemList_SelectedIndexChanged">
+                        <%--                         <asp:ListItem Value="1">1</asp:ListItem>
                             <asp:ListItem Value="2">2</asp:ListItem>
                             <asp:ListItem Value="3">3</asp:ListItem>--%>
                         </asp:ListBox>
-                          </p>
-                      <p>
-                          &nbsp;</p>
+                    </p>
+                    <p>&nbsp;
+                    </p>
                   </td>
-                  <td rowspan="5" class="table_body" style="width: 6%"><p></p>
-                    <p><asp:Button ID="BtnItemUp" runat="server" OnClick="BtnItemUp_Click" Text="上移" />&nbsp;</p>
-                      <p>
-                          <asp:Button ID="BtnItemDown" runat="server" OnClick="BtnItemDown_Click" Text="下移" />
+                  <td width="14%" rowspan="3" class="table_body"><p></p>
+                    <p><asp:Button ID="BtnItemUp2" runat="server" OnClick="BtnItemUp_Click" Text="上移" />&nbsp;</p>
+                    <p>
+                      <asp:Button ID="BtnItemDown2" runat="server" OnClick="BtnItemDown_Click" Text="下移" />
                       </p>
                   </td>
-                    <td width="18%" class="table_body">
-                        标题</td>
-                    <td width="68%" class="table_none">
+                  <td width="9%" height="45" align="right" class="table_body" style="width: 6%">图片名称</td>
+                  <td align="left" class="table_body">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td  height="40" align="right" class="table_body">
+                    图片路径</td>
+                    <td  align="left" class="table_body">
                      
-                        <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                      <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
-                        <asp:Label ID="Title_Disp" runat="server"></asp:Label></td>
+                    <asp:Label ID="ImagePath_Disp" runat="server"></asp:Label></td>
                 </tr>
 
                 <tr>
-                  <td class="table_body" style="height: 31px">
-                      图片加入时间</td>
-                    <td class="table_none" style="height: 31px">
-                     
-                        <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-                    
-                        <asp:Label ID="AddTime_Disp" runat="server"></asp:Label></td>
-                </tr>
-
-                <tr>
-                  <td class="table_body">
-                      作者</td>
-                    <td class="table_none">
-                     
-                        <asp:TextBox ID="Author_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-                    
-                        <asp:Label ID="Author_Disp" runat="server"></asp:Label></td>
-                </tr>
-
-                <tr>
-                  <td class="table_body">
-                      图片路径</td>
-                    <td class="table_none">
-                     
-                        <asp:TextBox ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-                    
-                        <asp:Label ID="ImagePath_Disp" runat="server"></asp:Label></td>
-                </tr>
-
-                <tr>
-                  <td class="table_body">
+                  <td align="right" class="table_body">
                       图片注释</td>
-                    <td class="table_none">
+                    <td align="left" class="table_body">
                      
-                        <asp:TextBox ID="Comment_Input"  runat="server" CssClass="text_input"></asp:TextBox>
+                    <asp:TextBox ID="Comment_Input"  runat="server" CssClass="text_input"></asp:TextBox>
                     
                         <asp:Label ID="Comment_Disp" runat="server"></asp:Label></td>
                 </tr>
                               
-                <tr id="ButtonOption" runat="server">
-                    <td align="right" colspan="3">
+                <tr id="ButtonOption" runat="server"  class="table_body">
+                    <td align="center" colspan="5">
                         <asp:Button ID="Button1" runat="server" CssClass="button_bak" Text="添加" OnClick="Button1_Click" />
                         <asp:Button ID="Button2" runat="server" CssClass="button_bak" Text="删除" OnClick="Button1_Click" />
                         <input id="Reset1" class="button_bak" type="reset" value="重填" />
                     </td>
                 </tr>
             </table>
-        </FrameWorkWebControls:TabOptionItem>
+      </FrameWorkWebControls:TabOptionItem>
     </FrameWorkWebControls:TabOptionWebControls>
 </asp:Content>
