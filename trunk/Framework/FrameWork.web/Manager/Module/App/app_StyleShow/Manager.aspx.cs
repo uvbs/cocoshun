@@ -26,11 +26,40 @@ using FrameWork.web.Manager.Module.App.Components;
 using FrameWork;
 using FrameWork.Components;
 using FrameWork.WebControls;
+using System.Data.OleDb;
+using FrameWork.web.Manager.Module.App.Data;
 
 namespace FrameWork.web.Manager.Module.App.app_StyleShow
 {
     public partial class Manager : System.Web.UI.Page
     {
+        /// <summary>
+        /// 数据库连接字符串
+        /// </summary>
+        private string ConnString = string.Empty;
+
+        public Manager()
+        {
+            ConnString = string.Format("Provider=Microsoft.Jet.OleDb.4.0;Data Source={0}{1};Persist Security Info=True;",
+                AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["Access"]);
+        }
+
+        /// <summary>
+        /// 获取数据连接
+        /// </summary>
+        /// <returns></returns>
+        public OleDbConnection GetSqlConnection()
+        {
+            try
+            {
+                return new OleDbConnection(ConnString);
+            }
+            catch
+            {
+                throw new Exception("没有提供数据库连接字符串Access！");
+            }
+        }
+
         int IDX = (int)Common.sink("IDX", MethodType.Get, 4, 0, DataType.Int);
         string CMD = (string)Common.sink("CMD", MethodType.Get, 10, 1, DataType.Str);
         protected void Page_Load(object sender, EventArgs e)
@@ -121,11 +150,12 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         /// <param name="ut"></param>
         private void OnStartData(app_StyleShowEntity ut)
         {
-        Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
-                AddTime_Input.Text = AddTime_Disp.Text = ut.AddTime.ToString();
-                Author_Input.Text = Author_Disp.Text = ut.Author.ToString();
-                ImagePath_Input.Text = ImagePath_Disp.Text = ut.ImagePath.ToString();
-                Comment_Input.Text = Comment_Disp.Text = ut.Comment.ToString();
+            Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
+            AddTime_Input.Text = AddTime_Disp.Text = ut.AddTime.ToString();
+            Author_Input.Text = Author_Disp.Text = ut.Author.ToString();
+          //  ImagePath_Input.Text = ImagePath_Disp.Text = ut.ImagePath.ToString();
+
+            Comment_Input.Text = Comment_Disp.Text = ut.Comment.ToString();
                 
         }
 
@@ -134,12 +164,11 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         /// </summary>
         private void Hidden_Input()
         {
-        Title_Input.Visible = false;
-        AddTime_Input.Visible = false;
-        Author_Input.Visible = false;
-        ImagePath_Input.Visible = false;
-        Comment_Input.Visible = false;
-        
+            Title_Input.Visible = false;
+            AddTime_Input.Visible = false;
+            Author_Input.Visible = false;
+            ImagePath_Input.Visible = false;
+            Comment_Input.Visible = false;       
         }
 
         /// <summary>
@@ -170,7 +199,7 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             ut.Title = Title_Input.Text;
             ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
             ut.Author = Author_Input.Text;
-            ut.ImagePath = ImagePath_Input.Text;
+           // ut.ImagePath = ImagePath_Input.Text;
             ut.Comment = Comment_Input.Text;
             
             if (CMD == "New")
@@ -242,9 +271,129 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             }
         }
 
+        /************************************************************************/
+        /* 选择图片                                                             */
+        /************************************************************************/
         protected void ImageItemList_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
+
+        /************************************************************************/
+        /* 添加图片                                                             */
+        /************************************************************************/
+        protected void Btn_Image_Add_Click(object sender, EventArgs e)
+        {
+            DateTime? AddTime_Value = (DateTime?)Common.sink(AddTime_Input.UniqueID, MethodType.Post, 50, 0, DataType.Dat);
+
+            try
+            {            
+                app_StyleShowEntity ut = BusinessFacadeFrameWork.app_StyleShowDisp(IDX);
+
+                ut.Title = Title_Input.Text;
+                ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
+                ut.Author = Author_Input.Text;
+                // ut.ImagePath = ImagePath_Input.Text;
+                ut.Comment = Comment_Input.Text;
+
+                Int32 rInt = BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut);
+
+                // 添加图片
+                InsertImage(rInt);
+
+               // Response.Redirect(string.Format("Manager.aspx?CMD=Edit&IDX={0}", rInt));
+
+                //Response.Redirect(string.Format("~/Manager/Module/App/app_StyleShow/Manager.aspx?CMD=Edit&IDX={0}", rInt));
+            }
+            catch (System.Exception ex)
+            {
+                EventMessage.MessageBox(2, "操作失败", "添加图片失败!请检查参数完整性!", Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
+            }
+
+
+        }
+
+        private void InsertImage(int rInt)
+        {
+            string imagePath = ImageName_Input.Text;
+            string path = UploadPic(ImagePath_Input);
+            string comment = Comment_Input.Text;
+
+            using (OleDbConnection Conn = GetSqlConnection())
+            {
+                string CommTxt;
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.Connection = Conn;
+                Conn.Open();
+
+                // 插入图片表
+                CommTxt = "Insert into app_Images(Name,Path,Comment)VALUES(@Name,@Path,@Comment)";
+                cmd.CommandText = CommTxt;
+                cmd.Parameters.Add("@Title", OleDbType.VarWChar).Value = imagePath; //标题
+                cmd.Parameters.Add("@Path", OleDbType.VarWChar).Value = path;
+                cmd.Parameters.Add("@Comment", OleDbType.VarWChar).Value = comment;
+                int ImageID = cmd.ExecuteNonQuery();
+                cmd.Dispose();
+
+                // 插入关联表 
+                int nextOrder = 0;
+                cmd = new OleDbCommand();
+                cmd.Connection = Conn;
+                cmd.CommandText = string.Format("select Max(ImageOrder) from app_Styles_Images where StyleID={0} and ImageID={1}", rInt, ImageID);
+                OleDbDataReader dr = cmd.ExecuteReader();
+                
+                if (dr.Read())
+                {
+                    string value = dr[0].ToString();
+                    if (value != null && value.Length>0)
+                        nextOrder = int.Parse(value) + 1;
+                }
+                cmd.Dispose();
+
+
+                cmd = new OleDbCommand();
+                cmd.Connection = Conn;
+                CommTxt = "Insert into app_Styles_Images (StyleID,ImageID,ImageOrder)VALUES(@StyleID,@ImageID,@ImageOrder)";
+                cmd.CommandText = CommTxt;
+
+                cmd.Parameters.Add("@StyleID", OleDbType.Integer).Value = rInt; //标题
+                cmd.Parameters.Add("@ImageID", OleDbType.Integer).Value = ImageID;
+                cmd.Parameters.Add("@ImageOrder", OleDbType.Integer).Value = nextOrder;
+
+                cmd.ExecuteNonQuery();
+                
+                cmd.Dispose();
+                Conn.Dispose();
+                Conn.Close();
+
+            }
+
+        }
+
+
+        /************************************************************************/
+        /* 删除图片                                                             */
+        /************************************************************************/
+        protected void Btn_ImageDelete_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private static string ImagePath = Common.UpLoadDir + "StyleShowImages/";
+
+        /************************************************************************/
+        /* 上传新闻图片                                                         */
+        /************************************************************************/
+        private string UploadPic(FileUpload fileUpload)
+        {
+            FileUpLoadCommon fc = new FileUpLoadCommon(ImagePath, true);
+
+            // 如果图片上传成功
+            fc.SaveFile(fileUpload, true);
+            return ImagePath +　fc.newFileName;
+        }
+
+      
     }
 }
