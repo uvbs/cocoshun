@@ -55,7 +55,7 @@ namespace FrameWork.web.Manager.Module.App.Data
             }
             catch
             {
-                throw new Exception("没有提供数据庫连接字符串Access！");
+                throw new Exception("没有提供数据库连接字符串Access！");
             }
         }
         #endregion
