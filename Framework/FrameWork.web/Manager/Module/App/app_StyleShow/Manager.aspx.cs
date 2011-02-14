@@ -302,9 +302,10 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                 // 添加图片
                 InsertImage(rInt);
 
-               // Response.Redirect(string.Format("Manager.aspx?CMD=Edit&IDX={0}", rInt));
 
-                //Response.Redirect(string.Format("~/Manager/Module/App/app_StyleShow/Manager.aspx?CMD=Edit&IDX={0}", rInt));
+                string url = string.Format(Common.GetHomeBaseUrl("Manager.aspx?CMD=Edit&IDX={0}"), rInt);
+                Response.Redirect(url, false);
+
             }
             catch (System.Exception ex)
             {
