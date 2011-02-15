@@ -99,6 +99,9 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                     ut.DataTable_Action_ = DataTable_Action.Delete;
                     if (BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut) > 0)
                     {
+                        //删除关联表
+                        removeRelationData(ut);
+
                         EventMessage.MessageBox(1, "删除成功", string.Format("删除ID:{0}成功!", IDX), Icon_Type.OK, Common.GetHomeBaseUrl("Default.aspx"));
                     }
                     else {
@@ -109,6 +112,47 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                     EventMessage.MessageBox(2, "不存在操作字符串!", "不存在操作字符串!", Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
                     break;
             }
+        }
+
+        private  void removeRelationData(app_StyleShowEntity ut)
+        {
+            try
+            {
+                int StyleID = ut.ID;
+
+                using (OleDbConnection Conn = GetSqlConnection())
+                {
+                    string CommTxt;
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.Connection = Conn;
+                    Conn.Open();
+
+//                     CommTxt = "delete form app_Styles_Images where StyleID=@StyleID";
+//                     cmd.CommandText = CommTxt;
+//                     cmd.Parameters.Add("@Title", OleDbType.Integer).Value = StyleID; //标题
+//                     int ImageID = cmd.ExecuteNonQuery();
+//                     cmd.Dispose();
+                  
+                    cmd = new OleDbCommand();
+                    cmd.Connection = Conn;
+                    CommTxt = "delete form app_Images where ID in (select ImageID app_Styles_Images where StyleID=@StyleID)";
+                    cmd.CommandText = CommTxt;
+                    cmd.Parameters.Add("@StyleID", OleDbType.Integer).Value = StyleID; //标题
+                    int ImageID = cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+
+                    Conn.Dispose();
+                    Conn.Close();
+
+                }
+            }
+            catch (System.Exception e)
+            {
+
+            }
+       
         }
 
         /// <summary>
@@ -288,8 +332,22 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             DateTime? AddTime_Value = (DateTime?)Common.sink(AddTime_Input.UniqueID, MethodType.Post, 50, 0, DataType.Dat);
 
             try
-            {            
+            {
                 app_StyleShowEntity ut = BusinessFacadeFrameWork.app_StyleShowDisp(IDX);
+
+                if (CMD == "New")
+                {
+                    ut.DataTable_Action_ = DataTable_Action.Insert;
+                }
+                else if (CMD == "Edit")
+                {
+                    ut.DataTable_Action_ = DataTable_Action.Update;
+
+                }
+                else
+                {
+                    EventMessage.MessageBox(2, "不存在操作字符串!", "不存在操作字符串!", Icon_Type.Error, Common.GetHomeBaseUrl("Default.aspx"));
+                }
 
                 ut.Title = Title_Input.Text;
                 ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
@@ -297,7 +355,12 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                 // ut.ImagePath = ImagePath_Input.Text;
                 ut.Comment = Comment_Input.Text;
 
-                Int32 rInt = BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut);
+                Int32 rInt = 0;
+
+                if (IDX > 0)
+                    rInt = IDX;
+                else
+                    rInt = BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut);
 
                 // 添加图片
                 InsertImage(rInt);
@@ -331,10 +394,13 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                 // 插入图片表
                 CommTxt = "Insert into app_Images(Name,Path,Comment)VALUES(@Name,@Path,@Comment)";
                 cmd.CommandText = CommTxt;
-                cmd.Parameters.Add("@Title", OleDbType.VarWChar).Value = imagePath; //标题
+                cmd.Parameters.Add("@Title", OleDbType.VarWChar).Value = imagePath; 
                 cmd.Parameters.Add("@Path", OleDbType.VarWChar).Value = path;
                 cmd.Parameters.Add("@Comment", OleDbType.VarWChar).Value = comment;
                 int ImageID = cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT @@identity";
+                ImageID = Convert.ToInt32(cmd.ExecuteScalar());
+
                 cmd.Dispose();
 
                 // 插入关联表 
@@ -388,11 +454,11 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         /************************************************************************/
         private string UploadPic(FileUpload fileUpload)
         {
-            FileUpLoadCommon fc = new FileUpLoadCommon(ImagePath, true);
+            FileUpLoadCommon fc = new FileUpLoadCommon(ImagePath, false);
 
             // 如果图片上传成功
             fc.SaveFile(fileUpload, true);
-            return ImagePath +　fc.newFileName;
+            return fc.newFileName;
         }
 
       
