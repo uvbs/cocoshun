@@ -27,16 +27,44 @@ using FrameWork.web.Manager.Module.App;
 using FrameWork.web.Manager.Module.App.Components;
 using FrameWork;
 using FrameWork.Components;
+using System.Data.OleDb;
 
 namespace FrameWork.web.Manager.Module.App.app_StyleShow
 {
     public partial class Default : System.Web.UI.Page
     {
+         /// <summary>
+        /// 数据库连接字符串
+        /// </summary>
+        private string ConnString = string.Empty;
+
+        public Default()
+        {
+            ConnString = string.Format("Provider=Microsoft.Jet.OleDb.4.0;Data Source={0}{1};Persist Security Info=True;",
+                AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["Access"]);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 BindDataList();
+            }
+        }
+
+                /// <summary>
+        /// 获取数据连接
+        /// </summary>
+        /// <returns></returns>
+        public OleDbConnection GetSqlConnection()
+        {
+            try
+            {
+                return new OleDbConnection(ConnString);
+            }
+            catch
+            {
+                throw new Exception("没有提供数据库连接字符串Access！");
             }
         }
 
@@ -236,10 +264,78 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                     et.DataTable_Action_ = DataTable_Action.Delete;
                     et.ID = IDX;
                     BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(et);
+                    removeRelationData(et);
                 }
             }
 
             EventMessage.MessageBox(1, "批量删除成功", string.Format("批量删除({0})成功!", Checkbox_Value), Icon_Type.OK, Common.GetHomeBaseUrl("default.aspx"));
+        }
+
+
+        /// <summary>
+        /// 删除图片
+        /// </summary>
+        private static void removeImage(string ImagePath)
+        {
+            if (ImagePath.Length > 0)
+            {
+                FileUpLoadCommon.DeleteFile(string.Format("{0}{1}{2}", Common.UpLoadDir, "StyleShowImages/", ImagePath));
+                FileUpLoadCommon.DeleteFile(string.Format("{0}{1}s_{2}", Common.UpLoadDir, "StyleShowImages/", ImagePath));
+            }
+        }
+
+        protected void removeRelationData(app_StyleShowEntity ut)
+        {
+            try
+            {
+                int StyleID = ut.ID;
+
+                using (OleDbConnection Conn = GetSqlConnection())
+                {
+                    string CommTxt;
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.Connection = Conn;
+                    Conn.Open();
+
+                    CommTxt = "SELECT b.Path FROM app_Styles_Images AS a,app_Images AS b WHERE a.ImageID=b.ID and a.StyleID=@StyleID";
+                    cmd.CommandText = CommTxt;
+                    cmd.Parameters.Add("@StyleID", OleDbType.Integer).Value = StyleID;
+
+                    OleDbDataReader dr = cmd.ExecuteReader();
+                    while(dr.Read())
+                    {
+                        string ImagePath = dr[0].ToString();
+                        removeImage(ImagePath);
+                    }
+                    
+                    cmd.Dispose();
+                    
+
+                    cmd = new OleDbCommand();
+                    cmd.Connection = Conn;
+                    CommTxt = "delete from app_Images where ID in (select ImageID from app_Styles_Images where StyleID=@StyleID)";
+                    cmd.CommandText = CommTxt;
+                    cmd.Parameters.Add("@StyleID", OleDbType.Integer).Value = StyleID; 
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+
+                    cmd = new OleDbCommand();
+                    cmd.Connection = Conn;
+                    CommTxt = "delete from app_Styles_Images where StyleID=@StyleID";
+                    cmd.CommandText = CommTxt;
+                    cmd.Parameters.Add("@StyleID", OleDbType.Integer).Value = StyleID; 
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+
+                    Conn.Dispose();
+                    Conn.Close();
+
+                }
+            }
+            catch (System.Exception e)
+            {
+
+            }
         }
     }
 }
