@@ -146,6 +146,15 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         protected global::System.Web.UI.WebControls.TextBox ImageName_Input;
         
         /// <summary>
+        /// Imagename_Disp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Imagename_Disp;
+        
+        /// <summary>
         /// ImagePath_Input 控件。
         /// </summary>
         /// <remarks>
@@ -162,6 +171,15 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ImagePath_Disp;
+        
+        /// <summary>
+        /// Image_show 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image_show;
         
         /// <summary>
         /// Comment_Input 控件。

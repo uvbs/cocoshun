@@ -14,32 +14,21 @@
           <td colspan="3" align="right" valign="middle"><span class="table_body">
             <asp:Label id="MainID" runat="server" Text="MainID" __designer:wfdid="w1" Width="25px" Visible="False"></asp:Label>
             标 题</span></td>
-          <td width="66%" align="left" valign="middle"><span class="table_body">
-            <asp:TextBox ID="Title_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-            <asp:Label ID="Title_Disp" runat="server"></asp:Label>
-            </span></td>
+          <td width="66%" align="left" valign="middle"><span class="table_body"><asp:TextBox id="Title_Input" runat="server" CssClass="text_input"></asp:TextBox> <asp:Label id="Title_Disp" runat="server" Width="169px"></asp:Label> </span></td>
         </tr>
         <tr class="table_body">
           <td colspan="3" align="right" valign="middle"><span class="table_body" style="height: 31px">时 间</span></td>
-          <td align="left" valign="middle"><span class="table_body" style="height: 31px">
-            <asp:TextBox ID="AddTime_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-            <asp:Label ID="AddTime_Disp" runat="server"></asp:Label>
-            </span></td>
+          <td align="left" valign="middle"><span class="table_body" style="height: 31px"><asp:TextBox id="AddTime_Input" runat="server" CssClass="text_input"></asp:TextBox> <asp:Label id="AddTime_Disp" runat="server" Width="169px"></asp:Label> </span></td>
         </tr>
         <tr class="table_body">
           <td colspan="3" align="right" valign="middle"><span class="table_body">作 者</span></td>
-          <td align="left" valign="middle"><span class="table_body">
-            <asp:TextBox ID="Author_Input"  runat="server" CssClass="text_input"></asp:TextBox>
-            <asp:Label ID="Author_Disp" runat="server"></asp:Label>
-            </span></td>
+          <td align="left" valign="middle"><span class="table_body"><asp:TextBox id="Author_Input" runat="server" CssClass="text_input"></asp:TextBox> <asp:Label id="Author_Disp" runat="server" Width="168px"></asp:Label> </span></td>
         </tr>
         <tr>
           <td width="11%" rowspan="3" align="center" valign="middle" class="table_body" style="width: 14%"><p> 图片顺序</p>
             <p>
-              <asp:ListBox ID="ImageItemList" SelectionMode="Multiple" Rows="10" runat="server"  OnSelectedIndexChanged="ImageItemList_SelectedIndexChanged">
-                <%--                         <asp:ListItem Value="1">1</asp:ListItem>
-                            <asp:ListItem Value="2">2</asp:ListItem>
-                            <asp:ListItem Value="3">3</asp:ListItem>--%>
+              <asp:ListBox ID="ImageItemList" SelectionMode="Single" Rows="10" runat="server"  OnSelectedIndexChanged="ImageItemList_SelectedIndexChanged" onClick="selectImageItem();">
+
               </asp:ListBox>
             </p>
             <p>&nbsp; </p></td>
@@ -51,12 +40,14 @@
               <asp:Button ID="BtnItemDown2" runat="server" OnClick="BtnItemDown_Click" Text="下移" />
             </p></td>
           <td height="45" align="right" valign="middle" class="table_body" style="width: 323px">图片名称</td>
-          <td align="left" class="table_body"><asp:TextBox ID="ImageName_Input" runat="server" CssClass="text_input"></asp:TextBox></td>
+          <td align="left" class="table_body"><asp:TextBox ID="ImageName_Input" runat="server" CssClass="text_input"></asp:TextBox>
+              <asp:Label ID="Imagename_Disp" runat="server" Width="168px"></asp:Label></td>
         </tr>
         <tr>
-          <td  height="40" align="right" valign="middle" class="table_body" style="width: 323px"> 图片路径</td>
+          <td  height="40" align="right" valign="middle" class="table_body" style="width: 323px"> 图 &nbsp;&nbsp; 片</td>
           <td  align="left" class="table_body"><asp:FileUpload ID="ImagePath_Input"  runat="server" CssClass="text_input"></asp:FileUpload>
-            <asp:Label ID="ImagePath_Disp" runat="server"></asp:Label></td>
+            <asp:Label ID="ImagePath_Disp" runat="server"></asp:Label>
+              <asp:Image ID="Image_show" Width="400" Height="300" runat="server" /></td>
         </tr>
         <tr>
           <td align="right" valign="middle" class="table_body" style="width: 323px"> 图片注释</td>
@@ -72,4 +63,11 @@
       </table>
     </FrameWorkWebControls:TabOptionItem>
   </FrameWorkWebControls:TabOptionWebControls>
+  <script language="javascript">
+      function selectImageItem()
+      {
+            document.forms[0].action = "Manager.aspx?IDX=<%#Request.Params("ID")%>&CMD=List<%#Request.Params["CMD"] %>";
+            document.forms[0].submit();
+      }
+  </script>
 </asp:Content>

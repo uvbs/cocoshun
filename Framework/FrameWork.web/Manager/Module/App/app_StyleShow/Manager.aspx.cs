@@ -28,6 +28,7 @@ using FrameWork.Components;
 using FrameWork.WebControls;
 using System.Data.OleDb;
 using FrameWork.web.Manager.Module.App.Data;
+using System.Collections.Generic;
 
 namespace FrameWork.web.Manager.Module.App.app_StyleShow
 {
@@ -77,6 +78,10 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         private void OnStart()
         {
             app_StyleShowEntity ut = BusinessFacadeFrameWork.app_StyleShowDisp(IDX);
+            ArrayList lst = QueryStyleImageList(IDX);
+
+            InitImageList(lst);
+
             OnStartData(ut);
             switch (CMD)
             { 
@@ -89,6 +94,7 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                     Hidden_Input();
                     ButtonOption.Visible = false;
                     AddEditButton();
+                    
                     break;
                 case "Edit":
                     TabOptionItem1.Tab_Name = HeadMenuWebControls1.HeadOPTxt = "修改";
@@ -100,7 +106,7 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                     if (BusinessFacadeFrameWork.app_StyleShowInsertUpdateDelete(ut) > 0)
                     {
                         //删除关联表
-                        removeRelationData(ut);
+                        //removeRelationData(ut);
 
                         EventMessage.MessageBox(1, "删除成功", string.Format("删除ID:{0}成功!", IDX), Icon_Type.OK, Common.GetHomeBaseUrl("Default.aspx"));
                     }
@@ -114,47 +120,80 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             }
         }
 
-        private  void removeRelationData(app_StyleShowEntity ut)
+        private void InitImageList(ArrayList lst)
         {
-            try
+
+            if (ImageItemList.SelectedIndex != -1)
             {
-                int StyleID = ut.ID;
-
-                using (OleDbConnection Conn = GetSqlConnection())
-                {
-                    string CommTxt;
-                    OleDbCommand cmd = new OleDbCommand();
-                    cmd.Connection = Conn;
-                    Conn.Open();
-
-//                     CommTxt = "delete form app_Styles_Images where StyleID=@StyleID";
-//                     cmd.CommandText = CommTxt;
-//                     cmd.Parameters.Add("@Title", OleDbType.Integer).Value = StyleID; //标题
-//                     int ImageID = cmd.ExecuteNonQuery();
-//                     cmd.Dispose();
-                  
-                    cmd = new OleDbCommand();
-                    cmd.Connection = Conn;
-                    CommTxt = "delete form app_Images where ID in (select ImageID app_Styles_Images where StyleID=@StyleID)";
-                    cmd.CommandText = CommTxt;
-                    cmd.Parameters.Add("@StyleID", OleDbType.Integer).Value = StyleID; //标题
-                    int ImageID = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
-                    cmd.ExecuteNonQuery();
-                    cmd.Dispose();
-
-                    Conn.Dispose();
-                    Conn.Close();
-
-                }
-            }
-            catch (System.Exception e)
-            {
+                ListItem item = new ListItem();
+                int nextIndex;
+                item.Value = ImageItemList.SelectedValue;
+                item.Text = ImageItemList.SelectedItem.ToString();
+                nextIndex = (ImageItemList.SelectedIndex) - 1;
+                if (nextIndex == -1)
+                    return;
+                ImageItemList.Items.Remove(ImageItemList.SelectedItem);
+                ImageItemList.Items.Insert(nextIndex, item.Text);
+                ImageItemList.Items[nextIndex].Value = item.Value;
+                ImageItemList.SelectedIndex = nextIndex;
 
             }
-       
+
+            for (int i=0;i<lst.Count;i++)
+            {
+                app_StyleShowImageEntity entity = (app_StyleShowImageEntity)lst[i];
+                ListItem item = new ListItem();
+                item.Text = entity.ImageName;
+                item.Value = Convert.ToString(entity.ImageID);
+                ImageItemList.Items.Add(item);
+            }
         }
 
+        private ArrayList QueryStyleImageList(int IDX)
+        {
+            ArrayList lst = new ArrayList();
+            using (OleDbConnection Conn = GetSqlConnection())
+            {
+                string CommTxt;
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.Connection = Conn;
+                Conn.Open();
+
+                cmd.CommandText = "select * from app_Styles_Image_View where app_StyleShow.ID=@IDX";
+                cmd.Parameters.Add("@IDX", OleDbType.Integer).Value = IDX; 
+
+
+
+                OleDbDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    app_StyleShowImageEntity entity = new app_StyleShowImageEntity();
+                    entity.ID = IDX;
+                    entity.Title = dr["Title"].ToString();
+                    entity.AddTime= Convert.ToDateTime(dr["AddTime"]);
+
+                    entity.Author= dr["Author"].ToString();
+                    entity.ImagePath = dr["ImagePath"].ToString();
+                    entity.Comment = dr["app_StyleShow.Comment"].ToString();
+                    entity.ImageOrder = Convert.ToInt32(dr["ImageOrder"]);
+                    entity.ImageID = Convert.ToInt32(dr["app_Images.ID"]);
+                    entity.Path = Convert.ToString(dr["Path"]);
+                    entity.ImageComment = Convert.ToString(dr["app_Images.Comment"]);
+                    //entity.ImageUploadTime = Convert.ToDateTime(dr["UploadTime"]);
+                    entity.ImageName = dr["Name"].ToString();
+                    lst.Add(entity);
+                }
+                cmd.Dispose();
+
+                Conn.Dispose();
+                Conn.Close();
+
+            }
+            return lst;
+        }
+
+        
         /// <summary>
         /// 增加修改按钮
         /// </summary>
@@ -197,9 +236,9 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
             AddTime_Input.Text = AddTime_Disp.Text = ut.AddTime.ToString();
             Author_Input.Text = Author_Disp.Text = ut.Author.ToString();
-          //  ImagePath_Input.Text = ImagePath_Disp.Text = ut.ImagePath.ToString();
+            //ImagePath_Input.Text = ImagePath_Disp.Text = ut.ImagePath.ToString();
 
-            Comment_Input.Text = Comment_Disp.Text = ut.Comment.ToString();
+            //Comment_Input.Text = Comment_Disp.Text = ut.Comment.ToString();
                 
         }
 
@@ -212,7 +251,8 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
             AddTime_Input.Visible = false;
             Author_Input.Visible = false;
             ImagePath_Input.Visible = false;
-            Comment_Input.Visible = false;       
+            Comment_Input.Visible = false;
+            ImageName_Input.Visible = false;
         }
 
         /// <summary>
@@ -220,11 +260,12 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         /// </summary>
         private void Hidden_Disp()
         {
-        Title_Disp.Visible = false;
-        AddTime_Disp.Visible = false;
-        Author_Disp.Visible = false;
-        ImagePath_Disp.Visible = false;
-        Comment_Disp.Visible = false;
+            Title_Disp.Visible = false;
+            AddTime_Disp.Visible = false;
+            Author_Disp.Visible = false;
+            ImagePath_Disp.Visible = false;
+            Comment_Disp.Visible = false;
+            Imagename_Disp.Visible = false;
         
         }
 
@@ -321,6 +362,14 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         protected void ImageItemList_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            int index = ImageItemList.SelectedIndex; //Convert.ToInt32(ImageItemList.SelectedItem.Value);
+            if (index == -1)
+                return;
+            ArrayList lst = QueryStyleImageList(IDX);
+            app_StyleShowImageEntity entity = (app_StyleShowImageEntity)lst[index];
+            ImageName_Input.Text = Imagename_Disp.Text = entity.ImageName;
+            Comment_Input.Text = Comment_Disp.Text = entity.ImageComment;
+            Image_show.ImageUrl = ImagePath + entity.Path;
         }
 
 
@@ -353,7 +402,7 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                 ut.AddTime = Convert.ToDateTime(AddTime_Input.Text);
                 ut.Author = Author_Input.Text;
                 // ut.ImagePath = ImagePath_Input.Text;
-                ut.Comment = Comment_Input.Text;
+                //ut.Comment = Comment_Input.Text;
 
                 Int32 rInt = 0;
 
