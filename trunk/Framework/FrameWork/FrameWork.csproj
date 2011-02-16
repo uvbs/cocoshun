@@ -53,6 +53,7 @@
     <Compile Include="App\Components\app_NewsEntity.cs" />
     <Compile Include="App\Components\app_NotifyEntity.cs" />
     <Compile Include="App\Components\app_StyleShowEntity.cs" />
+    <Compile Include="App\Components\app_StyleShowImageEntity.cs" />
     <Compile Include="App\Data\AccessDataProvider.cs" />
     <Compile Include="App\Data\DataProvider.cs" />
     <Compile Include="App\Data\SqlDataProvider.cs" />
