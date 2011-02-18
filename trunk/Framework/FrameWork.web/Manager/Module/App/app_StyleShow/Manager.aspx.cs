@@ -123,22 +123,6 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
         private void InitImageList(ArrayList lst)
         {
 
-            if (ImageItemList.SelectedIndex != -1)
-            {
-                ListItem item = new ListItem();
-                int nextIndex;
-                item.Value = ImageItemList.SelectedValue;
-                item.Text = ImageItemList.SelectedItem.ToString();
-                nextIndex = (ImageItemList.SelectedIndex) - 1;
-                if (nextIndex == -1)
-                    return;
-                ImageItemList.Items.Remove(ImageItemList.SelectedItem);
-                ImageItemList.Items.Insert(nextIndex, item.Text);
-                ImageItemList.Items[nextIndex].Value = item.Value;
-                ImageItemList.SelectedIndex = nextIndex;
-
-            }
-
             for (int i=0;i<lst.Count;i++)
             {
                 app_StyleShowImageEntity entity = (app_StyleShowImageEntity)lst[i];
@@ -146,6 +130,13 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                 item.Text = entity.ImageName;
                 item.Value = Convert.ToString(entity.ImageID);
                 ImageItemList.Items.Add(item);
+                if(i==0)
+                {
+                    ImageItemList.SelectedIndex = 0;
+                    Image_show.ImageUrl = ImagePath + entity.Path;
+                    ImageName_Input.Text = Imagename_Disp.Text = entity.ImageName;
+                    Comment_Input.Text = Comment_Disp.Text = entity.ImageComment;
+                }
             }
         }
 
