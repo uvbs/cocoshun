@@ -66,7 +66,6 @@
   <script language="javascript">
       function selectImageItem()
       {
-            document.forms[0].action = "Manager.aspx?IDX=<%#Request.Params("ID")%>&CMD=List<%#Request.Params["CMD"] %>";
             document.forms[0].submit();
       }
   </script>
