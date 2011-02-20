@@ -47,15 +47,6 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         protected global::FrameWork.WebControls.TabOptionItem TabOptionItem1;
         
         /// <summary>
-        /// MainID 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label MainID;
-        
-        /// <summary>
         /// Title_Input 控件。
         /// </summary>
         /// <remarks>
@@ -110,6 +101,15 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         protected global::System.Web.UI.WebControls.Label Author_Disp;
         
         /// <summary>
+        /// BtnSave 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSave;
+        
+        /// <summary>
         /// ImageItemList 控件。
         /// </summary>
         /// <remarks>
@@ -117,6 +117,15 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox ImageItemList;
+        
+        /// <summary>
+        /// Image_show 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image_show;
         
         /// <summary>
         /// BtnItemUp2 控件。
@@ -173,15 +182,6 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         protected global::System.Web.UI.WebControls.Label ImagePath_Disp;
         
         /// <summary>
-        /// Image_show 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image_show;
-        
-        /// <summary>
         /// Comment_Input 控件。
         /// </summary>
         /// <remarks>
@@ -209,15 +209,6 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         protected global::System.Web.UI.HtmlControls.HtmlTableRow ButtonOption;
         
         /// <summary>
-        /// Button1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
         /// Btn_Image_Add 控件。
         /// </summary>
         /// <remarks>
@@ -234,5 +225,14 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow {
         /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Btn_ImageDelete;
+        
+        /// <summary>
+        /// Button1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }

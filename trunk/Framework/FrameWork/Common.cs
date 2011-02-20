@@ -1770,7 +1770,7 @@ namespace FrameWork
         public static string ConvertDate(DateTime? s)
         {
             if (s.HasValue)
-                return s.Value.ToString("yyyy/MM/dd");
+                return s.Value.ToString("yyyy-MM-dd");
             else
                 return "";
         }

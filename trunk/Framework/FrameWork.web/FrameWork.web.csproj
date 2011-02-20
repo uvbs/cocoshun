@@ -53,6 +53,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Home\GetSQL.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>GetSQL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\GetSQL.aspx.designer.cs">
+      <DependentUpon>GetSQL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\NewsPic.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>NewsPic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\NewsPic.aspx.designer.cs">
+      <DependentUpon>NewsPic.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manager\about.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>about.aspx</DependentUpon>
@@ -670,6 +684,13 @@
     <Content Include="Manager\Module\App\News\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FrameWork.mdb">
+    </Content>
+    <Content Include="Home\GetSQL.aspx" />
+    <Content Include="Home\NewsPic.aspx" />
+    <Content Include="Home\js\jquery-1.4a2.min.js" />
+    <Content Include="Home\js\jquery.KinSlideshow-1.1.js" />
+    <Content Include="Home\js\jquery.KinSlideshow-1.2.1.min.js" />
     <Content Include="Manager\Module\App\app_News\web.config" />
     <Content Include="Manager\Module\App\app_Notify\web.config" />
     <Content Include="Manager\Module\App\app_StyleShow\web.config" />
