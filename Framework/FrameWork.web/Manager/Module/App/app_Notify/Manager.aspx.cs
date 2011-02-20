@@ -123,7 +123,13 @@ namespace FrameWork.web.Manager.Module.App.app_Notify
         {
         Title_Input.Text = Title_Disp.Text = ut.Title.ToString();
                 Notifier_Input.Text = Notifier_Disp.Text = ut.Notifier.ToString();
-                AddTime_Input.Text = AddTime_Disp.Text = ut.AddTime.ToString();
+
+                if (ut.AddTime == null || ut.AddTime.ToString().Length == 0)
+                {
+                    ut.AddTime = DateTime.Now;
+                }
+
+                AddTime_Input.Text = AddTime_Disp.Text = Common.ConvertDate(ut.AddTime);
                 Content_Input.Text = Content_Disp.Text = ut.Content.ToString();
                 
         }

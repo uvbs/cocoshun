@@ -12,8 +12,8 @@
           <AspNetDebugging>True</AspNetDebugging>
           <NativeDebugging>False</NativeDebugging>
           <SQLDebugging>False</SQLDebugging>
-          <PublishCopyOption>RunFiles</PublishCopyOption>
-          <PublishTargetLocation>D:\webhome\FrameWork\Code\release\20080612\</PublishTargetLocation>
+          <PublishCopyOption>ProjectFiles</PublishCopyOption>
+          <PublishTargetLocation>D:\FrameWork\</PublishTargetLocation>
           <PublishDeleteAllFiles>True</PublishDeleteAllFiles>
           <PublishCopyAppData>True</PublishCopyAppData>
           <ExternalProgram>
