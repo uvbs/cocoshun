@@ -53,18 +53,18 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Home\GetSQL.aspx.cs">
+    <Compile Include="home\GetSQL.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>GetSQL.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Home\GetSQL.aspx.designer.cs">
+    <Compile Include="home\GetSQL.aspx.designer.cs">
       <DependentUpon>GetSQL.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Home\NewsPic.aspx.cs">
+    <Compile Include="home\NewsPic.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>NewsPic.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Home\NewsPic.aspx.designer.cs">
+    <Compile Include="home\NewsPic.aspx.designer.cs">
       <DependentUpon>NewsPic.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manager\about.aspx.cs">
@@ -429,6 +429,20 @@
     <Compile Include="Manager\UserSet.aspx.designer.cs">
       <DependentUpon>UserSet.aspx</DependentUpon>
     </Compile>
+    <Compile Include="template\MasterPage\template.Master.cs">
+      <DependentUpon>Template.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="template\MasterPage\template.Master.designer.cs">
+      <DependentUpon>Template.Master</DependentUpon>
+    </Compile>
+    <Compile Include="template\news.aspx.cs">
+      <DependentUpon>news.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="template\news.aspx.designer.cs">
+      <DependentUpon>news.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameWork\FrameWork.csproj">
@@ -686,14 +700,20 @@
   <ItemGroup>
     <Content Include="App_Data\FrameWork.mdb">
     </Content>
-    <Content Include="Home\GetSQL.aspx" />
-    <Content Include="Home\NewsPic.aspx" />
-    <Content Include="Home\js\jquery-1.4a2.min.js" />
-    <Content Include="Home\js\jquery.KinSlideshow-1.1.js" />
-    <Content Include="Home\js\jquery.KinSlideshow-1.2.1.min.js" />
+    <Content Include="home\GetSQL.aspx" />
+    <Content Include="home\NewsPic.aspx" />
+    <Content Include="home\js\jquery-1.4a2.min.js" />
+    <Content Include="home\js\jquery.KinSlideshow-1.1.js" />
+    <Content Include="home\js\jquery.KinSlideshow-1.2.1.min.js" />
     <Content Include="Manager\Module\App\app_News\web.config" />
     <Content Include="Manager\Module\App\app_Notify\web.config" />
     <Content Include="Manager\Module\App\app_StyleShow\web.config" />
+    <Content Include="template\news.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1.css" />
+    <Content Include="template\MasterPage\Template.Master" />
+    <Content Include="theend.htm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\DataBase\Access\" />

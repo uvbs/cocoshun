@@ -13,14 +13,14 @@ using System.Text;
 
 namespace FrameWork.web.Home
 {
-    public partial class NewsPic : System.Web.UI.Page
+    public partial class NewsTemplate : System.Web.UI.Page
     {
          /// <summary>
         /// 数据库连接字符串
         /// </summary>
         private string ConnString = string.Empty;
 
-        public NewsPic()
+        public NewsTemplate()
         {
             ConnString = string.Format("Provider=Microsoft.Jet.OleDb.4.0;Data Source={0}{1};Persist Security Info=True;",
                 AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["Access"]);
@@ -50,40 +50,52 @@ namespace FrameWork.web.Home
             }
         }
 
-        public string Html;
+
+        private int ID = (int)Common.sink("ID", MethodType.Get, 4, 0, DataType.Int);
+        private static string SQL = "SELECT * FROM app_News where ID=@ID";
+
 
         private void OnStart()
         {
-            string SQL = "SELECT TOP 5 [ID], [Title], [ImagePath] FROM [app_News] ORDER BY [AddTime] DESC";
-
+            
             using (OleDbConnection Conn = GetSqlConnection())
             {
                 OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandText = SQL;
-                cmd.Connection = Conn;
                 Conn.Open();
+                cmd.Connection = Conn;
+                cmd.CommandText = SQL;
+
+                cmd.Parameters.Add("@ID", OleDbType.Integer).Value = ID;
                 OleDbDataReader reader = cmd.ExecuteReader();
-                StringBuilder sb = new StringBuilder("<div id='KinSlideshow' style='visibility:hidden;'>\n");
-                for (int i = 0; i < 5 && reader.Read();i++ )
+
+                if(reader.HasRows)
                 {
-                    string ID = reader["ID"].ToString();
-                    string Title = reader["Title"].ToString();
+                    reader.Read();
+
+                    NewsTitle.Text = reader["Title"].ToString();
+
+                    NewsAuthorTime.Text = reader["Author"].ToString() + "    " + Common.ConvertDate((DateTime)reader["AddTime"]);
+
                     string ImagePath = reader["ImagePath"].ToString();
+                    if(ImagePath.Length == 0)
+                    {
+                        NewsImage.Visible = false;
+                    }else
+                    {
+                        NewsImage.ImageUrl = Common.UpLoadDir + "NewsImages/" + ImagePath;
+                    }
+                    ImageComment.Text = reader["ImageComment"].ToString();
 
-                    sb.Append("<a target='_blank' href='/template/news.aspx?ID=");
-                    sb.Append(ID);
-                    sb.Append("' ><img src='");
-                    sb.Append(Common.UpLoadDir + "NewsImages/");
-                    sb.Append("s_" + ImagePath);
-                    sb.Append("' alt='");
-                    sb.Append(Title);
-                    sb.Append("'");
-                    sb.Append("width='205' height='160' /></a>");
-                    sb.AppendLine();
+                    string content =  reader["Content"].ToString();
+                    if(content.Length > 0)
+                    {
+                        NewsContent.Text = content.Replace(" ", "&nbsp;&nbsp;");
+                        NewsContent.Text = NewsContent.Text.Replace("\r\n", "</br>");
+                        
+                    }
+                    
                 }
-                sb.AppendLine("</div>");
-
-                Html = sb.ToString();
+  
 
                 cmd.Dispose();
                 Conn.Dispose();
