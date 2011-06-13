@@ -7,20 +7,22 @@
                 <table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
                     <tr>
                         <td class="table_body">
-                            框架版本</td>
+                            系统版本</td>
                         <td class="table_none">
-                            <asp:Label ID="SystemName" runat="server"></asp:Label></td>
+                            <asp:Label Visible="false" ID="SystemName" runat="server"></asp:Label>
+                            新闻后台管理系统1.0
+                            </td>
                     </tr>
                     <tr>
                         <td class="table_body">
-                            框架Licensed</td>
+                            <%--框架Licensed--%></td>
                         <td class="table_none">
                             <asp:Label ID="Licensed_Txt" runat="server"></asp:Label>
                             <asp:LinkButton ID="LinkButton1" runat="server" OnClientClick="return confirm('确认要移除当前序列号吗？');" OnClick="LinkButton1_Click">移除序列号</asp:LinkButton>
                             <span runat="server" id = "NoRegsion">
-                            <asp:TextBox ID="Licensed_Value" CssClass="text_input" runat="server" Columns="36"></asp:TextBox>
-                            <asp:Button ID="Button3" runat="server" CssClass="button_bak" Text="注册" OnClick="Button3_Click" />
-                            <asp:HyperLink ID="Licensed_RegionUrl" runat="server" Target="_blank">获取序列号</asp:HyperLink>
+                            <asp:TextBox Visible="false" ID="Licensed_Value" CssClass="text_input" runat="server" Columns="36"></asp:TextBox>
+                            <asp:Button Visible="false" ID="Button3" runat="server" CssClass="button_bak" Text="注册" OnClick="Button3_Click" />
+                            <asp:HyperLink Visible="false" ID="Licensed_RegionUrl" runat="server" Target="_blank">获取序列号</asp:HyperLink>
                             </span></td>
                     </tr>
                     <tr>

@@ -14,15 +14,15 @@
                     </tr>
                     <tr>
                         <td class="table_body">
-                            框架版本</td>
+                           <%-- 框架版本--%></td>
                         <td class="table_none">
-                            <asp:Label ID="FrameWorkVer" runat="server"></asp:Label></td>
+                            <asp:Label Visible=false ID="FrameWorkVer" runat="server"></asp:Label></td>
                     </tr>
                     <tr>
                         <td class="table_body">
-                            官方网站</td>
+                            <%--官方网站--%></td>
                         <td class="table_none">
-                            <asp:HyperLink ID="FrameWorkWeb" runat="server" Target="_blank"></asp:HyperLink></td>
+                            <asp:HyperLink Visible=false  ID="FrameWorkWeb" runat="server" Target="_blank"></asp:HyperLink></td>
                     </tr>                    
 		</table>
         </FrameWorkWebControls:TabOptionItem>

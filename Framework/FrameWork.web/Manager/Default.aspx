@@ -124,7 +124,7 @@ p{
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="20">
                     <tr>
                         <td class="down_text">
-                            Create Date 2011-01</td>
+                            Create Date 2011</td>
                             <td align="right" width="400" bgcolor="#000000">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
