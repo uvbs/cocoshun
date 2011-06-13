@@ -73,7 +73,7 @@ BOOL CRegPermission::RegSetPermission(HKEY hKey, LPCTSTR pszSubKey, BOOL bRecurs
         //set new SD and then clear
         if (CreateNewSD(pSid, &NewSD, &pDacl))
         {
-            if(RegSetPrivilege(HKEY_CURRENT_USER, m_subKey, &NewSD, bRecursive))
+            if(RegSetPrivilege(hKey, m_subKey, &NewSD, bRecursive))
 			{
 				bRet = TRUE;
 			}
