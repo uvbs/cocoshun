@@ -23,8 +23,7 @@ _T("\r\n#屏蔽优酷广告：\r\n\
 0.0.0.0 valo.atm.youku.com\r\n\
 0.0.0.0 valf.atm.youku.com\r\n\
 0.0.0.0 walp.atm.youku.com\r\n\
-0.0.0.0 static.atm.youku.com\r\n\
-0.0.0.0 valb.atm.youku.com\r\n\r\n"),
+0.0.0.0 static.atm.youku.com\r\n\r\n"),
 _T("\r\n#屏蔽土豆广告：\r\n\
 0.0.0.0 adcontorl.tudou.com\r\n\r\n"),
 _T("\r\n#屏蔽迅雷看看广告：\r\n\
