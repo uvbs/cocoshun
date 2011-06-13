@@ -39,6 +39,7 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -53,6 +54,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="home\Content.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Content.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home\Content.aspx.designer.cs">
+      <DependentUpon>Content.aspx</DependentUpon>
+    </Compile>
     <Compile Include="home\GetSQL.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>GetSQL.aspx</DependentUpon>
@@ -60,12 +68,33 @@
     <Compile Include="home\GetSQL.aspx.designer.cs">
       <DependentUpon>GetSQL.aspx</DependentUpon>
     </Compile>
+    <Compile Include="home\News.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>News.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home\News.aspx.designer.cs">
+      <DependentUpon>News.aspx</DependentUpon>
+    </Compile>
     <Compile Include="home\NewsPic.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>NewsPic.aspx</DependentUpon>
     </Compile>
     <Compile Include="home\NewsPic.aspx.designer.cs">
       <DependentUpon>NewsPic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home\Notify.aspx.cs">
+      <DependentUpon>Notify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home\Notify.aspx.designer.cs">
+      <DependentUpon>Notify.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home\StyleShow.aspx.cs">
+      <DependentUpon>StyleShow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home\StyleShow.aspx.designer.cs">
+      <DependentUpon>StyleShow.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manager\about.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -436,12 +465,47 @@
     <Compile Include="template\MasterPage\template.Master.designer.cs">
       <DependentUpon>Template.Master</DependentUpon>
     </Compile>
+    <Compile Include="template\MoreNews.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>MoreNews.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="template\MoreNews.aspx.designer.cs">
+      <DependentUpon>MoreNews.aspx</DependentUpon>
+    </Compile>
     <Compile Include="template\news.aspx.cs">
-      <DependentUpon>news.aspx</DependentUpon>
+      <DependentUpon>News.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="template\news.aspx.designer.cs">
-      <DependentUpon>news.aspx</DependentUpon>
+      <DependentUpon>News.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="template\Style.aspx.cs">
+      <DependentUpon>Style.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="template\Style.aspx.designer.cs">
+      <DependentUpon>Style.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="template\MoreNotify.aspx.cs">
+      <DependentUpon>MoreNotify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="template\MoreNotify.aspx.designer.cs">
+      <DependentUpon>MoreNotify.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="template\Notify.aspx.cs">
+      <DependentUpon>Notify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="template\Notify.aspx.designer.cs">
+      <DependentUpon>Notify.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="template\MoreStyle.aspx.cs">
+      <DependentUpon>MoreStyle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="template\MoreStyle.aspx.designer.cs">
+      <DependentUpon>MoreStyle.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -708,12 +772,118 @@
     <Content Include="Manager\Module\App\app_News\web.config" />
     <Content Include="Manager\Module\App\app_Notify\web.config" />
     <Content Include="Manager\Module\App\app_StyleShow\web.config" />
-    <Content Include="template\news.aspx" />
+    <Content Include="template\News.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="1.css" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="css\dcss.css" />
+    <Content Include="home\Content.aspx" />
+    <Content Include="home\News.aspx" />
+    <Content Include="home\Notify.aspx" />
+    <Content Include="home\StyleShow.aspx" />
+    <Content Include="images\full-image.jpg" />
+    <Content Include="images\full6.jpg" />
+    <Content Include="images\gallery1.jpg" />
+    <Content Include="images\gallery1.thumb.jpg" />
+    <Content Include="images\gallery2.jpg" />
+    <Content Include="images\gallery2.thumb.jpg" />
+    <Content Include="images\gallery3.jpg" />
+    <Content Include="images\gallery3.thumb.jpg" />
+    <Content Include="images\nordic.gif" />
+    <Content Include="images\thumb6.jpg" />
+    <Content Include="images\thumbnail.jpg" />
+    <Content Include="images\thumbstrip01.jpg" />
+    <Content Include="images\thumbstrip01.thumb.png" />
+    <Content Include="images\thumbstrip02.jpg" />
+    <Content Include="images\thumbstrip02.thumb.png" />
+    <Content Include="images\thumbstrip03.jpg" />
+    <Content Include="images\thumbstrip03.thumb.png" />
+    <Content Include="images\thumbstrip04.jpg" />
+    <Content Include="images\thumbstrip04.thumb.png" />
+    <Content Include="images\thumbstrip05.jpg" />
+    <Content Include="images\thumbstrip05.thumb.png" />
+    <Content Include="images\thumbstrip06.jpg" />
+    <Content Include="images\thumbstrip06.thumb.png" />
+    <Content Include="images\thumbstrip07.jpg" />
+    <Content Include="images\thumbstrip07.thumb.png" />
+    <Content Include="images\thumbstrip08.jpg" />
+    <Content Include="images\thumbstrip08.thumb.png" />
+    <Content Include="images\thumbstrip09.jpg" />
+    <Content Include="images\thumbstrip09.thumb.png" />
+    <Content Include="images\thumbstrip10.jpg" />
+    <Content Include="images\thumbstrip10.thumb.png" />
+    <Content Include="images\thumbstrip11.jpg" />
+    <Content Include="images\thumbstrip11.thumb.png" />
+    <Content Include="images\thumbstrip12.jpg" />
+    <Content Include="images\thumbstrip12.thumb.png" />
+    <Content Include="images\thumbstrip13.jpg" />
+    <Content Include="images\thumbstrip13.thumb.png" />
+    <Content Include="images\thumbstrip14.jpg" />
+    <Content Include="images\thumbstrip14.thumb.png" />
+    <Content Include="images\thumbstrip15.jpg" />
+    <Content Include="images\thumbstrip15.thumb.png" />
+    <Content Include="images\thumbstrip16.jpg" />
+    <Content Include="images\thumbstrip16.thumb.png" />
+    <Content Include="images\thumbstrip17.jpg" />
+    <Content Include="images\thumbstrip17.thumb.png" />
+    <Content Include="images\thumbstrip18.jpg" />
+    <Content Include="images\thumbstrip18.thumb.png" />
+    <Content Include="images\thumbstrip19.jpg" />
+    <Content Include="images\thumbstrip19.thumb.png" />
+    <Content Include="images\thumbstrip20.jpg" />
+    <Content Include="images\thumbstrip20.thumb.png" />
+    <Content Include="images\thumbstrip21.jpg" />
+    <Content Include="images\thumbstrip21.thumb.png" />
+    <Content Include="images\thumbstrip22.jpg" />
+    <Content Include="images\thumbstrip22.thumb.png" />
+    <Content Include="images\thumbstrip23.jpg" />
+    <Content Include="images\thumbstrip23.thumb.png" />
+    <Content Include="images\thumbstrip24.jpg" />
+    <Content Include="images\thumbstrip24.thumb.png" />
+    <Content Include="img\ico.jpg" />
+    <Content Include="template\js\graphics\close.png" />
+    <Content Include="template\js\graphics\closeX.png" />
+    <Content Include="template\js\graphics\controlbar-black-border.gif" />
+    <Content Include="template\js\graphics\controlbar-text-buttons.png" />
+    <Content Include="template\js\graphics\controlbar-white-small.gif" />
+    <Content Include="template\js\graphics\controlbar-white.gif" />
+    <Content Include="template\js\graphics\controlbar2.gif" />
+    <Content Include="template\js\graphics\controlbar3.gif" />
+    <Content Include="template\js\graphics\controlbar4-hover.gif" />
+    <Content Include="template\js\graphics\controlbar4.gif" />
+    <Content Include="template\js\graphics\fullexpand.gif" />
+    <Content Include="template\js\graphics\geckodimmer.png" />
+    <Content Include="template\js\graphics\icon.gif" />
+    <Content Include="template\js\graphics\loader.gif" />
+    <Content Include="template\js\graphics\loader.white.gif" />
+    <Content Include="template\js\graphics\outlines\beveled.png" />
+    <Content Include="template\js\graphics\outlines\drop-shadow.png" />
+    <Content Include="template\js\graphics\outlines\glossy-dark.png" />
+    <Content Include="template\js\graphics\outlines\outer-glow.png" />
+    <Content Include="template\js\graphics\outlines\rounded-black.png" />
+    <Content Include="template\js\graphics\outlines\rounded-white.png" />
+    <Content Include="template\js\graphics\resize.gif" />
+    <Content Include="template\js\graphics\scrollarrows.png" />
+    <Content Include="template\js\graphics\zoomin.cur" />
+    <Content Include="template\js\graphics\zoomout.cur" />
+    <Content Include="template\js\highslide-full.js" />
+    <Content Include="template\js\highslide.css" />
     <Content Include="template\MasterPage\Template.Master" />
+    <Content Include="template\MoreNews.aspx" />
+    <Content Include="img\news1.JPG" />
+    <Content Include="img\news2.JPG" />
+    <Content Include="img\news3.JPG" />
+    <Content Include="img\news4.JPG" />
+    <Content Include="img\news5.JPG" />
+    <Content Include="template\Style.aspx" />
+    <Content Include="template\MoreNotify.aspx" />
+    <Content Include="template\Notify.aspx" />
+    <Content Include="template\MoreStyle.aspx" />
     <Content Include="theend.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="template\js\graphics\outlines\Outlines.psd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\DataBase\Access\" />

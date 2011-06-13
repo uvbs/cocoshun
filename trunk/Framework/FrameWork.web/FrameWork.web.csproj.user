@@ -12,7 +12,7 @@
           <AspNetDebugging>True</AspNetDebugging>
           <NativeDebugging>False</NativeDebugging>
           <SQLDebugging>False</SQLDebugging>
-          <PublishCopyOption>ProjectFiles</PublishCopyOption>
+          <PublishCopyOption>AllFiles</PublishCopyOption>
           <PublishTargetLocation>D:\FrameWork\</PublishTargetLocation>
           <PublishDeleteAllFiles>True</PublishDeleteAllFiles>
           <PublishCopyAppData>True</PublishCopyAppData>

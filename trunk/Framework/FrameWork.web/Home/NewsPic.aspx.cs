@@ -63,6 +63,8 @@ namespace FrameWork.web.Home
                 cmd.Connection = Conn;
                 Conn.Open();
                 OleDbDataReader reader = cmd.ExecuteReader();
+
+                // ͼƬ
                 StringBuilder sb = new StringBuilder("<div id='KinSlideshow' style='visibility:hidden;'>\n");
                 for (int i = 0; i < 5 && reader.Read();i++ )
                 {
@@ -70,7 +72,7 @@ namespace FrameWork.web.Home
                     string Title = reader["Title"].ToString();
                     string ImagePath = reader["ImagePath"].ToString();
 
-                    sb.Append("<a target='_blank' href='/template/news.aspx?ID=");
+                    sb.Append("<a target='_blank' href='/template/news1.aspx?ID=");
                     sb.Append(ID);
                     sb.Append("' ><img src='");
                     sb.Append(Common.UpLoadDir + "NewsImages/");
@@ -78,7 +80,7 @@ namespace FrameWork.web.Home
                     sb.Append("' alt='");
                     sb.Append(Title);
                     sb.Append("'");
-                    sb.Append("width='205' height='160' /></a>");
+                    sb.Append("width='255' height='180' /></a>");
                     sb.AppendLine();
                 }
                 sb.AppendLine("</div>");

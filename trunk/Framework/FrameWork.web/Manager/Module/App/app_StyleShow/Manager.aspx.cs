@@ -157,7 +157,7 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
                 {
                     if (oldSelect == -1)
                         ImageItemList.SelectedIndex = 0;
-                    Image_show.ImageUrl = ImagePath + entity.Path;
+                    Image_show.ImageUrl = string.Format("{0}s_{1}", ImagePath, entity.Path);
                     ImageName_Input.Text = Imagename_Disp.Text = entity.ImageName;
                     Comment_Input.Text = Comment_Disp.Text = entity.ImageComment;
                 }
@@ -539,7 +539,7 @@ namespace FrameWork.web.Manager.Module.App.app_StyleShow
 
         }
 
-        private static string ImagePath = Common.UpLoadDir + "StyleShowImages/";
+        private string ImagePath = Common.UpLoadDir + "StyleShowImages/";
 
         /************************************************************************/
         /* 上传新闻图片                                                         */
