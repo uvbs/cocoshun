@@ -763,8 +763,6 @@ void CHistoryClearDlg::OnButton2()
 }
 
 
-
-
 void CHistoryClearDlg::OnButton3() 
 {
 	//浏览器地址栏历史地址的清除
