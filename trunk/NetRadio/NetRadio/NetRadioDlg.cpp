@@ -29,12 +29,16 @@ void CNetRadioDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CNetRadioDlg, CDialog)
+	//{{AFX_MSG_MAP(CNetRadioDlg)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	//}}AFX_MSG_MAP
+	ON_WM_NCHITTEST()
+	
 	ON_BN_CLICKED(IDC_TEST, &CNetRadioDlg::OnBnClickedTest)
 	ON_BN_CLICKED(IDC_BAIDU, &CNetRadioDlg::OnBnClickedBaidu)
 	ON_BN_CLICKED(IDC_DOUBAN, &CNetRadioDlg::OnBnClickedDouban)
+	
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -54,15 +58,11 @@ BOOL CNetRadioDlg::OnInitDialog()
 	ReadConfigFromIni(&Config);
 
 	USES_CONVERSION;  
-	LPCSTR proxy=T2A(Config.Proxy.GetBuffer(Config.Proxy.GetLength()));
-	SetProxy(proxy);
+	m_Proxy=T2A(Config.Proxy.GetBuffer(Config.Proxy.GetLength()));
 
 	CString FM(Config.FM);
-	FM = FM.MakeUpper();
-	if(FM == "BAIDU")
-		TurnBaidu();
-	else
-		TurnDouban();
+	TurnFM(FM);
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -177,6 +177,7 @@ void CNetRadioDlg::OnBnClickedDouban()
 }
 void CNetRadioDlg::TurnBaidu() 
 {
+	SetProxy(NULL);
 	m_Browser.SetLeft(-130);
 	m_Browser.SetTop(-140);
 	m_Browser.Navigate2(FM_BAIDU);	
@@ -184,6 +185,7 @@ void CNetRadioDlg::TurnBaidu()
 
 void CNetRadioDlg::TurnDouban()
 {
+	SetProxy(m_Proxy);
 	m_Browser.SetLeft(0);
 	m_Browser.SetTop(0);
 	m_Browser.Navigate2(FM_DOUBAN);	
@@ -206,4 +208,24 @@ void CNetRadioDlg::ReadConfigFromIni( CONFIG *Config )
 	CString proxy(strValueProxy);
 	Config->FM = fm;
 	Config->Proxy = proxy;
+}
+
+void CNetRadioDlg::TurnFM( CString &FM ) 
+{
+	m_Browser.ShowWindow(SW_HIDE);
+	FM = FM.MakeUpper();
+	if(FM == "BAIDU")
+		TurnBaidu();
+	else
+		TurnDouban();
+	m_Browser.ShowWindow(SW_SHOW);
+}
+
+LRESULT CNetRadioDlg::OnNcHitTest( CPoint point )
+{
+	UINT ht = CDialog::OnNcHitTest(point);
+	UINT nHitTest = CDialog::OnNcHitTest (point); 
+	if (nHitTest == HTCLIENT)
+		nHitTest = HTCAPTION;
+	return nHitTest;
 }
