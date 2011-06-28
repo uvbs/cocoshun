@@ -57,14 +57,19 @@ protected:
 	void TurnBaidu();
 	void ReadConfigFromIni(CONFIG *Config);
 	void SetProxy( LPCSTR strProxy );
+	void TurnFM( CString &FM );
+
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
 	// 自定义浏览器控件
 	CCustomBrowser m_Browser;
+
+protected:
+	LPCSTR m_Proxy;	
 	afx_msg void OnBnClickedTest();
 	afx_msg void OnBnClickedBaidu();
 	afx_msg void OnBnClickedDouban();
-	
+	afx_msg LRESULT OnNcHitTest(CPoint point);
 };
