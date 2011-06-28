@@ -21,12 +21,42 @@ public:
 
 // 实现
 protected:
+	typedef struct {
+
+		//
+		// dwAccessType - INTERNET_OPEN_TYPE_DIRECT, INTERNET_OPEN_TYPE_PROXY, or
+		// INTERNET_OPEN_TYPE_PRECONFIG (set only)
+		//
+
+		DWORD dwAccessType;
+
+		//
+		// lpszProxy - proxy server list
+		//
+
+		LPCSTR Proxy;
+
+		//
+		// lpszProxyBypass - proxy bypass list
+		//
+
+		LPCSTR lpszProxyBypass;
+	} INTERNET_PROXY_INFO_ANSI, * LPINTERNET_PROXY_INFO_ANSI;
+
+	typedef struct	{
+		CString Proxy;
+		CString FM;
+	}CONFIG;
+
 	HICON m_hIcon;
 
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
 
-	void SetProxy( CString strProxy );
+	void TurnDouban();
+	void TurnBaidu();
+	void ReadConfigFromIni(CONFIG *Config);
+	void SetProxy( LPCSTR strProxy );
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
@@ -34,4 +64,7 @@ public:
 	// 自定义浏览器控件
 	CCustomBrowser m_Browser;
 	afx_msg void OnBnClickedTest();
+	afx_msg void OnBnClickedBaidu();
+	afx_msg void OnBnClickedDouban();
+	
 };
