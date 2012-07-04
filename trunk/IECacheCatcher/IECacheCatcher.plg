@@ -1,0 +1,44 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: IECacheCatcher - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/IECacheCatcher.res" /d "_DEBUG" /d "_AFXDLL" "F:\google-svn\cocoshun\IECacheCatcher\IECacheCatcher.rc"" 
+Creating temporary file "G:\cache\Temp\RSP35AE.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_GUILIB_STATIC_" /D "_AFXDLL" /Fp"Debug/IECacheCatcher.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"F:\google-svn\cocoshun\IECacheCatcher\IECacheCatcherDlg.cpp"
+"F:\google-svn\cocoshun\IECacheCatcher\IECacheThread.cpp"
+]
+Creating command line "cl.exe @G:\cache\Temp\RSP35AE.tmp" 
+Creating temporary file "G:\cache\Temp\RSP35BF.tmp" with contents
+[
+shlwapi.lib Wininet.lib imagehlp.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/IECacheCatcher.pdb" /debug /machine:I386 /out:"Debug/IECacheCatcher.exe" /pdbtype:sept 
+".\Debug\IECache.obj"
+".\Debug\IECacheCatcher.obj"
+".\Debug\IECacheCatcherDlg.obj"
+".\Debug\IECacheThread.obj"
+".\Debug\ShellUtil.obj"
+".\Debug\StdAfx.obj"
+".\Debug\SysUtil.obj"
+".\Debug\IECacheCatcher.res"
+]
+Creating command line "link.exe @G:\cache\Temp\RSP35BF.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+IECacheCatcherDlg.cpp
+IECacheThread.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+IECacheCatcher.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
