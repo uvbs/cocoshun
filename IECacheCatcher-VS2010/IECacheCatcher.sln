@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IECacheCatcher", "IECacheCatcher.vcxproj", "{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugU|Win32 = DebugU|Win32
+		Release|Win32 = Release|Win32
+		ReleaseU|Win32 = ReleaseU|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.Debug|Win32.Build.0 = Debug|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.DebugU|Win32.ActiveCfg = DebugU|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.DebugU|Win32.Build.0 = DebugU|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.Release|Win32.ActiveCfg = Release|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.Release|Win32.Build.0 = Release|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.ReleaseU|Win32.ActiveCfg = ReleaseU|Win32
+		{74460AF1-68D5-D4F0-5BC8-EDBAA3B0DB6C}.ReleaseU|Win32.Build.0 = ReleaseU|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
