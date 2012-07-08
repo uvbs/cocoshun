@@ -1,0 +1,226 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Simplified, PRC) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\IECacheCatcher.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\IECacheCatcher.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 IECacheCatcher"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "IECacheCatcher 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2012",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_IECACHECATCHER_DIALOG DIALOGEX 0, 0, 481, 360
+STYLE DS_SETFONT | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "IE Cache Catcher"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_URLPATH,54,37,241,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FILETYPE,54,56,241,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_EXPORTPATH,54,75,241,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "导出(&E)",IDC_BUTTON_EXPORT,356,75,58,15
+    PUSHBUTTON      "浏览(&B)",IDC_BUTTON_BROWSE,297,75,58,15
+    PUSHBUTTON      "打开导出目录",IDC_BUTTON_OPEN_EXPORT_PATH,414,75,58,15
+    PUSHBUTTON      "清空(&C)",IDC_BUTTON_CLEARCACHE,298,18,58,15
+    PUSHBUTTON      "IE选项",IDC_BUTTON_IEOPTION,356,18,58,15
+    PUSHBUTTON      "打开(&O)",IDC_BUTTON_OPEN,414,18,58,15
+    CONTROL         "List1",IDC_LIST_RECORD,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,114,467,226
+    CTEXT           "导出路径:",IDC_STATIC,7,78,43,8
+    CTEXT           "缓存路径:",IDC_STATIC,7,21,43,8
+    CTEXT           "目标网址:",IDC_STATIC,7,40,43,8
+    CTEXT           "文件类型:",IDC_STATIC,7,59,43,8
+    EDITTEXT        IDC_EDIT_CACHEPATH,54,18,241,14,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "",IDC_STATIC_CTRL_AREA,7,7,467,91
+    LTEXT           "导出记录:",IDC_STATIC,10,102,39,8
+    LTEXT           "",IDC_STATIC_STATUS,7,341,467,15,SS_CENTERIMAGE | SS_SUNKEN
+    LTEXT           "(文件类型过滤,用;号分隔,如:*.mp3;*.flv)",IDC_STATIC_COMMENT2,300,59,157,8
+    LTEXT           "(网址模糊匹配,如:youku, *.baidu.com)",IDC_STATIC_COMMENT1,299,41,145,8
+    CTEXT           "列表操作:1.双击列表项打开导出文件; 2.右击列表项复制网址.",IDC_STATIC_OPERCOMMENT,54,99,241,14,SS_CENTERIMAGE | SS_SUNKEN
+    COMBOBOX        IDC_COMBOBOX_FILETYPE,233,115,241,30,CBS_DROPDOWN | NOT WS_VISIBLE | WS_TABSTOP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "FileDescription", "IECacheCatcher IE缓存抓取"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "IECacheCatcher"
+            VALUE "LegalCopyright", "版权所有 (C) 2012"
+            VALUE "OriginalFilename", "IECacheCatcher.EXE"
+            VALUE "ProductName", "IECacheCatcher 应用程序"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_IECACHECATCHER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 474
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 353
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "res\\Master.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 IECacheCatcher(&A)..."
+    IDS_SEARCH_CACHEENTRY   "搜索缓存..."
+    IDS_EXPORT_CACHEENTRY   "导出文件..."
+END
+
+#endif    // Chinese (Simplified, PRC) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\IECacheCatcher.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
